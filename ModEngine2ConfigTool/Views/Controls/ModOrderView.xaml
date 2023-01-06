@@ -13,63 +13,69 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
-    <Expander Header="{Binding Header}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
 
-            <ListView Grid.Row="0"
-                      ItemsSource="{Binding ProfileModsList}"
-                      SelectedItem="{Binding SelectedItem}">
-                <ListView.ItemContainerStyle>
-                    <Style BasedOn="{StaticResource MaterialDesignGridViewItem}" TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Enabled">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsEnabled}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
-                        <GridViewColumn Width="500"
-                                        DisplayMemberBinding="{Binding Location}"
-                                        Header="Location" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="1"
-                        Margin="5,10,5,5"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
-                <Button Margin="0,2.5,5,2.5"
-                        Command="{Binding AddNewCommand}"
-                        ToolTip="Add">
-                    <materialDesign:PackIcon Kind="Plus" />
-                </Button>
-                <Button Margin="0,2.5,5,2.5"
-                        Command="{Binding DeleteCommand}"
-                        ToolTip="Remove">
-                    <materialDesign:PackIcon Kind="Delete" />
-                </Button>
-                <Button Margin="0,2.5,5,2.5"
-                        Command="{Binding MoveUpCommand}"
-                        ToolTip="Move Up">
-                    <materialDesign:PackIcon Kind="ArrowUpThick" />
-                </Button>
-                <Button Margin="0,2.5,5,2.5"
-                        Command="{Binding MoveDownCommand}"
-                        ToolTip="Move Down">
-                    <materialDesign:PackIcon Kind="ArrowDownThick" />
-                </Button>
-            </StackPanel>
-        </Grid>
-    </Expander>
+        <ListView Grid.Row="0"
+                  ItemsSource="{Binding ProfileModsList}"
+                  SelectedItem="{Binding SelectedItem}">
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource MaterialDesignGridViewItem}" TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Enabled">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsEnabled}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Location}" Header="Location" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="2"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button Margin="5,0,0,0"
+                    Command="{Binding AddNewCommand}"
+                    ToolTip="Add">
+                <materialDesign:PackIcon Kind="Plus" />
+            </Button>
+            <Button Margin="5,0,0,0"
+                    Command="{Binding EditCommand}"
+                    ToolTip="Edit"
+                    Visibility="{Binding CanEdit, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <materialDesign:PackIcon Kind="Pencil" />
+            </Button>
+            <Button Margin="5,0,0,0"
+                    Command="{Binding MoveUpCommand}"
+                    ToolTip="Move Up">
+                <materialDesign:PackIcon Kind="ArrowUpThick" />
+            </Button>
+            <Button Margin="5,0,0,0"
+                    Command="{Binding MoveDownCommand}"
+                    ToolTip="Move Down">
+                <materialDesign:PackIcon Kind="ArrowDownThick" />
+            </Button>
+            <Button Margin="5,0,0,0"
+                    Command="{Binding DeleteCommand}"
+                    ToolTip="Remove">
+                <materialDesign:PackIcon Kind="Delete" />
+            </Button>
+        </StackPanel>
+    </Grid>
 </UserControl>

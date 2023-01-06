@@ -11,6 +11,10 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="FolderBrowserEx" Version="1.0.1" />
     <PackageReference Include="MaterialDesignThemes" Version="4.7.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="Sherlog" Version="1.0.0" />
+    <PackageReference Include="Sherlog.Appenders" Version="1.0.3" />
+    <PackageReference Include="Sherlog.Formatters" Version="2.0.0" />
     <PackageReference Include="Tommy" Version="3.1.2" />
     <PackageReference Include="Tommy.Extensions" Version="3.1.2" />
     <PackageReference Include="Tommy.Extensions.Configuration" Version="6.2.0" />
@@ -20,6 +24,12 @@
     <Compile Update="Views\Controls\BoolField.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Profiles\SampleProfile.toml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

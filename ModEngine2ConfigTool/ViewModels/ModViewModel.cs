@@ -1,9 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ModEngine2ConfigTool.Models;
 
 namespace ModEngine2ConfigTool.ViewModels
 {
@@ -35,6 +31,14 @@ namespace ModEngine2ConfigTool.ViewModels
         {
             _name = name;
             _location = location;
+            _isEnabled = true;
+        }
+
+        public ModViewModel(ModModel modModel) 
+        { 
+            _name = modModel.Name;
+            _location = modModel.Location;
+            _isEnabled = modModel.IsEnabled;
         }
     }
 }

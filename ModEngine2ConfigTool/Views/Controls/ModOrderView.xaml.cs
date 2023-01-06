@@ -28,5 +28,19 @@ namespace ModEngine2ConfigTool.Views.Controls
         {
             InitializeComponent();
         }
+
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            var expander = (Expander)sender;
+            var row = Grid.GetRow(expander);
+            ((Grid)((ModOrderView)expander.Parent).Parent).RowDefinitions[row].Height = new GridLength(1, GridUnitType.Star);
+        }
+
+        private void Expander_Collapsed(object sender, RoutedEventArgs e)
+        {
+            var expander = (Expander)sender;
+            var row = Grid.GetRow(expander);
+            ((Grid)((ModOrderView)expander.Parent).Parent).RowDefinitions[row].Height = new GridLength(1, GridUnitType.Auto);
+        }
     }
 }
