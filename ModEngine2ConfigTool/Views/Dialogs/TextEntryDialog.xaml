@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="ModEngine2ConfigTool.Views.Dialogs.TextEntryDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ModEngine2ConfigTool.Views.Dialogs"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:validationrules="clr-namespace:ModEngine2ConfigTool.Views.ValidationRules"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding Header}" />
+        <TextBox x:Name="FieldEntry"
+                 Grid.Row="1"
+                 Margin="0,6,0,0"
+                 FontSize="18"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+            <TextBox.Text>
+                <Binding Path="FieldValue" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationrules:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <StackPanel Grid.Row="2"
+                    Margin="0,16,0,0"
+                    Orientation="Horizontal">
+            <Button Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                    Content="Accept"
+                    IsDefault="True">
+                <Button.CommandParameter>
+                    <system:Boolean>True</system:Boolean>
+                </Button.CommandParameter>
+                <Button.Style>
+                    <Style BasedOn="{StaticResource MaterialDesignFlatButton}" TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=FieldEntry}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Margin="8,0,0,0"
+                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}"
+                    Content="Cancel"
+                    IsCancel="True"
+                    Style="{StaticResource MaterialDesignFlatButton}">
+                <Button.CommandParameter>
+                    <system:Boolean>False</system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

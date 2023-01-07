@@ -9,7 +9,7 @@ namespace ModEngine2ConfigTool.ViewModels
     {
         private string _lastOpenedLocation;
 
-        public DllListViewModel(string header, IEnumerable<ModViewModel> modList) : base(header, modList)
+        public DllListViewModel(IEnumerable<ModViewModel> modList) : base(modList)
         {
             _lastOpenedLocation = string.Empty;
         }

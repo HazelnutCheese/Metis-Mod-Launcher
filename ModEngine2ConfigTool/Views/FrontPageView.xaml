@@ -18,81 +18,174 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Configure and Play">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" MinWidth="350" />
-                    <ColumnDefinition Width="5" />
-                    <ColumnDefinition Width="*" MinWidth="250" />
-                </Grid.ColumnDefinitions>
+        <GroupBox materialDesign:ElevationAssist.Elevation="Dp6"
+                  Header="Configure and Play"
+                  Style="{StaticResource MaterialDesignCardGroupBox}">
+            <GroupBox.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="PlaylistEdit" />
+                        <TextBlock Margin="8,0,0,0"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </GroupBox.HeaderTemplate>
 
+            <!--<materialDesign:Card>-->
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="25" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <materialDesign:Card Grid.Row="0" Grid.Column="0">
-                    <Grid Margin="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                <Grid Grid.Row="0"
+                      Grid.Column="0"
+                      Margin="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Grid.Row="0"
+                              Margin="5"
+                              VerticalAlignment="Bottom"
+                              ItemsSource="{Binding Profiles}"
+                              SelectedValue="{Binding SelectedProfile}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <Button Grid.Column="1"
+                            Margin="5,0,0,0"
+                            Command="{Binding AddNewProfileCommand}"
+                            ToolTip="Add New">
+                        <materialDesign:PackIcon Kind="Plus" />
+                    </Button>
+                    <Button Grid.Column="2"
+                            Margin="5,0,0,0"
+                            Command="{Binding CopyProfileCommand}"
+                            ToolTip="Duplicate">
+                        <materialDesign:PackIcon Kind="ContentCopy" />
+                    </Button>
+                    <Button Grid.Column="3"
+                            Margin="5,0,0,0"
+                            Command="{Binding RenameProfileCommand}"
+                            ToolTip="Rename selected Profile">
+                        <Button.Content>
+                            <materialDesign:PackIcon Kind="Pencil" />
+                        </Button.Content>
+                    </Button>
+                    <Button Grid.Column="4"
+                            Margin="5,0,0,0"
+                            Command="{Binding SaveProfileChangesCommand}"
+                            ToolTip="Save changes to profile">
+                        <Button.Content>
+                            <materialDesign:PackIcon Kind="ContentSave" />
+                        </Button.Content>
+                    </Button>
+                    <Button Grid.Column="5"
+                            Margin="5,0,0,0"
+                            Command="{Binding RevertProfileChangesCommand}"
+                            ToolTip="Revert changes">
+                        <Button.Content>
+                            <materialDesign:PackIcon Kind="Undo" />
+                        </Button.Content>
+                    </Button>
+                    <Button Grid.Column="6"
+                            Margin="5,0,0,0"
+                            Command="{Binding DeleteProfileCommand}"
+                            ToolTip="Delete">
+                        <materialDesign:PackIcon Kind="Delete" />
+                    </Button>
+
+                    <Grid Grid.Row="1" Grid.ColumnSpan="7">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" MinWidth="300" />
+                            <ColumnDefinition Width="15" />
+                            <ColumnDefinition Width="*" MinWidth="300" />
                         </Grid.ColumnDefinitions>
-                        <ComboBox Grid.Row="0"
-                                  Margin="5"
-                                  VerticalAlignment="Bottom">
-                            <ComboBoxItem Content="Profile 1" IsSelected="True" />
-                            <ComboBoxItem Content="Profile 2" />
-                            <ComboBoxItem Content="Profile 3" />
-                            <ComboBoxItem Content="Profile 4" />
-                        </ComboBox>
-                        <Button Grid.Column="1"
-                                Margin="5,0,0,0"
-                                ToolTip="Add New">
-                            <materialDesign:PackIcon Kind="Plus" />
-                        </Button>
-                        <Button Grid.Column="2"
-                                Margin="5,0,0,0"
-                                ToolTip="Duplicate">
-                            <materialDesign:PackIcon Kind="ContentCopy" />
-                        </Button>
-                        <Button Grid.Column="3"
-                                Margin="5,0,0,0"
-                                ToolTip="Delete">
-                            <materialDesign:PackIcon Kind="Delete" />
-                        </Button>
-                        <local:ProfileOptionsView Grid.Row="1"
-                                                  Grid.ColumnSpan="4"
-                                                  Margin="0,5,0,0" />
+
+                        <local:ProfileOptionsView Grid.Column="0"
+                                                  Margin="0,5,0,0"
+                                                  DataContext="{Binding SelectedProfile}" />
+
+                        <GridSplitter Grid.Column="1"
+                                      Width="15"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      Background="Transparent"
+                                      ResizeDirection="Columns" />
+
+                        <Separator Grid.Column="1" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+
+                        <TabControl Grid.Column="2"
+                                    HorizontalContentAlignment="Left"
+                                    materialDesign:ElevationAssist.Elevation="Dp4"
+                                    materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
+                                    TabStripPlacement="Top">
+                            <TabItem Margin="0,5">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Margin="5,0"
+                                                                 HorizontalAlignment="Center"
+                                                                 Kind="FolderMultiple" />
+                                        <TextBlock Margin="5,0"
+                                                   HorizontalAlignment="Center"
+                                                   Text="Mod Folders" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <controls:ModOrderView Grid.Row="0"
+                                                       materialDesign:ElevationAssist.Elevation="Dp0"
+                                                       DataContext="{Binding SelectedProfile.ModFolderListViewModel}" />
+                            </TabItem>
+                            <TabItem>
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Margin="5,0"
+                                                                 HorizontalAlignment="Center"
+                                                                 Kind="FileMultiple" />
+                                        <TextBlock Margin="5,0"
+                                                   HorizontalAlignment="Center"
+                                                   Text="External Dlls" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <controls:ModOrderView Grid.Row="2"
+                                                       materialDesign:ElevationAssist.Elevation="Dp0"
+                                                       DataContext="{Binding SelectedProfile.DllListViewModel}" />
+                            </TabItem>
+                        </TabControl>
                     </Grid>
-                </materialDesign:Card>
+                </Grid>
 
+                <Rectangle Grid.Row="1"
+                           Grid.ColumnSpan="7"
+                           Height="3"
+                           HorizontalAlignment="Stretch"
+                           Fill="#616161"
+                           Stroke="#616161" />
 
+                <Grid Grid.Row="2"
+                      Grid.ColumnSpan="7"
+                      Margin="0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <GridSplitter Grid.RowSpan="2"
-                              Grid.Column="1"
-                              Width="2.5"
-                              HorizontalAlignment="Stretch"
-                              Background="Transparent"
-                              ResizeDirection="Auto" />
-
-                <materialDesign:Card Grid.RowSpan="2" Grid.Column="2">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel>
-
-                            <controls:ModOrderView Margin="5" DataContext="{Binding SelectedProfileViewModel.ModFolderListViewModel}" />
-                            <controls:ModOrderView Margin="5" DataContext="{Binding SelectedProfileViewModel.DllListViewModel}" />
-                        </StackPanel>
-                    </ScrollViewer>
-                </materialDesign:Card>
-
-                <materialDesign:Card Grid.Row="1" Margin="0,5,0,0">
-                    <Grid Margin="5">
+                    <Grid Grid.Column="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -112,15 +205,34 @@
                                 </Grid>
                             </Button.Content>
                         </Button>
-                        <materialDesign:PopupBox Grid.Column="2" HorizontalAlignment="Right">
+                        <materialDesign:PopupBox Grid.Column="2"
+                                                 HorizontalAlignment="Right"
+                                                 Content="{materialDesign:PackIcon DotsHorizontal}">
                             <StackPanel>
                                 <Button Content="With Profile 1" />
                                 <Button Content="Without Mods" />
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </Grid>
-                </materialDesign:Card>
+
+                    <!--<StackPanel Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                        <Button Margin="0,2.5,0,2.5" ToolTip="Save changes to profile">
+                            <Button.Content>
+                                <materialDesign:PackIcon Kind="ContentSave" />
+                            </Button.Content>
+                        </Button>
+                        <Button Margin="5,2.5,0,2.5" ToolTip="Revert changes">
+                            <Button.Content>
+                                <materialDesign:PackIcon Kind="Undo" />
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>-->
+                </Grid>
+                <!--</materialDesign:Card>-->
             </Grid>
+            <!--</materialDesign:Card>-->
         </GroupBox>
     </Grid>
 </UserControl>

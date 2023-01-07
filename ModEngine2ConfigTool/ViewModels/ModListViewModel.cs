@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace ModEngine2ConfigTool.ViewModels
@@ -12,6 +14,8 @@ namespace ModEngine2ConfigTool.ViewModels
 
         public ICommand AddNewCommand { get; }
 
+        public ICommand EditCommand { get; }
+
         public ICommand DeleteCommand { get; }
 
         public ICommand MoveUpCommand { get; }
@@ -20,7 +24,7 @@ namespace ModEngine2ConfigTool.ViewModels
 
         public ObservableCollection<ModViewModel> ProfileModsList { get; }
 
-        public string Header { get; }
+        public bool CanEdit { get; protected set; }
 
         public ModViewModel? SelectedItem 
         { 
@@ -28,18 +32,23 @@ namespace ModEngine2ConfigTool.ViewModels
             set => SetProperty(ref _selectedItem, value); 
         }
 
-        public ModListViewModel(string header, IEnumerable<ModViewModel> modList)
+        public ModListViewModel(IEnumerable<ModViewModel> modList)
         {
             AddNewCommand = new RelayCommand(AddNew);
+            EditCommand = new RelayCommand(Edit);
             DeleteCommand = new RelayCommand(Delete);
             MoveUpCommand = new RelayCommand(MoveUp);
             MoveDownCommand = new RelayCommand(MoveDown);
 
             ProfileModsList = new ObservableCollection<ModViewModel>(modList);
-            Header = header;
         }
 
         protected abstract void AddNew();
+
+        protected async virtual void Edit()
+        {
+            throw new NotImplementedException();
+        }
 
         private void Delete()
         {
@@ -48,7 +57,17 @@ namespace ModEngine2ConfigTool.ViewModels
                 return;
             }
 
+            var selectedIndex = ProfileModsList.IndexOf(SelectedItem);
             ProfileModsList.Remove(SelectedItem);
+
+            if(!ProfileModsList.Any())
+            {
+                return;
+            }
+
+            SelectedItem = selectedIndex < ProfileModsList.Count
+                ? ProfileModsList[selectedIndex]
+                : ProfileModsList[ProfileModsList.Count - 1];
         }
 
         private void MoveUp()

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using MaterialDesignThemes.Wpf;
+using ModEngine2ConfigTool.ViewModels.Dialogs;
+using ModEngine2ConfigTool.Views.Dialogs;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -9,9 +12,34 @@ namespace ModEngine2ConfigTool.ViewModels
     {
         private string _lastOpenedLocation;
 
-        public ModFolderListViewModel(string header, IEnumerable<ModViewModel> modList) : base(header, modList)
+        public ModFolderListViewModel(IEnumerable<ModViewModel> modList) : base(modList)
         {
             _lastOpenedLocation = string.Empty;
+            CanEdit = true;
+        }
+
+        protected async override void Edit()
+        {
+            if(SelectedItem is null)
+            {
+                return;
+            }
+
+            var dialogVm = new TextEntryDialogViewModel("Edit Name", SelectedItem.Name);
+
+            var dialog = new TextEntryDialog()
+            {
+                DataContext = dialogVm
+            };
+
+            var result = await DialogHost.Show(dialog, App.DialogHostId);
+
+            if(result is not bool || result.Equals(false))
+            {
+                return;
+            }
+
+            SelectedItem.Name = dialogVm.FieldValue;
         }
 
         protected override void AddNew()

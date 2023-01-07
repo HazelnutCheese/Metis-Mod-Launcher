@@ -4,11 +4,22 @@
              xmlns:controls="clr-namespace:ModEngine2ConfigTool.Views.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ModEngine2ConfigTool.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
-    <GroupBox Header="Settings">
+    <GroupBox Header="Settings" Style="{StaticResource MaterialDesignCardGroupBox}">
+        <GroupBox.HeaderTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon VerticalAlignment="Center" Kind="Cog" />
+                    <TextBlock Margin="8,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="{Binding}" />
+                </StackPanel>
+            </DataTemplate>
+        </GroupBox.HeaderTemplate>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

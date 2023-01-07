@@ -31,5 +31,13 @@ namespace ModEngine2ConfigTool.Models
             EnableModLoaderConfiguration = enableModLoaderConfiguration;
             EnableScyllaHide = enableScyllaHide;
         }
+
+        public ProfileModel(string name)
+        {
+            Name = name;
+            Mods = new List<ModModel>();
+            Dlls = new List<ModModel>();
+            EnableModLoaderConfiguration = true;
+        }
     }
 }

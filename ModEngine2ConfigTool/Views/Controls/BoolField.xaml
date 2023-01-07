@@ -5,13 +5,12 @@
              xmlns:local="clr-namespace:ModEngine2ConfigTool.Views.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Name="FieldControl"
-             MinWidth="300"
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" MinWidth="200" />
+            <ColumnDefinition Width="Auto" MinWidth="150" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
