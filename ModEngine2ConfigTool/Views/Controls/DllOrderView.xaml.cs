@@ -19,9 +19,9 @@ using System.Windows.Shapes;
 
 namespace ModEngine2ConfigTool.Views.Controls
 {
-    public partial class ModOrderView : UserControl
+    public partial class DllOrderView : UserControl
     {
-        public ModOrderView()
+        public DllOrderView()
         {
             InitializeComponent();
         }

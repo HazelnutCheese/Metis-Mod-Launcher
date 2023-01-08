@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ModEngine2ConfigTool.Extensions;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Input;
 
 namespace ModEngine2ConfigTool.ViewModels
@@ -8,6 +11,8 @@ namespace ModEngine2ConfigTool.ViewModels
     public class MainWindowViewModel : ObservableObject
     {
         private ObservableObject _currentContent;
+        private FrontPageViewModel _frontPageViewModel;
+        private SettingsViewModel _settingsViewModel;
 
         public ObservableObject CurrentContent 
         { 
@@ -26,21 +31,41 @@ namespace ModEngine2ConfigTool.ViewModels
 
         public MainWindowViewModel()
         {
-            _currentContent = new FrontPageViewModel();
+            _frontPageViewModel = new FrontPageViewModel();
+            _settingsViewModel = new SettingsViewModel();
 
-            ConfigureProfilesCommand = new RelayCommand(ConfigureProfiles);
-            ConfigureSettingsCommand = new RelayCommand(ConfigureSettings);
+            _settingsViewModel.PropertyChanged += _settingsViewModel_PropertyChanged;
+
+            ConfigureProfilesCommand = new RelayCommand(
+                ConfigureProfiles,
+                () => !_settingsViewModel.HasErrors && !_settingsViewModel.Fields.IsChanged);
+
+            ConfigureSettingsCommand = new RelayCommand(
+                ConfigureSettings);
+
             OpenLicencesCommand = new RelayCommand(OpenLicences);
+
+            _currentContent = _settingsViewModel.HasErrors 
+                ? _settingsViewModel 
+                : _frontPageViewModel;
+        }
+
+        private void _settingsViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if(Equals(e.PropertyName, nameof(SettingsViewModel.HasErrors)))
+            {
+                ConfigureProfilesCommand.NotifyCanExecuteChanged();
+            }
         }
 
         private void ConfigureProfiles()
         {
-            CurrentContent = new FrontPageViewModel();
+            CurrentContent = _frontPageViewModel;
         }
 
         private void ConfigureSettings()
         {
-            CurrentContent = new SettingsViewModel();
+            CurrentContent = _settingsViewModel;
         }
 
         private void OpenLicences()

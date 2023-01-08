@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ModEngine2ConfigTool.Models
+﻿namespace ModEngine2ConfigTool.Models
 {
-    public class ModModel
+    public class ModModel : BaseDiskObjectModel
     {
         public string Name { get; }
 
-        public string Location { get; }
-
         public bool IsEnabled { get; }
 
-        public ModModel(string name, string location, bool isEnabled)
+        public ModModel(string name, string location, bool isEnabled) : base(location)
         {
             Name = name;
-            Location = location;
             IsEnabled = isEnabled;
         }
     }

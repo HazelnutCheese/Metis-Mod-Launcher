@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="ModEngine2ConfigTool.Views.Controls.ProfileItemsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ModEngine2ConfigTool.Views.Controls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="clr-namespace:ModEngine2ConfigTool.ViewModels"
+             d:DataContext="{d:DesignInstance viewmodels:FrontPageViewModel,
+                                              IsDesignTimeCreatable=False}"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <Grid>
+        <TabControl HorizontalContentAlignment="Left"
+                    materialDesign:ElevationAssist.Elevation="Dp4"
+                    materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
+                    TabStripPlacement="Top"
+                    Visibility="{Binding SelectedProfile, Converter={StaticResource NullableToVisibilityConverter}}">
+            <TabItem Margin="0,5">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Margin="5,0"
+                                                 HorizontalAlignment="Center"
+                                                 Kind="FolderMultiple" />
+                        <TextBlock Margin="5,0"
+                                   HorizontalAlignment="Center"
+                                   Text="Mod Folders" />
+                    </StackPanel>
+                </TabItem.Header>
+                <local:ModOrderView DataContext="{Binding SelectedProfile.ModFolderListViewModel}" />
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Margin="5,0"
+                                                 HorizontalAlignment="Center"
+                                                 Kind="FileMultiple" />
+                        <TextBlock Margin="5,0"
+                                   HorizontalAlignment="Center"
+                                   Text="External Dlls" />
+                    </StackPanel>
+                </TabItem.Header>
+                <local:DllOrderView DataContext="{Binding SelectedProfile.DllListViewModel}" />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

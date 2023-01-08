@@ -1,4 +1,5 @@
-﻿using ModEngine2ConfigTool.ViewModels;
+﻿using ModEngine2ConfigTool.Services;
+using ModEngine2ConfigTool.ViewModels;
 using Sherlog;
 using Sherlog.Appenders;
 using Sherlog.Formatters;
@@ -17,12 +18,15 @@ namespace ModEngine2ConfigTool
     {
         public static Logger Logger { get; private set; }
 
-        public static string DialogHostId = "MainWindowDialogHost";
+        public static ConfigurationService ConfigurationService { get; }
+
+        public const string DialogHostId = "MainWindowDialogHost";
 
         static App()
         {
             ConfigureLogging();
             Logger = Logger.GetLogger(nameof(App));
+            ConfigurationService = new ConfigurationService();
         }
 
         protected override void OnStartup(StartupEventArgs e)

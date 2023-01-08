@@ -13,7 +13,7 @@
         MinWidth="1024"
         MinHeight="640"
         d:DataContext="{d:DesignInstance viewmodels:MainWindowViewModel,
-                                         IsDesignTimeCreatable=True}"
+                                         IsDesignTimeCreatable=False}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         TextElement.FontSize="13"

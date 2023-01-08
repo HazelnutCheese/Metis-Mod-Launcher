@@ -11,6 +11,8 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="FolderBrowserEx" Version="1.0.1" />
     <PackageReference Include="MaterialDesignThemes" Version="4.7.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
     <PackageReference Include="Sherlog" Version="1.0.0" />
     <PackageReference Include="Sherlog.Appenders" Version="1.0.3" />
@@ -21,12 +23,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Controls\BoolField.xaml.cs">
+    <Compile Update="Views\Controls\Fields\BoolField.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Controls\DllOrderView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="appSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Profiles\SampleProfile.toml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

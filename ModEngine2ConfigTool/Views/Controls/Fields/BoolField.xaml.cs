@@ -1,9 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using ModEngine2ConfigTool.ViewModels;
-using ModEngine2ConfigTool.Views.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,11 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ModEngine2ConfigTool.Views.Controls
+namespace ModEngine2ConfigTool.Views.Controls.Fields
 {
-    public partial class ModOrderView : UserControl
+    public partial class BoolField : UserControl
     {
-        public ModOrderView()
+        public BoolField()
         {
             InitializeComponent();
         }

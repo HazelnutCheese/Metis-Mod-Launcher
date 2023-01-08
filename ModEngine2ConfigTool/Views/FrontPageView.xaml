@@ -8,10 +8,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewmodels="clr-namespace:ModEngine2ConfigTool.ViewModels"
              d:DataContext="{d:DesignInstance viewmodels:FrontPageViewModel,
-                                              IsDesignTimeCreatable=True}"
+                                              IsDesignTimeCreatable=False}"
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -32,7 +35,6 @@
                 </DataTemplate>
             </GroupBox.HeaderTemplate>
 
-            <!--<materialDesign:Card>-->
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -63,7 +65,19 @@
                               SelectedValue="{Binding SelectedProfile}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                                    <TextBlock Grid.Column="1"
+                                               HorizontalAlignment="Right"
+                                               FontStyle="Italic"
+                                               Text="Unsaved changes pending"
+                                               Visibility="{Binding IsChanged, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                </Grid>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
@@ -131,11 +145,14 @@
 
                         <Separator Grid.Column="1" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
-                        <TabControl Grid.Column="2"
+                        <controls:ProfileItemsView Grid.Column="2" />
+
+                        <!--<TabControl Grid.Column="2"
                                     HorizontalContentAlignment="Left"
                                     materialDesign:ElevationAssist.Elevation="Dp4"
                                     materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
-                                    TabStripPlacement="Top">
+                                    TabStripPlacement="Top"
+                                    Visibility="{Binding SelectedProfile, Converter={StaticResource NullableToVisibilityConverter}}">
                             <TabItem Margin="0,5">
                                 <TabItem.Header>
                                     <StackPanel Orientation="Horizontal">
@@ -166,7 +183,7 @@
                                                        materialDesign:ElevationAssist.Elevation="Dp0"
                                                        DataContext="{Binding SelectedProfile.DllListViewModel}" />
                             </TabItem>
-                        </TabControl>
+                        </TabControl>-->
                     </Grid>
                 </Grid>
 
@@ -191,7 +208,9 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" ToolTip="Launch Game With Profile 1">
+                        <Button Grid.Column="0"
+                                Command="{Binding LaunchCommand}"
+                                ToolTip="{Binding LaunchButtonContent}">
                             <Button.Content>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -201,7 +220,7 @@
                                     <materialDesign:PackIcon Grid.Column="0"
                                                              Margin="5,0,5,0"
                                                              Kind="Play" />
-                                    <TextBlock Grid.Column="1" Text="Launch Game With Profile 1" />
+                                    <TextBlock Grid.Column="1" Text="{Binding LaunchButtonContent}" />
                                 </Grid>
                             </Button.Content>
                         </Button>
@@ -209,30 +228,13 @@
                                                  HorizontalAlignment="Right"
                                                  Content="{materialDesign:PackIcon DotsHorizontal}">
                             <StackPanel>
-                                <Button Content="With Profile 1" />
-                                <Button Content="Without Mods" />
+                                <Button Command="{Binding SelectLaunchEldenRingWithProfileCommand}" Content="With Mods" />
+                                <Button Command="{Binding SelectLaunchEldenRingCommand}" Content="Without Mods" />
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </Grid>
-
-                    <!--<StackPanel Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                Orientation="Horizontal">
-                        <Button Margin="0,2.5,0,2.5" ToolTip="Save changes to profile">
-                            <Button.Content>
-                                <materialDesign:PackIcon Kind="ContentSave" />
-                            </Button.Content>
-                        </Button>
-                        <Button Margin="5,2.5,0,2.5" ToolTip="Revert changes">
-                            <Button.Content>
-                                <materialDesign:PackIcon Kind="Undo" />
-                            </Button.Content>
-                        </Button>
-                    </StackPanel>-->
                 </Grid>
-                <!--</materialDesign:Card>-->
             </Grid>
-            <!--</materialDesign:Card>-->
         </GroupBox>
     </Grid>
 </UserControl>
