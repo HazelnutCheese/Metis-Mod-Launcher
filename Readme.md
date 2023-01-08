@@ -13,6 +13,7 @@ ModEngine2 stores mod configurations in .toml files. This tool presents them in 
 This tool requires you to have downloaded ModEngine2. You can find it here:
 
 * [soulsmods/ModEngine2 Repository](https://github.com/soulsmods/ModEngine2)
+* [.NET Desktop Runtime 6.0.12](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 
 ## Currently Supported Games
 
