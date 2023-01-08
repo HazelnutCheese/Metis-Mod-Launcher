@@ -507,6 +507,7 @@ namespace ModEngine2ConfigTool.ViewModels
                 SaveProfileChangesCommand.NotifyCanExecuteChanged();
                 RevertProfileChangesCommand.NotifyCanExecuteChanged();
                 LaunchCommand.NotifyCanExecuteChanged();
+                SelectLaunchEldenRingWithProfileCommand.NotifyCanExecuteChanged();
             }
         }
     }

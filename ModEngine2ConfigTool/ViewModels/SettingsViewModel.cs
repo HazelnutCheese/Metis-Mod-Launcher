@@ -37,7 +37,7 @@ namespace ModEngine2ConfigTool.ViewModels
                 {
                     CommonValidationRules.NotEmpty("This field is required."),
                     CommonValidationRules.DirectoryExists(),
-                    new ValidationRule<string>(s => s.EndsWith("Game"), "Expected path ending in \"Game\".")
+                    new ValidationRule<string>(s => s is not null && s.EndsWith("Game"), "Expected path ending in \"Game\".")
                 });
 
             var modEngine2PathField = new TextFieldViewModel(

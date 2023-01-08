@@ -82,7 +82,7 @@ namespace ModEngine2ConfigTool.Services
                 {
                     ["mod_loader"] =
                     {
-                        ["enabled"] = profile.EnableModLoaderConfiguration,
+                        ["enabled"] = !profile.IgnoreModFolders,
                         ["loose_params"] = false,
                         ["mods"] = modsListToml,
                     }
@@ -121,7 +121,7 @@ namespace ModEngine2ConfigTool.Services
                 externalDlls.Add(new ExternalDllModel(node.AsString));
             }
 
-            var enableModLoaderConfiguration = table["extension"]["mod_loader"]["enabled"].AsBoolean;
+            var enableModLoaderConfiguration = !table["extension"]["mod_loader"]["enabled"].AsBoolean;
             var modFolders = new List<ModModel>();
             foreach (TomlNode node in table["extension"]["mod_loader"]["mods"])
             {

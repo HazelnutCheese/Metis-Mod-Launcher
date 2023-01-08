@@ -10,6 +10,7 @@
              xmlns:validationrules="clr-namespace:ModEngine2ConfigTool.Views.ValidationRules"
              xmlns:viewModels="clr-namespace:ModEngine2ConfigTool.ViewModels.Dialogs"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             MaxWidth="800"
              d:DataContext="{d:DesignInstance viewModels:CustomDialogViewModel,
                                               IsDesignTimeCreatable=False}"
              d:DesignHeight="450"
@@ -25,7 +26,8 @@
         <TextBlock Margin="5,10" Text="{Binding Header}" />
         <TextBlock Grid.Row="1"
                    Margin="10,10"
-                   Text="{Binding Message}" />
+                   Text="{Binding Message}"
+                   TextWrapping="Wrap" />
         <!--<TextBox x:Name="FieldEntry"
                  Grid.Row="2"
                  Margin="5"

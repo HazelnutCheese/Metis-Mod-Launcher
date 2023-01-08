@@ -12,7 +12,7 @@ namespace ModEngine2ConfigTool.Models
 
         public bool EnableME2Debug { get; }
 
-        public bool EnableModLoaderConfiguration { get; }
+        public bool IgnoreModFolders { get; }
 
         public bool EnableScyllaHide { get; }
 
@@ -21,14 +21,14 @@ namespace ModEngine2ConfigTool.Models
             List<ModModel> mods,
             List<ExternalDllModel> dlls,
             bool enableME2Debug,
-            bool enableModLoaderConfiguration,
+            bool ignoreModFolders,
             bool enableScyllaHide)
         {
             Name = name;
             Mods = mods;
             Dlls = dlls;
             EnableME2Debug = enableME2Debug;
-            EnableModLoaderConfiguration = enableModLoaderConfiguration;
+            IgnoreModFolders = ignoreModFolders;
             EnableScyllaHide = enableScyllaHide;
         }
 
@@ -37,7 +37,7 @@ namespace ModEngine2ConfigTool.Models
             Name = name;
             Mods = new List<ModModel>();
             Dlls = new List<ExternalDllModel>();
-            EnableModLoaderConfiguration = true;
+            IgnoreModFolders = false;
         }
     }
 }
