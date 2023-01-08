@@ -88,6 +88,11 @@
                         ToolTip="View Licences">
                     <materialDesign:PackIcon Kind="FileDocument" />
                 </Button>
+                <Button Margin="5,0,0,0"
+                        Command="{Binding ShowHelpCommand}"
+                        ToolTip="View Help">
+                    <materialDesign:PackIcon Kind="Help" />
+                </Button>
             </StackPanel>
             <ContentPresenter Grid.Row="1"
                               Grid.ColumnSpan="2"

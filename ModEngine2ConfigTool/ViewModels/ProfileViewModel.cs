@@ -51,7 +51,7 @@ namespace ModEngine2ConfigTool.ViewModels
             Fields = new FieldsCollectionViewModel(new List<IFieldViewModel>
             {
                 new BoolFieldViewModel("Enable ME2 Debug Mode:", "", profileModel.EnableME2Debug),
-                new BoolFieldViewModel("Enable Mod Loader Configuration:", "", profileModel.EnableModLoaderConfiguration),
+                new BoolFieldViewModel("Ignore Mod Folders:", "", profileModel.IgnoreModFolders),
                 new BoolFieldViewModel("Enable ScyllaHide Extension:", "", profileModel.EnableScyllaHide)
             });
 

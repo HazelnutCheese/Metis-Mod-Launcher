@@ -5,10 +5,14 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <AssemblyVersion>0.0.0.1</AssemblyVersion>
+    <FileAssemblyVersion>0.0.0.1</FileAssemblyVersion>
+    <Version>0.0.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+    <PackageReference Include="Config.Net" Version="5.1.5" />
     <PackageReference Include="FolderBrowserEx" Version="1.0.1" />
     <PackageReference Include="MaterialDesignThemes" Version="4.7.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
@@ -18,8 +22,6 @@
     <PackageReference Include="Sherlog.Appenders" Version="1.0.3" />
     <PackageReference Include="Sherlog.Formatters" Version="2.0.0" />
     <PackageReference Include="Tommy" Version="3.1.2" />
-    <PackageReference Include="Tommy.Extensions" Version="3.1.2" />
-    <PackageReference Include="Tommy.Extensions.Configuration" Version="6.2.0" />
   </ItemGroup>
 
   <ItemGroup>

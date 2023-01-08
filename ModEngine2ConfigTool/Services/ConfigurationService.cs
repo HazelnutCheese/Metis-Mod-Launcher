@@ -1,29 +1,32 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Config.Net;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
 
 namespace ModEngine2ConfigTool.Services
 {
     public class ConfigurationService
     {
-        readonly IConfigurationRoot _config;
+        readonly IAppSettings _settings;
 
+        [Option(Alias = "Settings.EldenRingGameFolder")]
         public string EldenRingGameFolder
         {
-            get => _config["Settings:EldenRingGameFolder"] ?? string.Empty; 
-            set => _config["Settings:EldenRingGameFolder"] = value;
+            get => _settings.EldenRingGameFolder; 
+            set => _settings.EldenRingGameFolder = value;
         }
 
+        [Option(Alias = "Settings.ModEngine2Folder")]
         public string ModEngine2Folder
         {
-            get => _config["Settings:ModEngine2Folder"] ?? string.Empty;
-            set => _config["Settings:ModEngine2Folder"] = value;
+            get => _settings.ModEngine2Folder;
+            set => _settings.ModEngine2Folder = value;
         }
 
         public ConfigurationService() 
         {
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.json");
-
-            _config = configuration.Build();
+            _settings = new ConfigurationBuilder<IAppSettings>()
+               .UseJsonFile("appSettings.json")
+               .Build();
         }
     }
 }
