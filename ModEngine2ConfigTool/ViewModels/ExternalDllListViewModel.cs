@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace ModEngine2ConfigTool.ViewModels
 {
-    public class DllListViewModel : ModListViewModel
+    public class ExternalDllListViewModel : BaseOnDiskListViewModel<ExternalDllViewModel>
     {
         private string _lastOpenedLocation;
 
-        public DllListViewModel(IEnumerable<ModViewModel> modList) : base(modList)
+        public ExternalDllListViewModel(List<ExternalDllViewModel> modList) : base(modList)
         {
             _lastOpenedLocation = string.Empty;
         }
@@ -27,8 +27,8 @@ namespace ModEngine2ConfigTool.ViewModels
 
             if (_lastOpenedLocation.Equals(string.Empty))
             {
-                fileDialog.InitialDirectory = ProfileModsList.Any()
-                    ? Path.GetDirectoryName(ProfileModsList.First().Location)
+                fileDialog.InitialDirectory = OnDiskObjectList.Any()
+                    ? Path.GetDirectoryName(OnDiskObjectList.First().Location)
                     : Directory.GetCurrentDirectory();
             }
             else
@@ -38,18 +38,17 @@ namespace ModEngine2ConfigTool.ViewModels
 
             if(fileDialog.ShowDialog().Equals(true))
             {
-                foreach(var file in fileDialog.FileNames)
+                foreach (var file in fileDialog.FileNames)
                 {
-                    var dllName = new FileInfo(file).Name;
-
-                    var newMod = new ModViewModel(dllName, file);
-
-                    if(ProfileModsList.Any(x => x.Name== dllName && x.Location == file))
+                    if(OnDiskObjectList.Any(x => x.Location == file) || !File.Exists(file))
                     {
                         return;
                     }
 
-                    ProfileModsList.Add(newMod);
+                    _lastOpenedLocation = Path.GetDirectoryName(file) ?? string.Empty;
+
+                    var newMod = new ExternalDllViewModel(file);
+                    OnDiskObjectList.Add(newMod);
                 }
             }
         }

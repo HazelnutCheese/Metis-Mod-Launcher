@@ -18,7 +18,7 @@ namespace ModEngine2ConfigTool.Services
             {
                 try
                 {
-                    var profile = ReadProfile(tomlFile);
+                    var profile = ReadProfileFromFile(tomlFile);
                     results.Add(new ProfileViewModel(profile));
                 }
                 catch(Exception ex)
@@ -30,51 +30,42 @@ namespace ModEngine2ConfigTool.Services
             return results;
         }
 
-        public static ProfileModel ReadProfile(string filePath) 
+        public static ProfileModel ReadProfile(string profileName)
         {
-            var profileName = Path.GetFileNameWithoutExtension(filePath);
+            return ReadProfileFromFile($".\\Profiles\\{profileName}.toml");
+        }
 
-            using StreamReader reader = File.OpenText(filePath);
+        public static void DeleteProfile(string profileName) 
+        {
+            File.Delete($".\\Profiles\\{profileName}.toml");
+        }
 
-            TomlTable table = TOML.Parse(reader);
+        public static void RenameProfile(string currentName, string newName)
+        {
+            var currentPath = GetProfilePath(currentName);
+            var newPath = GetProfilePath(newName);
 
-            var enableModEngineDebug = (bool) table["modengine"]["debug"];
-            var enableModLoaderConfiguration = (bool)table["extension"]["mod_loader"]["enabled"];
-            var modFolders = new List<ModModel>();
-
-            foreach (TomlNode node in table["extension"]["mod_loader"]["mods"])
-            {
-                var enabled = node["enabled"];
-                var name = node["name"];
-                var path = node["path"];
-
-                modFolders.Add(new ModModel(name, path, enabled));
-            }
-
-            var enableScyllaHide = (bool)table["extension"]["scylla_hide"]["enabled"];
-
-            return new ProfileModel(
-                profileName,
-                modFolders,
-                new List<ModModel>(),
-                enableModEngineDebug,
-                enableModLoaderConfiguration,
-                enableScyllaHide);
+            File.Move(currentPath, newPath, true);
         }
 
         public static void WriteProfile(ProfileModel profile)
         {
-            var fileName = $".\\Profiles\\{profile.Name}_{Guid.NewGuid()}.toml";
+            var fileName = GetProfilePath(profile.Name);
 
             using TextWriter writer = File.CreateText(fileName);
 
-            var modsListToml = new TomlArray();
+            var dllListToml = new TomlArray();
+            foreach(var dll in profile.Dlls)
+            {
+                dllListToml.Add(dll.Location);
+            }
 
+            var modsListToml = new TomlArray();
             foreach (var mod in profile.Mods)
             {
                 modsListToml.Add(new TomlTable
                 {
-                    ["isEnabled"] = mod.IsEnabled,
+                    ["enabled"] = mod.IsEnabled,
                     ["name"] = mod.Name,
                     ["path"] = mod.Location
                 });
@@ -84,17 +75,18 @@ namespace ModEngine2ConfigTool.Services
             {
                 ["modengine"] =
                 {
-                    ["debug"] = profile.EnableME2Debug
+                    ["debug"] = profile.EnableME2Debug,
+                    ["external_dlls"] = dllListToml
                 },
                 ["extension"] =
                 {
                     ["mod_loader"] =
                     {
-                        ["enabled"] = profile.EnableModLoaderConfiguration
+                        ["enabled"] = profile.EnableModLoaderConfiguration,
+                        ["loose_params"] = false,
+                        ["mods"] = modsListToml,
                     }
-                },
-                ["loose_params"] = false,
-                ["mods"] = modsListToml,
+                },                
                 ["extension"] =
                 {
                     ["scylla_hide"] =
@@ -106,6 +98,49 @@ namespace ModEngine2ConfigTool.Services
 
             fileToml.WriteTo(writer);
             writer.Flush();
+        }
+
+        private static string GetProfilePath(string profileName)
+        {
+            return $".\\Profiles\\{profileName}.toml";
+        }
+
+        private static ProfileModel ReadProfileFromFile(string filePath)
+        {
+            var profileName = Path.GetFileNameWithoutExtension(filePath);
+
+            using StreamReader reader = File.OpenText(filePath);
+
+            TomlTable table = TOML.Parse(reader);
+
+            var enableModEngineDebug = table["modengine"]["debug"].AsBoolean;
+            var externalDlls = new List<ExternalDllModel>();
+            foreach (TomlNode node in table["modengine"]["external_dlls"])
+            {
+                var dll = node.AsString.Value;
+                externalDlls.Add(new ExternalDllModel(node.AsString));
+            }
+
+            var enableModLoaderConfiguration = table["extension"]["mod_loader"]["enabled"].AsBoolean;
+            var modFolders = new List<ModModel>();
+            foreach (TomlNode node in table["extension"]["mod_loader"]["mods"])
+            {
+                var enabled = node["enabled"].AsBoolean;
+                var name = node["name"].AsString;
+                var path = node["path"].AsString;
+
+                modFolders.Add(new ModModel(name, path, enabled));
+            }
+
+            var enableScyllaHide = table["extension"]["scylla_hide"]["enabled"].AsBoolean;
+
+            return new ProfileModel(
+                profileName,
+                modFolders,
+                externalDlls,
+                enableModEngineDebug,
+                enableModLoaderConfiguration,
+                enableScyllaHide);
         }
     }
 }

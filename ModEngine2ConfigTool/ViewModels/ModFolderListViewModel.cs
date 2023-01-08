@@ -1,36 +1,69 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using CommunityToolkit.Mvvm.Input;
+using MaterialDesignThemes.Wpf;
 using ModEngine2ConfigTool.ViewModels.Dialogs;
+using ModEngine2ConfigTool.ViewModels.Fields;
 using ModEngine2ConfigTool.Views.Dialogs;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ModEngine2ConfigTool.ViewModels
 {
-    public class ModFolderListViewModel : ModListViewModel
+    public class ModFolderListViewModel : BaseOnDiskListViewModel<ModViewModel>
     {
         private string _lastOpenedLocation;
+        public override bool IsChanged => OnDiskObjectList.Any(x => x.IsChanged) || base.IsChanged;
 
-        public ModFolderListViewModel(IEnumerable<ModViewModel> modList) : base(modList)
+        public ModFolderListViewModel(List<ModViewModel> modList) : base(modList)
         {
             _lastOpenedLocation = string.Empty;
             CanEdit = true;
         }
 
-        protected async override void Edit()
+        protected async override Task Edit()
         {
-            if(SelectedItem is null)
+            if (SelectedItem is null)
             {
                 return;
             }
 
-            var dialogVm = new TextEntryDialogViewModel("Edit Name", SelectedItem.Name);
+            var dialog = new CustomDialogView();
 
-            var dialog = new TextEntryDialog()
+            var dialogAcceptCommand = new RelayCommand(() =>
             {
-                DataContext = dialogVm
-            };
+                DialogHost.CloseDialogCommand.Execute(true, dialog);
+            });
+
+            var dialogVm = new CustomDialogViewModel(
+                "Rename Mod",
+                "Specify a new name for the mod." +
+                "\n\nNote: This is only the name in the profile, it does not make any on disk changes.",
+                new List<IFieldViewModel>()
+                {
+                    new TextFieldViewModel(
+                        "New Name:",
+                        "Enter the new name for the mod",
+                        SelectedItem.Name,
+                        new List<ValidationRule<string>>()
+                        {
+                            new ValidationRule<string>(s => !string.IsNullOrWhiteSpace(s), "The field cannot be empty.")
+                        })
+                },
+                new List<DialogButtonViewModel>()
+                {
+                    new DialogButtonViewModel(
+                        "Accept", 
+                        CustomDialogViewModel.GetCloseDialogCommand(true, dialog), 
+                        isDefault: false),
+                    new DialogButtonViewModel(
+                        "Cancel", 
+                        CustomDialogViewModel.GetCloseDialogCommand(false, dialog), 
+                        isDefault: true)
+                });
+
+            dialog.DataContext = dialogVm;
 
             var result = await DialogHost.Show(dialog, App.DialogHostId);
 
@@ -39,7 +72,7 @@ namespace ModEngine2ConfigTool.ViewModels
                 return;
             }
 
-            SelectedItem.Name = dialogVm.FieldValue;
+            SelectedItem.Name = ((TextFieldViewModel) dialogVm.Fields.Fields.Single()).Value;
         }
 
         protected override void AddNew()
@@ -53,8 +86,8 @@ namespace ModEngine2ConfigTool.ViewModels
 
             if (_lastOpenedLocation.Equals(string.Empty))
             {
-                dialog.InitialFolder = ProfileModsList.Any() 
-                    ? ProfileModsList.First().Location
+                dialog.InitialFolder = OnDiskObjectList.Any() 
+                    ? OnDiskObjectList.First().Location
                     : Directory.GetCurrentDirectory();
             }
             else
@@ -64,16 +97,19 @@ namespace ModEngine2ConfigTool.ViewModels
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
+                _lastOpenedLocation = dialog.SelectedFolder;
+
                 var modName = new DirectoryInfo(dialog.SelectedFolder).Name;
 
                 var newMod = new ModViewModel(modName, dialog.SelectedFolder);
 
-                if (ProfileModsList.Any(x => x.Name == modName && x.Location == dialog.SelectedFolder))
+                if (OnDiskObjectList.Any(x => x.Name == modName && x.Location == dialog.SelectedFolder))
                 {
                     return;
                 }
 
-                ProfileModsList.Add(newMod);
+                newMod.PropertyChanged += Mod_Changed;
+                OnDiskObjectList.Add(newMod);
             }
         }
     }

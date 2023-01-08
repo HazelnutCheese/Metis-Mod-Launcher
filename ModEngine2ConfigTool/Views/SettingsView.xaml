@@ -3,9 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:ModEngine2ConfigTool.Views.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:fields="clr-namespace:ModEngine2ConfigTool.Views.Controls.Fields"
              xmlns:local="clr-namespace:ModEngine2ConfigTool.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:ModEngine2ConfigTool.ViewModels"
+             d:DataContext="{d:DesignInstance viewModels:SettingsViewModel,
+                                              IsDesignTimeCreatable=False}"
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
@@ -20,20 +24,38 @@
                 </StackPanel>
             </DataTemplate>
         </GroupBox.HeaderTemplate>
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <controls:TextField Grid.Row="0"
-                                Margin="5,10,0,10"
-                                FieldActionName="Browse"
-                                FieldName="ModEngine2 Path" />
-            <controls:TextField Grid.Row="1"
-                                Margin="5,10,0,10"
-                                FieldActionName="Browse"
-                                FieldName="Elden Ring Install Path:" />
+            <fields:FieldsView Grid.Row="1"
+                               Margin="5"
+                               Fields="{Binding Fields.Fields}" />
+
+            <StackPanel Grid.Row="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Orientation="Horizontal">
+                <Button Margin="5,0,0,0"
+                        Command="{Binding SaveChangesCommand}"
+                        ToolTip="Save changes to profile">
+                    <Button.Content>
+                        <materialDesign:PackIcon Kind="ContentSave" />
+                    </Button.Content>
+                </Button>
+                <Button Margin="5,0,0,0"
+                        Command="{Binding RevertChangesCommand}"
+                        ToolTip="Revert changes">
+                    <Button.Content>
+                        <materialDesign:PackIcon Kind="Undo" />
+                    </Button.Content>
+                </Button>
+            </StackPanel>
         </Grid>
+
+
     </GroupBox>
 </UserControl>

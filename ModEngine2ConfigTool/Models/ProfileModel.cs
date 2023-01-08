@@ -8,7 +8,7 @@ namespace ModEngine2ConfigTool.Models
 
         public List<ModModel> Mods { get; }
 
-        public List<ModModel> Dlls { get; }
+        public List<ExternalDllModel> Dlls { get; }
 
         public bool EnableME2Debug { get; }
 
@@ -19,7 +19,7 @@ namespace ModEngine2ConfigTool.Models
         public ProfileModel(
             string name,
             List<ModModel> mods,
-            List<ModModel> dlls,
+            List<ExternalDllModel> dlls,
             bool enableME2Debug,
             bool enableModLoaderConfiguration,
             bool enableScyllaHide)
@@ -36,7 +36,7 @@ namespace ModEngine2ConfigTool.Models
         {
             Name = name;
             Mods = new List<ModModel>();
-            Dlls = new List<ModModel>();
+            Dlls = new List<ExternalDllModel>();
             EnableModLoaderConfiguration = true;
         }
     }
