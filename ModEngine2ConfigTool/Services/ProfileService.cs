@@ -9,8 +9,21 @@ namespace ModEngine2ConfigTool.Services
 {
     public static class ProfileService
     {
+        public static void Initialise()
+        {
+            if(!Directory.Exists(".\\Profiles"))
+            {
+                Directory.CreateDirectory(".\\Profiles");
+            }
+        }
+
         public static List<ProfileViewModel> LoadProfiles(string directory)
         {
+            if(!Directory.Exists(directory))
+            {
+                return new List<ProfileViewModel>();
+            }
+
             var files = Directory.GetFiles(directory, "*.toml");
             var results = new List<ProfileViewModel>();
 
@@ -107,6 +120,11 @@ namespace ModEngine2ConfigTool.Services
 
         private static ProfileModel ReadProfileFromFile(string filePath)
         {
+            if(!Directory.Exists(filePath))
+            {
+                throw new FileNotFoundException(filePath);
+            }
+
             var profileName = Path.GetFileNameWithoutExtension(filePath);
 
             using StreamReader reader = File.OpenText(filePath);

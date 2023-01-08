@@ -18,6 +18,12 @@ This tool requires you to have downloaded ModEngine2. You can find it here:
 
 * Elden Ring
 
+## What this tool does not do!
+
+* This tool does **not** download mods or install mods or arrange them on your disk. To use a mod you must first download it and move it's files into a ME2 suitable arrangement. If the mod comes with a regulation.bin file it should be in the same top level folder as all the other mod files.
+
+* This tool does **not yet** manage save games. You should back up your save games before using it and if you use different saves for different profiles (most likely) then you will need to swap them in and out of your saves folder before launching. This is a planned feature that will be supported soon(tm).
+
 # First time setup
 
 ### Settings
@@ -72,7 +78,7 @@ The configuration settings available for a profile are described below:
 
 | **Options**        | **Description**   |
 | ------------- |:-------------|
-| Mod Folders ![Righthand Side Options](images/RightHandSideOptions.png) | Choose the folders which contain the mod files you want to load. These folders contain files such as Regulation.bin and any "maps" or "msg" folders.<br><br>You can click the edit button to rename a mod folder within a profile, this does not change the name of the folder on disk. | 
+| Mod Folders ![Righthand Side Options](images/RightHandSideOptions.png) | Choose the folders which contain the mod files you want to load. These folders contain files such as Regulation.bin and any "maps" or "msg" folders.<br><br>You can click the edit button to rename a mod folder within a profile, this does not change the name of the folder on disk.<br><br> For instance if you want to use Elden Ring Ascended copy the Regulation.bin, map and msg files to a single folder and then add that folder here. | 
 | External Dlls ![External Dlls](images/ExternalDlls.png) | Choose any external dlls you want to load.<br><br>For instance if you want to use Seamless Coop you should add the Seamless Coop dll to the list.|
 
 ## Additional Information
