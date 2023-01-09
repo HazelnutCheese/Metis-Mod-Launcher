@@ -120,11 +120,6 @@ namespace ModEngine2ConfigTool.Services
 
         private static ProfileModel ReadProfileFromFile(string filePath)
         {
-            if(!Directory.Exists(filePath))
-            {
-                throw new FileNotFoundException(filePath);
-            }
-
             var profileName = Path.GetFileNameWithoutExtension(filePath);
 
             using StreamReader reader = File.OpenText(filePath);
