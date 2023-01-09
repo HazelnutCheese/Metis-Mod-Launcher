@@ -39,7 +39,7 @@ namespace ModEngine2ConfigTool
             Current.DispatcherUnhandledException += Dispatcher_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
-            // Get everything the profile service needs setup
+            // Initialise Services
             ProfileService.Initialise();
 
             var mainViewModel = new MainWindowViewModel();

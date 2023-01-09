@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace ModEngine2ConfigTool.ViewModels
         private ObservableCollection<ProfileViewModel> _profiles;
         private ProfileViewModel? _selectedProfile;
         private LaunchMode _selectedLaunchMode;
+        private bool _gameIsRunning;
 
         public string PageName { get; } = nameof(FrontPageViewModel);
 
@@ -36,6 +38,16 @@ namespace ModEngine2ConfigTool.ViewModels
         {
             get => _profiles;
             set => SetProperty(ref _profiles, value);
+        }
+
+        public bool GameIsRunning
+        {
+            get => _gameIsRunning;
+            set
+            {
+                SetProperty(ref _gameIsRunning, value);
+                LaunchCommand.NotifyCanExecuteChanged();
+            }
         }
 
         public ProfileViewModel? SelectedProfile
@@ -148,10 +160,10 @@ namespace ModEngine2ConfigTool.ViewModels
                 DeleteProfile,
                 () => SelectedProfile is not null);
 
-            LaunchCommand = new RelayCommand(
+            LaunchCommand = new AsyncRelayCommand(
                 Launch,
-                () => Equals(_selectedLaunchMode, LaunchMode.WithoutMods) 
-                    || (SelectedProfile is not null && !SelectedProfile.IsChanged));
+                () => !GameIsRunning && (Equals(_selectedLaunchMode, LaunchMode.WithoutMods) 
+                    || (SelectedProfile is not null && !SelectedProfile.IsChanged)));
 
             SelectLaunchEldenRingCommand = new RelayCommand(SelectLaunchEldenRing);
 
@@ -431,30 +443,55 @@ namespace ModEngine2ConfigTool.ViewModels
             SelectedProfile = Profiles.FirstOrDefault();
         }
 
-        public void Launch()
+        public async Task Launch()
         {
-            switch(_selectedLaunchMode)
+            if(GameIsRunning)
             {
-                case LaunchMode.WithMods:
-                {
-                    if (SelectedProfile is null || SelectedProfile.IsChanged)
-                    {
-                        return;
-                    }
-
-                    ModEngine2Service.LaunchWithProfile(SelectedProfile.Name);
-                    break;
-                }
-                case LaunchMode.WithoutMods:
-                {
-                    ModEngine2Service.LaunchWithoutMods();
-                    break;
-                }
-                default:
-                {
-                    throw new InvalidOperationException();
-                }
+                return;
             }
+
+            if(Equals(_selectedLaunchMode, LaunchMode.WithMods))
+            {
+                await LaunchWithMods();
+            }
+            else
+            {
+                await LaunchWithoutMods();
+            }
+        }
+
+        private async Task LaunchWithMods()
+        {
+            if (SelectedProfile is null || SelectedProfile.IsChanged)
+            {
+                return;
+            }
+
+            GameIsRunning = true;
+
+            SaveManagerService.CreateUnmoddedBackups();
+            SaveManagerService.CreateBackups(SelectedProfile.Name);
+            SaveManagerService.InstallProfileSaves(SelectedProfile.Name);
+
+            using var modEngineProcess = ModEngine2Service.LaunchWithProfile(SelectedProfile.Name);
+
+            await modEngineProcess.WaitForExitAsync();
+            await ModEngine2Service.WaitForEldenRingExit();
+
+            SaveManagerService.UninstallProfileSaves(SelectedProfile.Name);
+
+            GameIsRunning = false;
+        }
+
+        private async Task LaunchWithoutMods()
+        {
+            GameIsRunning = true;
+
+            SaveManagerService.CreateUnmoddedBackups();
+            ModEngine2Service.LaunchWithoutMods();
+            await ModEngine2Service.WaitForEldenRingExit();
+
+            GameIsRunning = false;
         }
 
         private void SelectLaunchEldenRing()

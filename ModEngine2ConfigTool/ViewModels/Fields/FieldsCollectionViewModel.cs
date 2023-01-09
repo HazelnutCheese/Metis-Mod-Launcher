@@ -38,5 +38,10 @@ namespace ModEngine2ConfigTool.ViewModels.Fields
                 field.AcceptChanges();
             }
         }
+
+        public T GetField<T>(string fieldName) where T : IFieldViewModel
+        {
+            return Fields.OfType<T>().Single(x => x.Label == fieldName);
+        }
     }
 }

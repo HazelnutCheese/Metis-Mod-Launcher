@@ -3,7 +3,7 @@
 # If set to true the debug console will appear while the game is running
 debug = false
 
-external_dlls = [ "C:\\Users\\MyUser\\Downloads\\SeamlessCoop\\ModFiles\\elden_ring_seamless_coop.dll"]
+external_dlls = [ "C:\\Users\\Thebb\\Downloads\\Seamless Co-op BETA 1.4.2-510-1-4-2-1672180222\\SeamlessCoop\\elden_ring_seamless_coop.dll"]
 
 # Mod loader configuration
 [extension.mod_loader]
@@ -29,7 +29,7 @@ loose_params = false
 # will have the modded file be loaded in the case of conflict. Some support for merging of params and potentially other assets is considered for
 # a future release.
 mods = [
-    { enabled = true, name = "Elden Ring Ascended", path = "C:\\Users\\MyUser\\Downloads\\EldenRingAscended\\ModFiles" }
+    { enabled = true, name = "Elden Ring Ascended", path = "C:\\Users\\Thebb\\Desktop\\modpack2\\mod" }
 ]
 
 # When enabled, scylly hide will be injected into the game. This allows for antidebug measures in the game to be bypassed so that you can attach
