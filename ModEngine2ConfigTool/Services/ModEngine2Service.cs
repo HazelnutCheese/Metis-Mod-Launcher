@@ -26,7 +26,7 @@ namespace ModEngine2ConfigTool.Services
             return Launch(arguments);
         }
 
-        public static Process LaunchWithoutMods()
+        public static void LaunchWithoutMods()
         {
             if (!IsSteamRunning())
             {
@@ -49,13 +49,24 @@ namespace ModEngine2ConfigTool.Services
                 WorkingDirectory = eldenRingGameFolder
             };
 
-            var process = Process.Start(processStartInfo);
+            using var process = Process.Start(processStartInfo);
             if (process is null)
             {
                 throw new InvalidOperationException("Failed to start Elden Ring");
             }
+        }
 
-            return process;
+        public static async Task WaitForEldenRingExit()
+        {
+            using var eldenRingProcess = GetProcessByName("eldenring");
+
+            if(eldenRingProcess is null)
+            {
+                throw new InvalidOperationException(
+                    "Could not find Elden Ring Process.");
+            }
+
+            await eldenRingProcess.WaitForExitAsync();
         }
 
         private static Process Launch(List<string> arguments) 
@@ -92,29 +103,25 @@ namespace ModEngine2ConfigTool.Services
 
         private static bool IsSteamRunning()
         {
-            var steamProcesses = Process.GetProcessesByName("steam");
-            var result = steamProcesses.Any();
+            using var steamProcesses = GetProcessByName("steam");
 
-            foreach (var steamProcess in steamProcesses)
+            return steamProcesses is not null;
+        }
+
+        private static Process? GetProcessByName(string name)
+        {
+            var processes = Process.GetProcessesByName(name);
+            var result = processes.FirstOrDefault();
+
+            foreach (var process in processes)
             {
-                steamProcess.Dispose();
+                if(process != result)
+                {
+                    process.Dispose();
+                }
             }
 
             return result;
-        }
-
-        private static async Task RenameModLoaderDll()
-        {
-            var eldenRingGamePath = App.ConfigurationService.EldenRingGameFolder;
-            
-            var modLoaderDllPath = $"{eldenRingGamePath}\\modLoader.dll";
-            var dinput8DllPath = $"{eldenRingGamePath}\\dinput8.dll";
-
-            File.Copy(modLoaderDllPath, dinput8DllPath, true);
-
-            await Task.Delay(10000);
-
-            File.Delete(dinput8DllPath);
         }
     }
 }
