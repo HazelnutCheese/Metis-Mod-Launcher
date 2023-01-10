@@ -125,7 +125,7 @@ namespace ModEngine2ConfigTool.ViewModels
         public FrontPageViewModel()
         {
             _profiles = new ObservableCollection<ProfileViewModel>(
-                ProfileService.LoadProfiles(".\\Profiles"));
+                ProfileService.LoadProfiles());
 
             SelectedProfile = Profiles.FirstOrDefault();
 

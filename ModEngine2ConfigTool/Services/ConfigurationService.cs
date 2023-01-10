@@ -1,4 +1,5 @@
 ﻿using Config.Net;
+using System.IO;
 
 namespace ModEngine2ConfigTool.Services
 {
@@ -29,8 +30,10 @@ namespace ModEngine2ConfigTool.Services
 
         public ConfigurationService() 
         {
+            var configFile = Path.Combine(App.DataStorage, "appsettings.json");
+
             _settings = new ConfigurationBuilder<IAppSettings>()
-               .UseJsonFile("appSettings.json")
+               .UseJsonFile(configFile)
                .Build();
         }
     }

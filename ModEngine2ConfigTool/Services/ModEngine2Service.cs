@@ -11,16 +11,16 @@ namespace ModEngine2ConfigTool.Services
     {
         public static Process LaunchWithProfile(string profileName)
         {
-            var profileFilePath = Path.GetFullPath($".\\Profiles\\{profileName}.toml");
-            if (!File.Exists(profileFilePath))
+            var profilePath = ProfileService.GetProfilePath(profileName);
+            if (!File.Exists(profilePath))
             {
-                throw new FileNotFoundException($"Could not find profile at \"{profileFilePath}\"");
+                throw new FileNotFoundException($"Could not find profile at \"{profilePath}\"");
             }
 
             var arguments = new List<string>()
             {
                 "-t er",
-                $"-c {profileFilePath}"
+                $"-c {profilePath}"
             };
 
             return Launch(arguments);

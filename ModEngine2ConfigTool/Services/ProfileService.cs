@@ -9,22 +9,20 @@ namespace ModEngine2ConfigTool.Services
 {
     public static class ProfileService
     {
+        private const string _profilesFolderName = "Profiles";
+
+        private static string ProfilesRoot { get; } = Path.Combine(
+            App.DataStorage,
+            _profilesFolderName);
+
         public static void Initialise()
         {
-            if(!Directory.Exists(".\\Profiles"))
-            {
-                Directory.CreateDirectory(".\\Profiles");
-            }
+            Directory.CreateDirectory(ProfilesRoot);
         }
 
-        public static List<ProfileViewModel> LoadProfiles(string directory)
+        public static List<ProfileViewModel> LoadProfiles()
         {
-            if(!Directory.Exists(directory))
-            {
-                return new List<ProfileViewModel>();
-            }
-
-            var files = Directory.GetFiles(directory, "*.toml");
+            var files = Directory.GetFiles(ProfilesRoot, "*.toml");
             var results = new List<ProfileViewModel>();
 
             foreach(var tomlFile in files)
@@ -45,12 +43,12 @@ namespace ModEngine2ConfigTool.Services
 
         public static ProfileModel ReadProfile(string profileName)
         {
-            return ReadProfileFromFile($".\\Profiles\\{profileName}.toml");
+            return ReadProfileFromFile(GetProfilePath(profileName));
         }
 
         public static void DeleteProfile(string profileName) 
         {
-            File.Delete($".\\Profiles\\{profileName}.toml");
+            File.Delete(GetProfilePath(profileName));
         }
 
         public static void RenameProfile(string currentName, string newName)
@@ -113,9 +111,9 @@ namespace ModEngine2ConfigTool.Services
             writer.Flush();
         }
 
-        private static string GetProfilePath(string profileName)
+        public static string GetProfilePath(string profileName)
         {
-            return $".\\Profiles\\{profileName}.toml";
+            return Path.Combine(ProfilesRoot, $"{profileName}.toml");
         }
 
         private static ProfileModel ReadProfileFromFile(string filePath)
