@@ -1,5 +1,9 @@
 # ModEngine2 Config Tool
 
+## Build Status
+
+[![build](https://github.com/HazelnutCheese/ModEngine2ConfigTool/actions/workflows/build-validation.yml/badge.svg)](https://github.com/HazelnutCheese/ModEngine2ConfigTool/actions/workflows/build-validation.yml)
+
 ## Description
 
 This is a .Net6 WPF based profile configuration tool ModEngine2, specifically designed to work with Elden Ring.
