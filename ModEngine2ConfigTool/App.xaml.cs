@@ -5,7 +5,9 @@ using Sherlog.Appenders;
 using Sherlog.Formatters;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -18,12 +20,27 @@ namespace ModEngine2ConfigTool
     {
         public static Logger Logger { get; private set; }
 
+        public static string DataStorage { get; }
+
         public static ConfigurationService ConfigurationService { get; }
 
         public const string DialogHostId = "MainWindowDialogHost";
 
         static App()
         {
+            if(Debugger.IsAttached)
+            {
+                DataStorage = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "ModEngine2ConfigTool");
+            }
+            else
+            {
+                DataStorage = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "ModEngine2ConfigTool");
+            }
+
             ConfigureLogging();
             Logger = Logger.GetLogger(nameof(App));
             ConfigurationService = new ConfigurationService();

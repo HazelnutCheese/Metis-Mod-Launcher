@@ -12,7 +12,7 @@ namespace ModEngine2ConfigTool.Services
         private const string _baseGameBackupsFolderName = "Unmodded";
 
         private static string SavesRoot { get; } = Path.Combine(
-            Directory.GetCurrentDirectory(),
+            App.DataStorage,
             _savesFolderName);
 
         private static string BackupsRoot { get; } = Path.Combine(
@@ -116,10 +116,10 @@ namespace ModEngine2ConfigTool.Services
                 BackupsRoot,
                 _baseGameBackupsFolderName);
 
-            Directory.CreateDirectory(unmoddedBackups);
-
             if (Directory.Exists(eldenRingSaveGameFolder))
             {
+                Directory.CreateDirectory(unmoddedBackups);
+
                 var saveGames = Directory.GetFiles(eldenRingSaveGameFolder);
 
                 foreach (var file in saveGames)
