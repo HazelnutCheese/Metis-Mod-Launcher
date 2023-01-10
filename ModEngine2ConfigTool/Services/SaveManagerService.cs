@@ -72,10 +72,7 @@ namespace ModEngine2ConfigTool.Services
                 SavesRoot,
                 profileName);
 
-            if (!Directory.Exists(profileSaves)) 
-            { 
-                Directory.CreateDirectory(profileSaves);
-            }
+            Directory.CreateDirectory(profileSaves);
 
             if (Directory.Exists(eldenRingSaveGameFolder))
             {
@@ -149,11 +146,10 @@ namespace ModEngine2ConfigTool.Services
                 profileBackups,
                 timestamp);
 
-            Directory.CreateDirectory(profileSaves);
-            Directory.CreateDirectory(datedProfileBackupFolderPath);
-
             if (Directory.Exists(profileSaves))
             {
+                Directory.CreateDirectory(datedProfileBackupFolderPath);
+
                 var saveGames = Directory.GetFiles(profileSaves);
 
                 foreach (var file in saveGames)
@@ -161,6 +157,73 @@ namespace ModEngine2ConfigTool.Services
                     var fileName = Path.GetFileName(file);
                     File.Copy(file, $"{datedProfileBackupFolderPath}\\{fileName}");
                 }
+            }
+        }
+
+        public static void CopySaves(
+            string oldProfileName, 
+            string newProfileName)
+        {
+            var oldProfileSaves = Path.Combine(
+                SavesRoot,
+                oldProfileName);
+
+            var oldProfileBackups = Path.Combine(
+                BackupsRoot,
+                oldProfileName);
+
+            var newProfileSaves = Path.Combine(
+                SavesRoot,
+                newProfileName);
+
+            var newProfileBackups = Path.Combine(
+                BackupsRoot,
+                newProfileName);
+
+            Directory.CreateDirectory(newProfileSaves);
+
+            var oldSaves = Directory.GetFiles(oldProfileSaves);
+            foreach(var file in oldSaves) 
+            {
+                var newFilePath = Path.Combine(newProfileSaves, Path.GetFileName(file));
+                File.Copy(file, newFilePath);
+            }
+
+            var backupFolders = Directory.GetDirectories(oldProfileBackups);
+            foreach(var backupFolder in backupFolders) 
+            {
+                var directoryName = new DirectoryInfo(backupFolder).Name;
+                var newBackupPath = Path.Combine(newProfileBackups, directoryName);
+
+                Directory.CreateDirectory(newBackupPath);
+
+                var backupSaves = Directory.GetFiles(backupFolder);
+                foreach (var file in backupSaves)
+                {
+                    var newFilePath = Path.Combine(newBackupPath, Path.GetFileName(file));
+                    File.Copy(file, newFilePath);
+                }
+            }
+        }
+
+        public static void DeleteSaves(string profileName) 
+        {
+            var profileSaves = Path.Combine(
+                SavesRoot,
+                profileName);
+
+            var profileBackups = Path.Combine(
+                BackupsRoot,
+                profileName);
+
+            if(Directory.Exists(profileSaves))
+            {
+                Directory.Delete(profileSaves, true);
+            }
+
+            if (Directory.Exists(profileBackups))
+            {
+                Directory.Delete(profileBackups, true);
             }
         }
 

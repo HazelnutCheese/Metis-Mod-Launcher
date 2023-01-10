@@ -256,6 +256,8 @@ namespace ModEngine2ConfigTool.ViewModels
                 ((BoolFieldViewModel)SelectedProfile.Fields.Fields[2]).Value);
 
             ProfileService.WriteProfile(profile);
+            SaveManagerService.CopySaves(SelectedProfile.OriginalName, newProfileName);
+
             var savedProfile = ProfileService.ReadProfile(profile.Name);
             var savedProfileVm = new ProfileViewModel(savedProfile);
 
@@ -348,6 +350,8 @@ namespace ModEngine2ConfigTool.ViewModels
                 return;
             }
 
+            var oldName = SelectedProfile.OriginalName;
+
             var profile = new ProfileModel(
                 SelectedProfile.Name,
                 SelectedProfile.ModFolderListViewModel
@@ -368,8 +372,11 @@ namespace ModEngine2ConfigTool.ViewModels
 
             if(SelectedProfile.NameIsChanged)
             {
+                SaveManagerService.CopySaves(SelectedProfile.OriginalName, SelectedProfile.Name);
+                SaveManagerService.DeleteSaves(SelectedProfile.OriginalName);
                 ProfileService.DeleteProfile(SelectedProfile.OriginalName);
             }
+
             Profiles.Remove(SelectedProfile);
 
             Profiles.Add(savedProfileVm);
@@ -421,7 +428,7 @@ namespace ModEngine2ConfigTool.ViewModels
             var dialog = new CustomDialogView();
             var dialogVm = new CustomDialogViewModel(
                 $"Delete {SelectedProfile.Name}",
-                $"Are you sure you want to delete {SelectedProfile.Name}?\n\nNote: Once deleted a profile cannot be recovered.",
+                $"Are you sure you want to delete {SelectedProfile.Name} and all associated saves and backups?\n\nNote: Once deleted a profile and it's saves cannot be recovered.",
                 new List<IFieldViewModel>(),
                 new List<DialogButtonViewModel>()
                 {
@@ -439,6 +446,8 @@ namespace ModEngine2ConfigTool.ViewModels
             }
 
             ProfileService.DeleteProfile(SelectedProfile.Name);
+            SaveManagerService.DeleteSaves(SelectedProfile.Name);
+
             Profiles.Remove(SelectedProfile);
             SelectedProfile = Profiles.FirstOrDefault();
         }
