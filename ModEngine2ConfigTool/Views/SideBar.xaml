@@ -1,0 +1,146 @@
+﻿<UserControl x:Class="ModEngine2ConfigTool.Views.SideBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:calc="clr-namespace:CalcBinding;assembly=CalcBinding"
+             xmlns:controls="clr-namespace:ModEngine2ConfigTool.Views.Controls"
+             xmlns:converter="clr-namespace:ModEngine2ConfigTool.Views.Converter"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ModEngine2ConfigTool.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:media="[media ]clr-namespace:System.Windows.Media;assembly=PresentationCore"
+             xmlns:viewmodels="clr-namespace:ModEngine2ConfigTool.ViewModels"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             x:Name="Self"
+             d:DataContext="{d:DesignInstance Type={x:Type viewmodels:SideBarVm}}"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             Background="Black"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:SelectedItemColourConverter x:Key="SelectedItemColourConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+            </Grid.ColumnDefinitions>
+
+            <controls:SideBarButton Grid.Row="1"
+                                    Grid.Column="1"
+                                    Command="{Binding NavigateHomeCommand}"
+                                    IconKind="HomeOutline"
+                                    Text="Home" />
+
+            <controls:SideBarButton Grid.Row="2"
+                                    Grid.Column="1"
+                                    Command="{Binding NavigateProfilesCommand}"
+                                    IconKind="TextBoxMultipleOutline"
+                                    Text="Profiles" />
+
+            <controls:SideBarButton Grid.Row="3"
+                                    Grid.Column="1"
+                                    Command="{Binding NavigateModsCommand}"
+                                    IconKind="FolderOutline"
+                                    Text="Mods" />
+
+            <controls:SideBarButton Grid.Row="4"
+                                    Grid.Column="1"
+                                    Command="{Binding NavigateExternalDllsCommand}"
+                                    IconKind="FileOutline"
+                                    Text="External DLLs" />
+
+            <controls:SideBarButton Grid.Row="5"
+                                    Grid.Column="1"
+                                    Command="{Binding NavigateSettingsCommand}"
+                                    IconKind="CogOutline"
+                                    Text="Settings" />
+
+            <controls:SideBarButton Grid.Row="6"
+                                    Grid.Column="1"
+                                    Command="{Binding NavigateHelpCommand}"
+                                    IconKind="Help"
+                                    Text="Help" />
+
+            <Rectangle Grid.Row="7"
+                       Grid.Column="1"
+                       Height="1"
+                       Margin="0,10"
+                       HorizontalAlignment="Stretch"
+                       Fill="#616161" />
+
+            <controls:SideBarButton Grid.Row="8"
+                                    Grid.Column="1"
+                                    Command="{Binding NavigateCreateNewProfileCommand}"
+                                    IconKind="TextBoxPlusOutline"
+                                    Text="Create New Profile" />
+
+            <controls:SideBarButton Grid.Row="9"
+                                    Grid.Column="1"
+                                    IconKind="FolderPlusOutline"
+                                    Text="Add New Mod" />
+
+            <controls:SideBarButton Grid.Row="10"
+                                    Grid.Column="1"
+                                    IconKind="FilePlusOutline"
+                                    Text="Add New Dll" />
+
+            <Rectangle Grid.Row="11"
+                       Grid.Column="1"
+                       Height="1"
+                       Margin="0,10"
+                       HorizontalAlignment="Stretch"
+                       Fill="#616161" />
+
+            <ScrollViewer Grid.Row="12" Grid.Column="1">
+                <ItemsControl ItemsSource="{Binding Profiles}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <controls:SideBarButton Height="32"
+                                                    Command="{Binding ElementName=Self, Path=DataContext.NavigateEditProfileCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    IconKind="TextBoxOutline"
+                                                    Tag="{Binding ElementName=Self, Path=DataContext}"
+                                                    Text="{Binding Name}">
+                                <controls:SideBarButton.ContextMenu>
+                                    <ContextMenu DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Mode=Self}}">
+                                        <MenuItem Command="{Binding Path=Tag.PlayProfileCommand}"
+                                                  CommandParameter="{Binding DataContext}"
+                                                  Header="Play" />
+                                        <MenuItem Command="{Binding Path=Tag.NavigateEditProfileCommand}"
+                                                  CommandParameter="{Binding DataContext}"
+                                                  Header="Edit" />
+                                        <MenuItem Command="{Binding Path=Tag.DuplicateProfileCommand}"
+                                                  CommandParameter="{Binding DataContext}"
+                                                  Header="Duplicate" />
+                                        <MenuItem Command="{Binding Path=Tag.DeleteProfileCommand}"
+                                                  CommandParameter="{Binding DataContext}"
+                                                  Header="Delete" />
+                                    </ContextMenu>
+                                </controls:SideBarButton.ContextMenu>
+                            </controls:SideBarButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

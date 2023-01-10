@@ -1,0 +1,469 @@
+﻿<UserControl x:Class="ModEngine2ConfigTool.Views.Pages.ProfileEditPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:ModEngine2ConfigTool.Views.Controls"
+             xmlns:converter="clr-namespace:ModEngine2ConfigTool.Views.Converter"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ModEngine2ConfigTool.Views.Pages"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pages="clr-namespace:ModEngine2ConfigTool.ViewModels.Pages"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             x:Name="ProfileEditPageSelf"
+             d:DataContext="{d:DesignInstance Type={x:Type pages:ProfileEditPageVm},
+                                              IsDesignTimeCreatable=False}"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:EmptyImagePathConverter x:Key="EmptyImagePathConverter" />
+    </UserControl.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="32" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="0" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                       Text="{Binding Header}" />
+
+            <TextBlock Grid.Row="3"
+                       Grid.Column="1"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       FontSize="18"
+                       FontWeight="Medium"
+                       Text="Enter Profile Details" />
+
+            <Grid Grid.Row="5"
+                  Grid.Column="1"
+                  VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="128" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*" MaxWidth="400" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <materialDesign:Card Grid.Row="0"
+                                     Grid.RowSpan="2"
+                                     Grid.Column="0"
+                                     Width="128"
+                                     Height="128"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Top"
+                                     materialDesign:ElevationAssist.Elevation="Dp4"
+                                     materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left"
+                                     Opacity="0.85">
+                    <Grid>
+                        <Image Source="{Binding Profile.ImagePath, Converter={StaticResource EmptyImagePathConverter}}" Stretch="UniformToFill" />
+                        <Button x:Name="PlayIcon"
+                                Width="128"
+                                Height="128"
+                                Margin="0"
+                                Padding="0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                materialDesign:ElevationAssist.Elevation="Dp4"
+                                materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left"
+                                Background="#202020"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding SelectImageCommand}"
+                                Style="{StaticResource PictureSelectButtonStyle}">
+                            <Grid Background="Transparent">
+                                <materialDesign:PackIcon Width="90"
+                                                         Height="90"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"
+                                                         Kind="Plus" />
+                            </Grid>
+                        </Button>
+                    </Grid>
+                </materialDesign:Card>
+
+                <Grid Grid.Row="0"
+                      Grid.Column="2"
+                      Grid.ColumnSpan="2"
+                      HorizontalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MaxWidth="280" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Margin="0,0,10,10"
+                               FontSize="14"
+                               FontWeight="Medium"
+                               Text="Name:" />
+
+                    <TextBox Grid.Row="1"
+                             materialDesign:HintAssist.Hint="Enter Profile Name"
+                             Text="{Binding Profile.Name}"
+                             VerticalScrollBarVisibility="auto" />
+                </Grid>
+
+                <StackPanel Grid.Row="2"
+                            Grid.Column="2"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center">
+                    <TextBlock Margin="0,0,10,10"
+                               VerticalAlignment="Center"
+                               FontSize="14"
+                               FontWeight="Medium"
+                               Text="Created:" />
+
+                    <TextBlock Text="{Binding Profile.Created}" TextWrapping="Wrap" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="2"
+                            Grid.Column="3"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center">
+                    <TextBlock Margin="0,0,10,10"
+                               VerticalAlignment="Center"
+                               FontSize="14"
+                               FontWeight="Medium"
+                               Text="Last Played:" />
+
+                    <TextBlock VerticalAlignment="Center"
+                               Text="{Binding Profile.LastPlayed}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="6"
+                  Grid.Column="1"
+                  Margin="0,10,15,10"
+                  HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MaxWidth="800" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Margin="0,0,10,10"
+                           FontSize="14"
+                           FontWeight="Medium"
+                           Text="Description:" />
+
+                <TextBox Grid.Row="1"
+                         materialDesign:HintAssist.Hint="Enter Profile Desription"
+                         AcceptsReturn="True"
+                         Text="{Binding Profile.Description}"
+                         TextWrapping="Wrap"
+                         VerticalScrollBarVisibility="auto" />
+            </Grid>
+
+            <TextBlock Grid.Row="7"
+                       Grid.Column="1"
+                       Margin="0,10"
+                       HorizontalAlignment="Left"
+                       FontSize="18"
+                       FontWeight="Medium"
+                       Text="Active Mods and DLLs" />
+
+            <TabControl Grid.Row="8"
+                        Grid.Column="1"
+                        Margin="0,0,15,0"
+                        HorizontalAlignment="Stretch"
+                        materialDesign:NavigationRailAssist.ShowSelectionBackground="True">
+                <TabControl.Items>
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Margin="5,0"
+                                                         HorizontalAlignment="Center"
+                                                         Kind="FolderMultipleOutline" />
+                                <TextBlock FontSize="14"
+                                           FontWeight="Medium"
+                                           Text="Mods" />
+                            </StackPanel>
+                        </TabItem.Header>
+                        <Grid Grid.Row="5"
+                              Grid.Column="1"
+                              HorizontalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <ItemsControl Grid.Row="3"
+                                          Background="Transparent"
+                                          ItemsSource="{Binding Mods}"
+                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                          ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Margin="0,5">
+                                            <Button.Style>
+                                                <Style TargetType="{x:Type Button}">
+                                                    <Style.Resources>
+                                                        <converter:EmptyImagePathConverter x:Key="EmptyImagePathConverter" />
+                                                    </Style.Resources>
+                                                    <Setter Property="Height" Value="50" />
+                                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                                    <Setter Property="FrameworkElement.Cursor" Value="Hand" />
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate>
+                                                                <materialDesign:Card x:Name="Grid"
+                                                                                     Margin="0,0,10,0"
+                                                                                     materialDesign:ElevationAssist.Elevation="Dp4"
+                                                                                     materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left">
+                                                                    <Grid>
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="54" />
+                                                                            <ColumnDefinition Width="40" />
+                                                                            <ColumnDefinition Width="{Binding Path=Width, Mode=TwoWay, ElementName=ModNameColumn}" MinWidth="100" />
+                                                                            <ColumnDefinition Width="{Binding Path=Width, Mode=TwoWay, ElementName=ModDescriptionColumn}" MinWidth="100" />
+                                                                            <ColumnDefinition Width="{Binding Path=Width, Mode=TwoWay, ElementName=ModLocationColumn}" MinWidth="100" />
+                                                                            <ColumnDefinition Width="{Binding Path=Width, Mode=TwoWay, ElementName=ModAddedColumn}" MinWidth="100" />
+                                                                            <ColumnDefinition Width="*" />
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <Image Grid.Column="0"
+                                                                               Width="32"
+                                                                               Height="32"
+                                                                               Margin="10,0"
+                                                                               Source="{Binding ImagePath, Converter={StaticResource EmptyImagePathConverter}}"
+                                                                               Stretch="UniformToFill" />
+
+                                                                        <materialDesign:PopupBox Grid.Column="1"
+                                                                                                 HorizontalAlignment="Left"
+                                                                                                 VerticalAlignment="Center"
+                                                                                                 Background="Gray"
+                                                                                                 Foreground="#d1d1d1">
+                                                                            <StackPanel>
+                                                                                <Button Command="{Binding Path=DataContext.Profile.RemoveModCommand, ElementName=ProfileEditPageSelf}"
+                                                                                        CommandParameter="{Binding .}"
+                                                                                        Content="Remove from Profile" />
+                                                                            </StackPanel>
+                                                                        </materialDesign:PopupBox>
+
+                                                                        <TextBlock Grid.Column="2"
+                                                                                   VerticalAlignment="Center"
+                                                                                   FontSize="16"
+                                                                                   FontWeight="Medium"
+                                                                                   Foreground="#d1d1d1"
+                                                                                   Text="{Binding Name}"
+                                                                                   TextTrimming="CharacterEllipsis" />
+
+                                                                        <TextBlock Grid.Column="3"
+                                                                                   VerticalAlignment="Center"
+                                                                                   Foreground="#d1d1d1"
+                                                                                   Text="{Binding Description}"
+                                                                                   TextTrimming="CharacterEllipsis"
+                                                                                   TextWrapping="Wrap" />
+
+                                                                        <TextBlock Grid.Column="4"
+                                                                                   VerticalAlignment="Center"
+                                                                                   Foreground="#d1d1d1"
+                                                                                   Text="{Binding FolderPath}"
+                                                                                   TextTrimming="CharacterEllipsis"
+                                                                                   TextWrapping="Wrap" />
+
+                                                                        <TextBlock Grid.Column="5"
+                                                                                   VerticalAlignment="Center"
+                                                                                   Foreground="#d1d1d1"
+                                                                                   Text="{Binding Added}"
+                                                                                   TextTrimming="CharacterEllipsis" />
+                                                                    </Grid>
+                                                                </materialDesign:Card>
+
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="UIElement.IsMouseOver" Value="true">
+                                                                        <Setter TargetName="Grid" Property="Background" Value="#252525" />
+                                                                    </Trigger>
+                                                                    <Trigger Property="UIElement.IsMouseOver" Value="false">
+                                                                        <Setter TargetName="Grid" Property="Background" Value="#181818" />
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <materialDesign:Card x:Name="GridHeader"
+                                                 Grid.Row="1"
+                                                 Height="32"
+                                                 Margin="0,0,10,0"
+                                                 Panel.ZIndex="10"
+                                                 UniformCornerRadius="0">
+                                <Grid VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="54" />
+                                        <ColumnDefinition Width="40" />
+                                        <ColumnDefinition x:Name="ModNameColumn"
+                                                          Width="200"
+                                                          MinWidth="100" />
+                                        <ColumnDefinition x:Name="ModDescriptionColumn"
+                                                          Width="200"
+                                                          MinWidth="100" />
+                                        <ColumnDefinition x:Name="ModLocationColumn"
+                                                          Width="200"
+                                                          MinWidth="100" />
+                                        <ColumnDefinition x:Name="ModAddedColumn"
+                                                          Width="Auto"
+                                                          MinWidth="100" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <controls:SortButton Grid.Column="2"
+                                                         Margin="0,0,10,0"
+                                                         VerticalAlignment="Center"
+                                                         Command="{Binding SortModsByNameCommand}"
+                                                         CommandParameter="{Binding Path=Mode, RelativeSource={RelativeSource Mode=Self}}"
+                                                         SortGroup="ModPageView"
+                                                         Text="Mod Name" />
+
+                                    <GridSplitter Grid.Column="2" Width="5" />
+
+                                    <controls:SortButton Grid.Column="3"
+                                                         Margin="10,0"
+                                                         VerticalAlignment="Center"
+                                                         Command="{Binding SortModsByDescriptionCommand}"
+                                                         CommandParameter="{Binding Path=Mode, RelativeSource={RelativeSource Mode=Self}}"
+                                                         SortGroup="ModPageView"
+                                                         Text="Description" />
+
+                                    <GridSplitter Grid.Column="3" Width="5" />
+
+                                    <controls:SortButton Grid.Column="4"
+                                                         Margin="10,0"
+                                                         VerticalAlignment="Center"
+                                                         Command="{Binding SortModsByPathCommand}"
+                                                         CommandParameter="{Binding Path=Mode, RelativeSource={RelativeSource Mode=Self}}"
+                                                         SortGroup="ModPageView"
+                                                         Text="Location" />
+
+                                    <GridSplitter Grid.Column="4" Width="5" />
+
+                                    <controls:SortButton Grid.Column="5"
+                                                         Margin="10,0"
+                                                         VerticalAlignment="Center"
+                                                         Command="{Binding SortModsByDateAddedCommand}"
+                                                         CommandParameter="{Binding Path=Mode, RelativeSource={RelativeSource Mode=Self}}"
+                                                         SortGroup="ModPageView"
+                                                         Text="Added" />
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </TabItem>
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Margin="5,0"
+                                                         HorizontalAlignment="Center"
+                                                         Kind="FileMultipleOutline" />
+                                <TextBlock FontSize="14"
+                                           FontWeight="Medium"
+                                           Text="External DLLs" />
+                            </StackPanel>
+                        </TabItem.Header>
+                        <Grid Grid.Row="5"
+                              Grid.Column="1"
+                              HorizontalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <ItemsControl Grid.Row="2"
+                                          Background="Transparent"
+                                          ItemsSource="{Binding Profile.ExternalDlls}"
+                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                          ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Margin="0,5" Style="{StaticResource ModListItemButtonStyle}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <Grid x:Name="GridHeader1"
+                                  Grid.Row="0"
+                                  VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="54" />
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="*" MinWidth="100" />
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="2*" MinWidth="200" />
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                </Grid.ColumnDefinitions>
+
+                                <materialDesign:Card Grid.ColumnSpan="9"
+                                                     Height="32"
+                                                     UniformCornerRadius="0" />
+
+                                <TextBlock Grid.Column="0"
+                                           Grid.ColumnSpan="3"
+                                           Margin="10,0,0,0"
+                                           VerticalAlignment="Center"
+                                           Text="DLL Name" />
+
+                                <TextBlock Grid.Column="4"
+                                           VerticalAlignment="Center"
+                                           Text="Location" />
+
+                                <TextBlock Grid.Column="6"
+                                           VerticalAlignment="Center"
+                                           Text="Description"
+                                           TextTrimming="CharacterEllipsis" />
+
+                                <TextBlock Grid.Column="8"
+                                           VerticalAlignment="Center"
+                                           Text="Added"
+                                           TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                </TabControl.Items>
+            </TabControl>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

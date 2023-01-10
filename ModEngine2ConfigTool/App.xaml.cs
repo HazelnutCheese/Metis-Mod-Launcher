@@ -1,4 +1,5 @@
-﻿using ModEngine2ConfigTool.Services;
+﻿using ModEngine2ConfigTool.Helpers;
+using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels;
 using Sherlog;
 using Sherlog.Appenders;
@@ -8,8 +9,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interop;
 
 namespace ModEngine2ConfigTool
 {
@@ -48,6 +51,15 @@ namespace ModEngine2ConfigTool
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            using var otherProcess = GetOtherInstance();
+            if (otherProcess != null)
+            {
+                WindowHelper.BringProcessToFront(otherProcess);
+                otherProcess.Dispose();
+                Shutdown();
+                return;
+            }
+
             base.OnStartup(e);
 
             ConfigureLogging();
@@ -58,9 +70,11 @@ namespace ModEngine2ConfigTool
 
             // Initialise Services
             ProfileService.Initialise();
+            var mainWindow = new MainWindow();
 
-            var mainViewModel = new MainWindowViewModel();
-            var mainWindow = new MainWindow(mainViewModel);
+            var mainViewModel = new MainWindowVm(mainWindow);
+            
+            mainWindow.DataContext = mainViewModel;
 
             mainWindow.Show();
         }
@@ -111,6 +125,36 @@ namespace ModEngine2ConfigTool
                 consoleAppender.WriteLine(logger, level, message);
                 fileAppender.WriteLine(logger, level, message);
             });
+        }
+
+        private static Process? GetOtherInstance()
+        {
+            try
+            {
+                var processes = Process.GetProcessesByName("ModEngine2ConfigTool");
+                var currentProcess = Process.GetCurrentProcess();
+
+                Process? otherProcess = null;
+                if (processes.Length > 1)
+                {
+                    otherProcess = processes.FirstOrDefault(x => x.Id != currentProcess.Id);
+                }
+
+                foreach(var process in processes)
+                {
+                    if(otherProcess is null || process.Id != otherProcess.Id) 
+                    {
+                        process.Dispose();
+                    }
+                }
+
+                return otherProcess;
+            }
+            catch
+            {
+                return null;
+            }
+
         }
     }
 }

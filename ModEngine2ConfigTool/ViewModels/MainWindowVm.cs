@@ -15,11 +15,13 @@ using System.Windows.Input;
 
 namespace ModEngine2ConfigTool.ViewModels
 {
-    public class MainWindowViewModel : ObservableObject
+    public class MainWindowVm : ObservableObject
     {
         private ObservableObject _currentContent;
         private FrontPageViewModel _frontPageViewModel;
         private SettingsViewModel _settingsViewModel;
+
+        public MainHostVm MainHostVm { get; }
 
         public ObservableObject CurrentContent 
         { 
@@ -38,7 +40,7 @@ namespace ModEngine2ConfigTool.ViewModels
 
         public ICommand ShowHelpCommand { get; }
 
-        public MainWindowViewModel()
+        public MainWindowVm(MainWindow mainWindow)
         {
             _frontPageViewModel = new FrontPageViewModel();
             _settingsViewModel = new SettingsViewModel();
@@ -59,6 +61,8 @@ namespace ModEngine2ConfigTool.ViewModels
             _currentContent = _settingsViewModel.HasErrors 
                 ? _settingsViewModel 
                 : _frontPageViewModel;
+
+            MainHostVm = new MainHostVm(mainWindow);
         }
 
         private void _settingsViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)

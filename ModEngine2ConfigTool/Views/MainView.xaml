@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="ModEngine2ConfigTool.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ModEngine2ConfigTool.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pageVms="clr-namespace:ModEngine2ConfigTool.ViewModels.Pages"
+             xmlns:pages="clr-namespace:ModEngine2ConfigTool.Views.Pages"
+             xmlns:viewmodels="clr-namespace:ModEngine2ConfigTool.ViewModels"
+             d:DataContext="{d:DesignInstance Type={x:Type viewmodels:MainPanelVm}}"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             Background="#121212"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type pageVms:HomePageVm}">
+            <pages:HomePageView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type pageVms:ProfilesPageVm}">
+            <pages:ProfilesPageView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type pageVms:ModsPageVm}">
+            <pages:ModsPageView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type pageVms:DllsPageVm}">
+            <pages:DllsPageView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type pageVms:ProfileEditPageVm}">
+            <pages:ProfileEditPageView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type pageVms:ModEditPageVm}">
+            <pages:ModEditPageView />
+        </DataTemplate>
+
+    </UserControl.Resources>
+    <Grid>
+        <ContentPresenter Content="{Binding Navigator.CurrentPage}" />
+    </Grid>
+</UserControl>

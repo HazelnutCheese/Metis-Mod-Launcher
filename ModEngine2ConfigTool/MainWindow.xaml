@@ -7,13 +7,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:ModEngine2ConfigTool.ViewModels"
         xmlns:views="clr-namespace:ModEngine2ConfigTool.Views"
+        x:Name="MainWindowElement"
         Title="ModEngine2 Config Tool"
-        Width="1000"
+        Width="800"
         Height="600"
-        MinWidth="1024"
-        MinHeight="640"
-        d:DataContext="{d:DesignInstance viewmodels:MainWindowViewModel,
+        MinWidth="800"
+        MinHeight="600"
+        d:DataContext="{d:DesignInstance viewmodels:MainWindowVm,
                                          IsDesignTimeCreatable=False}"
+        AllowsTransparency="True"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         TextElement.FontSize="13"
@@ -21,7 +23,11 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
+        WindowStyle="None"
         mc:Ignorable="d">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="60" ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewmodels:FrontPageViewModel}">
             <views:FrontPageView />
@@ -31,8 +37,56 @@
         </DataTemplate>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Window.Resources>
-    <materialDesign:DialogHost Identifier="MainWindowDialogHost">
+    <materialDesign:DialogHost DataContext="{Binding MainHostVm}" Identifier="MainWindowDialogHost">
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220"
+                                  MinWidth="10"
+                                  MaxWidth="380" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+
+            <views:SideBar Grid.RowSpan="2"
+                           Grid.Column="0"
+                           DataContext="{Binding MainPanelVm}" />
+
+            <views:TopBar Grid.Row="0"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          DataContext="{Binding TopBarVm}" />
+            <views:MainView Grid.Row="1"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            DataContext="{Binding MainPanelVm}" />
+            <views:BottomBar Grid.Row="2" Grid.ColumnSpan="3" />
+
+            <GridSplitter Grid.RowSpan="2"
+                          Grid.Column="1"
+                          Width="5"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          Background="Transparent"
+                          ResizeDirection="Columns">
+                <GridSplitter.Style>
+                    <Style TargetType="{x:Type GridSplitter}">
+                        <Style.Triggers>
+                            <Trigger Property="UIElement.IsMouseOver" Value="true">
+                                <Setter Property="Background" Value="#d0d0d0" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </GridSplitter.Style>
+            </GridSplitter>
+        </Grid>
+
+        <!--<Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -98,6 +152,6 @@
                               Grid.ColumnSpan="2"
                               Margin="5,0,5,5"
                               Content="{Binding CurrentContent}" />
-        </Grid>
+        </Grid>-->
     </materialDesign:DialogHost>
 </Window>
