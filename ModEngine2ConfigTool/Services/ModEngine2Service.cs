@@ -20,7 +20,7 @@ namespace ModEngine2ConfigTool.Services
             var arguments = new List<string>()
             {
                 "-t er",
-                $"-c {profileFilePath}"
+                $"-c \"{profileFilePath}\""
             };
 
             return Launch(arguments);
