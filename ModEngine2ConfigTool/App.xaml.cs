@@ -1,4 +1,5 @@
 ﻿using ModEngine2ConfigTool.Helpers;
+using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels;
 using Sherlog;
@@ -27,15 +28,16 @@ namespace ModEngine2ConfigTool
 
         public static ConfigurationService ConfigurationService { get; }
 
+        public static IDispatcherService DispatcherService { get; }
+        public static IDatabaseService DatabaseService { get; }
+
         public const string DialogHostId = "MainWindowDialogHost";
 
         static App()
         {
             if(Debugger.IsAttached)
             {
-                DataStorage = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "ModEngine2ConfigTool");
+                DataStorage = Directory.GetCurrentDirectory();
             }
             else
             {
@@ -47,6 +49,8 @@ namespace ModEngine2ConfigTool
             ConfigureLogging();
             Logger = Logger.GetLogger(nameof(App));
             ConfigurationService = new ConfigurationService();
+            DispatcherService = new DispatcherService();
+            DatabaseService = new DatabaseService(Directory.GetCurrentDirectory());
         }
 
         protected override void OnStartup(StartupEventArgs e)

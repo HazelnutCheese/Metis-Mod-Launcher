@@ -1,0 +1,105 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ModEngine2ConfigTool.Equality;
+using ModEngine2ConfigTool.ViewModels.ProfileComponents;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ModEngine2ConfigTool.Services
+{
+    public class ModManagerService : ObservableObject
+    {
+        private readonly IDatabaseService _databaseService;
+        private readonly IDispatcherService _dispatcherService;
+        private readonly ProfileManagerService _profileManagerService;
+        private readonly IEqualityComparer<ModVm> _modVmEqualityComparer;
+
+        private ObservableCollection<ModVm> _modVms;
+
+        public ObservableCollection<ModVm> ModVms 
+        { 
+            get => _modVms; 
+            private set => _modVms = value; 
+        }
+
+        public ModManagerService(
+            IDatabaseService databaseService,
+            IDispatcherService dispatcherService,
+            ProfileManagerService profileManagerService)
+        {
+            _databaseService = databaseService;
+            _dispatcherService = dispatcherService;
+            _profileManagerService = profileManagerService;
+            _modVmEqualityComparer = new ModVmEqualityComparer();
+
+            var modVms = GetModsFromDatabase(_databaseService);
+            _modVms = new ObservableCollection<ModVm>(modVms);
+        }
+
+        public async Task RefreshAsync()
+        {
+            var modVms = GetModsFromDatabase(_databaseService);
+            await _dispatcherService.InvokeUiAsync(() =>
+            {
+                ModVms.Clear();
+
+                foreach(var modVm in modVms)
+                {
+                    ModVms.Add(modVm);
+                }
+            });
+
+            await _profileManagerService.RefreshAsync();
+        }
+
+        public async Task<ModVm> CreateNewModAsync(string folderPath)
+        {
+            var newModVm = new ModVm(
+                folderPath,
+                _databaseService);
+
+            await AddModAsync(newModVm);
+            return ModVms.Single(x => _modVmEqualityComparer.Equals(x, newModVm));
+        }
+
+        public async Task AddModAsync(ModVm modVm)
+        {
+            _databaseService.AddMod(modVm);
+            await RefreshAsync();
+        }
+
+        public async Task<ModVm> DuplicateModAsync(ModVm modVm)
+        {
+            var newModVm = new ModVm(
+                modVm.Name,
+                _databaseService);
+
+            await AddModAsync(newModVm);
+            return ModVms.Single(x => _modVmEqualityComparer.Equals(x, newModVm));
+        }
+
+        public async Task RemoveModAsync(ModVm modVm)
+        {
+            _databaseService.DeleteMod(modVm);
+            await RefreshAsync();
+        }
+
+        private List<ModVm> GetModsFromDatabase(IDatabaseService databaseService)
+        {
+            var mods = databaseService.GetMods();
+            var modVms = new List<ModVm>();
+
+            foreach (var mod in mods)
+            {
+                var modVm = new ModVm(
+                    mod,
+                    _databaseService);
+
+                modVms.Add(modVm);
+            }
+
+            return modVms;
+        }
+    }
+}

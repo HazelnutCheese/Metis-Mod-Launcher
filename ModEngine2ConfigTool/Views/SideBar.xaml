@@ -95,6 +95,7 @@
 
             <controls:SideBarButton Grid.Row="9"
                                     Grid.Column="1"
+                                    Command="{Binding NavigateAddModCommand}"
                                     IconKind="FolderPlusOutline"
                                     Text="Add New Mod" />
 

@@ -15,6 +15,9 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:ProfileModTupleConverter x:Key="ProfileModTupleConverter" />
+    </UserControl.Resources>
     <ScrollViewer x:Name="ProfileScroller"
                   Background="Transparent"
                   HorizontalScrollBarVisibility="Disabled"
@@ -182,8 +185,15 @@
                                                                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                                                                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
                                                                                     <Setter Property="Header" Value="{Binding Name}" />
-                                                                                    <Setter Property="Command" Value="{Binding AddModCommand}" />
-                                                                                    <Setter Property="CommandParameter" Value="{Binding Path=DataContext, ElementName=ModMenu}" />
+                                                                                    <Setter Property="Command" Value="{Binding Path=DataContext.AddModToProfileCommand, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}}}" />
+                                                                                    <Setter Property="CommandParameter">
+                                                                                        <Setter.Value>
+                                                                                            <MultiBinding Converter="{StaticResource ProfileModTupleConverter}">
+                                                                                                <Binding />
+                                                                                                <Binding ElementName="ModMenu" Path="DataContext" />
+                                                                                            </MultiBinding>
+                                                                                        </Setter.Value>
+                                                                                    </Setter>
                                                                                 </Style>
                                                                             </MenuItem.ItemContainerStyle>
                                                                         </MenuItem>

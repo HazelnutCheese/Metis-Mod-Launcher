@@ -9,6 +9,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pages="clr-namespace:ModEngine2ConfigTool.ViewModels.Pages"
              xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:views="clr-namespace:ModEngine2ConfigTool.Views"
              x:Name="ProfileEditPageSelf"
              d:DataContext="{d:DesignInstance Type={x:Type pages:ProfileEditPageVm},
                                               IsDesignTimeCreatable=False}"
@@ -195,6 +196,214 @@
                        FontWeight="Medium"
                        Text="Active Mods and DLLs" />
 
+            <!--<Grid Grid.Row="8"
+                  Grid.Column="1"
+                  HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <ItemsControl Grid.Row="3"
+                              Background="Transparent"
+                              ItemsSource="{Binding Mods}"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Margin="0,5">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Style.Resources>
+                                            <converter:EmptyImagePathConverter x:Key="EmptyImagePathConverter" />
+                                        </Style.Resources>
+                                        <Setter Property="Height" Value="50" />
+                                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                        <Setter Property="FrameworkElement.Cursor" Value="Hand" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <ControlTemplate.Resources>
+                                                        <helpers:BindingProxy x:Key="ParentProxy" Data="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+                                                    </ControlTemplate.Resources>
+                                                    <materialDesign:Card x:Name="Grid"
+                                                                         Margin="0,0,10,0"
+                                                                         materialDesign:ElevationAssist.Elevation="Dp4"
+                                                                         materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="54" />
+                                                                <ColumnDefinition Width="40" />
+                                                                <ColumnDefinition Width="{Binding Path=Width, Mode=TwoWay, ElementName=ModNameColumn}" MinWidth="100" />
+                                                                <ColumnDefinition Width="{Binding Path=Width, Mode=TwoWay, ElementName=ModDescriptionColumn}" MinWidth="100" />
+                                                                <ColumnDefinition Width="{Binding Path=Width, Mode=TwoWay, ElementName=ModLocationColumn}" MinWidth="100" />
+                                                                <ColumnDefinition Width="{Binding Path=Width, Mode=TwoWay, ElementName=ModAddedColumn}" MinWidth="100" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Grid.Column="0"
+                                                                   Width="32"
+                                                                   Height="32"
+                                                                   Margin="10,0"
+                                                                   Source="{Binding ImagePath, Converter={StaticResource EmptyImagePathConverter}}"
+                                                                   Stretch="UniformToFill" />
+
+                                                            <materialDesign:PopupBox Grid.Column="1"
+                                                                                     HorizontalAlignment="Left"
+                                                                                     VerticalAlignment="Center"
+                                                                                     Background="Gray"
+                                                                                     Foreground="#d1d1d1">
+                                                                <StackPanel>
+                                                                    <Menu>
+                                                                        <MenuItem Header="Remove Mod from Profile">
+                                                                            <MenuItem.Style>
+                                                                                <Style TargetType="MenuItem">
+                                                                                    <Style.Resources>
+                                                                                        <converter:ProfileModTupleConverter x:Key="ProfileModTupleConverter" />
+                                                                                    </Style.Resources>
+                                                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                                                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                                                                    <Setter Property="Command" Value="{Binding Path=DataContext.RemoveModFromProfileCommand, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}}}" />
+                                                                                    <Setter Property="CommandParameter">
+                                                                                        <Setter.Value>
+                                                                                            <MultiBinding Converter="{StaticResource ProfileModTupleConverter}">
+                                                                                                <Binding ElementName="ProfileEditPageSelf" Path="DataContext.Profile" />
+                                                                                                <Binding />
+                                                                                            </MultiBinding>
+                                                                                        </Setter.Value>
+                                                                                    </Setter>
+                                                                                </Style>
+                                                                            </MenuItem.Style>
+                                                                        </MenuItem>
+                                                                    </Menu>
+            -->
+            <!--<Button Command="{Binding Path=DataContext.RemoveModFromProfileCommand, ElementName=ProfileEditPageSelf}" Content="Remove from Profile">
+                                                                        <Button.CommandParameter>
+                                                                            <MultiBinding Converter="{StaticResource ProfileModTupleConverter}">
+                                                                                <Binding />
+                                                                                <Binding />
+                                                                            </MultiBinding>
+                                                                        </Button.CommandParameter>
+                                                                    </Button>-->
+            <!--
+                                                                </StackPanel>
+                                                            </materialDesign:PopupBox>
+
+                                                            <TextBlock Grid.Column="2"
+                                                                       VerticalAlignment="Center"
+                                                                       FontSize="16"
+                                                                       FontWeight="Medium"
+                                                                       Foreground="#d1d1d1"
+                                                                       Text="{Binding Name}"
+                                                                       TextTrimming="CharacterEllipsis" />
+
+                                                            <TextBlock Grid.Column="3"
+                                                                       VerticalAlignment="Center"
+                                                                       Foreground="#d1d1d1"
+                                                                       Text="{Binding Description}"
+                                                                       TextTrimming="CharacterEllipsis"
+                                                                       TextWrapping="Wrap" />
+
+                                                            <TextBlock Grid.Column="4"
+                                                                       VerticalAlignment="Center"
+                                                                       Foreground="#d1d1d1"
+                                                                       Text="{Binding FolderPath}"
+                                                                       TextTrimming="CharacterEllipsis"
+                                                                       TextWrapping="Wrap" />
+
+                                                            <TextBlock Grid.Column="5"
+                                                                       VerticalAlignment="Center"
+                                                                       Foreground="#d1d1d1"
+                                                                       Text="{Binding Added}"
+                                                                       TextTrimming="CharacterEllipsis" />
+                                                        </Grid>
+                                                    </materialDesign:Card>
+
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                                                            <Setter TargetName="Grid" Property="Background" Value="#252525" />
+                                                        </Trigger>
+                                                        <Trigger Property="UIElement.IsMouseOver" Value="false">
+                                                            <Setter TargetName="Grid" Property="Background" Value="#181818" />
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <materialDesign:Card x:Name="GridHeader"
+                                     Grid.Row="1"
+                                     Height="32"
+                                     Margin="0,0,10,0"
+                                     Panel.ZIndex="10"
+                                     UniformCornerRadius="0">
+                    <Grid VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="54" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition x:Name="ModNameColumn"
+                                              Width="200"
+                                              MinWidth="100" />
+                            <ColumnDefinition x:Name="ModDescriptionColumn"
+                                              Width="200"
+                                              MinWidth="100" />
+                            <ColumnDefinition x:Name="ModLocationColumn"
+                                              Width="200"
+                                              MinWidth="100" />
+                            <ColumnDefinition x:Name="ModAddedColumn"
+                                              Width="Auto"
+                                              MinWidth="100" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <controls:SortButton Grid.Column="2"
+                                             Margin="0,0,10,0"
+                                             VerticalAlignment="Center"
+                                             Command="{Binding SortModsByNameCommand}"
+                                             CommandParameter="{Binding Path=Mode, RelativeSource={RelativeSource Mode=Self}}"
+                                             SortGroup="ModPageView"
+                                             Text="Mod Name" />
+
+                        <GridSplitter Grid.Column="2" Width="5" />
+
+                        <controls:SortButton Grid.Column="3"
+                                             Margin="10,0"
+                                             VerticalAlignment="Center"
+                                             Command="{Binding SortModsByDescriptionCommand}"
+                                             CommandParameter="{Binding Path=Mode, RelativeSource={RelativeSource Mode=Self}}"
+                                             SortGroup="ModPageView"
+                                             Text="Description" />
+
+                        <GridSplitter Grid.Column="3" Width="5" />
+
+                        <controls:SortButton Grid.Column="4"
+                                             Margin="10,0"
+                                             VerticalAlignment="Center"
+                                             Command="{Binding SortModsByPathCommand}"
+                                             CommandParameter="{Binding Path=Mode, RelativeSource={RelativeSource Mode=Self}}"
+                                             SortGroup="ModPageView"
+                                             Text="Location" />
+
+                        <GridSplitter Grid.Column="4" Width="5" />
+
+                        <controls:SortButton Grid.Column="5"
+                                             Margin="10,0"
+                                             VerticalAlignment="Center"
+                                             Command="{Binding SortModsByDateAddedCommand}"
+                                             CommandParameter="{Binding Path=Mode, RelativeSource={RelativeSource Mode=Self}}"
+                                             SortGroup="ModPageView"
+                                             Text="Added" />
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>-->
+
             <TabControl Grid.Row="8"
                         Grid.Column="1"
                         Margin="0,0,15,0"
@@ -234,6 +443,7 @@
                                                 <Style TargetType="{x:Type Button}">
                                                     <Style.Resources>
                                                         <converter:EmptyImagePathConverter x:Key="EmptyImagePathConverter" />
+                                                        <converter:ProfileModTupleConverter x:Key="ProfileModTupleConverter" />
                                                     </Style.Resources>
                                                     <Setter Property="Height" Value="50" />
                                                     <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -268,9 +478,14 @@
                                                                                                  Background="Gray"
                                                                                                  Foreground="#d1d1d1">
                                                                             <StackPanel>
-                                                                                <Button Command="{Binding Path=DataContext.Profile.RemoveModCommand, ElementName=ProfileEditPageSelf}"
-                                                                                        CommandParameter="{Binding .}"
-                                                                                        Content="Remove from Profile" />
+                                                                                <Button Command="{Binding Path=DataContext.RemoveModFromProfileCommand, ElementName=ProfileEditPageSelf}" Content="Remove from Profile">
+                                                                                    <Button.CommandParameter>
+                                                                                        <MultiBinding Converter="{StaticResource ProfileModTupleConverter}">
+                                                                                            <Binding ElementName="ProfileEditPageSelf" Path="DataContext.Profile" />
+                                                                                            <Binding />
+                                                                                        </MultiBinding>
+                                                                                    </Button.CommandParameter>
+                                                                                </Button>
                                                                             </StackPanel>
                                                                         </materialDesign:PopupBox>
 

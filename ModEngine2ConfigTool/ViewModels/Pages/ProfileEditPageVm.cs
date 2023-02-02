@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
+using ModEngine2ConfigTool.Helpers;
+using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.ViewModels.Profiles;
 using ModEngine2ConfigTool.Views.Controls;
@@ -16,6 +18,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
     public class ProfileEditPageVm : ObservableObject
     {
         private string _lastOpenedLocation;
+        private readonly ProfileManagerService _profileManagerService;
 
         public ProfileVm Profile { get; }
 
@@ -31,14 +34,20 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public ICommand SortModsByDateAddedCommand { get; }
 
+        public ICommand RemoveModFromProfileCommand { get; }
+
         public ICollectionView Mods { get; }
 
         public ICollectionView ExternalDlls { get; }
 
-        public ProfileEditPageVm(ProfileVm profile, bool IsCreatingNewProfile)
+        public ProfileEditPageVm(
+            ProfileVm profile, 
+            bool IsCreatingNewProfile,
+            ProfileManagerService profileManagerService)
         {
-            Profile = profile;
+            _profileManagerService = profileManagerService;
 
+            Profile = profile;
             Header = IsCreatingNewProfile
                 ? "Create new Profile"
                 : "Edit Profile";
@@ -51,6 +60,9 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             SortModsByPathCommand = new AsyncRelayCommand<SortButtonMode>(SortModsByPath);
             SortModsByDescriptionCommand = new AsyncRelayCommand<SortButtonMode>(SortModsByDescription);
             SortModsByDateAddedCommand = new AsyncRelayCommand<SortButtonMode>(SortModsByDateAdded);
+
+            RemoveModFromProfileCommand = new AsyncRelayCommand<ProfileVmModVmTuple>(
+                RemoveModFromProfile);
 
             Mods = CollectionViewSource.GetDefaultView(Profile.Mods);
             ExternalDlls = CollectionViewSource.GetDefaultView(Profile.ExternalDlls);
@@ -85,6 +97,18 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 _lastOpenedLocation = Path.GetDirectoryName(fileDialog.FileName) ?? string.Empty;
                 Profile.ImagePath = fileDialog.FileName;
             }
+        }
+
+        private async Task RemoveModFromProfile(ProfileVmModVmTuple? tuple)
+        {
+            if (tuple is null)
+            {
+                return;
+            }
+
+            await _profileManagerService.RemoveModFromProfile(
+                tuple.ProfileVm,
+                tuple.ModVm);
         }
 
         private async Task SortModsByName(SortButtonMode sortButtonMode)

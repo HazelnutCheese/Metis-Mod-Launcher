@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModEngine2ConfigTool", "ModEngine2ConfigTool\ModEngine2ConfigTool.csproj", "{457A461C-6A42-4E01-8E48-7641E8BF65FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModEngine2ConfigTool", "ModEngine2ConfigTool\ModEngine2ConfigTool.csproj", "{457A461C-6A42-4E01-8E48-7641E8BF65FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{29265AA2-155E-4FE8-AAA5-7B0BF8C76CE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{457A461C-6A42-4E01-8E48-7641E8BF65FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{457A461C-6A42-4E01-8E48-7641E8BF65FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{457A461C-6A42-4E01-8E48-7641E8BF65FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29265AA2-155E-4FE8-AAA5-7B0BF8C76CE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29265AA2-155E-4FE8-AAA5-7B0BF8C76CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29265AA2-155E-4FE8-AAA5-7B0BF8C76CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29265AA2-155E-4FE8-AAA5-7B0BF8C76CE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

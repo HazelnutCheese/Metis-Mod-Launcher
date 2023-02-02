@@ -1,20 +1,25 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.Xaml.Behaviors.Media;
+using ModEngine2ConfigTool.Equality;
+using ModEngine2ConfigTool.Models;
+using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace ModEngine2ConfigTool.ViewModels.Profiles
 {
     public class ProfileVm : ObservableObject
     {
+        public Profile Model { get; private set; }
+
         private string _description;
         private string _name;
         private string _imagePath;
+        private readonly IDatabaseService _databaseService;
+        private readonly IDispatcherService _dispatcherService;
 
         public string Name
         {
@@ -24,6 +29,8 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
                 if(!string.IsNullOrWhiteSpace(value))
                 {
                     SetProperty(ref _name, value);
+                    Model.Name = value;
+                    _databaseService.SaveChanges();
                 }
             }
         }
@@ -31,13 +38,23 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
         public string Description
         {
             get => _description;
-            set => SetProperty(ref _description, value);
+            set 
+            {
+                SetProperty(ref _description, value);
+                Model.Description = value;
+                _databaseService.SaveChanges();
+            }
         }
 
         public string ImagePath
         {
             get => _imagePath;
-            set => SetProperty(ref _imagePath, value);
+            set
+            {
+                SetProperty(ref _imagePath, value);
+                Model.ImagePath = value;
+                _databaseService.SaveChanges();
+            }
         }
 
         public DateTime? LastPlayed { get; }
@@ -48,74 +65,74 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
 
         public ObservableCollection<DllVm> ExternalDlls { get; }
 
-        public ICommand AddModCommand { get; }
-
-        public ICommand RemoveModCommand { get; }
-
-        public ProfileVm(string name)
+        public ProfileVm(string name, 
+            IDatabaseService databaseService,
+            IDispatcherService dispatcherService)
         {
-            _name = name;
-            _description = string.Empty;
-            _imagePath = string.Empty;
+            Model = new Profile()
+            {
+                ProfileId = Guid.NewGuid(),
+                Name = name,
+                Description = string.Empty,
+                ImagePath = string.Empty,
+                Created = DateTime.Now,
+                LastPlayed = null,
+                Mods = new List<Mod>(),
+                Dlls = new List<Dll>()
+            };
+            _databaseService = databaseService;
+            _dispatcherService = dispatcherService;
 
-            Created = DateTime.Now;
+            _name = Model.Name;
+            _description = Model.Description ?? "";
+            _imagePath = Model.ImagePath ?? "";
+
+            Created = Model.Created;
+            LastPlayed = Model.LastPlayed;
 
             Mods = new ObservableCollection<ModVm>();
             ExternalDlls= new ObservableCollection<DllVm>();
-
-            AddModCommand = new AsyncRelayCommand<ModVm>(AddMod);
-            RemoveModCommand = new AsyncRelayCommand<ModVm>(RemoveMod);
         }
 
         public ProfileVm(
-            string name,
-            string description,
-            string imagePath,
-            DateTime created,
-            DateTime? lastPlayed = null)
+            Profile profile, 
+            IDatabaseService databaseService,
+            IDispatcherService dispatcherService)
         {
-            _name = name;
-            _description = description;
-            _imagePath = imagePath;
+            Model = profile;
+            _databaseService = databaseService;
+            _dispatcherService = dispatcherService;
+            _name = Model.Name;
+            _description = Model.Description ?? "";
+            _imagePath = Model.ImagePath ?? "";
 
-            Created = created;
-            LastPlayed = lastPlayed;
+            Created = Model.Created;
+            LastPlayed = Model.LastPlayed;
 
-            Mods = new ObservableCollection<ModVm>();
+            Mods = new ObservableCollection<ModVm>(
+                Model.Mods.Select(x => new ModVm(x, _databaseService)));
+
             ExternalDlls = new ObservableCollection<DllVm>();
-
-            AddModCommand = new AsyncRelayCommand<ModVm>(AddMod);
-            RemoveModCommand = new AsyncRelayCommand<ModVm>(RemoveMod);
         }
 
-        private async Task AddMod(ModVm? mod)
+        public async Task RefreshAsync()
         {
-            if(mod is null)
-            {
-                return;
-            }
+            Model = _databaseService
+                .GetProfiles()
+                .Single(x => new ProfileEqualityComparer().Equals(x, Model));
 
-            await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+            _name = Model.Name;
+            _description = Model.Description ?? "";
+            _imagePath = Model.ImagePath ?? "";
+
+            var modVms = Model.Mods.Select(x => new ModVm(x, _databaseService));
+
+            await _dispatcherService.InvokeUiAsync(() =>
             {
-                if(!Mods.Contains(mod))
+                Mods.Clear();
+                foreach (var modVm in modVms)
                 {
-                    Mods.Add(mod);
-                }
-            });
-        }
-
-        private async Task RemoveMod(ModVm? mod)
-        {
-            if (mod is null)
-            {
-                return;
-            }
-
-            await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-            {
-                if (Mods.Contains(mod))
-                {
-                    Mods.Remove(mod);
+                    Mods.Add(modVm);
                 }
             });
         }

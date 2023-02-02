@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ModEngine2ConfigTool.Helpers;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Pages;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
@@ -7,19 +8,19 @@ using ModEngine2ConfigTool.ViewModels.Profiles;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace ModEngine2ConfigTool.ViewModels
 {
     public class MainPanelVm : ObservableObject
     {
+        private ProfileManagerService _profileManagerService;
+        private ModManagerService _modManagerService;
         private ProfileVm? _selectedItem;
 
         public NavigationService Navigator { get; }
@@ -36,6 +37,8 @@ namespace ModEngine2ConfigTool.ViewModels
         public ICommand PlayProfileCommand { get; }
         public ICommand DuplicateProfileCommand { get; }
         public ICommand DeleteProfileCommand { get; }
+        public ICommand AddModToProfileCommand { get; }
+        public ICommand RemoveModFromProfileCommand { get; }
 
         public ICommand NavigateAddModCommand { get; }
         public ICommand NavigateEditModCommand { get; }
@@ -61,186 +64,21 @@ namespace ModEngine2ConfigTool.ViewModels
 
         public MainPanelVm(NavigationService navigator)
         {
+            _profileManagerService = new ProfileManagerService(
+                App.DatabaseService,
+                App.DispatcherService);
+
+            _modManagerService = new ModManagerService(
+                App.DatabaseService,
+                App.DispatcherService,
+                _profileManagerService);
+
             Navigator = navigator;
 
-            Profiles = new ObservableCollection<ProfileVm>(new List<ProfileVm>()
-            {
-                new ProfileVm(
-                    "Elden Ring",
-                    "The base game with no mods",
-                    Path.Combine(Directory.GetCurrentDirectory(), "Resources", "EldenRing256.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                new ProfileVm(
-                    "Limes Limes Limes Limes",
-                    "Why can't I hold all these limes! Why can't I hold all these limes! Why can't I hold all these limes!",
-                    "C:\\Users\\Thebb\\Pictures\\Saved Pictures\\hold-all-these-limes.jpg",
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                new ProfileVm(
-                    "Banderhob",
-                    "",
-                    "C:\\Users\\Thebb\\Pictures\\banderhobb.PNG",
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                new ProfileVm(
-                    "Banderhob",
-                    "",
-                    "C:\\Users\\Thebb\\Pictures\\banderhobb.PNG",
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                new ProfileVm(
-                    "Banderhob",
-                    "",
-                    "C:\\Users\\Thebb\\Pictures\\banderhobb.PNG",
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                new ProfileVm(
-                    "Banderhob",
-                    "",
-                    "C:\\Users\\Thebb\\Pictures\\banderhobb.PNG",
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                new ProfileVm(
-                    "Banderhob",
-                    "",
-                    "C:\\Users\\Thebb\\Pictures\\banderhobb.PNG",
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond)))
-            });
+            Profiles = _profileManagerService.ProfileVms;
+            Mods = _modManagerService.ModVms;
 
-            Mods = new ObservableCollection<ModVm>()
-                {
-                    new ModVm(
-                        "Elden Ring",
-                        Path.GetRandomFileName(),
-                        "The base game with no mods",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "EldenRing256.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new ModVm(
-                        "Limes Limes Limes Limes",
-                        Path.GetRandomFileName(),
-                        "Why can't I hold all these limes! Why can't I hold all these limes! Why can't I hold all these limes!",
-                        "C:\\Users\\Thebb\\Pictures\\Saved Pictures\\hold-all-these-limes.jpg",
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new ModVm(
-                        "Banderhob",
-                        Path.GetRandomFileName(),
-                        "",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Green.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new ModVm(
-                        "Banderhob",
-                        Path.GetRandomFileName(),
-                        "",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Blue.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new ModVm(
-                        "Limes Limes Limes Limes",
-                        Path.GetRandomFileName(),
-                        "Why can't I hold all these limes! Why can't I hold all these limes! Why can't I hold all these limes!",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Red.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new ModVm(
-                        "Banderhob",
-                        Path.GetRandomFileName(),
-                        "",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Green.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new ModVm(
-                        "Banderhob",
-                        Path.GetRandomFileName(),
-                        "",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Blue.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new ModVm(
-                        "Zimes Limes Limes Limes",
-                        Path.GetRandomFileName(),
-                        "Why can't I hold all these limes! Why can't I hold all these limes! Why can't I hold all these limes!",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Red.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new ModVm(
-                        "Banderhob",
-                        Path.GetRandomFileName(),
-                        "",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Green.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new ModVm(
-                        "Banderhob",
-                        Path.GetRandomFileName(),
-                        "",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Blue.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new ModVm(
-                        "Limes Limes Limes Limes",
-                        Path.GetRandomFileName(),
-                        "Ahy can't I hold all these limes! Why can't I hold all these limes! Why can't I hold all these limes!",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Red.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond)))
-                };
-
-            Dlls = new ObservableCollection<DllVm>()
-                {
-                    new DllVm(
-                        Path.ChangeExtension(Path.GetRandomFileName(), ".dll"),
-                        Path.GetRandomFileName(),
-                        "The base game with no mods",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "EldenRing256.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new DllVm(
-                        Path.ChangeExtension(Path.GetRandomFileName(), ".dll"),
-                        Path.GetRandomFileName(),
-                        "Why can't I hold all these limes! Why can't I hold all these limes! Why can't I hold all these limes!",
-                        "C:\\Users\\Thebb\\Pictures\\Saved Pictures\\hold-all-these-limes.jpg",
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new DllVm(
-                        "Banderhob",
-                        Path.GetRandomFileName(),
-                        "",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Green.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new DllVm(
-                        Path.ChangeExtension(Path.GetRandomFileName(), ".dll"),
-                        Path.GetRandomFileName(),
-                        "",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Blue.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new DllVm(
-                        Path.ChangeExtension(Path.GetRandomFileName(), ".dll"),
-                        Path.GetRandomFileName(),
-                        "Why can't I hold all these limes! Why can't I hold all these limes! Why can't I hold all these limes!",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Red.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new DllVm(
-                        Path.ChangeExtension(Path.GetRandomFileName(), ".dll"),
-                        Path.GetRandomFileName(),
-                        "",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Green.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new DllVm(
-                        Path.ChangeExtension(Path.GetRandomFileName(), ".dll"),
-                        Path.GetRandomFileName(),
-                        "",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Blue.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new DllVm(
-                        Path.ChangeExtension(Path.GetRandomFileName(), ".dll"),
-                        Path.GetRandomFileName(),
-                        "Why can't I hold all these limes! Why can't I hold all these limes! Why can't I hold all these limes!",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Red.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new DllVm(
-                        Path.ChangeExtension(Path.GetRandomFileName(), ".dll"),
-                        Path.GetRandomFileName(),
-                        "",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Green.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new DllVm(
-                        Path.ChangeExtension(Path.GetRandomFileName(), ".dll"),
-                        Path.GetRandomFileName(),
-                        "",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Blue.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond))),
-                    new DllVm(
-                        Path.ChangeExtension(Path.GetRandomFileName(), ".dll"),
-                        Path.GetRandomFileName(),
-                        "Ahy can't I hold all these limes! Why can't I hold all these limes! Why can't I hold all these limes!",
-                        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Red.png"),
-                        DateTime.UtcNow.AddDays(new Random().Next(DateTime.Now.Millisecond)))
-                };
+            Dlls = new ObservableCollection<DllVm>();
 
             NavigateHomeCommand = new AsyncRelayCommand(NavigateHome);
             NavigateProfilesCommand = new AsyncRelayCommand(NavigateProfiles);
@@ -255,6 +93,12 @@ namespace ModEngine2ConfigTool.ViewModels
             DuplicateProfileCommand = new AsyncRelayCommand<ProfileVm>(DuplicateProfile);
             DeleteProfileCommand = new AsyncRelayCommand<ProfileVm>(DeleteProfile);
 
+            AddModToProfileCommand = new AsyncRelayCommand<ProfileVmModVmTuple>(
+                AddModToProfile);
+            RemoveModFromProfileCommand = new AsyncRelayCommand<ProfileVmModVmTuple>(
+                RemoveModFromProfile);
+
+            NavigateAddModCommand = new AsyncRelayCommand(NavigateAddMod);
             NavigateEditModCommand = new AsyncRelayCommand<ModVm>(NavigateEditMod);
             DuplicateModCommand = new AsyncRelayCommand<ModVm>(DuplicateMod);
             DeleteModCommand = new AsyncRelayCommand<ModVm>(DeleteMod);
@@ -294,14 +138,8 @@ namespace ModEngine2ConfigTool.ViewModels
 
         public async Task NavigateCreateNewProfile()
         {
-            var newProfile = new ProfileVm(GetNewName(Profiles));
-
-            await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-            {                
-                Profiles.Insert(0, newProfile);
-            });
-
-            await Navigator.NavigateTo(new ProfileEditPageVm(newProfile, true));
+            var newProfileVm = await _profileManagerService.CreateNewProfileAsync("New Profile");
+            await Navigator.NavigateTo(new ProfileEditPageVm(newProfileVm, true, _profileManagerService));
         }
 
         private async Task NavigateEditProfile(ProfileVm? profile)
@@ -311,7 +149,7 @@ namespace ModEngine2ConfigTool.ViewModels
                 return;
             }
 
-            await Navigator.NavigateTo(new ProfileEditPageVm(profile, false));
+            await Navigator.NavigateTo(new ProfileEditPageVm(profile, false, _profileManagerService));
         }
 
         private async Task PlayProfile(ProfileVm? profile)
@@ -331,18 +169,8 @@ namespace ModEngine2ConfigTool.ViewModels
                 return;
             }
 
-            var duplicate = new ProfileVm(
-                GetNewName(Profiles, profile.Name),
-                profile.Description,
-                profile.ImagePath,
-                DateTime.Now);
-
-            await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-            {
-                Profiles.Insert(0, duplicate);
-            });
-
-            await Navigator.NavigateTo(new ProfileEditPageVm(duplicate, false));
+            var duplicate = await _profileManagerService.DuplicateProfileAsync(profile);
+            await Navigator.NavigateTo(new ProfileEditPageVm(duplicate, false, _profileManagerService));
         }
 
         private async Task DeleteProfile(ProfileVm? profile)
@@ -352,10 +180,7 @@ namespace ModEngine2ConfigTool.ViewModels
                 return;
             }
 
-            await Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                Profiles.Remove(profile);
-            });
+            await _profileManagerService.RemoveProfileAsync(profile);
 
             if(Navigator.CurrentPage is ProfileEditPageVm profileEditPageVm && 
                 profileEditPageVm.Profile == profile)
@@ -364,6 +189,42 @@ namespace ModEngine2ConfigTool.ViewModels
             }
 
             Navigator.ClearHistory();
+        }
+
+        public async Task AddModToProfile(ProfileVmModVmTuple? tuple)
+        {
+            if(tuple is null)
+            {
+                return;
+            }
+
+            await _profileManagerService.AddModToProfile(
+                tuple.ProfileVm, 
+                tuple.ModVm);
+        }
+
+        public async Task RemoveModFromProfile(ProfileVmModVmTuple? tuple)
+        {
+            if (tuple is null)
+            {
+                return;
+            }
+
+            await _profileManagerService.RemoveModFromProfile(
+                tuple.ProfileVm, 
+                tuple.ModVm);
+        }
+
+        private async Task NavigateAddMod()
+        {
+            var modPath = GetFolderPath("Select Mod Folder", "C:\\");
+            if(modPath is null)
+            {
+                return;
+            }
+
+            var newMod = await _modManagerService.CreateNewModAsync(modPath);
+            await Navigator.NavigateTo(new ModEditPageVm(newMod, true));
         }
 
         private async Task NavigateEditMod(ModVm? mod)
@@ -376,42 +237,28 @@ namespace ModEngine2ConfigTool.ViewModels
             await Navigator.NavigateTo(new ModEditPageVm(mod, false));
         }
 
-        private async Task DuplicateMod(ModVm? mod)
+        private async Task DuplicateMod(ModVm? modVm)
         {
-            if (mod is null)
+            if (modVm is null)
             {
                 return;
             }
 
-            var duplicate = new ModVm(
-                "x",
-                mod.FolderPath,
-                mod.Description,
-                mod.ImagePath,
-                DateTime.Now);
-
-            await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-            {
-                Mods.Insert(0, duplicate);
-            });
-
-            await Navigator.NavigateTo(new ModEditPageVm(duplicate, false));
+            var newMod = await _modManagerService.DuplicateModAsync(modVm);
+            await Navigator.NavigateTo(new ModEditPageVm(newMod, true));
         }
 
-        private async Task DeleteMod(ModVm? mod)
+        private async Task DeleteMod(ModVm? modVm)
         {
-            if (mod is null)
+            if (modVm is null)
             {
                 return;
             }
 
-            await Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                Mods.Remove(mod);
-            });
+            await _modManagerService.RemoveModAsync(modVm);
 
             if (Navigator.CurrentPage is ModEditPageVm modEditPageVm &&
-                modEditPageVm.Mod == mod)
+                modEditPageVm.Mod == modVm)
             {
                 await NavigateHome();
             }
@@ -419,17 +266,32 @@ namespace ModEngine2ConfigTool.ViewModels
             Navigator.ClearHistory();
         }
 
-        private static string GetNewName(
-            IEnumerable<ProfileVm> currentProfiles, 
-            string startingName = "New Profile")
+        private static string? GetFolderPath(string dialogTitle, string defaultLocation)
         {
-            var newName = startingName;
-            while (currentProfiles.Any(x => x.Name == newName))
+            var dialog = new FolderBrowserEx.FolderBrowserDialog
             {
-                newName = $"{newName} - Copy";
+                Title = dialogTitle,
+                InitialFolder = @"C:\",
+                AllowMultiSelect = false
+            };
+
+            if (string.IsNullOrWhiteSpace(defaultLocation) || !Directory.Exists(defaultLocation))
+            {
+                dialog.InitialFolder = "C:\\";
+            }
+            else
+            {
+                dialog.InitialFolder = defaultLocation;
             }
 
-            return newName;
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                return dialog.SelectedFolder;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
