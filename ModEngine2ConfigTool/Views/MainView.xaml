@@ -32,6 +32,9 @@
         <DataTemplate DataType="{x:Type pageVms:ModEditPageVm}">
             <pages:ModEditPageView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type pageVms:DllEditPageVm}">
+            <pages:DllEditPageView />
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <ContentPresenter Content="{Binding Navigator.CurrentPage}" />

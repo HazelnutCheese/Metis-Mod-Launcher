@@ -24,13 +24,24 @@ namespace ModEngine2ConfigTool.ViewModels
                 App.DispatcherService,
                 profileManagerService);
 
+            var dllManagerService = new DllManagerService(
+                App.DatabaseService,
+                App.DispatcherService,
+                profileManagerService);
+
             TopBarVm = new TopBarVm(mainWindow, navigationService);
-            MainPanelVm = new MainPanelVm(navigationService);
+
+            MainPanelVm = new MainPanelVm(
+                navigationService,
+                profileManagerService,
+                modManagerService,
+                dllManagerService);
 
             SideBarVm = new SideBarVm(
                 navigationService, 
                 profileManagerService, 
-                modManagerService);
+                modManagerService,
+                dllManagerService);
         }
     }
 }

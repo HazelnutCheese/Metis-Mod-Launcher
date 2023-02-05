@@ -96,6 +96,7 @@
 
             <controls:SideBarButton Grid.Row="10"
                                     Grid.Column="1"
+                                    Command="{Binding NavigateAddDllCommand}"
                                     IconKind="FilePlusOutline"
                                     Text="Import Dll" />
 

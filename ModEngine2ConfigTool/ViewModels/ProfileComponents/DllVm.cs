@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ModEngine2ConfigTool.Models;
+using ModEngine2ConfigTool.Services;
 using System;
 using System.IO;
 
@@ -10,52 +12,100 @@ namespace ModEngine2ConfigTool.ViewModels.ProfileComponents
         private string _name;
         private string _description;
         private string _imagePath;
+        private readonly IDatabaseService _databaseService;
 
         public string Name
         {
             get => _name;
-            set => SetProperty(ref _name, value);
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    SetProperty(ref _name, value);
+                    Model.Name = value;
+                    _databaseService.SaveChanges();
+                }
+            }
         }
 
         public string FilePath
         {
             get => _filePath;
-            set => SetProperty(ref _filePath, value);
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    SetProperty(ref _filePath, value);
+                    Model.FilePath = value;
+                    _databaseService.SaveChanges();
+                }
+            }
         }
 
         public string Description
         {
             get => _description;
-            set => SetProperty(ref _description, value);
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    SetProperty(ref _description, value);
+                    Model.Description = value;
+                    _databaseService.SaveChanges();
+                }
+            }
         }
+
         public string ImagePath
         {
             get => _imagePath;
-            set => SetProperty(ref _imagePath, value);
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    SetProperty(ref _imagePath, value);
+                    Model.ImagePath = value;
+                    _databaseService.SaveChanges();
+                }
+            }
         }
-        public DateTime Added { get; }
 
-        public DllVm(string filePath)
+        public DateTime Added => Model.Added;
+
+        public Dll Model { get; }
+
+        public DllVm(
+            string filePath,
+            IDatabaseService databaseService)
         {
-            _name = Path.GetFileNameWithoutExtension(filePath);
-            _filePath = Path.GetFullPath(filePath);
-            _description = string.Empty;
-            _imagePath = string.Empty;
-            Added = DateTime.Now;
+            Model = new Dll
+            {
+                DllId = Guid.NewGuid(),
+                Added = DateTime.Now,
+                Name = new FileInfo(filePath).Name,
+                FilePath = Path.GetFullPath(filePath),
+                Description = string.Empty,
+                ImagePath = string.Empty
+            };
+            _databaseService = databaseService;
+
+            _name = Model.Name;
+            _filePath = Model.FilePath ?? "";
+            _description = Model.Description ?? "";
+            _imagePath = Model.ImagePath ?? "";
         }
 
         public DllVm(
-            string name,
-            string filePath,
-            string description,
-            string imagePath,
-            DateTime added)
+            Dll dll,
+            IDatabaseService databaseService)
         {
-            _name = name;
-            _filePath = filePath;
-            _description = description;
-            _imagePath = imagePath;
-            Added = added;
+            Model = dll;
+            _databaseService = databaseService;
+
+            _name = dll.Name;
+            _filePath = dll.FilePath ?? "";
+            _description = dll.Description ?? "";
+            _imagePath = dll.ImagePath ?? "";
         }
     }
 }

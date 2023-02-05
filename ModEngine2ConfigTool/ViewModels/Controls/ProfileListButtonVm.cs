@@ -30,6 +30,7 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
         private readonly NavigationService _navigationService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
+        private readonly DllManagerService _dllManagerService;
 
         public ProfileVm Profile { get; }
 
@@ -61,12 +62,14 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
             ProfileVm profileVm,
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
-            ModManagerService modManagerService)
+            ModManagerService modManagerService,
+            DllManagerService dllManagerService)
         {
             Profile = profileVm;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
             _navigationService = navigationService;
+            _dllManagerService = dllManagerService;
 
             Command = new AsyncRelayCommand(NavigateToEditModCommand);
             PlayCommand = new RelayCommand(() => Debug.Print($"Playing {Profile.Name}"));
@@ -104,7 +107,8 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
                 true,
                 _navigationService,
                 _profileManagerService,
-                _modManagerService);
+                _modManagerService,
+                _dllManagerService);
 
             await _navigationService.NavigateTo(profileEditPageVm);
         }
@@ -118,7 +122,8 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
                 true,
                 _navigationService,
                 _profileManagerService,
-                _modManagerService);
+                _modManagerService,
+                _dllManagerService);
 
             await _navigationService.NavigateTo(profileEditPageVm);
         }

@@ -3,7 +3,6 @@ using ModEngine2ConfigTool.Equality;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,7 +14,7 @@ namespace ModEngine2ConfigTool.Services
         private readonly IDatabaseService _databaseService;
         private readonly IDispatcherService _dispatcherService;
         private readonly ProfileManagerService _profileManagerService;
-        private readonly IEqualityComparer<ModVm> _modVmEqualityComparer;
+        private readonly IEqualityComparer<DllVm> _dllVmEqualityComparer;
 
         private ObservableCollection<DllVm> _dllVms;
 
@@ -33,10 +32,10 @@ namespace ModEngine2ConfigTool.Services
             _databaseService = databaseService;
             _dispatcherService = dispatcherService;
             _profileManagerService = profileManagerService;
-            _modVmEqualityComparer = new ModVmEqualityComparer();
+            _dllVmEqualityComparer = new DllVmEqualityComparer();
 
-            var dllVms = GetModsFromDatabase(_databaseService);
-            _dllVms = new ObservableCollection<ModVm>(dllVms);
+            var dllVms = GetDllsFromDatabase(_databaseService);
+            _dllVms = new ObservableCollection<DllVm>(dllVms);
         }
 
         public async Task RefreshAsync()
@@ -57,62 +56,45 @@ namespace ModEngine2ConfigTool.Services
 
         public async Task<DllVm?> ImportDllAsync()
         {
-            var modPath = GetFolderPath("Select Mod folder", "");
-            if (string.IsNullOrWhiteSpace(modPath))
+            var dllPath = GetFilePath("Select Dll file", "");
+            if (string.IsNullOrWhiteSpace(dllPath))
             {
                 return null;
             }
 
-            var newModVm = new ModVm(
-                modPath,
+            var newDllVm = new DllVm(
+                dllPath,
                 _databaseService);
 
-            await AddModAsync(newModVm);
-            return ModVms.Single(x => _modVmEqualityComparer.Equals(x, newModVm));
+            await AddDllAsync(newDllVm);
+            return DllVms.Single(x => _dllVmEqualityComparer.Equals(x, newDllVm));
         }
 
-        public async Task AddModAsync(ModVm modVm)
+        public async Task AddDllAsync(DllVm dllVm)
         {
-            _databaseService.AddMod(modVm);
+            _databaseService.AddDll(dllVm);
             await RefreshAsync();
         }
 
-        public async Task<ModVm> DuplicateModAsync(ModVm modVm)
+        public async Task<DllVm> CopyDllAsync(DllVm dllVm)
         {
-            var newModVm = new ModVm(
-                modVm.Name + " - Copy",
+            var newDllVm = new DllVm(
+                dllVm.Name + " - Copy",
                 _databaseService);
 
-            await AddModAsync(newModVm);
-            return ModVms.Single(x => _modVmEqualityComparer.Equals(x, newModVm));
+            await AddDllAsync(newDllVm);
+            return DllVms.Single(x => _dllVmEqualityComparer.Equals(x, newDllVm));
         }
 
-        public async Task RemoveModAsync(ModVm modVm)
+        public async Task RemoveDllAsync(DllVm dllVm)
         {
-            _databaseService.DeleteMod(modVm);
+            _databaseService.DeleteDll(dllVm);
             await RefreshAsync();
-        }
-
-        private List<ModVm> GetModsFromDatabase(IDatabaseService databaseService)
-        {
-            var mods = databaseService.GetMods();
-            var modVms = new List<ModVm>();
-
-            foreach (var mod in mods)
-            {
-                var modVm = new ModVm(
-                    mod,
-                    _databaseService);
-
-                modVms.Add(modVm);
-            }
-
-            return modVms;
         }
 
         private List<DllVm> GetDllsFromDatabase(IDatabaseService databaseService)
         {
-            var dlls = databaseService.GetMods();
+            var dlls = databaseService.GetDlls();
             var dllVms = new List<DllVm>();
 
             foreach (var dll in dlls)
@@ -127,32 +109,24 @@ namespace ModEngine2ConfigTool.Services
             return dllVms;
         }
 
-        private static string? GetFolderPath(string dialogTitle, string defaultLocation)
+        private static string? GetFilePath(string dialogTitle, string defaultLocation)
         {
-            var dialog = new FolderBrowserEx.FolderBrowserDialog
+            var fileDialog = new OpenFileDialog
             {
-                Title = dialogTitle,
-                InitialFolder = @"C:\",
-                AllowMultiSelect = false
+                Filter = "Dll files (*.dll)|*.dll|All files (*.*)|*.*",
+                Multiselect = false,
+                Title = "Select External Dll",
+                CheckFileExists = true,
+                CheckPathExists = true,
+                InitialDirectory = defaultLocation
             };
 
-            if (string.IsNullOrWhiteSpace(defaultLocation) || !Directory.Exists(defaultLocation))
+            if(fileDialog.ShowDialog().Equals(DialogResult.OK))
             {
-                dialog.InitialFolder = "C:\\";
-            }
-            else
-            {
-                dialog.InitialFolder = defaultLocation;
+                return fileDialog.FileName;
             }
 
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                return dialog.SelectedFolder;
-            }
-            else
-            {
-                return null;
-            }
+            return null;
         }
     }
 }

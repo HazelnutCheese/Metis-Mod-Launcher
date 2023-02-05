@@ -307,7 +307,7 @@
                                                                                                                  Content="1"
                                                                                                                  Foreground="#d1d1d1">
                                                                                             <StackPanel>
-                                                                                                <Button attached:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True"
+                                                                                                <!--<Button attached:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True"
                                                                                                         Content="Add mod"
                                                                                                         IsEnabled="{Binding CanAddMods}">
                                                                                                     <Button.ContextMenu>
@@ -323,7 +323,7 @@
                                                                                                         </ContextMenu>
                                                                                                     </Button.ContextMenu>
                                                                                                 </Button>
-                                                                                                <Separator />
+                                                                                                <Separator />-->
                                                                                                 <Button Command="{Binding PlayCommand}"
                                                                                                         Content="Play"
                                                                                                         IsEnabled="{Binding CanPlay}" />
@@ -392,28 +392,6 @@
                     </Style>
                 </ContentControl.Style>
             </ContentControl>
-
-            <!--<ItemsControl x:Name="ProfileContent"
-                          Grid.Row="5"
-                          Grid.Column="1"
-                          Background="Transparent"
-                          ItemsSource="{Binding Profiles}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="FrameworkElement.Margin" Value="0 0 15 20" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Button Style="{StaticResource ProfileButtonStyle}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>-->
         </Grid>
     </ScrollViewer>
 </UserControl>

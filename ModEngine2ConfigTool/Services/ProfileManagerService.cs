@@ -123,6 +123,39 @@ namespace ModEngine2ConfigTool.Services
             await RefreshAsync();
         }
 
+        public async Task AddDllToProfile(ProfileVm profileVm, DllVm dllVm)
+        {
+            if (!profileVm.ExternalDlls.Contains(dllVm, new DllVmEqualityComparer()))
+            {
+                _databaseService.AddDllToProfile(profileVm, dllVm);
+            }
+
+            await profileVm.RefreshAsync();
+            await RefreshAsync();
+        }
+
+        public async Task MoveDllInProfile(ProfileVm profileVm, DllVm dllVm, int changeAmount)
+        {
+            if (profileVm.ExternalDlls.Contains(dllVm, new DllVmEqualityComparer()))
+            {
+                _databaseService.MoveDllInProfile(profileVm, dllVm, changeAmount);
+            }
+
+            await profileVm.RefreshAsync();
+            await RefreshAsync();
+        }
+
+        public async Task RemoveDllFromProfile(ProfileVm profileVm, DllVm dllVm)
+        {
+            if (profileVm.ExternalDlls.Contains(dllVm, new DllVmEqualityComparer()))
+            {
+                _databaseService.RemoveDllFromProfile(profileVm, dllVm);
+            }
+
+            await profileVm.RefreshAsync();
+            await RefreshAsync();
+        }
+
         private List<ProfileVm> GetProfilesFromDatabase(IDatabaseService databaseService)
         {
             var profiles = databaseService.GetProfiles();

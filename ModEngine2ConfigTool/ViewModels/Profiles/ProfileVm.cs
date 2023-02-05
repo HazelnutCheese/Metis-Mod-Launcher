@@ -112,7 +112,8 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
             Mods = new ObservableCollection<ModVm>(
                 Model.Mods.Select(x => new ModVm(x, _databaseService)));
 
-            ExternalDlls = new ObservableCollection<DllVm>();
+            ExternalDlls = new ObservableCollection<DllVm>(
+                Model.Dlls.Select(x => new DllVm(x, _databaseService)));
         }
 
         public async Task RefreshAsync()
@@ -126,6 +127,7 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
             _imagePath = Model.ImagePath ?? "";
 
             var modVms = Model.Mods.Select(x => new ModVm(x, _databaseService));
+            var dllVms = Model.Dlls.Select(x => new DllVm(x, _databaseService));
 
             await _dispatcherService.InvokeUiAsync(() =>
             {
@@ -133,6 +135,12 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
                 foreach (var modVm in modVms)
                 {
                     Mods.Add(modVm);
+                }
+
+                ExternalDlls.Clear();
+                foreach (var dllVm in dllVms)
+                {
+                    ExternalDlls.Add(dllVm);
                 }
             });
         }

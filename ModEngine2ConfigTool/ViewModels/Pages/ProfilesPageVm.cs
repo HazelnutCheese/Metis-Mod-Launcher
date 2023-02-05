@@ -25,7 +25,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly NavigationService _navigationService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
-
+        private readonly DllManagerService _dllManagerService;
         private readonly ObservableCollection<ProfileListButtonVm> _profileListButtons;
 
         public ICollectionView Profiles
@@ -47,11 +47,13 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         public ProfilesPageVm(
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
-            ModManagerService modManagerService)
+            ModManagerService modManagerService,
+            DllManagerService dllManagerService)
         {
             _navigationService = navigationService;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
+            _dllManagerService = dllManagerService;
 
             _profileListButtons = new ObservableCollection<ProfileListButtonVm>();
             UpdateProfileListButtons();
@@ -177,7 +179,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 true,
                 _navigationService,
                 _profileManagerService,
-                _modManagerService);
+                _modManagerService,
+                _dllManagerService);
 
             await _navigationService.NavigateTo(profileEditPage);
         }
@@ -191,7 +194,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     profile,
                     _navigationService,
                     _profileManagerService,
-                    _modManagerService));
+                    _modManagerService,
+                    _dllManagerService));
             }
         }
     }

@@ -28,6 +28,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly NavigationService _navigationService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
+        private readonly DllManagerService _dllManagerService;
 
         public ProfileVm Profile { get; }
 
@@ -37,7 +38,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public ObservableCollection<ProfileModListButtonVm> Mods { get; }
 
-        public ICollectionView ExternalDlls { get; }
+        public ObservableCollection<ProfileDllListButtonVm> Dlls { get; }
 
         public HotBarVm HotBarVm { get; }
 
@@ -46,10 +47,12 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             bool IsCreatingNewProfile,
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
-            ModManagerService modManagerService)
+            ModManagerService modManagerService,
+            DllManagerService dllManagerService)
         {
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
+            _dllManagerService = dllManagerService;
             _navigationService = navigationService;
 
             Profile = profile;
@@ -77,6 +80,15 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                                 async ()=> await profileManagerService.AddModToProfile(profile, x)))
                             .ToList(),
                         modManagerService.ModVms.Any),
+                    new HotBarMenuButtonVm(
+                        "Select Dlls",
+                        PackIconKind.FolderMultiplePlusOutline,
+                        dllManagerService.DllVms
+                            .Select(x => new HotBarMenuButtonItemVm(
+                                x.Name,
+                                async ()=> await profileManagerService.AddDllToProfile(profile, x)))
+                            .ToList(),
+                        dllManagerService.DllVms.Any),
                     new HotBarButtonVm(
                         "Copy Profile",
                         PackIconKind.ContentDuplicate,
@@ -87,17 +99,27 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                         async () => await DeleteProfileAsync())
                     });
 
-            Mods = new ObservableCollection<ProfileModListButtonVm>(Profile.Mods.Select(x => new ProfileModListButtonVm(
-                profile,
-                x,
-                navigationService,
-                profileManagerService,
-                modManagerService)));
+            Mods = new ObservableCollection<ProfileModListButtonVm>(
+                Profile.Mods.Select(x => new ProfileModListButtonVm(
+                    profile,
+                    x,
+                    navigationService,
+                    profileManagerService,
+                    modManagerService)));
 
-            ExternalDlls = CollectionViewSource.GetDefaultView(Profile.ExternalDlls);
+            Dlls = new ObservableCollection<ProfileDllListButtonVm>(
+                Profile.ExternalDlls.Select(x => new ProfileDllListButtonVm(
+                    profile,
+                    x,
+                    navigationService,
+                    profileManagerService,
+                    dllManagerService)));
 
             profile.Mods.CollectionChanged += ProfileMods_CollectionChanged;
             modManagerService.ModVms.CollectionChanged += AllMods_CollectionChanged;
+
+            profile.ExternalDlls.CollectionChanged += ProfileDlls_CollectionChanged;
+            dllManagerService.DllVms.CollectionChanged += AllDlls_CollectionChanged;
         }
 
         private void ProfileMods_CollectionChanged(
@@ -125,6 +147,33 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         {
             // Add Mods Button
             (HotBarVm.Buttons[1] as HotBarMenuButtonVm)?.RaiseNotifyCommandExecuteChanged();
+        }
+
+        private void ProfileDlls_CollectionChanged(
+            object? sender,
+            System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            Dlls.Clear();
+            foreach (var dll in Profile.ExternalDlls)
+            {
+                Dlls.Add(new ProfileDllListButtonVm(
+                    Profile,
+                    dll,
+                    _navigationService,
+                    _profileManagerService,
+                    _dllManagerService));
+            }
+
+            // Play Profile Button
+            (HotBarVm.Buttons[0] as HotBarButtonVm)?.RaiseNotifyCommandExecuteChanged();
+        }   
+
+        private void AllDlls_CollectionChanged(
+            object? sender,
+            System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            // Add Dlls Button
+            (HotBarVm.Buttons[2] as HotBarMenuButtonVm)?.RaiseNotifyCommandExecuteChanged();
         }
 
         private void SelectImage()
@@ -166,7 +215,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 true,
                 _navigationService,
                 _profileManagerService,
-                _modManagerService));
+                _modManagerService,
+                _dllManagerService));
         }
 
         private async Task DeleteProfileAsync()
@@ -176,7 +226,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 new ProfilesPageVm(
                     _navigationService,
                     _profileManagerService,
-                    _modManagerService));
+                    _modManagerService,
+                    _dllManagerService));
         }
     }
 }

@@ -28,23 +28,19 @@ namespace ModEngine2ConfigTool.ViewModels
             private set => SetProperty(ref _selectedItem, value); 
         }
 
-        public MainPanelVm(NavigationService navigator)
+        public MainPanelVm(
+            NavigationService navigator, 
+            ProfileManagerService profileManagerService, 
+            ModManagerService modManagerService, 
+            DllManagerService dllManagerService)
         {
-            _profileManagerService = new ProfileManagerService(
-                App.DatabaseService,
-                App.DispatcherService);
-
-            _modManagerService = new ModManagerService(
-                App.DatabaseService,
-                App.DispatcherService,
-                _profileManagerService);
-
             Navigator = navigator;
 
             Navigator.CurrentPage = new HomePageVm(
-                Navigator, 
-                _profileManagerService, 
-                _modManagerService);
+                Navigator,
+                profileManagerService,
+                modManagerService,
+                dllManagerService);
         }
     }
 }

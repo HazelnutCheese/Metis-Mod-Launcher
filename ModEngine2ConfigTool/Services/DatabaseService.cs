@@ -33,6 +33,11 @@ namespace ModEngine2ConfigTool.Services
             return _databaseContext.Mods.Include(m => m.Profiles).ToList();
         }
 
+        public List<Dll> GetDlls()
+        {
+            return _databaseContext.Dlls.Include(m => m.Profiles).ToList();
+        }
+
         public void SaveChanges()
         {
             _databaseContext.SaveChanges();
@@ -100,12 +105,7 @@ namespace ModEngine2ConfigTool.Services
                 var newIndex = index + changeAmount;
 
                 profile.Mods.Remove(mod);
-
-                //if(newIndex > index)
-                //{
-                //    newIndex -= 1;
-                //}
-                
+               
                 if(newIndex < 0)
                 {
                     newIndex = 0;
@@ -128,6 +128,77 @@ namespace ModEngine2ConfigTool.Services
                 && profile.Mods.Contains(mod, new ModEqualityComparer()))
             {
                 profile.Mods.Remove(mod); 
+                _databaseContext.SaveChanges();
+            }
+        }
+
+        public void AddDll(DllVm dllVm)
+        {
+            if (!_databaseContext.Dlls.AsEnumerable().Contains(dllVm.Model, new DllEqualityComparer()))
+            {
+                _databaseContext.Add(dllVm.Model);
+                _databaseContext.SaveChanges();
+            }
+        }
+
+        public void DeleteDll(DllVm dllVm)
+        {
+            if (_databaseContext.Dlls.AsEnumerable().Contains(dllVm.Model, new DllEqualityComparer()))
+            {
+                _databaseContext.Remove(dllVm.Model);
+                _databaseContext.SaveChanges();
+            }
+        }
+
+        public void AddDllToProfile(ProfileVm profileVm, DllVm dllVm)
+        {
+            if (TryGetProfile(profileVm, out var profile)
+                && TryGetDll(dllVm, out var dll)
+                && !profile.Dlls.Contains(dll, new DllEqualityComparer()))
+            {
+                profile.Dlls.Add(dll);
+                _databaseContext.SaveChanges();
+            }
+        }
+
+        public void MoveDllInProfile(ProfileVm profileVm, DllVm dllVm, int changeAmount)
+        {
+            if (TryGetProfile(profileVm, out var profile)
+                && TryGetDll(dllVm, out var dll)
+                && profile.Dlls.Contains(dll, new DllEqualityComparer()))
+            {
+                if (profile.Dlls.Count < changeAmount)
+                {
+                    return;
+                }
+
+                var index = profile.Dlls.FindIndex(x => x.DllId == dll.DllId);
+                var newIndex = index + changeAmount;
+
+                profile.Dlls.Remove(dll);
+
+                if (newIndex < 0)
+                {
+                    newIndex = 0;
+                }
+                else if (newIndex > profile.Dlls.Count)
+                {
+                    newIndex = profile.Dlls.Count;
+                }
+
+                profile.Dlls.Insert(newIndex, dll);
+
+                _databaseContext.SaveChanges();
+            }
+        }
+
+        public void RemoveDllFromProfile(ProfileVm profileVm, DllVm dllVm)
+        {
+            if (TryGetProfile(profileVm, out var profile)
+                && TryGetDll(dllVm, out var dll)
+                && profile.Dlls.Contains(dll, new DllEqualityComparer()))
+            {
+                profile.Dlls.Remove(dll);
                 _databaseContext.SaveChanges();
             }
         }
@@ -155,6 +226,17 @@ namespace ModEngine2ConfigTool.Services
             result = _databaseContext.Find(
                 typeof(Mod),
                 modVm.Model.ModId) as Mod;
+
+            return result is not null;
+        }
+
+        private bool TryGetDll(
+            DllVm dllVm,
+            [NotNullWhen(returnValue: true)] out Dll? result)
+        {
+            result = _databaseContext.Find(
+                typeof(Dll),
+                dllVm.Model.DllId) as Dll;
 
             return result is not null;
         }

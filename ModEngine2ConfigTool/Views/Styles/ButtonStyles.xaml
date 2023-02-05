@@ -69,7 +69,7 @@
                                                          Content="1"
                                                          Foreground="#d1d1d1">
                                     <StackPanel>
-                                        <Button attached:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True" Content="Add mod">
+                                        <!--<Button attached:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True" Content="Add mod">
                                             <Button.ContextMenu>
                                                 <ContextMenu ItemsSource="{Binding MenuItems}">
                                                     <ContextMenu.ItemContainerStyle>
@@ -83,7 +83,7 @@
                                                 </ContextMenu>
                                             </Button.ContextMenu>
                                         </Button>
-                                        <Separator />
+                                        <Separator />-->
                                         <Button Command="{Binding PlayCommand}" Content="Play" />
                                         <Button Command="{Binding EditCommand}" Content="Edit" />
                                         <Button Command="{Binding CopyCommand}" Content="Duplicate" />

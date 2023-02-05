@@ -1,5 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MaterialDesignThemes.Wpf;
+using ModEngine2ConfigTool.Models;
+using ModEngine2ConfigTool.Services;
+using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.Views.Controls;
 using System;
@@ -15,6 +19,11 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
     internal class DllsPageVm : ObservableObject
     {
         private ICollectionView _dlls;
+        private readonly NavigationService _navigationService;
+        private readonly ProfileManagerService _profileManagerService;
+        private readonly DllManagerService _dllManagerService;
+
+        private readonly ObservableCollection<DllListButtonVm> _dllListButtons;
 
         public ICollectionView Dlls
         {
@@ -30,23 +39,43 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public ICommand SortByDateAddedCommand { get; }
 
-        public DllsPageVm(ObservableCollection<DllVm> dlls)
-        {            
-            _dlls = CollectionViewSource.GetDefaultView(dlls);
-            _dlls.SortDescriptions.Add(new SortDescription(
-                nameof(DllVm.Name),
-                ListSortDirection.Descending));
+        public HotBarVm HotBarVm { get; }
 
-            dlls.CollectionChanged += _dlls_CollectionChanged;
+        public DllsPageVm(
+            NavigationService navigationService,
+            ProfileManagerService profileManagerService,
+            DllManagerService dllManagerService)
+        {
+            _navigationService = navigationService;
+            _profileManagerService = profileManagerService;
+            _dllManagerService = dllManagerService;
+
+            _dllListButtons = new ObservableCollection<DllListButtonVm>();
+            UpdateDllListButtons();
+
+            _dlls = CollectionViewSource.GetDefaultView(_dllListButtons);
+            _dlls.SortDescriptions.Add(new SortDescription(nameof(DllListButtonVm.Name), ListSortDirection.Descending));
+
+            _dllManagerService.DllVms.CollectionChanged += _dlls_CollectionChanged;
 
             SortByNameCommand = new AsyncRelayCommand<SortButtonMode>(SortByName);
             SortByDescriptionCommand = new AsyncRelayCommand<SortButtonMode>(SortByDescription);
             SortByPathCommand = new AsyncRelayCommand<SortButtonMode>(SortByPath);
             SortByDateAddedCommand = new AsyncRelayCommand<SortButtonMode>(SortByDateAdded);
+
+            HotBarVm = new HotBarVm(
+                new ObservableCollection<ObservableObject>()
+                {
+                    new HotBarButtonVm(
+                        "Import Dll",
+                        PackIconKind.FilePlusOutline,
+                        async () => await NavigateToImportDllAsync())
+                });
         }
 
         private void _dlls_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            UpdateDllListButtons();
             _dlls.Refresh();
         }
 
@@ -58,14 +87,14 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 {
                     _dlls.SortDescriptions.Clear();
                     _dlls.SortDescriptions.Add(new SortDescription(
-                        nameof(DllVm.Name), 
+                        nameof(DllListButtonVm.Name), 
                         ListSortDirection.Descending));
                 }
                 else if (sortButtonMode.Equals(SortButtonMode.Ascending))
                 {
                     _dlls.SortDescriptions.Clear();
                     _dlls.SortDescriptions.Add(new SortDescription(
-                        nameof(DllVm.Name), 
+                        nameof(DllListButtonVm.Name), 
                         ListSortDirection.Ascending));
                 }
             });
@@ -79,14 +108,14 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 {
                     _dlls.SortDescriptions.Clear();
                     _dlls.SortDescriptions.Add(new SortDescription(
-                        nameof(DllVm.Description),
+                        nameof(DllListButtonVm.Description),
                         ListSortDirection.Descending));
                 }
                 else if (sortButtonMode.Equals(SortButtonMode.Ascending))
                 {
                     _dlls.SortDescriptions.Clear();
                     _dlls.SortDescriptions.Add(new SortDescription(
-                        nameof(DllVm.Description),
+                        nameof(DllListButtonVm.Description),
                         ListSortDirection.Ascending));
                 }
             });
@@ -100,14 +129,14 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 {
                     _dlls.SortDescriptions.Clear();
                     _dlls.SortDescriptions.Add(new SortDescription(
-                        nameof(DllVm.FilePath),
+                        nameof(DllListButtonVm.FilePath),
                         ListSortDirection.Descending));
                 }
                 else if (sortButtonMode.Equals(SortButtonMode.Ascending))
                 {
                     _dlls.SortDescriptions.Clear();
                     _dlls.SortDescriptions.Add(new SortDescription(
-                        nameof(DllVm.FilePath),
+                        nameof(DllListButtonVm.FilePath),
                         ListSortDirection.Ascending));
                 }
             });
@@ -121,17 +150,48 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 {
                     _dlls.SortDescriptions.Clear();
                     _dlls.SortDescriptions.Add(new SortDescription(
-                        nameof(DllVm.Added),
+                        nameof(DllListButtonVm.Added),
                         ListSortDirection.Descending));
                 }
                 else if (sortButtonMode.Equals(SortButtonMode.Ascending))
                 {
                     _dlls.SortDescriptions.Clear();
                     _dlls.SortDescriptions.Add(new SortDescription(
-                        nameof(DllVm.Added),
+                        nameof(DllListButtonVm.Added),
                         ListSortDirection.Ascending));
                 }
             });
+        }
+
+        private async Task NavigateToImportDllAsync()
+        {
+            var dllVm = await _dllManagerService.ImportDllAsync();
+            if (dllVm is null)
+            {
+                return;
+            }
+
+            var dllEditPage = new DllEditPageVm(
+                dllVm,
+                true,
+                _navigationService,
+                _profileManagerService,
+                _dllManagerService);
+
+            await _navigationService.NavigateTo(dllEditPage);
+        }
+
+        private void UpdateDllListButtons()
+        {
+            _dllListButtons.Clear();
+            foreach (var dll in _dllManagerService.DllVms)
+            {
+                _dllListButtons.Add(new DllListButtonVm(
+                    dll,
+                    _navigationService,
+                    _profileManagerService,
+                    _dllManagerService));
+            }
         }
     }
 }

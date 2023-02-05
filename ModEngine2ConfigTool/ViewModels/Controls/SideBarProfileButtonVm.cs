@@ -14,6 +14,7 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
         private readonly NavigationService _navigationService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
+        private readonly DllManagerService _dllManagerService;
 
         public ICommand Command { get; }
 
@@ -31,12 +32,14 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
             ProfileVm profileVm,
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
-            ModManagerService modManagerService)
+            ModManagerService modManagerService,
+            DllManagerService dllManagerService)
         {
             _profileVm = profileVm;
             _navigationService = navigationService;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
+            _dllManagerService = dllManagerService;
 
             Command = new AsyncRelayCommand(async () =>
             {
@@ -45,7 +48,8 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
                     false,
                     navigationService,
                     profileManagerService,
-                    modManagerService);
+                    modManagerService,
+                    dllManagerService);
 
                 await navigationService.NavigateTo(profileEditPageVm);
             });
@@ -64,7 +68,8 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
                 true,
                 _navigationService,
                 _profileManagerService,
-                _modManagerService));
+                _modManagerService,
+                _dllManagerService));
         }
 
         private async Task DeleteProfileAsync()
@@ -74,7 +79,8 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
                 new ProfilesPageVm(
                     _navigationService,
                     _profileManagerService,
-                    _modManagerService));
+                    _modManagerService,
+                    _dllManagerService));
         }
     }
 }
