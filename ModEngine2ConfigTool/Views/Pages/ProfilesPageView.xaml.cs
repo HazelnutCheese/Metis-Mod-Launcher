@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,16 +27,19 @@ namespace ModEngine2ConfigTool.Views.Pages
             InitializeComponent();
         }
 
-        public T FindElementByName<T>(FrameworkElement element, string sChildName) where T : FrameworkElement
+        public T? FindElementByName<T>(FrameworkElement element, string sChildName) where T : FrameworkElement
         {
-            T childElement = null;
+            T? childElement = null;
+
             var nChildCount = VisualTreeHelper.GetChildrenCount(element);
             for (int i = 0; i < nChildCount; i++)
             {
-                FrameworkElement child = VisualTreeHelper.GetChild(element, i) as FrameworkElement;
+                FrameworkElement? child = VisualTreeHelper.GetChild(element, i) as FrameworkElement;
 
-                if (child == null)
+                if (child is null)
+                {
                     continue;
+                }
 
                 if (child is T && child.Name.Equals(sChildName))
                 {
@@ -45,23 +49,28 @@ namespace ModEngine2ConfigTool.Views.Pages
 
                 childElement = FindElementByName<T>(child, sChildName);
 
-                if (childElement != null)
+                if (childElement is not null)
+                {
                     break;
+                }
             }
+
             return childElement;
         }
 
         private void ProfileScroller_MouseWheel(object sender, ScrollChangedEventArgs e)
         {
-            var gridHeader = FindElementByName<Grid>(ProfileContentView, "GridHeader");
+            var gridHeader = FindElementByName<Card>(ProfileContentView, "GridHeader");
             if (gridHeader is null)
             {
                 return;
             }
 
-            if(e.VerticalOffset > 137)
+            const double offset = 275;
+
+            if(e.VerticalOffset > offset)
             {
-                gridHeader.RenderTransform = new TranslateTransform(0, e.VerticalOffset - 137);
+                gridHeader.RenderTransform = new TranslateTransform(0, e.VerticalOffset - offset);
             }
             else
             {

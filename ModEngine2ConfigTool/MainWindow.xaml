@@ -55,7 +55,7 @@
 
             <views:SideBar Grid.RowSpan="2"
                            Grid.Column="0"
-                           DataContext="{Binding MainPanelVm}" />
+                           DataContext="{Binding SideBarVm}" />
 
             <views:TopBar Grid.Row="0"
                           Grid.Column="1"

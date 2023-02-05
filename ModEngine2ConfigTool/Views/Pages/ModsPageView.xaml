@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="ModEngine2ConfigTool.Views.Pages.ModsPageView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:attached="clr-namespace:ModEngine2ConfigTool.Views.Attached"
              xmlns:controls="clr-namespace:ModEngine2ConfigTool.Views.Controls"
              xmlns:converter="clr-namespace:ModEngine2ConfigTool.Views.Converter"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,6 +9,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pages="clr-namespace:ModEngine2ConfigTool.ViewModels.Pages"
+             xmlns:proxy="clr-namespace:ModEngine2ConfigTool.Views.Proxy"
              xmlns:views="clr-namespace:ModEngine2ConfigTool.Views"
              x:Name="ModsPageViewSelf"
              d:DataContext="{d:DesignInstance Type={x:Type pages:ModsPageVm},
@@ -27,7 +29,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="32" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="*" />
@@ -45,6 +47,11 @@
                        VerticalAlignment="Top"
                        Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                        Text="Mods" />
+
+            <controls:HotBar Grid.Row="2"
+                             Grid.Column="1"
+                             Margin="0,10"
+                             DataContext="{Binding HotBarVm}" />
 
             <TextBlock Grid.Row="3"
                        Grid.Column="1"
@@ -133,9 +140,12 @@
                               ItemsSource="{Binding Mods}"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ItemsControl.Resources>
+                        <proxy:BindingProxy x:Key="MainViewProxy" Data="{Binding Path=DataContext, ElementName=MainViewSelf}" />
+                    </ItemsControl.Resources>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Margin="0,5">
+                            <Button Margin="0,5" Command="{Binding Command}">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}">
                                         <Style.Resources>
@@ -165,7 +175,7 @@
                                                                    Width="32"
                                                                    Height="32"
                                                                    Margin="10,0"
-                                                                   Source="{Binding ImagePath, Converter={StaticResource EmptyImagePathConverter}}"
+                                                                   Source="{Binding Mod.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Red'}"
                                                                    Stretch="UniformToFill" />
 
                                                             <materialDesign:PopupBox Grid.Column="1"
@@ -174,42 +184,26 @@
                                                                                      Background="Gray"
                                                                                      Foreground="#d1d1d1">
                                                                 <StackPanel>
-                                                                    <Menu x:Name="ModMenu" Grid.Column="1">
-                                                                        <MenuItem Height="32"
-                                                                                  MaxHeight="300"
-                                                                                  Header="Add to Profile"
-                                                                                  ItemsSource="{Binding Path=DataContext.Profiles, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}}}"
-                                                                                  ScrollViewer.VerticalScrollBarVisibility="Visible">
-                                                                            <MenuItem.ItemContainerStyle>
-                                                                                <Style TargetType="MenuItem">
-                                                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                                                                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                                                                                    <Setter Property="Header" Value="{Binding Name}" />
-                                                                                    <Setter Property="Command" Value="{Binding Path=DataContext.AddModToProfileCommand, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}}}" />
-                                                                                    <Setter Property="CommandParameter">
-                                                                                        <Setter.Value>
-                                                                                            <MultiBinding Converter="{StaticResource ProfileModTupleConverter}">
-                                                                                                <Binding />
-                                                                                                <Binding ElementName="ModMenu" Path="DataContext" />
-                                                                                            </MultiBinding>
-                                                                                        </Setter.Value>
-                                                                                    </Setter>
-                                                                                </Style>
-                                                                            </MenuItem.ItemContainerStyle>
-                                                                        </MenuItem>
-                                                                    </Menu>
+                                                                    <Button attached:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True" Content="Add to profile">
+                                                                        <Button.ContextMenu>
+                                                                            <ContextMenu ItemsSource="{Binding MenuItems}">
+                                                                                <ContextMenu.ItemContainerStyle>
+                                                                                    <Style TargetType="MenuItem">
+                                                                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                                                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                                                                        <Setter Property="Header" Value="{Binding Header}" />
+                                                                                        <Setter Property="Command" Value="{Binding Command}" />
+                                                                                    </Style>
+                                                                                </ContextMenu.ItemContainerStyle>
+                                                                            </ContextMenu>
+                                                                        </Button.ContextMenu>
+                                                                    </Button>
 
                                                                     <Separator />
 
-                                                                    <Button Command="{Binding Path=DataContext.NavigateEditModCommand, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}}}"
-                                                                            CommandParameter="{Binding .}"
-                                                                            Content="Edit" />
-                                                                    <Button Command="{Binding Path=DataContext.DuplicateModCommand, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}}}"
-                                                                            CommandParameter="{Binding .}"
-                                                                            Content="Duplicate" />
-                                                                    <Button Command="{Binding Path=DataContext.DeleteModCommand, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}}}"
-                                                                            CommandParameter="{Binding .}"
-                                                                            Content="Delete" />
+                                                                    <Button Command="{Binding EditCommand}" Content="Edit" />
+                                                                    <Button Command="{Binding CopyCommand}" Content="Duplicate" />
+                                                                    <Button Command="{Binding RemoveCommand}" Content="Uninstall - from all profiles" />
                                                                 </StackPanel>
                                                             </materialDesign:PopupBox>
 

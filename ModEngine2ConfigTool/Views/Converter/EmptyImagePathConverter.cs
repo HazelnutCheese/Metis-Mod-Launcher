@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace ModEngine2ConfigTool.Views.Converter
@@ -18,7 +19,12 @@ namespace ModEngine2ConfigTool.Views.Converter
                 return imagePath;
             }
 
-            return Path.GetFullPath(".\\Resources\\EldenRing256.png");
+            if(parameter is not string fallbackPath)
+            {
+                return DependencyProperty.UnsetValue;
+            }
+
+            return Path.GetFullPath($".\\Resources\\{fallbackPath}.png");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

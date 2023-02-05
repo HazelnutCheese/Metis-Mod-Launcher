@@ -15,10 +15,22 @@ namespace ModEngine2ConfigTool.ViewModels
         {
             var navigationService = new NavigationService();
 
+            var profileManagerService = new ProfileManagerService(
+                App.DatabaseService,
+                App.DispatcherService);
+
+            var modManagerService = new ModManagerService(
+                App.DatabaseService,
+                App.DispatcherService,
+                profileManagerService);
+
             TopBarVm = new TopBarVm(mainWindow, navigationService);
             MainPanelVm = new MainPanelVm(navigationService);
 
-            SideBarVm = new SideBarVm(MainPanelVm);
+            SideBarVm = new SideBarVm(
+                navigationService, 
+                profileManagerService, 
+                modManagerService);
         }
     }
 }

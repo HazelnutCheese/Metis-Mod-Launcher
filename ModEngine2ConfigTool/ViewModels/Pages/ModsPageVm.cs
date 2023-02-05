@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MaterialDesignThemes.Wpf;
+using ModEngine2ConfigTool.Services;
+using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.Views.Controls;
 using System.Collections.ObjectModel;
@@ -14,6 +17,11 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
     internal class ModsPageVm : ObservableObject
     {
         private ICollectionView _mods;
+        private readonly NavigationService _navigationService;
+        private readonly ProfileManagerService _profileManagerService;
+        private readonly ModManagerService _modManagerService;
+
+        private readonly ObservableCollection<ModListButtonVm> _modListButtons;
 
         public ICollectionView Mods
         {
@@ -29,23 +37,45 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public ICommand SortByDateAddedCommand { get; }
 
-        public ModsPageVm(ObservableCollection<ModVm> mods)
-        {
-            _mods = CollectionViewSource.GetDefaultView(mods);
-            _mods.SortDescriptions.Add(new SortDescription(nameof(ModVm.Name), ListSortDirection.Descending));
+        public HotBarVm HotBarVm { get; }
 
-            mods.CollectionChanged += _baseMods_CollectionChanged;
+        public ModsPageVm(
+            NavigationService navigationService,
+            ProfileManagerService profileManagerService,
+            ModManagerService modManagerService)
+        {
+            _navigationService = navigationService;
+            _profileManagerService = profileManagerService;
+            _modManagerService = modManagerService;
+
+            _modListButtons = new ObservableCollection<ModListButtonVm>();
+            UpdateModListButtons();
+
+            _mods = CollectionViewSource.GetDefaultView(_modListButtons);
+            _mods.SortDescriptions.Add(new SortDescription(nameof(ModListButtonVm.Name), ListSortDirection.Descending));
+
+            modManagerService.ModVms.CollectionChanged += _baseMods_CollectionChanged;
 
             SortByNameCommand = new AsyncRelayCommand<SortButtonMode>(SortByName);
             SortByDescriptionCommand = new AsyncRelayCommand<SortButtonMode>(SortByDescription);
             SortByPathCommand = new AsyncRelayCommand<SortButtonMode>(SortByPath);
             SortByDateAddedCommand = new AsyncRelayCommand<SortButtonMode>(SortByDateAdded);
+
+            HotBarVm = new HotBarVm(
+                new ObservableCollection<ObservableObject>()
+                {
+                    new HotBarButtonVm(
+                        "Import Mod",
+                        PackIconKind.FolderMultiplePlusOutline,
+                        async () => await NavigateToImportModAsync())
+                });
         }
 
         private void _baseMods_CollectionChanged(
             object? sender, 
             System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            UpdateModListButtons();
             _mods.Refresh();
         }
 
@@ -57,14 +87,14 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 {
                     _mods.SortDescriptions.Clear();
                     _mods.SortDescriptions.Add(new SortDescription(
-                        nameof(ModVm.Name), 
+                        nameof(ModListButtonVm.Name), 
                         ListSortDirection.Descending));
                 }
                 else if(sortButtonMode.Equals(SortButtonMode.Ascending))
                 {
                     _mods.SortDescriptions.Clear();
                     _mods.SortDescriptions.Add(new SortDescription(
-                        nameof(ModVm.Name), 
+                        nameof(ModListButtonVm.Name), 
                         ListSortDirection.Ascending));
                 }
             });
@@ -78,14 +108,14 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 {
                     _mods.SortDescriptions.Clear();
                     _mods.SortDescriptions.Add(new SortDescription(
-                        nameof(ModVm.Description),
+                        nameof(ModListButtonVm.Description),
                         ListSortDirection.Descending));
                 }
                 else if (sortButtonMode.Equals(SortButtonMode.Ascending))
                 {
                     _mods.SortDescriptions.Clear();
                     _mods.SortDescriptions.Add(new SortDescription(
-                        nameof(ModVm.Description),
+                        nameof(ModListButtonVm.Description),
                         ListSortDirection.Ascending));
                 }
             });
@@ -99,14 +129,14 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 {
                     _mods.SortDescriptions.Clear();
                     _mods.SortDescriptions.Add(new SortDescription(
-                        nameof(ModVm.FolderPath),
+                        nameof(ModListButtonVm.FolderPath),
                         ListSortDirection.Descending));
                 }
                 else if (sortButtonMode.Equals(SortButtonMode.Ascending))
                 {
                     _mods.SortDescriptions.Clear();
                     _mods.SortDescriptions.Add(new SortDescription(
-                        nameof(ModVm.FolderPath),
+                        nameof(ModListButtonVm.FolderPath),
                         ListSortDirection.Ascending));
                 }
             });
@@ -120,17 +150,48 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 {
                     _mods.SortDescriptions.Clear();
                     _mods.SortDescriptions.Add(new SortDescription(
-                        nameof(ModVm.Added),
+                        nameof(ModListButtonVm.Added),
                         ListSortDirection.Descending));
                 }
                 else if (sortButtonMode.Equals(SortButtonMode.Ascending))
                 {
                     _mods.SortDescriptions.Clear();
                     _mods.SortDescriptions.Add(new SortDescription(
-                        nameof(ModVm.Added),
+                        nameof(ModListButtonVm.Added),
                         ListSortDirection.Ascending));
                 }
             });
+        }
+
+        private async Task NavigateToImportModAsync()
+        {
+            var modVm = await _modManagerService.ImportModAsync();
+            if (modVm is null)
+            {
+                return;
+            }
+
+            var modEditPage = new ModEditPageVm(
+                modVm,
+                true,
+                _navigationService,
+                _profileManagerService,
+                _modManagerService);
+
+            await _navigationService.NavigateTo(modEditPage);
+        }
+
+        private void UpdateModListButtons()
+        {
+            _modListButtons.Clear();
+            foreach(var mod in _modManagerService.ModVms)
+            {
+                _modListButtons.Add(new ModListButtonVm(
+                    mod, 
+                    _navigationService, 
+                    _profileManagerService, 
+                    _modManagerService));
+            }
         }
     }
 }

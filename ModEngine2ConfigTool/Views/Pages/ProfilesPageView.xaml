@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="ModEngine2ConfigTool.Views.Pages.ProfilesPageView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:attached="clr-namespace:ModEngine2ConfigTool.Views.Attached"
              xmlns:calc="clr-namespace:CalcBinding;assembly=CalcBinding"
              xmlns:controls="clr-namespace:ModEngine2ConfigTool.Views.Controls"
              xmlns:converter="clr-namespace:ModEngine2ConfigTool.Views.Converter"
@@ -9,6 +10,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pages="clr-namespace:ModEngine2ConfigTool.ViewModels.Pages"
+             xmlns:proxy="clr-namespace:ModEngine2ConfigTool.Views.Proxy"
              xmlns:views="clr-namespace:ModEngine2ConfigTool.Views"
              x:Name="Self"
              d:DataContext="{d:DesignInstance Type={x:Type pages:ProfilesPageVm},
@@ -25,7 +27,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="32" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="*" />
@@ -43,6 +45,11 @@
                        VerticalAlignment="Top"
                        Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                        Text="Profiles" />
+
+            <controls:HotBar Grid.Row="2"
+                             Grid.Column="1"
+                             Margin="0,10"
+                             DataContext="{Binding HotBarVm}" />
 
             <Grid Grid.Row="3"
                   Grid.Column="1"
@@ -140,7 +147,7 @@
                                             </ItemsControl.ItemContainerStyle>
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Button Style="{StaticResource ProfileButtonStyle}" />
+                                                    <Button Command="{Binding EditCommand}" Style="{StaticResource ProfileButtonStyle}" />
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
@@ -228,9 +235,15 @@
                                                           ItemsSource="{Binding Profiles}"
                                                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                                           ScrollViewer.VerticalScrollBarVisibility="Disabled">
+
+                                                <ItemsControl.Resources>
+                                                    <proxy:BindingProxy x:Key="MainViewProxy" Data="{Binding Path=DataContext, ElementName=MainViewSelf}" />
+                                                </ItemsControl.Resources>
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Button Margin="0,5">
+                                                        <Button Margin="0,5"
+                                                                Command="{Binding Command}"
+                                                                CommandParameter="{Binding .}">
                                                             <Button.Style>
                                                                 <Style TargetType="{x:Type Button}">
                                                                     <Style.Resources>
@@ -260,7 +273,7 @@
                                                                                                Width="32"
                                                                                                Height="32"
                                                                                                Margin="10,0"
-                                                                                               Source="{Binding ImagePath, Converter={StaticResource EmptyImagePathConverter}}"
+                                                                                               Source="{Binding Profile.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Blue'}"
                                                                                                Stretch="UniformToFill" />
 
                                                                                         <Button x:Name="PlayIcon"
@@ -276,7 +289,7 @@
                                                                                                 Background="#202020"
                                                                                                 BorderBrush="Transparent"
                                                                                                 BorderThickness="0"
-                                                                                                Command="{Binding Path=DataContext.PlayProfileCommand, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}}}"
+                                                                                                Command="{Binding PlayCommand}"
                                                                                                 CommandParameter="{Binding .}"
                                                                                                 Opacity="0.8">
                                                                                             <Grid>
@@ -294,18 +307,29 @@
                                                                                                                  Content="1"
                                                                                                                  Foreground="#d1d1d1">
                                                                                             <StackPanel>
-                                                                                                <Button Command="{Binding Path=DataContext.PlayProfileCommand, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}}}"
-                                                                                                        CommandParameter="{Binding .}"
-                                                                                                        Content="Play" />
-                                                                                                <Button Command="{Binding Path=DataContext.NavigateEditProfileCommand, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}}}"
-                                                                                                        CommandParameter="{Binding .}"
-                                                                                                        Content="Edit" />
-                                                                                                <Button Command="{Binding Path=DataContext.DuplicateProfileCommand, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}}}"
-                                                                                                        CommandParameter="{Binding .}"
-                                                                                                        Content="Duplicate" />
-                                                                                                <Button Command="{Binding Path=DataContext.DeleteProfileCommand, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}}}"
-                                                                                                        CommandParameter="{Binding .}"
-                                                                                                        Content="Delete" />
+                                                                                                <Button attached:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True"
+                                                                                                        Content="Add mod"
+                                                                                                        IsEnabled="{Binding CanAddMods}">
+                                                                                                    <Button.ContextMenu>
+                                                                                                        <ContextMenu ItemsSource="{Binding MenuItems}">
+                                                                                                            <ContextMenu.ItemContainerStyle>
+                                                                                                                <Style TargetType="MenuItem">
+                                                                                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                                                                                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                                                                                                    <Setter Property="Header" Value="{Binding Header}" />
+                                                                                                                    <Setter Property="Command" Value="{Binding Command}" />
+                                                                                                                </Style>
+                                                                                                            </ContextMenu.ItemContainerStyle>
+                                                                                                        </ContextMenu>
+                                                                                                    </Button.ContextMenu>
+                                                                                                </Button>
+                                                                                                <Separator />
+                                                                                                <Button Command="{Binding PlayCommand}"
+                                                                                                        Content="Play"
+                                                                                                        IsEnabled="{Binding CanPlay}" />
+                                                                                                <Button Command="{Binding EditCommand}" Content="Edit" />
+                                                                                                <Button Command="{Binding CopyCommand}" Content="Duplicate" />
+                                                                                                <Button Command="{Binding DeleteCommand}" Content="Delete" />
                                                                                             </StackPanel>
                                                                                         </materialDesign:PopupBox>
 

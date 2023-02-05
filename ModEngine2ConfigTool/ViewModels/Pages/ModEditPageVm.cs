@@ -1,9 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
+using ModEngine2ConfigTool.Services;
+using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.ViewModels.Profiles;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ModEngine2ConfigTool.ViewModels.Pages
@@ -11,6 +17,9 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
     public class ModEditPageVm : ObservableObject
     {
         private string _lastOpenedLocation;
+        private readonly NavigationService _navigationService;
+        private readonly ProfileManagerService _profileManagerService;
+        private readonly ModManagerService _modManagerService;
 
         public ModVm Mod { get; }
 
@@ -18,8 +27,19 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public ICommand SelectImageCommand { get; }
 
-        public ModEditPageVm(ModVm mod, bool isCreatingNewMod)
+        public HotBarVm HotBarVm { get; }
+
+        public ModEditPageVm(
+            ModVm mod, 
+            bool isCreatingNewMod,
+            NavigationService navigationService,
+            ProfileManagerService profileManagerService,
+            ModManagerService modManagerService)
         {
+            _navigationService = navigationService;
+            _profileManagerService = profileManagerService;
+            _modManagerService = modManagerService;
+
             Mod = mod;
 
             Header = isCreatingNewMod
@@ -29,6 +49,28 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             SelectImageCommand = new RelayCommand(SelectImage);
 
             _lastOpenedLocation = string.Empty;
+
+            HotBarVm = new HotBarVm(
+                new ObservableCollection<ObservableObject>()
+                {
+                    new HotBarMenuButtonVm(
+                        "Add to Profile",
+                        PackIconKind.FolderPlusOutline,
+                        _profileManagerService.ProfileVms
+                            .Select(x => new HotBarMenuButtonItemVm(
+                                x.Name,
+                                async ()=> await _profileManagerService.AddModToProfile(x, Mod)))
+                            .ToList(),
+                        modManagerService.ModVms.Any),
+                    new HotBarButtonVm(
+                        "Copy Mod",
+                        PackIconKind.ContentDuplicate,
+                        async () => await NavigateToCopyModAsync()),
+                    new HotBarButtonVm(
+                        "Delete Mod",
+                        PackIconKind.DeleteOutline,
+                        async () => await DeleteModAsync())
+                });
         }
 
         private void SelectImage()
@@ -60,6 +102,30 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 _lastOpenedLocation = Path.GetDirectoryName(fileDialog.FileName) ?? string.Empty;
                 Mod.ImagePath = fileDialog.FileName;
             }
+        }
+
+        private async Task NavigateToCopyModAsync()
+        {
+            var modVm = await _modManagerService.DuplicateModAsync(Mod);
+
+            var modEditPage = new ModEditPageVm(
+                modVm,
+                true,
+                _navigationService,
+                _profileManagerService,
+                _modManagerService);
+
+            await _navigationService.NavigateTo(modEditPage);
+        }
+
+        private async Task DeleteModAsync()
+        {
+            await _modManagerService.RemoveModAsync(Mod);
+            await _navigationService.NavigateTo(
+                new ModsPageVm(
+                    _navigationService, 
+                    _profileManagerService, 
+                    _modManagerService));
         }
     }
 }

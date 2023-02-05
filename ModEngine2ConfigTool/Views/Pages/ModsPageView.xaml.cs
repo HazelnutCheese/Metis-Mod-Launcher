@@ -27,9 +27,12 @@ namespace ModEngine2ConfigTool.Views.Pages
 
         private void ProfileScroller_MouseWheel(object sender, ScrollChangedEventArgs e)
         {
-            if (e.VerticalOffset > 137)
+
+            const double offset = 275;
+
+            if (e.VerticalOffset > offset)
             {
-                GridHeader.RenderTransform = new TranslateTransform(0, e.VerticalOffset - 137);
+                GridHeader.RenderTransform = new TranslateTransform(0, e.VerticalOffset - offset);
             }
             else
             {

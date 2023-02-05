@@ -161,7 +161,7 @@
                                                                    Width="32"
                                                                    Height="32"
                                                                    Margin="10,0"
-                                                                   Source="{Binding ImagePath, Converter={StaticResource EmptyImagePathConverter}}"
+                                                                   Source="{Binding ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='ModDefaultImage'}"
                                                                    Stretch="UniformToFill" />
 
                                                             <materialDesign:PopupBox Grid.Column="1"

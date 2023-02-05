@@ -13,8 +13,8 @@ namespace ModEngine2ConfigTool.Models
         public string? ImagePath { get; set; }
         public DateTime Created { get; set; }
         public DateTime? LastPlayed { get; set; }
-        public List<Mod> Mods { get; set; } = new();
-        public List<Dll> Dlls { get; set; } = new();
+        public List<Mod> Mods { get; set; }
+        public List<Dll> Dlls { get; set; }
     }
 
     public sealed class Mod
@@ -25,7 +25,7 @@ namespace ModEngine2ConfigTool.Models
         public string? ImagePath { get; set; }
         public string? FolderPath { get; set; }
         public DateTime Added { get; set; }
-        public List<Profile> Profiles { get; set; } = new();
+        public List<Profile> Profiles { get; set; }
     }
 
     public sealed class Dll
@@ -36,7 +36,7 @@ namespace ModEngine2ConfigTool.Models
         public string? ImagePath { get; set; }
         public string? FilePath { get; set; }
         public DateTime Added { get; set; }
-        public List<Profile> Profiles { get; set; } = new();
+        public List<Profile> Profiles { get; set; }
     }
 
     public sealed class DatabaseContext : DbContext
@@ -49,12 +49,12 @@ namespace ModEngine2ConfigTool.Models
 
         public DatabaseContext()
         {
-            DbPath = System.IO.Path.Join(Directory.GetCurrentDirectory(), "ModEngine2ConfigTool.db");
+            DbPath = Path.Join(Directory.GetCurrentDirectory(), "ModEngine2ConfigTool.db");
         }
 
         public DatabaseContext(string dataStorageFolder)
         {
-            DbPath = System.IO.Path.Join(dataStorageFolder, "ModEngine2ConfigTool.db");
+            DbPath = Path.Join(dataStorageFolder, "ModEngine2ConfigTool.db");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

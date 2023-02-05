@@ -10,22 +10,22 @@ using System.Windows.Forms;
 
 namespace ModEngine2ConfigTool.Services
 {
-    public class ModManagerService : ObservableObject
+    public class DllManagerService : ObservableObject
     {
         private readonly IDatabaseService _databaseService;
         private readonly IDispatcherService _dispatcherService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly IEqualityComparer<ModVm> _modVmEqualityComparer;
 
-        private ObservableCollection<ModVm> _modVms;
+        private ObservableCollection<DllVm> _dllVms;
 
-        public ObservableCollection<ModVm> ModVms 
+        public ObservableCollection<DllVm> DllVms 
         { 
-            get => _modVms; 
-            private set => _modVms = value; 
+            get => _dllVms; 
+            private set => _dllVms = value; 
         }
 
-        public ModManagerService(
+        public DllManagerService(
             IDatabaseService databaseService,
             IDispatcherService dispatcherService,
             ProfileManagerService profileManagerService)
@@ -35,27 +35,27 @@ namespace ModEngine2ConfigTool.Services
             _profileManagerService = profileManagerService;
             _modVmEqualityComparer = new ModVmEqualityComparer();
 
-            var modVms = GetModsFromDatabase(_databaseService);
-            _modVms = new ObservableCollection<ModVm>(modVms);
+            var dllVms = GetModsFromDatabase(_databaseService);
+            _dllVms = new ObservableCollection<ModVm>(dllVms);
         }
 
         public async Task RefreshAsync()
         {
-            var modVms = GetModsFromDatabase(_databaseService);
+            var dllVms = GetDllsFromDatabase(_databaseService);
             await _dispatcherService.InvokeUiAsync(() =>
             {
-                ModVms.Clear();
+                DllVms.Clear();
 
-                foreach(var modVm in modVms)
+                foreach(var dllVm in dllVms)
                 {
-                    ModVms.Add(modVm);
+                    DllVms.Add(dllVm);
                 }
             });
 
             await _profileManagerService.RefreshAsync();
         }
 
-        public async Task<ModVm?> ImportModAsync()
+        public async Task<DllVm?> ImportDllAsync()
         {
             var modPath = GetFolderPath("Select Mod folder", "");
             if (string.IsNullOrWhiteSpace(modPath))
@@ -108,6 +108,23 @@ namespace ModEngine2ConfigTool.Services
             }
 
             return modVms;
+        }
+
+        private List<DllVm> GetDllsFromDatabase(IDatabaseService databaseService)
+        {
+            var dlls = databaseService.GetMods();
+            var dllVms = new List<DllVm>();
+
+            foreach (var dll in dlls)
+            {
+                var dllVm = new DllVm(
+                    dll,
+                    _databaseService);
+
+                dllVms.Add(dllVm);
+            }
+
+            return dllVms;
         }
 
         private static string? GetFolderPath(string dialogTitle, string defaultLocation)

@@ -7,14 +7,15 @@ namespace ModEngine2ConfigTool.Services
 {
     public interface IDatabaseService
     {
-        void AddMod(ModVm modVm);
-        void AddModToProfile(Profile profile, Mod mod);
-        void AddProfile(ProfileVm profileVm);
-        void DeleteMod(ModVm modVm);
-        void DeleteProfile(ProfileVm profileVm);
         List<Mod> GetMods();
         List<Profile> GetProfiles();
-        void RemoveModFromProfile(Profile profile, Mod mod);
+        void AddProfile(ProfileVm profileVm);
+        void DeleteProfile(ProfileVm profileVm);
+        void AddMod(ModVm modVm);
+        void DeleteMod(ModVm modVm);
+        void AddModToProfile(ProfileVm profile, ModVm mod);
+        void MoveModInProfile(ProfileVm profileVm, ModVm modVm, int changeAmount);
+        void RemoveModFromProfile(ProfileVm profile, ModVm mod);
         void SaveChanges();
     }
 }

@@ -70,7 +70,7 @@ namespace ModEngine2ConfigTool.Services
         public async Task<ProfileVm> DuplicateProfileAsync(ProfileVm profileVm)
         {
             var newProfileVm = new ProfileVm(
-                profileVm.Name,
+                profileVm.Name + " - Copy",
                 _databaseService,
                 _dispatcherService);
 
@@ -94,7 +94,18 @@ namespace ModEngine2ConfigTool.Services
         {
             if(!profileVm.Mods.Contains(modVm, new ModVmEqualityComparer()))
             {
-                _databaseService.AddModToProfile(profileVm.Model, modVm.Model);
+                _databaseService.AddModToProfile(profileVm, modVm);
+            }
+
+            await profileVm.RefreshAsync();
+            await RefreshAsync();
+        }
+
+        public async Task MoveModInProfile(ProfileVm profileVm, ModVm modVm, int changeAmount)
+        {
+            if (profileVm.Mods.Contains(modVm, new ModVmEqualityComparer()))
+            {
+                _databaseService.MoveModInProfile(profileVm, modVm, changeAmount);
             }
 
             await profileVm.RefreshAsync();
@@ -105,7 +116,7 @@ namespace ModEngine2ConfigTool.Services
         {
             if (profileVm.Mods.Contains(modVm, new ModVmEqualityComparer()))
             {
-                _databaseService.RemoveModFromProfile(profileVm.Model, modVm.Model);
+                _databaseService.RemoveModFromProfile(profileVm, modVm);
             }
 
             await profileVm.RefreshAsync();

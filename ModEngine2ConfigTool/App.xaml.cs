@@ -1,4 +1,5 @@
-﻿using ModEngine2ConfigTool.Helpers;
+﻿using Microsoft.Data.Sqlite;
+using ModEngine2ConfigTool.Helpers;
 using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels;
@@ -37,7 +38,17 @@ namespace ModEngine2ConfigTool
         {
             if(Debugger.IsAttached)
             {
-                DataStorage = Directory.GetCurrentDirectory();
+                DataStorage = Directory.GetCurrentDirectory() + "\\Temp";
+
+                //if(Directory.Exists(DataStorage))
+                //{
+                //    Directory.Delete(DataStorage, true);
+                //}
+
+                if(!Directory.Exists(DataStorage))
+                {
+                    Directory.CreateDirectory(DataStorage);
+                }
             }
             else
             {
@@ -50,7 +61,7 @@ namespace ModEngine2ConfigTool
             Logger = Logger.GetLogger(nameof(App));
             ConfigurationService = new ConfigurationService();
             DispatcherService = new DispatcherService();
-            DatabaseService = new DatabaseService(Directory.GetCurrentDirectory());
+            DatabaseService = new DatabaseService(DataStorage);
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -80,6 +91,11 @@ namespace ModEngine2ConfigTool
             
             mainWindow.DataContext = mainViewModel;
 
+            //AppDomain.CurrentDomain.ProcessExit += (sender, e) =>
+            //{
+            //    SqliteConnection.ClearAllPools();
+            //};
+
             mainWindow.Show();
         }
 
@@ -87,6 +103,7 @@ namespace ModEngine2ConfigTool
         {
             MessageBox.Show(e.Exception.Message);
             Logger.Error(e.Exception.ToString());
+
             e.SetObserved();
         }
 
