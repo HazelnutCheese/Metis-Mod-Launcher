@@ -32,7 +32,9 @@ namespace ModEngine2ConfigTool.ViewModels
             NavigationService navigator, 
             ProfileManagerService profileManagerService, 
             ModManagerService modManagerService, 
-            DllManagerService dllManagerService)
+            DllManagerService dllManagerService,
+            PlayManagerService playManagerService,
+            SaveManagerService saveManagerService)
         {
             Navigator = navigator;
 
@@ -40,7 +42,9 @@ namespace ModEngine2ConfigTool.ViewModels
                 Navigator,
                 profileManagerService,
                 modManagerService,
-                dllManagerService);
+                dllManagerService,
+                playManagerService,
+                saveManagerService);
         }
     }
 }

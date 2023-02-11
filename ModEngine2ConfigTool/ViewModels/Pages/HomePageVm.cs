@@ -21,6 +21,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
         private readonly DllManagerService _dllManagerService;
+        private readonly PlayManagerService _playManagerService;
+        private readonly SaveManagerService _saveManagerService;
         private ICollectionView _recentProfiles;
 
         private readonly ObservableCollection<ProfileListButtonVm> _profileListButtons;
@@ -37,7 +39,9 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             NavigationService navigationService,
             ProfileManagerService profileManagerService, 
             ModManagerService modManagerService,
-            DllManagerService dllManagerService)
+            DllManagerService dllManagerService,
+            PlayManagerService playManagerService,
+            SaveManagerService saveManagerService)
         {
             _profiles = profileManagerService.ProfileVms;
 
@@ -45,6 +49,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
             _dllManagerService = dllManagerService;
+            _playManagerService = playManagerService;
+            _saveManagerService = saveManagerService;
 
             _profileListButtons = new ObservableCollection<ProfileListButtonVm>();
             UpdateProfileListButtons();
@@ -63,7 +69,11 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     new HotBarButtonVm(
                         "Import Mod",
                         PackIconKind.FolderMultiplePlusOutline,
-                        async () => await NavigateToImportModAsync())
+                        async () => await NavigateToImportModAsync()),
+                    new HotBarButtonVm(
+                        "Import External Dll",
+                        PackIconKind.FilePlusOutline,
+                        async () => await NavigateToImportDllAsync())
                 });
 
             
@@ -91,7 +101,9 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 _navigationService,
                 _profileManagerService, 
                 _modManagerService,
-                _dllManagerService);
+                _dllManagerService,
+                _playManagerService,
+                _saveManagerService);
 
             await _navigationService.NavigateTo(profileEditPage);
         }
@@ -114,6 +126,24 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             await _navigationService.NavigateTo(modEditPage);
         }
 
+        private async Task NavigateToImportDllAsync()
+        {
+            var dllVm = await _dllManagerService.ImportDllAsync();
+            if (dllVm is null)
+            {
+                return;
+            }
+
+            var dllEditPage = new DllEditPageVm(
+                dllVm,
+                true,
+                _navigationService,
+                _profileManagerService,
+                _dllManagerService);
+
+            await _navigationService.NavigateTo(dllEditPage);
+        }
+
         private void UpdateProfileListButtons()
         {
             _profileListButtons.Clear();
@@ -124,7 +154,9 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     _navigationService,
                     _profileManagerService,
                     _modManagerService,
-                    _dllManagerService));
+                    _dllManagerService,
+                    _playManagerService,
+                    _saveManagerService));
             }
         }
     }

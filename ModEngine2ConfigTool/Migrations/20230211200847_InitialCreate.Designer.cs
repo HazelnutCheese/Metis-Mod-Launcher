@@ -11,7 +11,7 @@ using ModEngine2ConfigTool.Models;
 namespace ModEngine2ConfigTool.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230202225608_InitialCreate")]
+    [Migration("20230211200847_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -110,6 +110,15 @@ namespace ModEngine2ConfigTool.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("UseDebugMode")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("UseSaveManager")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("UseScyllaHide")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ProfileId");
 

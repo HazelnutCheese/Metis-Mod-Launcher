@@ -1,12 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
-using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
-using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.Views.Controls;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -67,7 +64,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 new ObservableCollection<ObservableObject>()
                 {
                     new HotBarButtonVm(
-                        "Import Dll",
+                        "Import External Dll",
                         PackIconKind.FilePlusOutline,
                         async () => await NavigateToImportDllAsync())
                 });

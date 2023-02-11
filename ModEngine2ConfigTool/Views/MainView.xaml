@@ -7,6 +7,7 @@
              xmlns:pageVms="clr-namespace:ModEngine2ConfigTool.ViewModels.Pages"
              xmlns:pages="clr-namespace:ModEngine2ConfigTool.Views.Pages"
              xmlns:viewmodels="clr-namespace:ModEngine2ConfigTool.ViewModels"
+             xmlns:xaml="http://materialdesigninxaml.net/winfx/xaml/themes"
              x:Name="MainViewSelf"
              d:DataContext="{d:DesignInstance Type={x:Type viewmodels:MainPanelVm}}"
              d:DesignHeight="450"
@@ -34,6 +35,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type pageVms:DllEditPageVm}">
             <pages:DllEditPageView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type pageVms:HelpPageVm}">
+            <pages:HelpPageView />
         </DataTemplate>
     </UserControl.Resources>
     <Grid>

@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
+using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
@@ -27,6 +28,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public ICommand SelectImageCommand { get; }
 
+        public ICommand BrowseCommand { get; }
+
         public HotBarVm HotBarVm { get; }
 
         public DllEditPageVm(
@@ -47,6 +50,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 : "Edit Mod";
 
             SelectImageCommand = new RelayCommand(SelectImage);
+            BrowseCommand = new RelayCommand(Browse);
 
             _lastOpenedLocation = string.Empty;
 
@@ -126,6 +130,31 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     _navigationService, 
                     _profileManagerService, 
                     _dllManagerService));
+        }
+
+        private void Browse()
+        {
+            Dll.FilePath = GetFilePath("Select new dll", Dll.FilePath) ?? Dll.FilePath;
+        }
+
+        private static string? GetFilePath(string dialogTitle, string defaultLocation)
+        {
+            var fileDialog = new OpenFileDialog
+            {
+                Filter = "Dll files (*.dll)|*.dll|All files (*.*)|*.*",
+                Multiselect = false,
+                Title = "Select External Dll",
+                CheckFileExists = true,
+                CheckPathExists = true,
+                InitialDirectory = defaultLocation
+            };
+
+            if (fileDialog.ShowDialog().Equals(true))
+            {
+                return fileDialog.FileName;
+            }
+
+            return null;
         }
     }
 }

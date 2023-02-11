@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Pages;
 using ModEngine2ConfigTool.ViewModels.Profiles;
@@ -15,6 +16,9 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
         private readonly DllManagerService _dllManagerService;
+        private readonly PlayManagerService _playManagerService;
+        private readonly SaveManagerService _saveManagerService;
+        private readonly PlayManagerService playManagerService;
 
         public ICommand Command { get; }
 
@@ -33,13 +37,17 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
             ModManagerService modManagerService,
-            DllManagerService dllManagerService)
+            DllManagerService dllManagerService,
+            PlayManagerService playManagerService,
+            SaveManagerService saveManagerService)
         {
             _profileVm = profileVm;
             _navigationService = navigationService;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
             _dllManagerService = dllManagerService;
+            _playManagerService = playManagerService;
+            _saveManagerService = saveManagerService;
 
             Command = new AsyncRelayCommand(async () =>
             {
@@ -49,12 +57,14 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
                     navigationService,
                     profileManagerService,
                     modManagerService,
-                    dllManagerService);
+                    dllManagerService,
+                    playManagerService,
+                    _saveManagerService);
 
                 await navigationService.NavigateTo(profileEditPageVm);
             });
 
-            PlayCommand = new RelayCommand(() => Debug.Print($"Playing {_profileVm.Name}"));
+            PlayCommand = new AsyncRelayCommand(PlayAsync);
             EditCommand = Command;
             CopyCommand = new AsyncRelayCommand(DuplicateProfileAsync);
             DeleteCommand = new AsyncRelayCommand(DeleteProfileAsync);
@@ -69,7 +79,9 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
                 _navigationService,
                 _profileManagerService,
                 _modManagerService,
-                _dllManagerService));
+                _dllManagerService,
+                _playManagerService,
+                _saveManagerService));
         }
 
         private async Task DeleteProfileAsync()
@@ -80,7 +92,14 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
                     _navigationService,
                     _profileManagerService,
                     _modManagerService,
-                    _dllManagerService));
+                    _dllManagerService,
+                    _playManagerService,
+                    _saveManagerService));
+        }
+
+        private async Task PlayAsync()
+        {
+            await _playManagerService.Play(_profileVm);
         }
     }
 }

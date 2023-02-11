@@ -1,30 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace ModEngine2ConfigTool.Services
 {
-    public static class SaveManagerService
+    public class SaveManagerService
     {
         private const string _savesFolderName = "Saves";
         private const string _backupsFolderName = "Backups";
-        private const string _baseGameBackupsFolderName = "Unmodded";
+        private const string _baseGameBackupsFolderName = "Vanilla";
 
-        private static string SavesRoot { get; } = Path.Combine(
-            App.DataStorage,
-            _savesFolderName);
+        private readonly string _savesRoot;
 
-        private static string BackupsRoot { get; } = Path.Combine(
-            SavesRoot,
-            _backupsFolderName);
+        private readonly string _backupsRoot;
 
-        public static void InstallProfileSaves(string profileName)
+        public SaveManagerService(string dataStorage)
         {
-            var eldenRingSaveGameFolder = App.ConfigurationService.SaveGameFolder;
+            _savesRoot = Path.Combine(dataStorage, _savesFolderName);
+            _backupsRoot = Path.Combine(_savesRoot, _backupsFolderName);
+
+            if(!Directory.Exists(_savesRoot))
+            {
+                Directory.CreateDirectory(_savesRoot);
+            }
+
+            if(!Directory.Exists(_backupsRoot))
+            {
+                Directory.CreateDirectory(_backupsRoot);
+            }
+        }
+
+        public void InstallProfileSaves(string profileName)
+        {
+            var eldenRingSaveGameFolder = GetEldenRingSavesFolder();
+            if (eldenRingSaveGameFolder is null)
+            {
+                return;
+            }
 
             var profileSaves = Path.Combine(
-                SavesRoot,
+                _savesRoot,
                 profileName);
 
             if (Directory.Exists(eldenRingSaveGameFolder))
@@ -35,13 +53,13 @@ namespace ModEngine2ConfigTool.Services
                 foreach (var file in existingSaveGames)
                 {
                     var newExtension = $"{Path.GetExtension(file)}temp";
-                    File.Move(file, Path.ChangeExtension(file, newExtension));
+                    File.Move(file, Path.ChangeExtension(file, newExtension), true);
                 }
 
                 foreach (var file in existingCoopSaveGames)
                 {
                     var newExtension = $"{Path.GetExtension(file)}temp";
-                    File.Move(file, Path.ChangeExtension(file, newExtension));
+                    File.Move(file, Path.ChangeExtension(file, newExtension), true);
                 }
             }
 
@@ -64,12 +82,16 @@ namespace ModEngine2ConfigTool.Services
             }
         }
 
-        public static void UninstallProfileSaves(string profileName)
+        public void UninstallProfileSaves(string profileName)
         {
-            var eldenRingSaveGameFolder = App.ConfigurationService.SaveGameFolder;
+            var eldenRingSaveGameFolder = GetEldenRingSavesFolder();
+            if (eldenRingSaveGameFolder is null)
+            {
+                return;
+            }
 
             var profileSaves = Path.Combine(
-                SavesRoot,
+                _savesRoot,
                 profileName);
 
             Directory.CreateDirectory(profileSaves);
@@ -108,12 +130,16 @@ namespace ModEngine2ConfigTool.Services
             }
         }
 
-        public static void CreateUnmoddedBackups()
+        public void CreateUnmoddedBackups()
         {
-            var eldenRingSaveGameFolder = App.ConfigurationService.SaveGameFolder;
+            var eldenRingSaveGameFolder = GetEldenRingSavesFolder();
+            if (eldenRingSaveGameFolder is null)
+            {
+                return;
+            }
 
             var unmoddedBackups = Path.Combine(
-                BackupsRoot,
+                _backupsRoot,
                 _baseGameBackupsFolderName);
 
             if (Directory.Exists(eldenRingSaveGameFolder))
@@ -130,17 +156,17 @@ namespace ModEngine2ConfigTool.Services
             }
         }
 
-        public static void CreateBackups(string profileName)
+        public void CreateBackups(string profileId)
         {
             var timestamp = DateTime.Now.ToString("dd_M_yyyy  H_mm_ss");
 
             var profileSaves = Path.Combine(
-                SavesRoot,
-                profileName);
+                _savesRoot,
+                profileId);
 
             var profileBackups = Path.Combine(
-                BackupsRoot,
-                profileName);
+                _backupsRoot,
+                profileId);
 
             var datedProfileBackupFolderPath = Path.Combine(
                 profileBackups,
@@ -160,24 +186,24 @@ namespace ModEngine2ConfigTool.Services
             }
         }
 
-        public static void CopySaves(
+        public void CopySaves(
             string oldProfileName, 
             string newProfileName)
         {
             var oldProfileSaves = Path.Combine(
-                SavesRoot,
+                _savesRoot,
                 oldProfileName);
 
             var oldProfileBackups = Path.Combine(
-                BackupsRoot,
+                _backupsRoot,
                 oldProfileName);
 
             var newProfileSaves = Path.Combine(
-                SavesRoot,
+                _savesRoot,
                 newProfileName);
 
             var newProfileBackups = Path.Combine(
-                BackupsRoot,
+                _backupsRoot,
                 newProfileName);
 
             Directory.CreateDirectory(newProfileSaves);
@@ -206,15 +232,15 @@ namespace ModEngine2ConfigTool.Services
             }
         }
 
-        public static void DeleteSaves(string profileName) 
+        public void DeleteSaves(string profileId) 
         {
             var profileSaves = Path.Combine(
-                SavesRoot,
-                profileName);
+                _savesRoot,
+                profileId);
 
             var profileBackups = Path.Combine(
-                BackupsRoot,
-                profileName);
+                _backupsRoot,
+                profileId);
 
             if(Directory.Exists(profileSaves))
             {
@@ -225,6 +251,100 @@ namespace ModEngine2ConfigTool.Services
             {
                 Directory.Delete(profileBackups, true);
             }
+        }
+
+        public void OpenProfileSavesFolder(string profileId)
+        {
+            var profileSaves = Path.Combine(
+                _savesRoot,
+                profileId);
+
+            if (Directory.Exists(profileSaves))
+            {
+                Process.Start("explorer", profileSaves);
+            }
+        }
+
+        public bool ProfileHasSaves(string profileId)
+        {
+            var profileSaves = Path.Combine(
+                _savesRoot,
+                profileId);
+
+            return Directory.Exists(profileSaves) && Directory.GetFiles(profileSaves).Any();
+        }
+
+        public void ImportSave(string profileId)
+        {
+            if(ProfileHasSaves(profileId))
+            {
+                // Show are you sure dialog
+            }
+
+            var importFolder = GetFolderPath("Select saves folder to import", _savesRoot);
+            if(string.IsNullOrEmpty(importFolder) || !Directory.Exists(importFolder))
+            {
+                return;
+            }
+
+            var sl2Saves = GetSaves(importFolder, "sl2");
+            var coopSaves = GetSaves(importFolder, "co2");
+            var allSaves = sl2Saves.Concat(coopSaves);
+
+            var profileSaves = Path.Combine(
+                _savesRoot,
+                profileId);
+
+            if (!Directory.Exists(profileSaves))
+            {
+                Directory.CreateDirectory(profileSaves);
+            }
+
+            foreach (var save in allSaves)
+            {
+                var fileName = Path.GetFileName(save);
+                var newLocation = Path.Combine(profileSaves, fileName);
+                File.Copy(save, newLocation, true);
+            }
+        }
+
+        public void BackupSaves(string profileId)
+        {
+            var exportFolder = GetFolderPath("Select folder to export to", "");
+            if (string.IsNullOrEmpty(exportFolder) || !Directory.Exists(exportFolder))
+            {
+                return;
+            }
+
+            var backupPath = Path.Combine(exportFolder, profileId);
+            if(!Directory.Exists(backupPath))
+            {
+                Directory.CreateDirectory(backupPath);
+            }
+
+            var profileSaves = Path.Combine(
+                _savesRoot,
+                profileId);
+
+            var sl2Saves = GetSaves(profileSaves, "sl2");
+            var coopSaves = GetSaves(profileSaves, "co2");
+            var allSaves = sl2Saves.Concat(coopSaves);
+
+            foreach (var save in allSaves)
+            {
+                var fileName = Path.GetFileName(save);
+                var newLocation = Path.Combine(backupPath, fileName);
+                File.Copy(save, newLocation, true);
+            }
+        }
+
+        private string? GetEldenRingSavesFolder()
+        {
+            var eldenRingSaveGameFolder = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "EldenRing");
+
+            return Directory.GetDirectories(eldenRingSaveGameFolder).FirstOrDefault();
         }
 
         private static List<string> GetSaves(string directory, string extension)
@@ -241,6 +361,34 @@ namespace ModEngine2ConfigTool.Services
                 .ToList()
                 .Concat(Directory.GetFiles(directory, $"*.{extension}.baktemp"))
                 .ToList();
+        }
+
+        private static string? GetFolderPath(string dialogTitle, string defaultLocation)
+        {
+            var dialog = new FolderBrowserEx.FolderBrowserDialog
+            {
+                Title = dialogTitle,
+                InitialFolder = @"C:\",
+                AllowMultiSelect = false
+            };
+
+            if (string.IsNullOrWhiteSpace(defaultLocation) || !Directory.Exists(defaultLocation))
+            {
+                dialog.InitialFolder = "C:\\";
+            }
+            else
+            {
+                dialog.InitialFolder = defaultLocation;
+            }
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                return dialog.SelectedFolder;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

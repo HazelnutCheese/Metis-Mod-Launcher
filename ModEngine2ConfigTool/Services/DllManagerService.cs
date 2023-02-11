@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Win32;
 using ModEngine2ConfigTool.Equality;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ModEngine2ConfigTool.Services
 {
@@ -121,7 +121,7 @@ namespace ModEngine2ConfigTool.Services
                 InitialDirectory = defaultLocation
             };
 
-            if(fileDialog.ShowDialog().Equals(DialogResult.OK))
+            if(fileDialog.ShowDialog().Equals(true))
             {
                 return fileDialog.FileName;
             }

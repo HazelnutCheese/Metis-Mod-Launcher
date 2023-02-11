@@ -15,9 +15,6 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <!--<converter:CollectionCountConverter x:Key="CollectionCountConverter" />-->
-    </UserControl.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
         <Grid>
             <Grid.RowDefinitions>
@@ -59,18 +56,7 @@
                        VerticalAlignment="Center"
                        FontSize="18"
                        FontWeight="Medium"
-                       Text="Recently Played Profiles">
-                <!--<TextBlock.Style>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Visibility" Value="Collapsed" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding RecentProfiles, Converter={StaticResource CollectionCountConverter}, ConverterParameter=0}" Value="true">
-                                <Setter Property="Visibility" Value="Hidden" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>-->
-            </TextBlock>
+                       Text="Recently Played Profiles" />
 
             <ItemsControl x:Name="ProfileContent"
                           Grid.Row="5"
@@ -89,37 +75,10 @@
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Style="{StaticResource ProfileButtonStyle}" />
+                        <Button Command="{Binding Command}" Style="{StaticResource ProfileButtonStyle}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-
-
-            <!--<TextBlock Grid.Row="7"
-                       Grid.Column="1"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       FontSize="18"
-                       FontWeight="Medium"
-                       Text="Disk Space Usage" />
-
-            <TextBlock Grid.Row="10"
-                       Grid.Column="1"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       FontSize="18"
-                       FontWeight="Medium"
-                       Text="Disk Space Usage" />
-
-            <TextBlock Grid.Row="10"
-                       Grid.Column="1"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       FontSize="18"
-                       FontWeight="Medium"
-                       Text="Disk Space Usage" />-->
-
-
         </Grid>
     </ScrollViewer>
 </UserControl>

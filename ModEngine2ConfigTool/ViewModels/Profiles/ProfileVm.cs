@@ -15,51 +15,96 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
     {
         public Profile Model { get; private set; }
 
-        private string _description;
-        private string _name;
-        private string _imagePath;
         private readonly IDatabaseService _databaseService;
         private readonly IDispatcherService _dispatcherService;
 
         public string Name
         {
-            get => _name;
+            get => Model.Name ?? string.Empty;
             set
             {
-                if(!string.IsNullOrWhiteSpace(value))
+                if (Model.Name != value)
                 {
-                    SetProperty(ref _name, value);
                     Model.Name = value;
                     _databaseService.SaveChanges();
+                    OnPropertyChanged(nameof(Name));
                 }
             }
         }
 
         public string Description
         {
-            get => _description;
-            set 
+            get => Model.Description ?? string.Empty;
+            set
             {
-                SetProperty(ref _description, value);
-                Model.Description = value;
-                _databaseService.SaveChanges();
+                if (Model.Description != value)
+                {
+                    Model.Description = value;
+                    _databaseService.SaveChanges();
+                    OnPropertyChanged(nameof(Description));
+                }
             }
         }
 
         public string ImagePath
         {
-            get => _imagePath;
+            get => Model.ImagePath ?? string.Empty;
             set
             {
-                SetProperty(ref _imagePath, value);
-                Model.ImagePath = value;
-                _databaseService.SaveChanges();
+                if (Model.ImagePath != value)
+                {
+                    Model.ImagePath = value;
+                    _databaseService.SaveChanges();
+                    OnPropertyChanged(nameof(ImagePath));
+                }
             }
         }
 
-        public DateTime? LastPlayed { get; }
+        public bool UseSaveManager
+        {
+            get => Model.UseSaveManager;
+            set
+            {
+                if (Model.UseSaveManager != value)
+                {
+                    Model.UseSaveManager = value;
+                    _databaseService.SaveChanges();
+                    OnPropertyChanged(nameof(UseSaveManager));
+                }
+            }
+        }
 
-        public DateTime Created { get; }
+        public bool UseDebugMode
+        {
+            get => Model.UseDebugMode;
+            set
+            {
+                if (Model.UseDebugMode != value)
+                {
+                    Model.UseDebugMode = value;
+                    _databaseService.SaveChanges();
+                    OnPropertyChanged(nameof(UseDebugMode));
+                }
+            }
+        }
+
+        public bool UseScyllaHide
+        {
+            get => Model.UseScyllaHide;
+            set
+            {
+                if(Model.UseScyllaHide != value)
+                {
+                    Model.UseScyllaHide = value;
+                    _databaseService.SaveChanges();
+                    OnPropertyChanged(nameof(UseScyllaHide));
+                }
+            }
+        }
+
+        public DateTime? LastPlayed => Model.LastPlayed;
+
+        public DateTime Created => Model.Created;
 
         public ObservableCollection<ModVm> Mods { get; }
 
@@ -83,13 +128,6 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
             _databaseService = databaseService;
             _dispatcherService = dispatcherService;
 
-            _name = Model.Name;
-            _description = Model.Description ?? "";
-            _imagePath = Model.ImagePath ?? "";
-
-            Created = Model.Created;
-            LastPlayed = Model.LastPlayed;
-
             Mods = new ObservableCollection<ModVm>();
             ExternalDlls= new ObservableCollection<DllVm>();
         }
@@ -102,18 +140,26 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
             Model = profile;
             _databaseService = databaseService;
             _dispatcherService = dispatcherService;
-            _name = Model.Name;
-            _description = Model.Description ?? "";
-            _imagePath = Model.ImagePath ?? "";
 
-            Created = Model.Created;
-            LastPlayed = Model.LastPlayed;
+            if(Model.Mods is null)
+            {
+                Mods = new ObservableCollection<ModVm>();
+            }
+            else
+            {
+                Mods = new ObservableCollection<ModVm>(
+                    Model.Mods.Select(x => new ModVm(x, _databaseService)));
+            }
 
-            Mods = new ObservableCollection<ModVm>(
-                Model.Mods.Select(x => new ModVm(x, _databaseService)));
-
-            ExternalDlls = new ObservableCollection<DllVm>(
-                Model.Dlls.Select(x => new DllVm(x, _databaseService)));
+            if (Model.Dlls is null)
+            {
+                ExternalDlls = new ObservableCollection<DllVm>();
+            }
+            else
+            {
+                ExternalDlls = new ObservableCollection<DllVm>(
+                    Model.Dlls.Select(x => new DllVm(x, _databaseService)));
+            }
         }
 
         public async Task RefreshAsync()
@@ -122,27 +168,45 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
                 .GetProfiles()
                 .Single(x => new ProfileEqualityComparer().Equals(x, Model));
 
-            _name = Model.Name;
-            _description = Model.Description ?? "";
-            _imagePath = Model.ImagePath ?? "";
+            OnPropertyChanged(nameof(Name));
+            OnPropertyChanged(nameof(Description));
+            OnPropertyChanged(nameof(ImagePath));
+            OnPropertyChanged(nameof(Created));
+            OnPropertyChanged(nameof(LastPlayed));
+            OnPropertyChanged(nameof(UseSaveManager));
+            OnPropertyChanged(nameof(UseDebugMode));
+            OnPropertyChanged(nameof(UseScyllaHide));
 
-            var modVms = Model.Mods.Select(x => new ModVm(x, _databaseService));
-            var dllVms = Model.Dlls.Select(x => new DllVm(x, _databaseService));
+            var modVms = Model.Mods?.Select(x => new ModVm(x, _databaseService));
+            var dllVms = Model.Dlls?.Select(x => new DllVm(x, _databaseService));
 
             await _dispatcherService.InvokeUiAsync(() =>
             {
                 Mods.Clear();
-                foreach (var modVm in modVms)
+                if (modVms is not null)
                 {
-                    Mods.Add(modVm);
-                }
+                    foreach (var modVm in modVms)
+                    {
+                        Mods.Add(modVm);
+                    }
+                }                
 
                 ExternalDlls.Clear();
-                foreach (var dllVm in dllVms)
+                if(dllVms is not null)
                 {
-                    ExternalDlls.Add(dllVm);
+                    foreach (var dllVm in dllVms)
+                    {
+                        ExternalDlls.Add(dllVm);
+                    }
                 }
             });
+        }
+
+        public void UpdateLastPlayed()
+        {
+            Model.LastPlayed = DateTime.Now;
+            _databaseService.SaveChanges();
+            OnPropertyChanged(nameof(LastPlayed));
         }
     }
 }

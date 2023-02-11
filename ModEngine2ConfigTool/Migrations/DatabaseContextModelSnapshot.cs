@@ -108,6 +108,15 @@ namespace ModEngine2ConfigTool.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("UseDebugMode")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("UseSaveManager")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("UseScyllaHide")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("ProfileId");
 
                     b.ToTable("Profiles");

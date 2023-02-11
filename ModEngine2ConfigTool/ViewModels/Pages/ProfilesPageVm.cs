@@ -26,6 +26,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
         private readonly DllManagerService _dllManagerService;
+        private readonly PlayManagerService _playManagerService;
+        private readonly SaveManagerService _saveManagerService;
         private readonly ObservableCollection<ProfileListButtonVm> _profileListButtons;
 
         public ICollectionView Profiles
@@ -48,12 +50,16 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
             ModManagerService modManagerService,
-            DllManagerService dllManagerService)
+            DllManagerService dllManagerService,
+            PlayManagerService playManagerService,
+            SaveManagerService saveManagerService)
         {
             _navigationService = navigationService;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
             _dllManagerService = dllManagerService;
+            _playManagerService = playManagerService;
+            _saveManagerService = saveManagerService;
 
             _profileListButtons = new ObservableCollection<ProfileListButtonVm>();
             UpdateProfileListButtons();
@@ -180,7 +186,9 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 _navigationService,
                 _profileManagerService,
                 _modManagerService,
-                _dllManagerService);
+                _dllManagerService,
+                _playManagerService,
+                _saveManagerService);
 
             await _navigationService.NavigateTo(profileEditPage);
         }
@@ -195,7 +203,9 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     _navigationService,
                     _profileManagerService,
                     _modManagerService,
-                    _dllManagerService));
+                    _dllManagerService,
+                    _playManagerService,
+                    _saveManagerService));
             }
         }
     }

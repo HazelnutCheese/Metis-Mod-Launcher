@@ -128,7 +128,7 @@ namespace ModEngine2ConfigTool.Services
                 dialog.InitialFolder = defaultLocation;
             }
 
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (dialog.ShowDialog().Equals(DialogResult.OK))
             {
                 return dialog.SelectedFolder;
             }

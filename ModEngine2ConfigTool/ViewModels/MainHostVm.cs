@@ -29,19 +29,29 @@ namespace ModEngine2ConfigTool.ViewModels
                 App.DispatcherService,
                 profileManagerService);
 
+            var playManagerService = new PlayManagerService(
+                App.ProfileService,
+                App.SaveManagerService,
+                App.ModEngine2Service,
+                App.DispatcherService);
+
             TopBarVm = new TopBarVm(mainWindow, navigationService);
 
             MainPanelVm = new MainPanelVm(
                 navigationService,
                 profileManagerService,
                 modManagerService,
-                dllManagerService);
+                dllManagerService,
+                playManagerService,
+                App.SaveManagerService);
 
             SideBarVm = new SideBarVm(
                 navigationService, 
                 profileManagerService, 
                 modManagerService,
-                dllManagerService);
+                dllManagerService,
+                playManagerService,
+                App.SaveManagerService);
         }
     }
 }

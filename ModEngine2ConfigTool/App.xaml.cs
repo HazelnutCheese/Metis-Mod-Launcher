@@ -32,36 +32,58 @@ namespace ModEngine2ConfigTool
         public static IDispatcherService DispatcherService { get; }
         public static IDatabaseService DatabaseService { get; }
 
+        public static ProfileService ProfileService { get; }
+
+        public static SaveManagerService SaveManagerService { get; }
+
+        public static ModEngine2Service ModEngine2Service { get; }
+
         public const string DialogHostId = "MainWindowDialogHost";
 
         static App()
         {
-            if(Debugger.IsAttached)
+            //if(Debugger.IsAttached)
+            //{
+            //    DataStorage = Directory.GetCurrentDirectory() + "\\Temp";
+
+            //    //if (Directory.Exists(DataStorage))
+            //    //{
+            //    //    Directory.Delete(DataStorage, true);
+            //    //}
+            //}
+            //else
+            //{
+            //    DataStorage = Path.Combine(
+            //        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            //        "Metis Mod Launcher");
+            //}
+
+            DataStorage = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+    "Metis Mod Launcher");
+
+            if (!Directory.Exists(DataStorage))
             {
-                DataStorage = Directory.GetCurrentDirectory() + "\\Temp";
-
-                //if(Directory.Exists(DataStorage))
-                //{
-                //    Directory.Delete(DataStorage, true);
-                //}
-
-                if(!Directory.Exists(DataStorage))
-                {
-                    Directory.CreateDirectory(DataStorage);
-                }
-            }
-            else
-            {
-                DataStorage = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "ModEngine2ConfigTool");
+                Directory.CreateDirectory(DataStorage);
             }
 
-            ConfigureLogging();
+            ConfigureLogging(App.DataStorage);
             Logger = Logger.GetLogger(nameof(App));
-            ConfigurationService = new ConfigurationService();
+
+            var configPath = Path.Combine("appsettings.json");
+            ConfigurationService = new ConfigurationService(configPath);
+
             DispatcherService = new DispatcherService();
             DatabaseService = new DatabaseService(DataStorage);
+            ProfileService = new ProfileService(DataStorage);
+            SaveManagerService = new SaveManagerService(DataStorage);
+
+            var modEngine2FolderDefault = Path.Combine(Directory.GetCurrentDirectory(), "..\\ModEngine2\\ModEngine-2.0.0-preview4-win64");
+            var modEngine2Folder = !string.IsNullOrWhiteSpace(ConfigurationService.ModEngine2Folder)
+                ? ConfigurationService.ModEngine2Folder
+                : modEngine2FolderDefault;
+
+            ModEngine2Service = new ModEngine2Service(modEngine2Folder);
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -77,14 +99,11 @@ namespace ModEngine2ConfigTool
 
             base.OnStartup(e);
 
-            ConfigureLogging();
-
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Current.DispatcherUnhandledException += Dispatcher_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
             // Initialise Services
-            ProfileService.Initialise();
             var mainWindow = new MainWindow();
 
             var mainViewModel = new MainWindowVm(mainWindow);
@@ -101,8 +120,16 @@ namespace ModEngine2ConfigTool
 
         private void TaskScheduler_UnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
         {
-            MessageBox.Show(e.Exception.Message);
-            Logger.Error(e.Exception.ToString());
+            if(e.Exception?.InnerException is not null)
+            {
+                MessageBox.Show(e.Exception.InnerException?.Message);
+            }
+            else
+            {
+                MessageBox.Show(e.Exception?.Message);
+            }
+            
+            Logger.Error(e.Exception?.ToString());
 
             e.SetObserved();
         }
@@ -120,7 +147,7 @@ namespace ModEngine2ConfigTool
             Logger.Error(e.ExceptionObject.ToString());
         }
 
-        private static void ConfigureLogging()
+        private static void ConfigureLogging(string dataStorage)
         {
             var messageFormatter = new LogMessageFormatter();
             var timestampFormatter = new TimestampFormatter(
@@ -136,7 +163,10 @@ namespace ModEngine2ConfigTool
                 {LogLevel.Fatal, ConsoleColor.Magenta},
             });
 
-            var logFileName = DateTime.Now.ToString("yyyy-M-dd_ModEngine2Config.log");
+            var logFileName = Path.Combine(
+                dataStorage, 
+                DateTime.Now.ToString("yyyy-M-dd_ModEngine2Config" + ".log"));
+
             var fileAppender = new FileWriterAppender(logFileName);
 
             Logger.AddAppender((logger, level, message) =>
@@ -152,7 +182,7 @@ namespace ModEngine2ConfigTool
         {
             try
             {
-                var processes = Process.GetProcessesByName("ModEngine2ConfigTool");
+                var processes = Process.GetProcessesByName("Metis Mod Launcher");
                 var currentProcess = Process.GetCurrentProcess();
 
                 Process? otherProcess = null;

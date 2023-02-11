@@ -5,11 +5,11 @@ using Microsoft.Win32;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
-using ModEngine2ConfigTool.ViewModels.Profiles;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace ModEngine2ConfigTool.ViewModels.Pages
@@ -26,6 +26,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         public string Header { get; }
 
         public ICommand SelectImageCommand { get; }
+        public ICommand BrowseCommand { get; }
 
         public HotBarVm HotBarVm { get; }
 
@@ -47,6 +48,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 : "Edit Mod";
 
             SelectImageCommand = new RelayCommand(SelectImage);
+            BrowseCommand = new RelayCommand(Browse);
 
             _lastOpenedLocation = string.Empty;
 
@@ -75,7 +77,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         private void SelectImage()
         {
-            var fileDialog = new OpenFileDialog
+            var fileDialog = new Microsoft.Win32.OpenFileDialog
             {
                 Filter = "All Picture Files(*.bmp;*.jpg;*.gif;*.ico;*.png;*.wdp;*.tiff)|" +
                     "*.BMP;*.JPG;*.GIF;*.ICO;*.PNG;*.WDP;*.TIFF|" +
@@ -126,6 +128,39 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     _navigationService, 
                     _profileManagerService, 
                     _modManagerService));
+        }
+
+        private void Browse()
+        {
+            Mod.FolderPath = GetFolderPath("Select new mod folder", Mod.FolderPath) ?? Mod.FolderPath;
+        }
+
+        private static string? GetFolderPath(string dialogTitle, string defaultLocation)
+        {
+            var dialog = new FolderBrowserEx.FolderBrowserDialog
+            {
+                Title = dialogTitle,
+                InitialFolder = @"C:\",
+                AllowMultiSelect = false
+            };
+
+            if (string.IsNullOrWhiteSpace(defaultLocation) || !Directory.Exists(defaultLocation))
+            {
+                dialog.InitialFolder = "C:\\";
+            }
+            else
+            {
+                dialog.InitialFolder = defaultLocation;
+            }
+
+            if (dialog.ShowDialog().Equals(DialogResult.OK))
+            {
+                return dialog.SelectedFolder;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ using ModEngine2ConfigTool.ViewModels.Fields;
 using ModEngine2ConfigTool.Views.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ModEngine2ConfigTool.ViewModels.Dialogs
@@ -14,7 +15,7 @@ namespace ModEngine2ConfigTool.ViewModels.Dialogs
     {
         public static ICommand GetCloseDialogCommand(
             bool result,
-            CustomDialogView dialog,
+            IInputElement dialog,
             Func<bool>? canExecute = null)
         {
             if(canExecute is not null)

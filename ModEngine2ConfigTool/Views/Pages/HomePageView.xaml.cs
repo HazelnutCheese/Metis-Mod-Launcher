@@ -25,23 +25,5 @@ namespace ModEngine2ConfigTool.Views.Pages
         {
             InitializeComponent();
         }
-
-        private void ItemsControl_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            if(sender is ScrollViewer scrollViewer)
-            {
-                if (e.Delta < 0)
-                {
-                    scrollViewer.LineRight();
-                    scrollViewer.LineRight();
-                }
-                else
-                {
-                    scrollViewer.LineLeft();
-                    scrollViewer.LineLeft();
-                }
-                e.Handled = true;
-            }
-        }
     }
 }

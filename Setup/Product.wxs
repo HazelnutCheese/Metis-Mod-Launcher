@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" 
+           Name="Metis Mod Launcher Setup" 
+           Language="1033" 
+           Version="!(bind.FileVersion.filD4DAAA696BC0E684E26F3405DCF658E1)" 
+           Manufacturer="HazelnutCheese" 
+           UpgradeCode="{203FC7DA-8B43-4B79-88B0-7FF270CB07D4}">
+		<Package InstallerVersion="200" 
+             Compressed="yes" 
+             InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="icon.ico" SourceFile="..\ModEngine2ConfigTool\Resources\icon_04.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+
+		<Feature Id="ProductFeature" Title="Setup" Level="1">
+			<ComponentGroupRef Id="LauncherComponents" />
+      <ComponentGroupRef Id="ModEngine2Components"/>
+      <ComponentGroupRef Id="DesktopComponents" />
+		</Feature>
+
+    <UIRef Id="WixUI_InstallDir" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+    <WixVariable Id="WixUIBannerBmp" Value="..\ModEngine2ConfigTool\Resources\top_banner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="..\ModEngine2ConfigTool\Resources\dialog.bmp" />
+	</Product> 
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Metis Mod Launcher" >
+          <Directory Id="ME2FOLDER" Name="ModEngine2"/>
+        </Directory>
+			</Directory>
+      <Directory Id="DesktopFolder" Name="Desktop"/>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+    <ComponentGroup Id="DesktopComponents" Directory="DesktopFolder">
+      <Component Id="ApplicationShortcutDesktop" Guid="*">
+        <Shortcut Id="ApplicationDesktopShortcut"
+            Name="Metis Mod Launcher"
+            Description="Metis Mod Launcher"
+            Target="[dirF1B51B0F0204B6EC0C0F76B6642CAA4A]\\Metis Mod Launcher.exe"
+            WorkingDirectory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A"/>
+        <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+        <RegistryValue
+            Root="HKCU"
+            Key="Software\HazelnutCheese\MetisModLauncher"
+            Name="installed"
+            Type="integer"
+            Value="1"
+            KeyPath="yes"/>
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>

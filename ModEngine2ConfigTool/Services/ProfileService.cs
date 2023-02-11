@@ -1,74 +1,32 @@
-﻿using ModEngine2ConfigTool.Models;
-using ModEngine2ConfigTool.ViewModels;
-using System;
-using System.Collections.Generic;
+﻿using ModEngine2ConfigTool.ViewModels.Profiles;
 using System.IO;
 using Tommy;
 
 namespace ModEngine2ConfigTool.Services
 {
-    public static class ProfileService
+    public class ProfileService
     {
-        private const string _profilesFolderName = "Profiles";
+        private readonly string _rootProfilesFolder;
 
-        private static string ProfilesRoot { get; } = Path.Combine(
-            App.DataStorage,
-            _profilesFolderName);
-
-        public static void Initialise()
+        public ProfileService(string dataStorage)
         {
-            Directory.CreateDirectory(ProfilesRoot);
-        }
-
-        public static List<ProfileViewModel> LoadProfiles()
-        {
-            var files = Directory.GetFiles(ProfilesRoot, "*.toml");
-            var results = new List<ProfileViewModel>();
-
-            foreach(var tomlFile in files)
+            _rootProfilesFolder = Path.Combine(dataStorage, "temp");
+            if(!Directory.Exists(_rootProfilesFolder))
             {
-                try
-                {
-                    var profile = ReadProfileFromFile(tomlFile);
-                    results.Add(new ProfileViewModel(profile));
-                }
-                catch(Exception ex)
-                {
-                    App.Logger.Error(ex.ToString());
-                }
-            }
-
-            return results;
+                Directory.CreateDirectory(_rootProfilesFolder);
+            }            
         }
 
-        public static ProfileModel ReadProfile(string profileName)
+        public string WriteProfile(ProfileVm profile)
         {
-            return ReadProfileFromFile(GetProfilePath(profileName));
-        }
-
-        public static void DeleteProfile(string profileName) 
-        {
-            File.Delete(GetProfilePath(profileName));
-        }
-
-        public static void RenameProfile(string currentName, string newName)
-        {
-            var currentPath = GetProfilePath(currentName);
-            var newPath = GetProfilePath(newName);
-
-            File.Move(currentPath, newPath, true);
-        }
-
-        public static void WriteProfile(ProfileModel profile)
-        {
-            var fileName = GetProfilePath(profile.Name);
+            var fileName = GetProfilePath(profile.Model.ProfileId.ToString());
 
             using TextWriter writer = File.CreateText(fileName);
 
             var dllListToml = new TomlArray();
-            foreach(var dll in profile.Dlls)
+            foreach(var dll in profile.ExternalDlls)
             {
-                dllListToml.Add(dll.Location);
+                dllListToml.Add(dll.FilePath);
             }
 
             var modsListToml = new TomlArray();
@@ -76,9 +34,9 @@ namespace ModEngine2ConfigTool.Services
             {
                 modsListToml.Add(new TomlTable
                 {
-                    ["enabled"] = mod.IsEnabled,
-                    ["name"] = mod.Name,
-                    ["path"] = mod.Location
+                    ["enabled"] = true,
+                    ["name"] = mod.Model.ModId.ToString(),
+                    ["path"] = mod.FolderPath
                 });
             }
 
@@ -86,14 +44,14 @@ namespace ModEngine2ConfigTool.Services
             {
                 ["modengine"] =
                 {
-                    ["debug"] = profile.EnableME2Debug,
+                    ["debug"] = profile.UseDebugMode,
                     ["external_dlls"] = dllListToml
                 },
                 ["extension"] =
                 {
                     ["mod_loader"] =
                     {
-                        ["enabled"] = !profile.IgnoreModFolders,
+                        ["enabled"] = true,
                         ["loose_params"] = false,
                         ["mods"] = modsListToml,
                     }
@@ -102,56 +60,20 @@ namespace ModEngine2ConfigTool.Services
                 {
                     ["scylla_hide"] =
                     {
-                        ["enabled"] = profile.EnableScyllaHide
+                        ["enabled"] = profile.UseScyllaHide
                     }
                 },
             };
 
             fileToml.WriteTo(writer);
             writer.Flush();
+
+            return fileName;
         }
 
-        public static string GetProfilePath(string profileName)
+        public string GetProfilePath(string profileId)
         {
-            return Path.Combine(ProfilesRoot, $"{profileName}.toml");
-        }
-
-        private static ProfileModel ReadProfileFromFile(string filePath)
-        {
-            var profileName = Path.GetFileNameWithoutExtension(filePath);
-
-            using StreamReader reader = File.OpenText(filePath);
-
-            TomlTable table = TOML.Parse(reader);
-
-            var enableModEngineDebug = table["modengine"]["debug"].AsBoolean;
-            var externalDlls = new List<ExternalDllModel>();
-            foreach (TomlNode node in table["modengine"]["external_dlls"])
-            {
-                var dll = node.AsString.Value;
-                externalDlls.Add(new ExternalDllModel(node.AsString));
-            }
-
-            var enableModLoaderConfiguration = !table["extension"]["mod_loader"]["enabled"].AsBoolean;
-            var modFolders = new List<ModModel>();
-            foreach (TomlNode node in table["extension"]["mod_loader"]["mods"])
-            {
-                var enabled = node["enabled"].AsBoolean;
-                var name = node["name"].AsString;
-                var path = node["path"].AsString;
-
-                modFolders.Add(new ModModel(name, path, enabled));
-            }
-
-            var enableScyllaHide = table["extension"]["scylla_hide"]["enabled"].AsBoolean;
-
-            return new ProfileModel(
-                profileName,
-                modFolders,
-                externalDlls,
-                enableModEngineDebug,
-                enableModLoaderConfiguration,
-                enableScyllaHide);
+            return Path.Combine(_rootProfilesFolder, $"{profileId}.toml");
         }
     }
 }

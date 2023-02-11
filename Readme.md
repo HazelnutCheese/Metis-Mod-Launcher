@@ -1,4 +1,4 @@
-# ModEngine2 Config Tool
+<h1><img src="images/icon_01.png"  width="32" height="32"/> Metis Mod Launcher</h1>
 
 ## Build Status
 
@@ -12,13 +12,6 @@ This is a .Net6 WPF based profile configuration tool ModEngine2, specifically de
 
 ModEngine2 stores mod configurations in .toml files. This tool presents them in an interactive format and allows modification and management via a WPF user interface.
 
-## Requirements
-
-This tool requires you to have downloaded ModEngine2. You can find it here:
-
-* [soulsmods/ModEngine2 Repository](https://github.com/soulsmods/ModEngine2)
-* [.NET Desktop Runtime 6.0.12](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
-
 ## Currently Supported Games
 
 * Elden Ring
@@ -26,8 +19,6 @@ This tool requires you to have downloaded ModEngine2. You can find it here:
 ## What this tool does not do!
 
 * This tool does **not** download mods or install mods or arrange them on your disk. To use a mod you must first download it and move it's files into a ME2 suitable arrangement. If the mod comes with a regulation.bin file it should be in the same top level folder as all the other mod files.
-
-* This tool does **not yet** manage save games. You should back up your save games before using it and if you use different saves for different profiles (most likely) then you will need to swap them in and out of your saves folder before launching. This is a planned feature that will be supported soon(tm).
 
 # First time setup
 

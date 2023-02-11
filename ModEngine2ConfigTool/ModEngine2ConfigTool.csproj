@@ -5,20 +5,23 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <AssemblyVersion>0.0.0.2</AssemblyVersion>
-    <FileAssemblyVersion>0.0.0.2</FileAssemblyVersion>
-    <Version>0.0.0.2</Version>
+    <AssemblyVersion>0.0.1</AssemblyVersion>
+    <FileAssemblyVersion>0.0.1</FileAssemblyVersion>
+    <Version>0.0.1</Version>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <ApplicationIcon>Resources\icon_04.ico</ApplicationIcon>
+    <StartupObject>ModEngine2ConfigTool.App</StartupObject>
+    <AssemblyName>Metis Mod Launcher</AssemblyName>
+    <DebugType>Embedded</DebugType>
+    <EmbedAllSources>True</EmbedAllSources>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ModEngine2ConfigTool.db" />
+    <None Remove="Resources\icon_04.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ModEngine2ConfigTool.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Resources\icon_04.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +46,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\icon_04.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resx\Help.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Help.resx</DependentUpon>
+    </Compile>
     <Compile Update="Views\Controls\Fields\BoolField.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -52,13 +64,20 @@
     <Compile Update="Views\Controls\HotBarMenuButton.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Dialogs\ProgressDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resx\Help.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Help.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="appSettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Profiles\SampleProfile.toml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Blue.png">
@@ -85,10 +104,6 @@
     <None Update="Resources\Red.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>

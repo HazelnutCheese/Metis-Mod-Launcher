@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ModEngine2ConfigTool": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

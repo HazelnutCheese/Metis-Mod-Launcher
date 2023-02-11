@@ -307,26 +307,7 @@
                                                                                                                  Content="1"
                                                                                                                  Foreground="#d1d1d1">
                                                                                             <StackPanel>
-                                                                                                <!--<Button attached:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True"
-                                                                                                        Content="Add mod"
-                                                                                                        IsEnabled="{Binding CanAddMods}">
-                                                                                                    <Button.ContextMenu>
-                                                                                                        <ContextMenu ItemsSource="{Binding MenuItems}">
-                                                                                                            <ContextMenu.ItemContainerStyle>
-                                                                                                                <Style TargetType="MenuItem">
-                                                                                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                                                                                                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                                                                                                                    <Setter Property="Header" Value="{Binding Header}" />
-                                                                                                                    <Setter Property="Command" Value="{Binding Command}" />
-                                                                                                                </Style>
-                                                                                                            </ContextMenu.ItemContainerStyle>
-                                                                                                        </ContextMenu>
-                                                                                                    </Button.ContextMenu>
-                                                                                                </Button>
-                                                                                                <Separator />-->
-                                                                                                <Button Command="{Binding PlayCommand}"
-                                                                                                        Content="Play"
-                                                                                                        IsEnabled="{Binding CanPlay}" />
+                                                                                                <Button Command="{Binding PlayCommand}" Content="Play" />
                                                                                                 <Button Command="{Binding EditCommand}" Content="Edit" />
                                                                                                 <Button Command="{Binding CopyCommand}" Content="Duplicate" />
                                                                                                 <Button Command="{Binding DeleteCommand}" Content="Delete" />

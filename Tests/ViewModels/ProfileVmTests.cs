@@ -22,7 +22,9 @@ namespace Tests.ViewModels
                 Name = "HelloWorld",
                 Description = "FizzBuzz",
                 Created = DateTime.Now,
-                LastPlayed = DateTime.Now
+                LastPlayed = DateTime.Now,
+                UseDebugMode = true,
+                UseScyllaHide = true
             };
 
             var profileVm = new ProfileVm(
@@ -36,6 +38,8 @@ namespace Tests.ViewModels
                 Assert.That(profileVm.Description, Is.EqualTo(profile.Description));
                 Assert.That(profileVm.Created, Is.EqualTo(profile.Created));
                 Assert.That(profileVm.LastPlayed, Is.EqualTo(profile.LastPlayed));
+                Assert.That(profileVm.UseDebugMode, Is.EqualTo(profile.UseDebugMode));
+                Assert.That(profileVm.UseScyllaHide, Is.EqualTo(profile.UseScyllaHide));
             });
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModEngine2ConfigTool.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,14 +14,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ModEngine2ConfigTool.Views
+namespace ModEngine2ConfigTool.Views.Pages
 {
-    /// <summary>
-    /// Interaction logic for ProfileOptionsView.xaml
-    /// </summary>
-    public partial class ProfileOptionsView : UserControl
+    public partial class HelpPageView : UserControl
     {
-        public ProfileOptionsView()
+        public HelpPageView()
         {
             InitializeComponent();
         }
