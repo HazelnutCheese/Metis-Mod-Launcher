@@ -7,13 +7,6 @@ namespace ModEngine2ConfigTool.Services
     {
         readonly IAppSettings _settings;
 
-        [Option(Alias = "EldenRingGameFolder")]
-        public string EldenRingGameFolder
-        {
-            get => _settings.EldenRingGameFolder; 
-            set => _settings.EldenRingGameFolder = value;
-        }
-
         [Option(Alias = "ModEngine2Folder")]
         public string ModEngine2Folder
         {
@@ -21,16 +14,9 @@ namespace ModEngine2ConfigTool.Services
             set => _settings.ModEngine2Folder = value;
         }
 
-        [Option(Alias = "SaveGameFolder")]
-        public string SaveGameFolder
+        public ConfigurationService(string configPath) 
         {
-            get => _settings.SaveGameFolder;
-            set => _settings.SaveGameFolder = value;
-        }
-
-        public ConfigurationService() 
-        {
-            var configFile = Path.Combine(App.DataStorage, "appsettings.json");
+            var configFile = configPath;
 
             _settings = new ConfigurationBuilder<IAppSettings>()
                .UseJsonFile(configFile)

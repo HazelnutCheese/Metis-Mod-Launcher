@@ -18,6 +18,9 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
         private string _description;
         private string _name;
         private string _imagePath;
+        private bool _useDebugMode;
+        private bool _useScyllaHide;
+        private bool _useSaveManager;
         private readonly IDatabaseService _databaseService;
         private readonly IDispatcherService _dispatcherService;
 
@@ -57,9 +60,42 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
             }
         }
 
-        public DateTime? LastPlayed { get; }
+        public bool UseSaveManager
+        {
+            get => _useSaveManager;
+            set
+            {
+                SetProperty(ref _useSaveManager, value);
+                Model.UseSaveManager = value;
+                _databaseService.SaveChanges();
+            }
+        }
 
-        public DateTime Created { get; }
+        public bool UseDebugMode
+        {
+            get => _useDebugMode;
+            set
+            {
+                SetProperty(ref _useDebugMode, value);
+                Model.UseDebugMode = value;
+                _databaseService.SaveChanges();
+            }
+        }
+
+        public bool UseScyllaHide
+        {
+            get => _useScyllaHide;
+            set
+            {
+                SetProperty(ref _useScyllaHide, value);
+                Model.UseScyllaHide = value;
+                _databaseService.SaveChanges();
+            }
+        }
+
+        public DateTime? LastPlayed => Model.LastPlayed;
+
+        public DateTime Created => Model.Created;
 
         public ObservableCollection<ModVm> Mods { get; }
 
@@ -87,9 +123,6 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
             _description = Model.Description ?? "";
             _imagePath = Model.ImagePath ?? "";
 
-            Created = Model.Created;
-            LastPlayed = Model.LastPlayed;
-
             Mods = new ObservableCollection<ModVm>();
             ExternalDlls= new ObservableCollection<DllVm>();
         }
@@ -105,9 +138,6 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
             _name = Model.Name;
             _description = Model.Description ?? "";
             _imagePath = Model.ImagePath ?? "";
-
-            Created = Model.Created;
-            LastPlayed = Model.LastPlayed;
 
             Mods = new ObservableCollection<ModVm>(
                 Model.Mods.Select(x => new ModVm(x, _databaseService)));
@@ -143,6 +173,13 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
                     ExternalDlls.Add(dllVm);
                 }
             });
+        }
+
+        public void UpdateLastPlayed()
+        {
+            Model.LastPlayed = DateTime.Now;
+            _databaseService.SaveChanges();
+            OnPropertyChanged(nameof(LastPlayed));
         }
     }
 }

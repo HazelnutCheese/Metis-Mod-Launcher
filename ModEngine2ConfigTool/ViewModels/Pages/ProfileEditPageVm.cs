@@ -7,13 +7,17 @@ using ModEngine2ConfigTool.Helpers;
 using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
+using ModEngine2ConfigTool.ViewModels.Dialogs;
+using ModEngine2ConfigTool.ViewModels.Fields;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.ViewModels.Profiles;
 using ModEngine2ConfigTool.Views.Controls;
+using ModEngine2ConfigTool.Views.Dialogs;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Formats.Asn1;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,9 +30,11 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
     {
         private string _lastOpenedLocation;
         private readonly NavigationService _navigationService;
+        private readonly SaveManagerService _saveManagerService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
         private readonly DllManagerService _dllManagerService;
+        private readonly PlayManagerService _playManagerService;
 
         public ProfileVm Profile { get; }
 
@@ -42,18 +48,24 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public HotBarVm HotBarVm { get; }
 
+        public HotBarVm SavesHotBarVm { get; }
+
         public ProfileEditPageVm(
             ProfileVm profile, 
             bool IsCreatingNewProfile,
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
             ModManagerService modManagerService,
-            DllManagerService dllManagerService)
+            DllManagerService dllManagerService,
+            PlayManagerService playManagerService,
+            SaveManagerService saveManagerService)
         {
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
             _dllManagerService = dllManagerService;
+            _playManagerService = playManagerService;
             _navigationService = navigationService;
+            _saveManagerService = saveManagerService;
 
             Profile = profile;
             Header = IsCreatingNewProfile
@@ -70,7 +82,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     new HotBarButtonVm(
                         "Play Profile",
                         PackIconKind.PlayBoxOutline,
-                        () => Debug.Print($"Playing {profile.Name}"), Profile.Mods.Any),
+                        async () => await PlayAsync()),
                     new HotBarMenuButtonVm(
                         "Select Mods",
                         PackIconKind.FolderMultiplePlusOutline,
@@ -97,6 +109,30 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                         "Delete Profile",
                         PackIconKind.DeleteOutline,
                         async () => await DeleteProfileAsync())
+                    });
+
+            SavesHotBarVm = new HotBarVm(
+                new ObservableCollection<ObservableObject>()
+                {
+                    new HotBarButtonVm(
+                        "Go To Saves",
+                        PackIconKind.ContentSaveOutline,
+                        OpenSavesFolder,
+                        HasSaves),
+                    new HotBarButtonVm(
+                        "Import Saves",
+                        PackIconKind.ContentSavePlusOutline,
+                        ImportSaves),
+                    new HotBarButtonVm(
+                        "Backup Saves",
+                        PackIconKind.ContentSaveMoveOutline,
+                        BackupSaves,
+                        HasSaves),
+                    new HotBarButtonVm(
+                        "Delete Saves",
+                        PackIconKind.ContentSaveMinusOutline,
+                        DeleteSaves,
+                        HasSaves)
                     });
 
             Mods = new ObservableCollection<ProfileModListButtonVm>(
@@ -207,6 +243,11 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             }
         }
 
+        private async Task PlayAsync()
+        {
+            await _playManagerService.Play(Profile);
+        }
+
         private async Task DuplicateProfileAsync()
         {
             var newProfile = await _profileManagerService.DuplicateProfileAsync(Profile);
@@ -216,7 +257,9 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 _navigationService,
                 _profileManagerService,
                 _modManagerService,
-                _dllManagerService));
+                _dllManagerService,
+                _playManagerService,
+                _saveManagerService));
         }
 
         private async Task DeleteProfileAsync()
@@ -227,7 +270,40 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     _navigationService,
                     _profileManagerService,
                     _modManagerService,
-                    _dllManagerService));
+                    _dllManagerService,
+                    _playManagerService,
+                    _saveManagerService));
+        }
+        
+        private void OpenSavesFolder()
+        {
+            _saveManagerService.OpenProfileSavesFolder(Profile.Model.ProfileId.ToString());
+        }
+
+        private void BackupSaves()
+        {
+            _saveManagerService.BackupSaves(Profile.Model.ProfileId.ToString());
+        }
+
+        private void ImportSaves()
+        {
+            _saveManagerService.ImportSave(Profile.Model.ProfileId.ToString());
+            (SavesHotBarVm.Buttons[0] as HotBarButtonVm)?.RaiseNotifyCommandExecuteChanged();
+            (SavesHotBarVm.Buttons[2] as HotBarButtonVm)?.RaiseNotifyCommandExecuteChanged();
+            (SavesHotBarVm.Buttons[3] as HotBarButtonVm)?.RaiseNotifyCommandExecuteChanged();
+        }
+
+        private void DeleteSaves()
+        {
+            _saveManagerService.DeleteSaves(Profile.Model.ProfileId.ToString());
+            (SavesHotBarVm.Buttons[0] as HotBarButtonVm)?.RaiseNotifyCommandExecuteChanged();
+            (SavesHotBarVm.Buttons[2] as HotBarButtonVm)?.RaiseNotifyCommandExecuteChanged();
+            (SavesHotBarVm.Buttons[3] as HotBarButtonVm)?.RaiseNotifyCommandExecuteChanged();
+        }
+
+        private bool HasSaves()
+        {
+            return _saveManagerService.ProfileHasSaves(Profile.Model.ProfileId.ToString());
         }
     }
 }

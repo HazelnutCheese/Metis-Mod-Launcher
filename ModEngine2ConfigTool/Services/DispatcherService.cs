@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 
 namespace ModEngine2ConfigTool.Services
 {
@@ -16,14 +15,19 @@ namespace ModEngine2ConfigTool.Services
             return await Task.Run(action);
         }
 
+        public void InvokeUi(Action action)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(action);
+        }
+
         public async Task InvokeUiAsync(Action action)
         {
-            await Dispatcher.CurrentDispatcher.InvokeAsync(action);
+            await System.Windows.Application.Current.Dispatcher.InvokeAsync(action);
         }
 
         public async Task<T> InvokeUiAsync<T>(Func<T> action)
         {
-            return await Dispatcher.CurrentDispatcher.InvokeAsync(action);
+            return await System.Windows.Application.Current.Dispatcher.InvokeAsync(action);
         }
     }
 }

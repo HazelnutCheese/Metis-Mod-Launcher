@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ModEngine2ConfigTool.Views
+namespace ModEngine2ConfigTool.Views.Dialogs
 {
     /// <summary>
-    /// Interaction logic for FrontPageView.xaml
+    /// Interaction logic for CustomDialogView.xaml
     /// </summary>
-    public partial class FrontPageView : UserControl
+    public partial class ProgressDialogView : UserControl
     {
-        public FrontPageView()
+        public ProgressDialogView()
         {
             InitializeComponent();
         }

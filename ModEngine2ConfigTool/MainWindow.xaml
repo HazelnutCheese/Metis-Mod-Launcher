@@ -8,7 +8,7 @@
         xmlns:viewmodels="clr-namespace:ModEngine2ConfigTool.ViewModels"
         xmlns:views="clr-namespace:ModEngine2ConfigTool.Views"
         x:Name="MainWindowElement"
-        Title="ModEngine2 Config Tool"
+        Title="Metis Mod Launcher"
         Width="800"
         Height="600"
         MinWidth="800"
@@ -29,12 +29,6 @@
         <WindowChrome CaptionHeight="60" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
     <Window.Resources>
-        <DataTemplate DataType="{x:Type viewmodels:FrontPageViewModel}">
-            <views:FrontPageView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:SettingsViewModel}">
-            <views:SettingsView />
-        </DataTemplate>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Window.Resources>
     <materialDesign:DialogHost DataContext="{Binding MainHostVm}" Identifier="MainWindowDialogHost">

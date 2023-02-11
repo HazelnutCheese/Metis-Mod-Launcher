@@ -7,18 +7,15 @@
     <UseWPF>true</UseWPF>
     <AssemblyVersion>0.0.0.2</AssemblyVersion>
     <FileAssemblyVersion>0.0.0.2</FileAssemblyVersion>
-    <Version>0.0.0.2</Version>
+    <Version>0.0.1</Version>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <ApplicationIcon>Resources\icon_04.ico</ApplicationIcon>
+    <StartupObject>ModEngine2ConfigTool.App</StartupObject>
+    <AssemblyName>Metis Mod Launcher</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ModEngine2ConfigTool.db" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="ModEngine2ConfigTool.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Resources\icon_04.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,13 +49,13 @@
     <Compile Update="Views\Controls\HotBarMenuButton.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Dialogs\ProgressDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="appSettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Profiles\SampleProfile.toml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Blue.png">
@@ -85,10 +82,6 @@
     <None Update="Resources\Red.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>

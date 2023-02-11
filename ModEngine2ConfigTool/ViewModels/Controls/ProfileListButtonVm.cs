@@ -31,6 +31,8 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
         private readonly DllManagerService _dllManagerService;
+        private readonly PlayManagerService _playManagerService;
+        private readonly SaveManagerService _saveManagerService;
 
         public ProfileVm Profile { get; }
 
@@ -56,23 +58,25 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
 
         public bool CanAddMods => _modManagerService.ModVms.Any();
 
-        public bool CanPlay => Profile.Mods.Any();
-
         public ProfileListButtonVm(
             ProfileVm profileVm,
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
             ModManagerService modManagerService,
-            DllManagerService dllManagerService)
+            DllManagerService dllManagerService,
+            PlayManagerService playManagerService,
+            SaveManagerService saveManagerService)
         {
             Profile = profileVm;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
             _navigationService = navigationService;
             _dllManagerService = dllManagerService;
+            _playManagerService= playManagerService;
+            _saveManagerService = saveManagerService;
 
             Command = new AsyncRelayCommand(NavigateToEditModCommand);
-            PlayCommand = new RelayCommand(() => Debug.Print($"Playing {Profile.Name}"));
+            PlayCommand = new AsyncRelayCommand(PlayAsync);
             EditCommand = Command;
             CopyCommand = new AsyncRelayCommand(Copy);
             DeleteCommand = new AsyncRelayCommand(Delete);
@@ -86,18 +90,12 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
                         async () => await profileManagerService.AddModToProfile(Profile, mod)));
             }
 
-            Profile.Mods.CollectionChanged += Mods_CollectionChanged;
             _modManagerService.ModVms.CollectionChanged += ModVms_CollectionChanged;
         }
 
         private void ModVms_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged(nameof(CanAddMods));
-        }
-
-        private void Mods_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            OnPropertyChanged(nameof(CanPlay));
         }
 
         private async Task NavigateToEditModCommand()
@@ -108,7 +106,9 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
                 _navigationService,
                 _profileManagerService,
                 _modManagerService,
-                _dllManagerService);
+                _dllManagerService,
+                _playManagerService,
+                _saveManagerService);
 
             await _navigationService.NavigateTo(profileEditPageVm);
         }
@@ -123,7 +123,9 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
                 _navigationService,
                 _profileManagerService,
                 _modManagerService,
-                _dllManagerService);
+                _dllManagerService,
+                _playManagerService,
+                _saveManagerService);
 
             await _navigationService.NavigateTo(profileEditPageVm);
         }
@@ -131,6 +133,11 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
         private async Task Delete()
         {
             await _profileManagerService.RemoveProfileAsync(Profile);
+        }
+
+        private async Task PlayAsync()
+        {
+            await _playManagerService.Play(Profile);
         }
     }
 }

@@ -69,8 +69,18 @@
                    Grid.ColumnSpan="6"
                    Height="60"
                    Fill="#202020" />
+        <!--<TextBlock Grid.RowSpan="2"
+                   Grid.Column="1"
+                   Grid.ColumnSpan="2"
+                   Margin="20"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="top"
+                   FontSize="16px"
+                   FontWeight="SemiBold"
+                   Foreground="#d1d1d1"
+                   Text="Metis Mod Launcher" />-->
 
-        <Button x:Name="BackButton"
+        <!--<Button x:Name="BackButton"
                 Grid.RowSpan="2"
                 Grid.Column="0"
                 Command="{Binding NavigateBackCommand}">
@@ -86,7 +96,7 @@
                                      Height="16"
                                      VerticalAlignment="Bottom"
                                      Kind="ArrowForward" />
-        </Button>
+        </Button>-->
         <Button Grid.Row="0"
                 Grid.Column="3"
                 Command="{Binding MinimizeCommand}">

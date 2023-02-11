@@ -32,6 +32,12 @@ namespace ModEngine2ConfigTool
         public static IDispatcherService DispatcherService { get; }
         public static IDatabaseService DatabaseService { get; }
 
+        public static ProfileService ProfileService { get; }
+
+        public static SaveManagerService SaveManagerService { get; }
+
+        public static ModEngine2Service ModEngine2Service { get; }
+
         public const string DialogHostId = "MainWindowDialogHost";
 
         static App()
@@ -40,14 +46,9 @@ namespace ModEngine2ConfigTool
             {
                 DataStorage = Directory.GetCurrentDirectory() + "\\Temp";
 
-                //if(Directory.Exists(DataStorage))
-                //{
-                //    Directory.Delete(DataStorage, true);
-                //}
-
-                if(!Directory.Exists(DataStorage))
+                if (Directory.Exists(DataStorage))
                 {
-                    Directory.CreateDirectory(DataStorage);
+                    Directory.Delete(DataStorage, true);
                 }
             }
             else
@@ -57,11 +58,22 @@ namespace ModEngine2ConfigTool
                     "ModEngine2ConfigTool");
             }
 
-            ConfigureLogging();
+            if (!Directory.Exists(DataStorage))
+            {
+                Directory.CreateDirectory(DataStorage);
+            }
+
+            ConfigureLogging(App.DataStorage);
             Logger = Logger.GetLogger(nameof(App));
-            ConfigurationService = new ConfigurationService();
+
+            var configPath = Path.Combine(App.DataStorage, "appsettings.json");
+            ConfigurationService = new ConfigurationService(configPath);
+
             DispatcherService = new DispatcherService();
             DatabaseService = new DatabaseService(DataStorage);
+            ProfileService = new ProfileService(DataStorage);
+            SaveManagerService = new SaveManagerService(DataStorage);
+            ModEngine2Service = new ModEngine2Service();
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -77,14 +89,13 @@ namespace ModEngine2ConfigTool
 
             base.OnStartup(e);
 
-            ConfigureLogging();
+            ConfigureLogging(App.DataStorage);
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Current.DispatcherUnhandledException += Dispatcher_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
             // Initialise Services
-            ProfileService.Initialise();
             var mainWindow = new MainWindow();
 
             var mainViewModel = new MainWindowVm(mainWindow);
@@ -120,7 +131,7 @@ namespace ModEngine2ConfigTool
             Logger.Error(e.ExceptionObject.ToString());
         }
 
-        private static void ConfigureLogging()
+        private static void ConfigureLogging(string dataStorage)
         {
             var messageFormatter = new LogMessageFormatter();
             var timestampFormatter = new TimestampFormatter(
@@ -136,7 +147,10 @@ namespace ModEngine2ConfigTool
                 {LogLevel.Fatal, ConsoleColor.Magenta},
             });
 
-            var logFileName = DateTime.Now.ToString("yyyy-M-dd_ModEngine2Config.log");
+            var logFileName = Path.Combine(
+                dataStorage, 
+                DateTime.Now.ToString("yyyy-M-dd_ModEngine2Config" + ".log"));
+
             var fileAppender = new FileWriterAppender(logFileName);
 
             Logger.AddAppender((logger, level, message) =>

@@ -4,8 +4,7 @@
                     xmlns:controls="clr-namespace:ModEngine2ConfigTool.Views.Controls"
                     xmlns:converter="clr-namespace:ModEngine2ConfigTool.Views.Converter"
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                    xmlns:views="clr-namespace:ModEngine2ConfigTool.Views"
-                    xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf">
+                    xmlns:views="clr-namespace:ModEngine2ConfigTool.Views">
     <Style x:Key="ProfileButtonStyle" TargetType="{x:Type Button}">
         <Style.Resources>
             <converter:EmptyImagePathConverter x:Key="EmptyImagePathConverter" />
@@ -243,11 +242,9 @@
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FrameworkElement.Cursor" Value="Hand" />
-        <Setter Property="FrameworkElement.FocusVisualStyle" Value="{StaticResource FocusVisual}" />
         <Setter Property="Height" Value="30" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Margin" Value="5,5" />
-        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -256,7 +253,7 @@
                             <Setter Property="Foreground" Value="#ffc969" />
                         </Trigger>
                     </ControlTemplate.Triggers>
-                    <ContentControl Content="{TemplateBinding Content}" />
+                    <ContentControl Background="Transparent" Content="{TemplateBinding Content}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -286,7 +283,6 @@
         <Setter Property="Background" Value="#181818" />
         <Setter Property="Height" Value="90" />
         <Setter Property="Width" Value="90" />
-        <Setter Property="Margin" Value="0,5,5,5" />
         <Setter Property="FrameworkElement.Cursor" Value="Hand" />
         <Setter Property="Template">
             <Setter.Value>

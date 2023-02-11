@@ -17,70 +17,11 @@ namespace ModEngine2ConfigTool.ViewModels
 {
     public class MainWindowVm : ObservableObject
     {
-        private ObservableObject _currentContent;
-        private FrontPageViewModel _frontPageViewModel;
-        private SettingsViewModel _settingsViewModel;
-
         public MainHostVm MainHostVm { get; }
-
-        public ObservableObject CurrentContent 
-        { 
-            get => _currentContent;
-            set
-            {
-                SetProperty(ref _currentContent, value);
-            }
-        }
-
-        public ICommand ConfigureProfilesCommand { get; }
-
-        public ICommand ConfigureSettingsCommand { get; }
-
-        public ICommand OpenLicencesCommand { get; }
-
-        public ICommand ShowHelpCommand { get; }
 
         public MainWindowVm(MainWindow mainWindow)
         {
-            _frontPageViewModel = new FrontPageViewModel();
-            _settingsViewModel = new SettingsViewModel();
-
-            _settingsViewModel.PropertyChanged += _settingsViewModel_PropertyChanged;
-
-            ConfigureProfilesCommand = new RelayCommand(
-                ConfigureProfiles,
-                () => !_settingsViewModel.HasErrors && !_settingsViewModel.Fields.IsChanged);
-
-            ConfigureSettingsCommand = new RelayCommand(
-                ConfigureSettings);
-
-            OpenLicencesCommand = new RelayCommand(OpenLicences);
-
-            ShowHelpCommand = new AsyncRelayCommand(ShowHelp);
-
-            _currentContent = _settingsViewModel.HasErrors 
-                ? _settingsViewModel 
-                : _frontPageViewModel;
-
             MainHostVm = new MainHostVm(mainWindow);
-        }
-
-        private void _settingsViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if(Equals(e.PropertyName, nameof(SettingsViewModel.HasErrors)))
-            {
-                ConfigureProfilesCommand.NotifyCanExecuteChanged();
-            }
-        }
-
-        private void ConfigureProfiles()
-        {
-            CurrentContent = _frontPageViewModel;
-        }
-
-        private void ConfigureSettings()
-        {
-            CurrentContent = _settingsViewModel;
         }
 
         private async Task ShowHelp()

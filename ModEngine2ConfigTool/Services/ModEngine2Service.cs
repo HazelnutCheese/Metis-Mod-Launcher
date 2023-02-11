@@ -3,60 +3,55 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ModEngine2ConfigTool.Services
 {
-    public static class ModEngine2Service
+    public class ModEngine2Service
     {
-        public static Process LaunchWithProfile(string profileName)
+        public Process LaunchWithProfile(string tomlPath)
         {
-            var profilePath = ProfileService.GetProfilePath(profileName);
-            if (!File.Exists(profilePath))
-            {
-                throw new FileNotFoundException($"Could not find profile at \"{profilePath}\"");
-            }
-
             var arguments = new List<string>()
             {
                 "-t er",
-                $"-c {profilePath}"
+                $"-c {tomlPath}"
             };
 
             return Launch(arguments);
         }
 
-        public static void LaunchWithoutMods()
-        {
-            if (!IsSteamRunning())
-            {
-                throw new InvalidOperationException(
-                    "You must be logged into Steam to launch Elden Ring");
-            }
+        //public void LaunchWithoutMods()
+        //{
+        //    if (!IsSteamRunning())
+        //    {
+        //        throw new InvalidOperationException(
+        //            "You must be logged into Steam to launch Elden Ring");
+        //    }
 
-            var eldenRingGameFolder = App.ConfigurationService.EldenRingGameFolder;
-            var eldenRingGameExe = $"{eldenRingGameFolder}\\eldenring.exe";
+        //    var eldenRingGameFolder = App.ConfigurationService.EldenRingGameFolder;
+        //    var eldenRingGameExe = $"{eldenRingGameFolder}\\eldenring.exe";
 
-            if (!File.Exists(eldenRingGameExe))
-            {
-                throw new InvalidOperationException(
-                    $"Could not find EldenRing (eldenring.exe) in \"{eldenRingGameFolder}\".");
-            }
+        //    if (!File.Exists(eldenRingGameExe))
+        //    {
+        //        throw new InvalidOperationException(
+        //            $"Could not find EldenRing (eldenring.exe) in \"{eldenRingGameFolder}\".");
+        //    }
 
-            var processStartInfo = new ProcessStartInfo()
-            {
-                FileName = eldenRingGameExe,
-                WorkingDirectory = eldenRingGameFolder
-            };
+        //    var processStartInfo = new ProcessStartInfo()
+        //    {
+        //        FileName = eldenRingGameExe,
+        //        WorkingDirectory = eldenRingGameFolder
+        //    };
 
-            using var process = Process.Start(processStartInfo);
-            if (process is null)
-            {
-                throw new InvalidOperationException("Failed to start Elden Ring");
-            }
-        }
+        //    using var process = Process.Start(processStartInfo);
+        //    if (process is null)
+        //    {
+        //        throw new InvalidOperationException("Failed to start Elden Ring");
+        //    }
+        //}
 
-        public static async Task WaitForEldenRingExit()
+        public async Task WaitForEldenRingExit(CancellationToken cancellationToken)
         {
             using var eldenRingProcess = GetProcessByName("eldenring");
 
@@ -66,10 +61,10 @@ namespace ModEngine2ConfigTool.Services
                     "Could not find Elden Ring Process.");
             }
 
-            await eldenRingProcess.WaitForExitAsync();
+            await eldenRingProcess.WaitForExitAsync(cancellationToken);
         }
 
-        private static Process Launch(List<string> arguments) 
+        private Process Launch(List<string> arguments) 
         {
             if(!IsSteamRunning())
             {

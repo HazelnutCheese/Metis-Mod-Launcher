@@ -8,5 +8,12 @@
              d:DesignWidth="800"
              Background="#181818"
              mc:Ignorable="d">
-    <Border BorderBrush="#282828" BorderThickness="0,1,0,0" />
+    <Border BorderBrush="#282828" BorderThickness="0,1,0,0">
+        <!--<TextBlock HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="16px"
+                   FontWeight="SemiBold"
+                   Foreground="#FFC969"
+                   Text="Metis Mod Launcher" />-->
+    </Border>
 </UserControl>

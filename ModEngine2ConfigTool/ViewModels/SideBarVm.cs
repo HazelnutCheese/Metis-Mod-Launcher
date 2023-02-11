@@ -18,6 +18,8 @@ namespace ModEngine2ConfigTool.ViewModels
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
         private readonly DllManagerService _dllManagerService;
+        private readonly PlayManagerService _playManagerService;
+        private readonly SaveManagerService _saveManagerService;
 
         public ICommand NavigateHomeCommand { get; }
 
@@ -43,13 +45,16 @@ namespace ModEngine2ConfigTool.ViewModels
             NavigationService navigationService, 
             ProfileManagerService profileManagerService, 
             ModManagerService modManagerService,
-            DllManagerService dllManagerService)
+            DllManagerService dllManagerService,
+            PlayManagerService playManagerService,
+            SaveManagerService saveManagerService)
         {
             _navigationService = navigationService;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
             _dllManagerService = dllManagerService;
-
+            _playManagerService = playManagerService;
+            _saveManagerService = saveManagerService;
             NavigateHomeCommand = new AsyncRelayCommand(NavigateHome);
             NavigateProfilesCommand = new AsyncRelayCommand(NavigateToProfiles);
             NavigateModsCommand = new AsyncRelayCommand(NavigateToMods);
@@ -70,7 +75,9 @@ namespace ModEngine2ConfigTool.ViewModels
                     _navigationService,
                     _profileManagerService,
                     _modManagerService,
-                    _dllManagerService));
+                    _dllManagerService,
+                    _playManagerService,
+                    _saveManagerService));
             };
         }
 
@@ -84,7 +91,9 @@ namespace ModEngine2ConfigTool.ViewModels
                     _navigationService,
                     _profileManagerService,
                     _modManagerService,
-                    _dllManagerService));
+                    _dllManagerService,
+                    _playManagerService,
+                    _saveManagerService));
             }
         }
 
@@ -95,7 +104,9 @@ namespace ModEngine2ConfigTool.ViewModels
                     _navigationService,
                     _profileManagerService, 
                     _modManagerService,
-                    _dllManagerService));
+                    _dllManagerService,
+                    _playManagerService,
+                    _saveManagerService));
         }
 
         private async Task NavigateToProfiles()
@@ -105,7 +116,9 @@ namespace ModEngine2ConfigTool.ViewModels
                     _navigationService,
                     _profileManagerService,
                     _modManagerService,
-                    _dllManagerService));
+                    _dllManagerService,
+                    _playManagerService,
+                    _saveManagerService));
         }
 
         private async Task NavigateToMods()
@@ -136,7 +149,9 @@ namespace ModEngine2ConfigTool.ViewModels
                 _navigationService,
                 _profileManagerService,
                 _modManagerService,
-                _dllManagerService);
+                _dllManagerService,
+                _playManagerService,
+                _saveManagerService);
 
             await _navigationService.NavigateTo(profileEditPageVm);
         }

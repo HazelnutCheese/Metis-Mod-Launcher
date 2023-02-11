@@ -63,16 +63,17 @@
                                     IconKind="FileOutline"
                                     Text="External DLLs" />
 
-            <controls:SideBarButton Grid.Row="5"
+            <!--<controls:SideBarButton Grid.Row="5"
                                     Grid.Column="1"
                                     Command="{Binding NavigateSettingsCommand}"
                                     IconKind="CogOutline"
-                                    Text="Settings" />
+                                    Text="Settings" />-->
 
             <controls:SideBarButton Grid.Row="6"
                                     Grid.Column="1"
                                     Command="{Binding NavigateHelpCommand}"
                                     IconKind="Help"
+                                    IsEnabled="False"
                                     Text="Help" />
 
             <Rectangle Grid.Row="7"
@@ -98,7 +99,7 @@
                                     Grid.Column="1"
                                     Command="{Binding NavigateAddDllCommand}"
                                     IconKind="FilePlusOutline"
-                                    Text="Import Dll" />
+                                    Text="Import External Dll" />
 
             <Rectangle Grid.Row="11"
                        Grid.Column="1"

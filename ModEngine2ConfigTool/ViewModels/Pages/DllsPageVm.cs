@@ -67,7 +67,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 new ObservableCollection<ObservableObject>()
                 {
                     new HotBarButtonVm(
-                        "Import Dll",
+                        "Import External Dll",
                         PackIconKind.FilePlusOutline,
                         async () => await NavigateToImportDllAsync())
                 });

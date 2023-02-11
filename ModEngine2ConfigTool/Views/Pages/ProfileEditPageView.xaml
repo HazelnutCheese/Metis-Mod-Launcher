@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:attached="clr-namespace:ModEngine2ConfigTool.Views.Attached"
+             xmlns:calc="clr-namespace:CalcBinding;assembly=CalcBinding"
              xmlns:controls="clr-namespace:ModEngine2ConfigTool.Views.Controls"
              xmlns:controlsVm="clr-namespace:ModEngine2ConfigTool.ViewModels.Controls"
              xmlns:converter="clr-namespace:ModEngine2ConfigTool.Views.Converter"
@@ -142,7 +143,8 @@
 
                 <StackPanel Grid.Row="2"
                             Grid.Column="2"
-                            HorizontalAlignment="Stretch"
+                            Width="100"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center">
                     <TextBlock Margin="0,0,10,10"
                                VerticalAlignment="Center"
@@ -155,7 +157,8 @@
 
                 <StackPanel Grid.Row="2"
                             Grid.Column="3"
-                            HorizontalAlignment="Stretch"
+                            Width="100"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center">
                     <TextBlock Margin="0,0,10,10"
                                VerticalAlignment="Center"
@@ -176,6 +179,12 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" MaxWidth="800" />
@@ -194,15 +203,66 @@
                          Text="{Binding Profile.Description}"
                          TextWrapping="Wrap"
                          VerticalScrollBarVisibility="auto" />
+
+                <Expander Grid.Row="2"
+                          Margin="0,20,0,0"
+                          materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
+                          Header="Advanced Options">
+                    <StackPanel Margin="10">
+                        <StackPanel Grid.Row="3"
+                                    Margin="0,15,15,5"
+                                    Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Text="Profile Id:" />
+                            <TextBox Margin="10,0,0,0"
+                                     VerticalAlignment="Center"
+                                     IsReadOnly="True"
+                                     Opacity="0.75"
+                                     Text="{Binding Profile.Model.ProfileId}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4"
+                                    Margin="0,15,15,5"
+                                    Orientation="Horizontal">
+                            <CheckBox x:Name="UseSavesCheck"
+                                      VerticalAlignment="Center"
+                                      IsChecked="{Binding Profile.UseSaveManager}" />
+                            <TextBlock Margin="10,0,0,0"
+                                       VerticalAlignment="Center"
+                                       Text="Use profile specific save game" />
+                        </StackPanel>
+                        <controls:HotBar Grid.Row="5"
+                                         Margin="0,10"
+                                         DataContext="{Binding SavesHotBarVm}"
+                                         Visibility="{calc:Binding ElementName=UseSavesCheck,
+                                                                   Path=IsChecked,
+                                                                   FalseToVisibility=Collapsed}" />
+                        <StackPanel Grid.Row="6"
+                                    Margin="0,15,15,5"
+                                    Orientation="Horizontal">
+                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding Profile.UseDebugMode}" />
+                            <TextBlock Margin="10,0,0,0"
+                                       VerticalAlignment="Center"
+                                       Text="Launch ModEngine2 with Debug Mode" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="7"
+                                    Margin="0,15,15,5"
+                                    Orientation="Horizontal">
+                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding Profile.UseScyllaHide}" />
+                            <TextBlock Margin="10,0,0,0"
+                                       VerticalAlignment="Center"
+                                       Text="Launch ModEngine2 with ScyllaHide" />
+                        </StackPanel>
+                    </StackPanel>
+                </Expander>
             </Grid>
 
             <TextBlock Grid.Row="7"
                        Grid.Column="1"
                        Margin="0,10"
                        HorizontalAlignment="Left"
-                       FontSize="18"
+                       FontSize="14"
                        FontWeight="Medium"
-                       Text="Active Mods and DLLs" />
+                       Text="Mods and DLLs" />
 
             <TabControl Grid.Row="8"
                         Grid.Column="1"
