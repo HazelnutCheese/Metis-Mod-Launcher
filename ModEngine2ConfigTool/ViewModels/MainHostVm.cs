@@ -11,29 +11,35 @@ namespace ModEngine2ConfigTool.ViewModels
 
         public SideBarVm SideBarVm { get; }
 
-        public MainHostVm(MainWindow mainWindow)
+        public MainHostVm(
+            MainWindow mainWindow,
+            IDatabaseService databaseService,
+            IDispatcherService dispatcherService,
+            ProfileService profileService,
+            SaveManagerService saveManagerService,
+            ModEngine2Service modEngine2Service)
         {
             var navigationService = new NavigationService();
 
             var profileManagerService = new ProfileManagerService(
-                App.DatabaseService,
-                App.DispatcherService);
+                databaseService,
+                dispatcherService);
 
             var modManagerService = new ModManagerService(
-                App.DatabaseService,
-                App.DispatcherService,
+                databaseService,
+                dispatcherService,
                 profileManagerService);
 
             var dllManagerService = new DllManagerService(
-                App.DatabaseService,
-                App.DispatcherService,
+                databaseService,
+                dispatcherService,
                 profileManagerService);
 
             var playManagerService = new PlayManagerService(
-                App.ProfileService,
-                App.SaveManagerService,
-                App.ModEngine2Service,
-                App.DispatcherService);
+                profileService,
+                saveManagerService,
+                modEngine2Service,
+                dispatcherService);
 
             TopBarVm = new TopBarVm(mainWindow, navigationService);
 
@@ -43,7 +49,7 @@ namespace ModEngine2ConfigTool.ViewModels
                 modManagerService,
                 dllManagerService,
                 playManagerService,
-                App.SaveManagerService);
+                saveManagerService);
 
             SideBarVm = new SideBarVm(
                 navigationService, 
@@ -51,7 +57,7 @@ namespace ModEngine2ConfigTool.ViewModels
                 modManagerService,
                 dllManagerService,
                 playManagerService,
-                App.SaveManagerService);
+                saveManagerService);
         }
     }
 }

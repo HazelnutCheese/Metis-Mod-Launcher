@@ -79,14 +79,14 @@ namespace ModEngine2ConfigTool.Services
             return process;
         }
 
-        private static bool IsSteamRunning()
+        private bool IsSteamRunning()
         {
             using var steamProcesses = GetProcessByName("steam");
 
             return steamProcesses is not null;
         }
 
-        private static Process? GetProcessByName(string name)
+        public Process? GetProcessByName(string name)
         {
             var processes = Process.GetProcessesByName(name);
             var result = processes.FirstOrDefault();

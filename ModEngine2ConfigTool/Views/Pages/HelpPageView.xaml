@@ -113,148 +113,22 @@
                       Margin="0,10,10,10"
                       materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
                       Header="Frequently Asked Questions">
-                <StackPanel>
-                    <Expander Margin="10"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="1. What is Metis Mod Launcher?">
-                        <TextBox Margin="10,5"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqWhatIsMetis, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="2. How do I download mods?">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqHowToDownloadMods, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="3. How do I import a mod?">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqHowToImportMods, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="4. How do I merge mods?">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqHowToMergeMods, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="5. How can I tell if mods conflict?">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqDoModsConflict, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="6. What is an External Dll?">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqWhatIsAnExternalDll, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="7. How to import an External Dll?">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqHowToImportExternalDlls, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="8. What does importing a Mod or External Dll do?">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqWhatDoesImportingDo, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="9. Can I move a Mod or External Dll on disk after importing?">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqWhatHappensIfIMoveAModOrDll, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="10. How do I make my profile use a seperate save?">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqEnableProfileSaves, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="11. How do I import saves into my profile?">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqImportProfileSaves, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="12. Where does Metis store its application data?">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqWhereDoesMetisStoreData, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="13. Where do I report bugs or issues?">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqIFoundABug, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="14. How do I set a password when using Seamless Coop?">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding FaqCoopPassword, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                </StackPanel>
+                <ItemsControl ItemsSource="{Binding FrequentlyAskedQuestions}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Expander Margin="10"
+                                      materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
+                                      Header="{Binding Question}">
+                                <TextBox Margin="10,5"
+                                         IsReadOnly="True"
+                                         Opacity="0.75"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Text="{Binding Answer, Mode=OneWay}"
+                                         TextWrapping="Wrap" />
+                            </Expander>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Expander>
 
             <Expander Grid.Row="6"
@@ -275,108 +149,77 @@
                       Margin="0,10,10,10"
                       materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
                       Header="Third Party Licences">
-                <StackPanel>
-                    <Expander Margin="10"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="ModEngine2">
-                        <TextBox Margin="10,5"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding LicenceModEngine2, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="Windows Community Toolkit">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding LicenceWindowsCommunityToolkit, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="MaterialDesignInXaml">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding LicenceMaterialDesignInXamlToolkit, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="Tommy">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding LicenceTommy, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="FolderBrowserEx">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding LicenceFolderBrowserEx, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="Sherlog">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding LicenceSherlog, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="CalcBinding">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding LicenceCalBinding, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="Config.Net">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding LicenceConfigDotNet, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header="Wix (Windows Installer)">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding LicenceWix, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                    <Expander Margin="10,5"
-                              materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
-                              Header=".net 6.0 / Entity Framework">
-                        <TextBox Margin="10"
-                                 IsReadOnly="True"
-                                 Opacity="0.75"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="{Binding LicenceDotNotEntityFramework, Mode=OneWay}"
-                                 TextWrapping="Wrap" />
-                    </Expander>
-                </StackPanel>
+                <ItemsControl ItemsSource="{Binding ThirdPartyLicences}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Expander Margin="10"
+                                      materialDesign:ExpanderAssist.HorizontalHeaderPadding="10,5"
+                                      Header="{Binding Title}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Margin="20,5,10,5"
+                                               VerticalAlignment="Center"
+                                               Text="Source:" />
+                                    <TextBox Grid.Column="1"
+                                             Grid.ColumnSpan="2"
+                                             Margin="10,5,30,5"
+                                             VerticalAlignment="Center"
+                                             IsReadOnly="True"
+                                             Opacity="0.75"
+                                             Text="{Binding Link, Mode=OneWay}" />
+
+                                    <TextBlock Grid.Row="1"
+                                               Margin="20,5,10,5"
+                                               VerticalAlignment="Center"
+                                               Text="Authors:" />
+                                    <TextBox Grid.Row="1"
+                                             Grid.Column="1"
+                                             Grid.ColumnSpan="2"
+                                             Margin="10,5,30,5"
+                                             VerticalAlignment="Center"
+                                             IsReadOnly="True"
+                                             Opacity="0.75"
+                                             Text="{Binding Authors, Mode=OneWay}" />
+
+                                    <TextBlock Grid.Row="2"
+                                               Margin="20,5,10,5"
+                                               VerticalAlignment="Center"
+                                               Text="Version:" />
+                                    <TextBox Grid.Row="2"
+                                             Grid.Column="1"
+                                             Grid.ColumnSpan="2"
+                                             Margin="10,5,30,5"
+                                             VerticalAlignment="Center"
+                                             IsReadOnly="True"
+                                             Opacity="0.75"
+                                             Text="{Binding Version, Mode=OneWay}" />
+
+                                    <TextBox Grid.Row="3"
+                                             Grid.Column="0"
+                                             Grid.ColumnSpan="3"
+                                             Margin="20,5"
+                                             IsReadOnly="True"
+                                             Opacity="0.75"
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                             Text="{Binding Licence, Mode=OneWay}"
+                                             TextWrapping="Wrap" />
+                                </Grid>
+                            </Expander>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Expander>
         </Grid>
     </ScrollViewer>

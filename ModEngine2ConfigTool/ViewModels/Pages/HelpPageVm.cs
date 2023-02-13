@@ -1,12 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ModEngine2ConfigTool.Resx;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using ModEngine2ConfigTool.ViewModels.Controls;
+using System.Collections.ObjectModel;
 
 namespace ModEngine2ConfigTool.ViewModels.Pages
 {
@@ -20,53 +15,10 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public string Licence { get; }
 
-        public string FaqWhatIsMetis { get; }
 
-        public string FaqHowToDownloadMods { get; }
+        public ObservableCollection<LicenceVm> ThirdPartyLicences { get; }
 
-        public string FaqHowToImportMods { get; }
-
-        public string FaqWhatIsAnExternalDll { get; }
-
-        public string FaqHowToImportExternalDlls { get; }
-
-        public string FaqWhatDoesImportingDo { get; }
-
-        public string FaqWhatHappensIfIMoveAModOrDll { get; }
-
-        public string FaqWhereDoesMetisStoreData { get; }
-
-        public string FaqHowToMergeMods { get; }
-
-        public string FaqEnableProfileSaves { get; }
-
-        public string FaqImportProfileSaves { get; }
-
-        public string FaqDoModsConflict { get; }
-
-        public string FaqIFoundABug { get; }
-
-        public string FaqCoopPassword { get; }
-
-        public string LicenceModEngine2 { get; }
-
-        public string LicenceWindowsCommunityToolkit { get; }
-
-        public string LicenceMaterialDesignInXamlToolkit { get; }
-
-        public string LicenceTommy { get; }
-
-        public string LicenceFolderBrowserEx { get; }
-
-        public string LicenceSherlog { get; }
-
-        public string LicenceCalBinding { get; }
-
-        public string LicenceConfigDotNet { get; }
-
-        public string LicenceWix { get; }
-
-        public string LicenceDotNotEntityFramework { get; }
+        public ObservableCollection<QuestionVm> FrequentlyAskedQuestions { get; }
 
         public HelpPageVm()
         {
@@ -88,31 +40,115 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
             Licence = Help.Licence_Metis;
 
-            FaqWhatIsMetis = Help.Faq_WhatIsMetisModLauncher;
-            FaqHowToDownloadMods = Help.Faq_HowToDownloadMods;
-            FaqHowToImportMods = Help.Faq_HowToImportMod;
-            FaqWhatIsAnExternalDll = Help.Faq_WhatIsAnExternalDll;
-            FaqHowToImportExternalDlls = Help.Faq_HowToImportAnExternalDll;
-            FaqWhatDoesImportingDo = Help.Faq_WhatDoesImportingDo;
-            FaqWhatHappensIfIMoveAModOrDll = Help.Faq_WhatHappensIfIMoveAModOrDllAfterImport;
-            FaqWhereDoesMetisStoreData = Help.Faq_WhereDoesMetisStoreData;
-            FaqIFoundABug = Help.Faq_IFoundABug;
-            FaqHowToMergeMods = Help.Faq_HowToMergeMods;
-            FaqDoModsConflict = Help.Faq_HowCanITellIfModsConflict;
-            FaqEnableProfileSaves = Help.Faq_ProfileSaves;
-            FaqImportProfileSaves = Help.Faq_ImportSaves;
-            FaqCoopPassword = Help.FaqCoopPassword;
+            FrequentlyAskedQuestions = new ObservableCollection<QuestionVm>()
+            {
+                new QuestionVm(
+                    "What is Metis Mod Launcher?",
+                    Help.Faq_WhatIsMetisModLauncher),
+                new QuestionVm(
+                    "How do I download new mods?",
+                    Help.Faq_HowToDownloadMods),
+                new QuestionVm(
+                    "How do I import a mod I have downloaded?",
+                    Help.Faq_HowToImportMod),
+                new QuestionVm(
+                    "What is an external dll?",
+                    Help.Faq_WhatIsAnExternalDll),
+                new QuestionVm(
+                    "How do I use an external dll?",
+                    Help.Faq_HowToImportAnExternalDll),
+                new QuestionVm(
+                    "How can I tell if my mods have conflicts?",
+                    Help.Faq_HowCanITellIfModsConflict),
+                new QuestionVm(
+                    "How can I merge mods to avoid conflicts?",
+                    Help.Faq_HowToMergeMods),
+                new QuestionVm(
+                    "How do I make my profile use it's own save file?",
+                    Help.Faq_ProfileSaves),
+                new QuestionVm(
+                    "How do I import saves from vanilla or another profile?",
+                    Help.Faq_ImportSaves),
+                new QuestionVm(
+                    "How do I set a password for Seamless Coop?",
+                    Help.FaqCoopPassword),
+                new QuestionVm(
+                    "Where does Metis store application data?",
+                    Help.Faq_WhereDoesMetisStoreData),
+                new QuestionVm(
+                    "Where do I post bugs or issues I find?",
+                    Help.Faq_IFoundABug),
+            };
 
-            LicenceModEngine2 = Help.Licence_ModEngine2;
-            LicenceWindowsCommunityToolkit = Help.Licence_WindowsCommunityToolkit;
-            LicenceMaterialDesignInXamlToolkit = Help.Licence_MaterialDesignInXamlToolkit;
-            LicenceTommy = Help.Licence_Tommy;
-            LicenceFolderBrowserEx = Help.Licence_FolderBrowserEx;
-            LicenceSherlog = Help.Licence_Sherlog;
-            LicenceCalBinding = Help.Licence_CalcBinding;
-            LicenceConfigDotNet = Help.Licence_ConfigDotNet;
-            LicenceWix = Help.Licence_Wix;
-            LicenceDotNotEntityFramework = Help.Licence_DotNetEf;
+            ThirdPartyLicences = new ObservableCollection<LicenceVm>()
+            {
+                new LicenceVm(
+                    "ModEngine2",
+                    @"https://github.com/soulsmods/ModEngine2",
+                    "Gary Tierney, katalash, Dasaav-dsv",
+                    "ModEngine-2.0.0-preview4-win64", 
+                    Help.Licence_ModEngine2),
+                new LicenceVm(
+                    ".NET Community Toolkit",
+                    @"https://github.com/CommunityToolkit/dotnet",
+                    "Microsoft", 
+                    "8.0.0", 
+                    Help.Licence_WindowsCommunityToolkit),
+                new LicenceVm(
+                    "Material Design In XAML Toolkit",
+                    @"https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit",
+                    "James Willock", 
+                    "4.7", 
+                    Help.Licence_MaterialDesignInXamlToolkit),
+                new LicenceVm(
+                    "Tommy",
+                    @"https://github.com/dezhidki/Tommy",
+                    "Denis Zhidkikh", 
+                    "3.1.2", 
+                    Help.Licence_Tommy),
+                new LicenceVm(
+                    "FolderBrowserEx",
+                    @"https://github.com/evaristocuesta/FolderBrowserEx",
+                    "Evaristo Cuesta", 
+                    "1.0.1", 
+                    Help.Licence_FolderBrowserEx),
+                new LicenceVm(
+                    "Sherlog",
+                    @"https://github.com/sschmid/Sherlog",
+                    "Simon Schmid",
+                    "1.0.0",
+                    Help.Licence_Sherlog),
+                new LicenceVm(
+                    "CalcBinding",
+                    @"https://github.com/Alex141/CalcBinding",
+                    "Alexander Zinchenko",
+                    "2.5.2",
+                    Help.Licence_CalcBinding),
+                new LicenceVm(
+                    "Config.Net",
+                    @"https://github.com/aloneguid/config",
+                    "Ivan Gavryliuk (@aloneguid)",
+                    "5.1.5",
+                    Help.Licence_ConfigDotNet),
+                new LicenceVm(
+                    "Wix",
+                    @"https://github.com/wixtoolset/wix3",
+                    "Microsoft",
+                    "3.11",
+                    Help.Licence_Wix),
+                new LicenceVm(
+                    "Entity Framework Core",
+                    @"https://learn.microsoft.com/en-gb/ef/core/",
+                    "Microsoft",
+                    "7.0.2",
+                    Help.Licence_DotNetEf),
+                new LicenceVm(
+                    "Power Args",
+                    @"https://github.com/adamabdelhamed/powerargs",
+                    "Adam Abdelhamed",
+                    "4.0.0",
+                    Help.Licence_PowerArgs),
+            };
         }
     }
 }

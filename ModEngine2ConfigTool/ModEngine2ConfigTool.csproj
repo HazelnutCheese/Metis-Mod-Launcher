@@ -10,14 +10,30 @@
     <Version>0.0.1</Version>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <ApplicationIcon>Resources\icon_04.ico</ApplicationIcon>
-    <StartupObject>ModEngine2ConfigTool.App</StartupObject>
+    <StartupObject>ModEngine2ConfigTool.EntryPoint</StartupObject>
     <AssemblyName>Metis Mod Launcher</AssemblyName>
     <DebugType>Embedded</DebugType>
     <EmbedAllSources>True</EmbedAllSources>
   </PropertyGroup>
 
   <ItemGroup>
+    <ApplicationDefinition Remove="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\icon_04.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <COMReference Include="IWshRuntimeLibrary">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>f935dc20-1cf0-11d0-adb9-00c04fd58a0b</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -39,10 +55,15 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="PowerArgs" Version="4.0.0" />
     <PackageReference Include="Sherlog" Version="1.0.0" />
     <PackageReference Include="Sherlog.Appenders" Version="1.0.3" />
     <PackageReference Include="Sherlog.Formatters" Version="2.0.0" />
     <PackageReference Include="Tommy" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="App.xaml" />
   </ItemGroup>
 
   <ItemGroup>

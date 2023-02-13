@@ -1,4 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
+using Microsoft.VisualBasic.ApplicationServices;
 using ModEngine2ConfigTool.ViewModels.Dialogs;
 using ModEngine2ConfigTool.ViewModels.Fields;
 using ModEngine2ConfigTool.ViewModels.Profiles;
@@ -30,6 +31,81 @@ namespace ModEngine2ConfigTool.Services
             _saveManagerService = saveManagerService;
             _modEngine2Service = modEngine2Service;
             _dispatcherService = dispatcherService;
+        }
+
+        public void PlaySilent(ProfileVm profileVm)
+        {
+            try
+            {
+                profileVm.UpdateLastPlayed();
+
+                var profileId = profileVm.Model.ProfileId.ToString();
+
+                // create Toml file from profileVm
+                var profileToml = _profileService.WriteProfile(profileVm);
+
+                // Backup base game saves
+                _saveManagerService.CreateUnmoddedBackups();
+
+                //// Backup current profile saves
+                if (profileVm.UseSaveManager)
+                {
+                    _saveManagerService.CreateBackups(profileId);
+                }
+
+                //// push current profile saves
+                if (profileVm.UseSaveManager)
+                {
+                    _saveManagerService.InstallProfileSaves(profileId);
+                }
+
+                try
+                {
+                    //// launch modengine2 with toml
+                    using var modEngineProcess = _modEngine2Service.LaunchWithProfile(profileToml);
+
+                    // wait a little bit for things to initialise
+                    Thread.Sleep(5000);
+
+                    // If using save manager wait for exit
+                    if (profileVm.UseSaveManager)
+                    {
+                        if (!modEngineProcess.HasExited)
+                        {
+                            modEngineProcess.WaitForExit();
+                        }
+
+                        //// wait for elden ring to exit
+                        using var eldenRingProcess = _modEngine2Service.GetProcessByName("eldenring");
+                        if (eldenRingProcess is null)
+                        {
+                            throw new InvalidOperationException(
+                                "Could not find Elden Ring Process.");
+                        }
+
+                        eldenRingProcess.WaitForExit();
+                    }
+                }
+                catch (InvalidOperationException e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+
+                //// pop current profile saves
+                if (profileVm.UseSaveManager)
+                {
+                    _saveManagerService.UninstallProfileSaves(profileId);
+                }
+
+                // delete toml file                
+                File.Delete(profileToml);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                var logger = Logger.GetLogger(nameof(App));
+                logger.Error(e.Message);
+            }
         }
 
         public async Task Play(ProfileVm profileVm)
@@ -97,18 +173,25 @@ namespace ModEngine2ConfigTool.Services
                     //// launch modengine2 with toml
                     using var modEngineProcess = _modEngine2Service.LaunchWithProfile(profileToml);
 
-                    //// wait for elden ring to exit
-                    try
+                    if(!modEngineProcess.HasExited)
                     {
-                        await modEngineProcess.WaitForExitAsync(cancellationToken);
-                    }
-                    catch (TaskCanceledException)
-                    {
-                        modEngineProcess.Kill();
+                        try
+                        {
+                            await modEngineProcess
+                                .WaitForExitAsync(cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            modEngineProcess.Kill();
+                        }
                     }
 
-                    await Task.Delay(3000);
-                    await _modEngine2Service.WaitForEldenRingExit(cancellationToken);
+                    //// wait for elden ring to exit
+                    await Task.Delay(3000).ConfigureAwait(false);
+                    await _modEngine2Service
+                        .WaitForEldenRingExit(cancellationToken)
+                        .ConfigureAwait(false);
                     //await Task.Delay(15000, cancellationToken);
                 }
                 catch (TaskCanceledException)

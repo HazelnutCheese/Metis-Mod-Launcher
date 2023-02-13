@@ -16,17 +16,7 @@ namespace ModEngine2ConfigTool.ViewModels
 {
     public class MainPanelVm : ObservableObject
     {
-        private ProfileManagerService _profileManagerService;
-        private ModManagerService _modManagerService;
-        private ProfileVm? _selectedItem;
-
         public NavigationService Navigator { get; }
-
-        public ProfileVm? SelectedItem 
-        { 
-            get => _selectedItem; 
-            private set => SetProperty(ref _selectedItem, value); 
-        }
 
         public MainPanelVm(
             NavigationService navigator, 

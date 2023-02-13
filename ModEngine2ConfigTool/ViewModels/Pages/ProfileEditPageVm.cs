@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using IWshRuntimeLibrary;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using ModEngine2ConfigTool.Equality;
@@ -13,6 +14,7 @@ using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.ViewModels.Profiles;
 using ModEngine2ConfigTool.Views.Controls;
 using ModEngine2ConfigTool.Views.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -101,6 +103,10 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                                 async ()=> await profileManagerService.AddDllToProfile(profile, x)))
                             .ToList(),
                         dllManagerService.DllVms.Any),
+                    new HotBarButtonVm(
+                        "Create Shortcut",
+                        PackIconKind.LinkPlus,
+                        () => CreateShortcut()),
                     new HotBarButtonVm(
                         "Copy Profile",
                         PackIconKind.ContentDuplicate,
@@ -307,6 +313,38 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private bool HasSaves()
         {
             return _saveManagerService.ProfileHasSaves(Profile.Model.ProfileId.ToString());
+        }
+
+        private void CreateShortcut()
+        {
+            var fileDialog = new SaveFileDialog
+            {
+                Filter = "All Shortcut Files(*.lnk)|*.lnk",
+                Title = "Save shortcut",
+                AddExtension = true,
+                FileName = $"{Profile.Name}.lnk"
+            };
+
+            if (_lastOpenedLocation.Equals(string.Empty))
+            {
+                fileDialog.InitialDirectory = !string.IsNullOrWhiteSpace(Profile.ImagePath)
+                    ? Path.GetDirectoryName(Profile.ImagePath)
+                    : Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                fileDialog.InitialDirectory = _lastOpenedLocation;
+            }
+
+            if (fileDialog.ShowDialog().Equals(true))
+            {
+                var shell = new WshShell();
+                IWshShortcut shortcut = shell.CreateShortcut(fileDialog.FileName);
+                shortcut.TargetPath = AppDomain.CurrentDomain.BaseDirectory + "Metis Mod Launcher.exe";
+                shortcut.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                shortcut.Arguments = $"-p \"{Profile.Model.ProfileId}\"";
+                shortcut.Save();
+            }
         }
     }
 }

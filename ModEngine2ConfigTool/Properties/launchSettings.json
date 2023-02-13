@@ -2,7 +2,12 @@
   "profiles": {
     "ModEngine2ConfigTool": {
       "commandName": "Project",
-      "nativeDebugging": true
+      "nativeDebugging": false
+    },
+    "Silent Mode": {
+      "commandName": "Project",
+      "commandLineArgs": "-p \"bc7a2fc5-df9b-413c-9cd2-15d071fe4a27\"",
+      "nativeDebugging": false
     }
   }
 }
