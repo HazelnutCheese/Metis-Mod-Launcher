@@ -76,10 +76,24 @@ namespace ModEngine2ConfigTool.Services
 
             await AddProfileAsync(newProfileVm);
 
-            foreach(var modVm in profileVm.Mods)
+            newProfileVm.ImagePath = profileVm.ImagePath;
+            newProfileVm.Description = profileVm.Description;
+
+            newProfileVm.UseSaveManager = profileVm.UseSaveManager;
+            newProfileVm.UseDebugMode = profileVm.UseDebugMode;
+            newProfileVm.UseScyllaHide = profileVm.UseScyllaHide;
+
+            foreach (var modVm in profileVm.Mods)
             {
                 await AddModToProfile(newProfileVm, modVm);
             }
+
+            foreach(var dllVm in profileVm.ExternalDlls)
+            {
+                await AddDllToProfile(newProfileVm, dllVm);
+            }
+
+            await RefreshAsync();
 
             return ProfileVms.Single(x => _profileVmEqualityComparer.Equals(x, newProfileVm));
         }

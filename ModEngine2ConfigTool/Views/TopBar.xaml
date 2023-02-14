@@ -51,25 +51,30 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="48" />
-            <ColumnDefinition Width="48" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="48" />
-            <ColumnDefinition Width="48" />
-            <ColumnDefinition Width="48" />
-        </Grid.ColumnDefinitions>
+    <Border Grid.RowSpan="2"
+            Grid.ColumnSpan="6"
+            BorderBrush="{DynamicResource PrimaryHueLightBrush}"
+            BorderThickness="1,0,0,1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="48" />
+                <ColumnDefinition Width="48" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="48" />
+                <ColumnDefinition Width="48" />
+                <ColumnDefinition Width="48" />
+            </Grid.ColumnDefinitions>
 
-        <Rectangle Grid.RowSpan="2"
-                   Grid.ColumnSpan="6"
-                   Height="60"
-                   Fill="#202020" />
-        <!--<TextBlock Grid.RowSpan="2"
+
+            <Rectangle Grid.RowSpan="2"
+                       Grid.ColumnSpan="6"
+                       Height="60"
+                       Fill="#202020" />
+            <!--<TextBlock Grid.RowSpan="2"
                    Grid.Column="1"
                    Grid.ColumnSpan="2"
                    Margin="20"
@@ -80,7 +85,7 @@
                    Foreground="#d1d1d1"
                    Text="Metis Mod Launcher" />-->
 
-        <!--<Button x:Name="BackButton"
+            <!--<Button x:Name="BackButton"
                 Grid.RowSpan="2"
                 Grid.Column="0"
                 Command="{Binding NavigateBackCommand}">
@@ -97,35 +102,36 @@
                                      VerticalAlignment="Bottom"
                                      Kind="ArrowForward" />
         </Button>-->
-        <Button Grid.Row="0"
-                Grid.Column="3"
-                Command="{Binding MinimizeCommand}">
-            <materialDesign:PackIcon Width="16"
-                                     Height="16"
-                                     Kind="WindowMinimize" />
-        </Button>
-        <Button x:Name="RestoreButton"
-                Grid.Row="0"
-                Grid.Column="4"
-                Command="{Binding WindowedModeCommand}">
-            <materialDesign:PackIcon Width="16"
-                                     Height="16"
-                                     Kind="WindowRestore" />
-        </Button>
-        <Button x:Name="MaximizeButton"
-                Grid.Row="0"
-                Grid.Column="4"
-                Command="{Binding MaximizeCommand}">
-            <materialDesign:PackIcon Width="16"
-                                     Height="16"
-                                     Kind="WindowMaximize" />
-        </Button>
-        <Button Grid.Row="0"
-                Grid.Column="5"
-                Command="{Binding CloseWindowCommand}">
-            <materialDesign:PackIcon Width="16"
-                                     Height="16"
-                                     Kind="WindowClose" />
-        </Button>
-    </Grid>
+            <Button Grid.Row="0"
+                    Grid.Column="3"
+                    Command="{Binding MinimizeCommand}">
+                <materialDesign:PackIcon Width="16"
+                                         Height="16"
+                                         Kind="WindowMinimize" />
+            </Button>
+            <Button x:Name="RestoreButton"
+                    Grid.Row="0"
+                    Grid.Column="4"
+                    Command="{Binding WindowedModeCommand}">
+                <materialDesign:PackIcon Width="16"
+                                         Height="16"
+                                         Kind="WindowRestore" />
+            </Button>
+            <Button x:Name="MaximizeButton"
+                    Grid.Row="0"
+                    Grid.Column="4"
+                    Command="{Binding MaximizeCommand}">
+                <materialDesign:PackIcon Width="16"
+                                         Height="16"
+                                         Kind="WindowMaximize" />
+            </Button>
+            <Button Grid.Row="0"
+                    Grid.Column="5"
+                    Command="{Binding CloseWindowCommand}">
+                <materialDesign:PackIcon Width="16"
+                                         Height="16"
+                                         Kind="WindowClose" />
+            </Button>
+        </Grid>
+    </Border>
 </UserControl>

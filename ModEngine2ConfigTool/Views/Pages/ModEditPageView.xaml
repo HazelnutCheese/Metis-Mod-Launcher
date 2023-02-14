@@ -1,18 +1,14 @@
 ﻿<UserControl x:Class="ModEngine2ConfigTool.Views.Pages.ModEditPageView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:attached="clr-namespace:ModEngine2ConfigTool.Views.Attached"
+             xmlns:calc="clr-namespace:CalcBinding;assembly=CalcBinding"
              xmlns:controls="clr-namespace:ModEngine2ConfigTool.Views.Controls"
              xmlns:converter="clr-namespace:ModEngine2ConfigTool.Views.Converter"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
-             xmlns:local="clr-namespace:ModEngine2ConfigTool.Views.Pages"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pages="clr-namespace:ModEngine2ConfigTool.ViewModels.Pages"
-             xmlns:proxy="clr-namespace:ModEngine2ConfigTool.Views.Proxy"
-             xmlns:system="clr-namespace:System;assembly=netstandard"
-             xmlns:views="clr-namespace:ModEngine2ConfigTool.Views"
+             x:Name="ModEditPageSelf"
              d:DataContext="{d:DesignInstance Type={x:Type pages:ModEditPageVm},
                                               IsDesignTimeCreatable=False}"
              d:DesignHeight="450"
@@ -21,201 +17,194 @@
     <UserControl.Resources>
         <converter:EmptyImagePathConverter x:Key="EmptyImagePathConverter" />
     </UserControl.Resources>
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="32" />
-                <RowDefinition Height="20" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="10" />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock Grid.Row="1"
-                       Grid.Column="1"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                       Text="{Binding Header}" />
-
-            <controls:HotBar Grid.Row="2"
-                             Grid.Column="1"
-                             Margin="0,10"
-                             DataContext="{Binding HotBarVm}" />
-
-            <TextBlock Grid.Row="3"
-                       Grid.Column="1"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       FontSize="18"
-                       FontWeight="Medium"
-                       Text="Enter Mod Details" />
-
-            <Grid Grid.Row="5"
-                  Grid.Column="1"
-                  VerticalAlignment="Top">
+    <Grid>
+        <Image x:Name="BackImage"
+               VerticalAlignment="Top"
+               RenderOptions.BitmapScalingMode="HighQuality"
+               Source="{Binding Mod.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Blue'}"
+               Stretch="UniformToFill">
+            <Image.OpacityMask>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
+                    <GradientStop Offset="0" Color="Black" />
+                    <GradientStop Offset="{calc:Binding ElementName=BackImage, Path='(580.0/ActualWidth)*0.55'}" Color="#22000000" />
+                    <GradientStop Offset="1" Color="Transparent" />
+                </LinearGradientBrush>
+            </Image.OpacityMask>
+        </Image>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
+
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="128" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="30" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="30" />
                 </Grid.ColumnDefinitions>
 
-                <materialDesign:Card Grid.Row="0"
-                                     Grid.RowSpan="2"
-                                     Grid.Column="0"
-                                     Width="128"
-                                     Height="128"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Top"
-                                     materialDesign:ElevationAssist.Elevation="Dp4"
-                                     materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left"
-                                     Opacity="0.85">
-                    <Grid>
-                        <Image Source="{Binding Mod.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Red'}" Stretch="UniformToFill" />
-                        <Button x:Name="PlayIcon"
-                                Width="128"
-                                Height="128"
-                                Margin="0"
-                                Padding="0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                materialDesign:ElevationAssist.Elevation="Dp4"
-                                materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="0"
-                                Command="{Binding SelectImageCommand}"
-                                Style="{StaticResource PictureSelectButtonStyle}">
-                            <Grid Background="Transparent">
-                                <materialDesign:PackIcon Width="90"
-                                                         Height="90"
-                                                         HorizontalAlignment="Center"
-                                                         VerticalAlignment="Center"
-                                                         Kind="Plus" />
-
-                            </Grid>
-                        </Button>
-                    </Grid>
-                </materialDesign:Card>
-
                 <Grid Grid.Row="0"
-                      Grid.Column="2"
-                      Grid.ColumnSpan="2"
-                      HorizontalAlignment="Stretch">
+                      Grid.Column="1"
+                      Grid.ColumnSpan="1"
+                      Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <materialDesign:Card Width="128"
+                                         Height="128"
+                                         Margin="0,31,0,31"
+                                         HorizontalAlignment="Stretch"
+                                         VerticalAlignment="Center"
+                                         materialDesign:ElevationAssist.Elevation="Dp4"
+                                         materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left"
+                                         Opacity="0.85">
+                        <Grid>
+
+                            <Button x:Name="PlayIcon"
+                                    Width="128"
+                                    Height="128"
+                                    materialDesign:ElevationAssist.Elevation="Dp4"
+                                    materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left"
+                                    Command="{Binding SelectImageCommand}"
+                                    Style="{StaticResource PictureSelectButtonStyle}">
+                                <Border BorderBrush="{DynamicResource PrimaryHueLightBrush}" BorderThickness="2">
+                                    <Image RenderOptions.BitmapScalingMode="HighQuality"
+                                           Source="{Binding Mod.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Blue'}"
+                                           Stretch="UniformToFill" />
+                                </Border>
+                            </Button>
+                        </Grid>
+                    </materialDesign:Card>
+
+                    <controls:HotBar Grid.Column="1"
+                                     Margin="30,0"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Center"
+                                     DataContext="{Binding HotBarVm}" />
+                </Grid>
+
+                <Grid Grid.Row="2"
+                      Grid.Column="1"
+                      Margin="0,15">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MaxWidth="280" />
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="0.85*" MaxWidth="1000" />
+                        <ColumnDefinition Width="0.15*" />
                     </Grid.ColumnDefinitions>
-
-                    <TextBlock Margin="0,0,10,10"
-                               FontSize="14"
-                               FontWeight="Medium"
+                    <TextBlock Margin="0,0,0,12"
+                               Style="{StaticResource TitleStyle}"
                                Text="Name:" />
 
                     <TextBox Grid.Row="1"
-                             materialDesign:HintAssist.Hint="Enter name for Mod"
-                             Text="{Binding Mod.Name}"
-                             VerticalScrollBarVisibility="auto" />
+                             materialDesign:HintAssist.Hint="Enter Mod Name"
+                             Background="{DynamicResource SecondaryHueLightBrush}"
+                             MaxLines="1"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding Mod.Name}" />
                 </Grid>
 
-                <StackPanel Grid.Row="2"
-                            Grid.Column="2"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center">
-                    <TextBlock Margin="0,0,10,10"
-                               VerticalAlignment="Center"
-                               FontSize="14"
-                               FontWeight="Medium"
-                               Text="Added:" />
-
-                    <TextBlock Text="{Binding Mod.Added}" TextWrapping="Wrap" />
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Row="6"
-                  Grid.Column="1"
-                  Margin="0,10,15,10"
-                  HorizontalAlignment="Stretch">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" MaxWidth="800" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Row="0"
-                           Margin="0,0,10,10"
-                           FontSize="14"
-                           FontWeight="Medium"
-                           Text="Description:" />
-
-                <TextBox Grid.Row="1"
-                         materialDesign:HintAssist.Hint="Enter description for Mod"
-                         AcceptsReturn="True"
-                         Text="{Binding Mod.Description}"
-                         TextWrapping="Wrap"
-                         VerticalScrollBarVisibility="auto" />
-            </Grid>
-
-            <Grid Grid.Row="7"
-                  Grid.Column="1"
-                  Margin="0,10,15,10"
-                  HorizontalAlignment="Stretch">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" MaxWidth="900" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Row="0"
-                           Margin="0,0,10,10"
-                           FontSize="14"
-                           FontWeight="Medium"
-                           Text="Location:" />
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="3"
+                      Grid.Column="1"
+                      Margin="0,15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="0.85*" MaxWidth="1000" />
+                        <ColumnDefinition Width="0.15*" />
                     </Grid.ColumnDefinitions>
+                    <TextBlock Margin="0,0,0,12"
+                               Style="{StaticResource TitleStyle}"
+                               Text="Description:" />
 
-                    <TextBox Grid.Column="0"
-                             Text="{Binding Mod.FolderPath}"
+                    <TextBox Grid.Row="1"
+                             materialDesign:HintAssist.Hint="Enter Mod Desription"
+                             AcceptsReturn="True"
+                             Background="{DynamicResource SecondaryHueLightBrush}"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding Mod.Description}"
                              TextWrapping="Wrap" />
+                </Grid>
 
-                    <controls:SideBarButton Grid.Column="1"
+                <Grid Grid.Row="4"
+                      Grid.Column="1"
+                      Margin="0,15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.90*" MaxWidth="900" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="0.1*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="0,0,0,12"
+                               Style="{StaticResource TitleStyle}"
+                               Text="Mod Folder Path:" />
+
+                    <TextBox Grid.Row="1"
+                             materialDesign:HintAssist.Hint="Enter Mod Folder Path"
+                             AcceptsReturn="False"
+                             Background="{DynamicResource SecondaryHueLightBrush}"
+                             MaxLines="1"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding Mod.FolderPath}" />
+
+                    <controls:SideBarButton Grid.Row="1"
+                                            Grid.Column="1"
                                             Margin="10,0"
+                                            Background="{DynamicResource SecondaryHueLightBrush}"
                                             Command="{Binding BrowseCommand}"
                                             IconKind="FolderEditOutline"
                                             Text="Browse" />
-
                 </Grid>
+
+                <StackPanel Grid.Row="5"
+                            Grid.Column="1"
+                            Margin="0,15"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <TextBlock Margin="0,0,10,10"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource TitleStyle}"
+                               Text="Added:" />
+
+                    <TextBlock Style="{StaticResource ValueStyle}" Text="{Binding Mod.Added}" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="6"
+                            Grid.Column="1"
+                            Margin="0,15">
+                    <TextBlock Margin="0,0,0,10"
+                               Style="{StaticResource TitleStyle}"
+                               Text="Advanced Options:" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="Mod ID:" />
+                        <TextBox Margin="10,0,0,0"
+                                 VerticalAlignment="Center"
+                                 IsReadOnly="True"
+                                 Opacity="0.75"
+                                 Text="{Binding Mod.Model.ModId}" />
+                    </StackPanel>
+                </StackPanel>
             </Grid>
-        </Grid>
-    </ScrollViewer>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

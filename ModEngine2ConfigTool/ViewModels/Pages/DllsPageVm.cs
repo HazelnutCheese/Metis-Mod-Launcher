@@ -4,8 +4,10 @@ using MaterialDesignThemes.Wpf;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.Views.Controls;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -37,6 +39,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         public ICommand SortByDateAddedCommand { get; }
 
         public HotBarVm HotBarVm { get; }
+        public string BackgroundImage { get; }
 
         public DllsPageVm(
             NavigationService navigationService,
@@ -64,10 +67,19 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 new ObservableCollection<ObservableObject>()
                 {
                     new HotBarButtonVm(
-                        "Import External Dll",
+                        "Add from File",
                         PackIconKind.FilePlusOutline,
+                        async () => await NavigateToImportDllAsync()),
+                    new HotBarButtonVm(
+                        "Add from Package",
+                        PackIconKind.PackageVariantClosedPlus,
                         async () => await NavigateToImportDllAsync())
                 });
+
+            BackgroundImage = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Resources",
+                "Background_03.png");
         }
 
         private void _dlls_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

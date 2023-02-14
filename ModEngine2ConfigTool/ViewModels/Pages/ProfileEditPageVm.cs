@@ -17,8 +17,10 @@ using ModEngine2ConfigTool.Views.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Formats.Asn1;
 using System.IO;
 using System.Linq;
@@ -51,6 +53,10 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         public HotBarVm HotBarVm { get; }
 
         public HotBarVm SavesHotBarVm { get; }
+
+        public HotBarMenuButtonVm AddMods { get; }
+
+        public HotBarMenuButtonVm AddDlls { get; }
 
         public ProfileEditPageVm(
             ProfileVm profile, 
@@ -85,28 +91,6 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                         "Play Profile",
                         PackIconKind.PlayBoxOutline,
                         async () => await PlayAsync()),
-                    new HotBarMenuButtonVm(
-                        "Select Mods",
-                        PackIconKind.FolderMultiplePlusOutline,
-                        modManagerService.ModVms
-                            .Select(x => new HotBarMenuButtonItemVm(
-                                x.Name,
-                                async ()=> await profileManagerService.AddModToProfile(profile, x)))
-                            .ToList(),
-                        modManagerService.ModVms.Any),
-                    new HotBarMenuButtonVm(
-                        "Select Dlls",
-                        PackIconKind.FolderMultiplePlusOutline,
-                        dllManagerService.DllVms
-                            .Select(x => new HotBarMenuButtonItemVm(
-                                x.Name,
-                                async ()=> await profileManagerService.AddDllToProfile(profile, x)))
-                            .ToList(),
-                        dllManagerService.DllVms.Any),
-                    new HotBarButtonVm(
-                        "Create Shortcut",
-                        PackIconKind.LinkPlus,
-                        () => CreateShortcut()),
                     new HotBarButtonVm(
                         "Copy Profile",
                         PackIconKind.ContentDuplicate,
@@ -114,8 +98,34 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     new HotBarButtonVm(
                         "Delete Profile",
                         PackIconKind.DeleteOutline,
-                        async () => await DeleteProfileAsync())
+                        async () => await DeleteProfileAsync()),
+                    new HotBarButtonVm(
+                        "Create Shortcut",
+                        PackIconKind.LinkPlus,
+                        () => CreateShortcut()),
+                    new HotBarButtonVm(
+                        "Export Profile",
+                        PackIconKind.FileExportOutline,
+                        () => { }),
                     });
+
+            AddMods = new HotBarMenuButtonVm(
+                "Add Mods",
+                PackIconKind.FileExportOutline,
+                modManagerService.ModVms
+                    .Select(x => new HotBarMenuButtonItemVm(
+                        x.Name,
+                        async () => await profileManagerService.AddModToProfile(profile, x)))
+                    .ToList());
+
+            AddDlls = new HotBarMenuButtonVm(
+                "Add Dlls",
+                PackIconKind.FolderMultiplePlusOutline,
+                dllManagerService.DllVms
+                    .Select(x => new HotBarMenuButtonItemVm(
+                        x.Name,
+                        async () => await profileManagerService.AddDllToProfile(profile, x)))
+                    .ToList());
 
             SavesHotBarVm = new HotBarVm(
                 new ObservableCollection<ObservableObject>()
@@ -158,15 +168,10 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     dllManagerService)));
 
             profile.Mods.CollectionChanged += ProfileMods_CollectionChanged;
-            modManagerService.ModVms.CollectionChanged += AllMods_CollectionChanged;
-
             profile.ExternalDlls.CollectionChanged += ProfileDlls_CollectionChanged;
-            dllManagerService.DllVms.CollectionChanged += AllDlls_CollectionChanged;
         }
 
-        private void ProfileMods_CollectionChanged(
-            object? sender, 
-            System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void ProfileMods_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             Mods.Clear();
             foreach (var mod in Profile.Mods)
@@ -178,17 +183,6 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     _profileManagerService,
                     _modManagerService));
             }
-
-            // Play Profile Button
-            (HotBarVm.Buttons[0] as HotBarButtonVm)?.RaiseNotifyCommandExecuteChanged();
-        }
-
-        private void AllMods_CollectionChanged(
-            object? sender,
-            System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            // Add Mods Button
-            (HotBarVm.Buttons[1] as HotBarMenuButtonVm)?.RaiseNotifyCommandExecuteChanged();
         }
 
         private void ProfileDlls_CollectionChanged(
@@ -205,18 +199,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     _profileManagerService,
                     _dllManagerService));
             }
-
-            // Play Profile Button
-            (HotBarVm.Buttons[0] as HotBarButtonVm)?.RaiseNotifyCommandExecuteChanged();
         }   
-
-        private void AllDlls_CollectionChanged(
-            object? sender,
-            System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            // Add Dlls Button
-            (HotBarVm.Buttons[2] as HotBarMenuButtonVm)?.RaiseNotifyCommandExecuteChanged();
-        }
 
         private void SelectImage()
         {
@@ -338,13 +321,73 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
             if (fileDialog.ShowDialog().Equals(true))
             {
+                var iconPath = string.Empty; 
+                if (Profile.ImagePath != null)
+                {
+                    iconPath = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                        $"Metis Mod Launcher\\Temp\\{Guid.NewGuid()}.ico");
+
+                    var image = Image.FromFile(Profile.ImagePath);
+                    var icon = IconFromImage(image);
+                    using var filestream = new FileStream(
+                        iconPath, 
+                        FileMode.Create);
+                    icon.Save(filestream);
+                    icon.Dispose();
+                    image.Dispose();
+                }
+
                 var shell = new WshShell();
                 IWshShortcut shortcut = shell.CreateShortcut(fileDialog.FileName);
                 shortcut.TargetPath = AppDomain.CurrentDomain.BaseDirectory + "Metis Mod Launcher.exe";
                 shortcut.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 shortcut.Arguments = $"-p \"{Profile.Model.ProfileId}\"";
+                shortcut.IconLocation = iconPath;
                 shortcut.Save();
             }
+        }
+
+        public static Icon IconFromImage(Image img)
+        {
+            var ms = new System.IO.MemoryStream();
+            var bw = new System.IO.BinaryWriter(ms);
+            // Header
+            bw.Write((short)0);   // 0 : reserved
+            bw.Write((short)1);   // 2 : 1=ico, 2=cur
+            bw.Write((short)1);   // 4 : number of images
+                                  // Image directory
+            var w = img.Width;
+            if (w >= 256)
+            {
+                w = 0;
+            }
+
+            bw.Write((byte)w);    // 0 : width of image
+            var h = img.Height;
+            if (h >= 256)
+            {
+                h = 0;
+            }
+
+            bw.Write((byte)h);    // 1 : height of image
+            bw.Write((byte)0);    // 2 : number of colors in palette
+            bw.Write((byte)0);    // 3 : reserved
+            bw.Write((short)0);   // 4 : number of color planes
+            bw.Write((short)0);   // 6 : bits per pixel
+            var sizeHere = ms.Position;
+            bw.Write((int)0);     // 8 : image size
+            var start = (int)ms.Position + 4;
+            bw.Write(start);      // 12: offset of image data
+                                  // Image data
+            img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            var imageSize = (int)ms.Position - start;
+            ms.Seek(sizeHere, System.IO.SeekOrigin.Begin);
+            bw.Write(imageSize);
+            ms.Seek(0, System.IO.SeekOrigin.Begin);
+
+            // And load it
+            return new Icon(ms);
         }
     }
 }

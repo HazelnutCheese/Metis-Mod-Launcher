@@ -5,8 +5,10 @@ using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.Views.Controls;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -39,6 +41,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public HotBarVm HotBarVm { get; }
 
+        public string BackgroundImage { get; }
+
         public ModsPageVm(
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
@@ -65,10 +69,19 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 new ObservableCollection<ObservableObject>()
                 {
                     new HotBarButtonVm(
-                        "Import Mod",
+                        "Add from Folder",
                         PackIconKind.FolderMultiplePlusOutline,
+                        async () => await NavigateToImportModAsync()),
+                    new HotBarButtonVm(
+                        "Add from Package",
+                        PackIconKind.PackageVariantClosedPlus,
                         async () => await NavigateToImportModAsync())
                 });
+
+            BackgroundImage = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Resources",
+                "Background_02.png");
         }
 
         private void _baseMods_CollectionChanged(

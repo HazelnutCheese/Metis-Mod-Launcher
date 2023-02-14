@@ -3,6 +3,7 @@ using MaterialDesignThemes.Wpf;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.Profiles;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -34,6 +35,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         }
 
         public HotBarVm HotBarVm { get; }
+        public string BackgroundImage { get; }
 
         public HomePageVm(
             NavigationService navigationService,
@@ -76,7 +78,11 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                         async () => await NavigateToImportDllAsync())
                 });
 
-            
+            BackgroundImage = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Resources",
+                "Background_04.png");
+
             _profiles.CollectionChanged += async (s,e) => await UpdateRecentProfiles();
         }
 

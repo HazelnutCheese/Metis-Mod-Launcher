@@ -67,14 +67,11 @@ namespace ModEngine2ConfigTool.Services
                 modPath,
                 _databaseService);
 
-            await AddModAsync(newModVm);
-            return ModVms.Single(x => _modVmEqualityComparer.Equals(x, newModVm));
-        }
+            _databaseService.AddMod(newModVm);
 
-        public async Task AddModAsync(ModVm modVm)
-        {
-            _databaseService.AddMod(modVm);
             await RefreshAsync();
+
+            return ModVms.Single(x => _modVmEqualityComparer.Equals(x, newModVm));
         }
 
         public async Task<ModVm> DuplicateModAsync(ModVm modVm)
@@ -83,7 +80,14 @@ namespace ModEngine2ConfigTool.Services
                 modVm.Name + " - Copy",
                 _databaseService);
 
-            await AddModAsync(newModVm);
+            _databaseService.AddMod(newModVm);
+
+            newModVm.Description = modVm.Description;
+            newModVm.FolderPath = modVm.FolderPath;
+            newModVm.ImagePath = modVm.ImagePath;
+
+            await RefreshAsync();
+
             return ModVms.Single(x => _modVmEqualityComparer.Equals(x, newModVm));
         }
 

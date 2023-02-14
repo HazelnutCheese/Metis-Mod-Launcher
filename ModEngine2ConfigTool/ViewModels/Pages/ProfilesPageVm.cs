@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +47,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public HotBarVm HotBarVm { get; }
 
+        public string BackgroundImage { get; }
+
         public ProfilesPageVm(
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
@@ -81,9 +84,18 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 {
                     new HotBarButtonVm(
                         "Create new Profile",
-                        PackIconKind.PlayBoxOutline,
+                        PackIconKind.PencilOutline,
+                        async () => await NavigateToCreateProfileAsync()),
+                    new HotBarButtonVm(
+                        "Add from Package",
+                        PackIconKind.PackageVariantClosedPlus,
                         async () => await NavigateToCreateProfileAsync())
                 });
+
+            BackgroundImage = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Resources",
+                "Background_01.png");
         }
 
         private void Profiles_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

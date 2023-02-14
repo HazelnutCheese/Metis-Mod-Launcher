@@ -29,13 +29,13 @@
                 <Style TargetType="materialDesign:PackIcon">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName=SortButtonSelf, Path=Mode}" Value="Off">
-                            <Setter Property="Foreground" Value="#d1d1d1" />
+                            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=SortButtonSelf, Path=Mode}" Value="Ascending">
-                            <Setter Property="Foreground" Value="#ffc969" />
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=SortButtonSelf, Path=Mode}" Value="Descending">
-                            <Setter Property="Foreground" Value="#ffc969" />
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -53,13 +53,13 @@
                 <Style TargetType="materialDesign:PackIcon">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName=SortButtonSelf, Path=Mode}" Value="Off">
-                            <Setter Property="Foreground" Value="#d1d1d1" />
+                            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=SortButtonSelf, Path=Mode}" Value="Ascending">
-                            <Setter Property="Foreground" Value="#ffc969" />
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=SortButtonSelf, Path=Mode}" Value="Descending">
-                            <Setter Property="Foreground" Value="#ffc969" />
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -76,13 +76,13 @@
                 <Style TargetType="materialDesign:PackIcon">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName=SortButtonSelf, Path=Mode}" Value="Off">
-                            <Setter Property="Foreground" Value="#d1d1d1" />
+                            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=SortButtonSelf, Path=Mode}" Value="Ascending">
-                            <Setter Property="Foreground" Value="#ffc969" />
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=SortButtonSelf, Path=Mode}" Value="Descending">
-                            <Setter Property="Foreground" Value="#ffc969" />
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -99,13 +99,13 @@
                 <Style TargetType="TextBlock">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName=SortButtonSelf, Path=Mode}" Value="Off">
-                            <Setter Property="Foreground" Value="#d1d1d1" />
+                            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=SortButtonSelf, Path=Mode}" Value="Ascending">
-                            <Setter Property="Foreground" Value="#ffc969" />
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=SortButtonSelf, Path=Mode}" Value="Descending">
-                            <Setter Property="Foreground" Value="#ffc969" />
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

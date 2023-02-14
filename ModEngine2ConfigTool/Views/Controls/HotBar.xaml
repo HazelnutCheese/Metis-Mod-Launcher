@@ -20,7 +20,7 @@
         <ItemsControl ItemsSource="{Binding Buttons}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel HorizontalAlignment="Left" Orientation="Horizontal" />
+                    <WrapPanel HorizontalAlignment="Left" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>

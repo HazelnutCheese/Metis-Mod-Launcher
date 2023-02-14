@@ -66,14 +66,10 @@ namespace ModEngine2ConfigTool.Services
                 dllPath,
                 _databaseService);
 
-            await AddDllAsync(newDllVm);
-            return DllVms.Single(x => _dllVmEqualityComparer.Equals(x, newDllVm));
-        }
-
-        public async Task AddDllAsync(DllVm dllVm)
-        {
-            _databaseService.AddDll(dllVm);
+            _databaseService.AddDll(newDllVm);
             await RefreshAsync();
+
+            return DllVms.Single(x => _dllVmEqualityComparer.Equals(x, newDllVm));
         }
 
         public async Task<DllVm> CopyDllAsync(DllVm dllVm)
@@ -82,7 +78,14 @@ namespace ModEngine2ConfigTool.Services
                 dllVm.Name + " - Copy",
                 _databaseService);
 
-            await AddDllAsync(newDllVm);
+            _databaseService.AddDll(newDllVm);
+
+            newDllVm.ImagePath = dllVm.ImagePath;
+            newDllVm.Description = dllVm.Description;
+            newDllVm.FilePath = dllVm.FilePath;
+
+            await RefreshAsync();
+
             return DllVms.Single(x => _dllVmEqualityComparer.Equals(x, newDllVm));
         }
 

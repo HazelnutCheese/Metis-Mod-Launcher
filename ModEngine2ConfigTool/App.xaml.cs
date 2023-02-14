@@ -12,6 +12,7 @@ namespace ModEngine2ConfigTool
     /// </summary>
     public partial class App : Application
     {
+        public const string AppName = "Metis Mod Launcher";
         public const string DialogHostId = "MainWindowDialogHost";
 
         private readonly Logger _logger;

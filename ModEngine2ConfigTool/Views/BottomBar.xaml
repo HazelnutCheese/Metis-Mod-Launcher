@@ -6,14 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="450"
              d:DesignWidth="800"
-             Background="#181818"
+             Background="{DynamicResource SecondaryHueLightBrush}"
              mc:Ignorable="d">
-    <Border BorderBrush="#282828" BorderThickness="0,1,0,0">
-        <!--<TextBlock HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="16px"
-                   FontWeight="SemiBold"
-                   Foreground="#FFC969"
-                   Text="Metis Mod Launcher" />-->
-    </Border>
+    <Border BorderBrush="#282828" BorderThickness="0,1,0,0" />
 </UserControl>
