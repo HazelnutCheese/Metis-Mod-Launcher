@@ -1,8 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
+using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.Views.Controls;
 using System;
 using System.Collections.ObjectModel;
@@ -70,10 +72,10 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                         "Add from File",
                         PackIconKind.FilePlusOutline,
                         async () => await NavigateToImportDllAsync()),
-                    new HotBarButtonVm(
-                        "Add from Package",
-                        PackIconKind.PackageVariantClosedPlus,
-                        async () => await NavigateToImportDllAsync())
+                    //new HotBarButtonVm(
+                    //    "Add from Package",
+                    //    PackIconKind.PackageVariantClosedPlus,
+                    //    async () => await NavigateToImportDllAsync())
                 });
 
             BackgroundImage = Path.Combine(
@@ -180,14 +182,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 return;
             }
 
-            var dllEditPage = new DllEditPageVm(
-                dllVm,
-                true,
-                _navigationService,
-                _profileManagerService,
-                _dllManagerService);
-
-            await _navigationService.NavigateTo(dllEditPage);
+            await _navigationService.NavigateTo<DllEditPageVm>(
+                new NamedParameter("dll", dllVm));
         }
 
         private void UpdateDllListButtons()

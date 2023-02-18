@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Pages;
@@ -9,16 +11,12 @@ using System.Windows.Input;
 
 namespace ModEngine2ConfigTool.ViewModels.Controls
 {
-    public class SideBarProfileButtonVm
+    public class SideBarProfileButtonVm : ObservableObject
     {
         private readonly ProfileVm _profileVm;
         private readonly NavigationService _navigationService;
         private readonly ProfileManagerService _profileManagerService;
-        private readonly ModManagerService _modManagerService;
-        private readonly DllManagerService _dllManagerService;
         private readonly PlayManagerService _playManagerService;
-        private readonly SaveManagerService _saveManagerService;
-        private readonly PlayManagerService playManagerService;
 
         public ICommand Command { get; }
 
@@ -36,65 +34,47 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
             ProfileVm profileVm,
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
-            ModManagerService modManagerService,
-            DllManagerService dllManagerService,
-            PlayManagerService playManagerService,
-            SaveManagerService saveManagerService)
+            PlayManagerService playManagerService)
         {
             _profileVm = profileVm;
             _navigationService = navigationService;
             _profileManagerService = profileManagerService;
-            _modManagerService = modManagerService;
-            _dllManagerService = dllManagerService;
             _playManagerService = playManagerService;
-            _saveManagerService = saveManagerService;
 
             Command = new AsyncRelayCommand(async () =>
             {
-                var profileEditPageVm = new ProfileEditPageVm(
-                    profileVm,
-                    false,
-                    navigationService,
-                    profileManagerService,
-                    modManagerService,
-                    dllManagerService,
-                    playManagerService,
-                    _saveManagerService);
-
-                await navigationService.NavigateTo(profileEditPageVm);
+                await _navigationService.NavigateTo<ProfileEditPageVm>(
+                    new NamedParameter("profile", profileVm));
             });
 
             PlayCommand = new AsyncRelayCommand(PlayAsync);
             EditCommand = Command;
             CopyCommand = new AsyncRelayCommand(DuplicateProfileAsync);
             DeleteCommand = new AsyncRelayCommand(DeleteProfileAsync);
+
+            _profileVm.PropertyChanged += _profileVm_PropertyChanged;
+        }
+
+        private void _profileVm_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(ProfileVm.Name))
+            {
+                OnPropertyChanged(nameof(Name));
+            }
         }
 
         private async Task DuplicateProfileAsync()
         {
             var newProfile = await _profileManagerService.DuplicateProfileAsync(_profileVm);
-            await _navigationService.NavigateTo(new ProfileEditPageVm(
-                newProfile,
-                true,
-                _navigationService,
-                _profileManagerService,
-                _modManagerService,
-                _dllManagerService,
-                _playManagerService,
-                _saveManagerService));
+
+            await _navigationService.NavigateTo<ProfileEditPageVm>(
+                new NamedParameter("profile", newProfile));
         }
 
         private async Task DeleteProfileAsync()
         {
             await _profileManagerService.RemoveProfileAsync(_profileVm);
-            await _navigationService.NavigateTo(
-                new ProfilesPageVm(
-                    _navigationService,
-                    _profileManagerService,
-                    _modManagerService,
-                    _dllManagerService,
-                    _playManagerService,
-                    _saveManagerService));
+            await _navigationService.NavigateTo<ProfilesPageVm>();
         }
 
         private async Task PlayAsync()

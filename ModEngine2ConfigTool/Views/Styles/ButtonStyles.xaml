@@ -46,7 +46,11 @@
                                                      VerticalAlignment="Center"
                                                      materialDesign:ElevationAssist.Elevation="Dp4"
                                                      materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left">
-                                    <Image Source="{Binding Profile.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Blue'}" Stretch="UniformToFill" />
+                                    <Image HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                           Source="{Binding Profile.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='EldenRing'}"
+                                           Stretch="UniformToFill" />
                                 </materialDesign:Card>
 
                                 <Grid Grid.Row="3" Grid.Column="1">
@@ -387,6 +391,9 @@
                     </materialDesign:Card>
 
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.8" />
+                        </Trigger>
                         <Trigger Property="UIElement.IsMouseOver" Value="true">
                             <Setter TargetName="Plus" Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
                         </Trigger>

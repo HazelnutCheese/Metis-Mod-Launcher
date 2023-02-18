@@ -1,9 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.Pages;
+using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.ViewModels.Profiles;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -19,7 +21,6 @@ namespace ModEngine2ConfigTool.ViewModels
         private readonly ModManagerService _modManagerService;
         private readonly DllManagerService _dllManagerService;
         private readonly PlayManagerService _playManagerService;
-        private readonly SaveManagerService _saveManagerService;
 
         public ICommand NavigateHomeCommand { get; }
 
@@ -28,8 +29,6 @@ namespace ModEngine2ConfigTool.ViewModels
         public ICommand NavigateModsCommand { get; }
 
         public ICommand NavigateExternalDllsCommand { get; }
-
-        //public ICommand NavigateSettingsCommand { get; }
 
         public ICommand NavigateHelpCommand { get; }
 
@@ -46,20 +45,18 @@ namespace ModEngine2ConfigTool.ViewModels
             ProfileManagerService profileManagerService, 
             ModManagerService modManagerService,
             DllManagerService dllManagerService,
-            PlayManagerService playManagerService,
-            SaveManagerService saveManagerService)
+            PlayManagerService playManagerService)
         {
             _navigationService = navigationService;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
             _dllManagerService = dllManagerService;
             _playManagerService = playManagerService;
-            _saveManagerService = saveManagerService;
+
             NavigateHomeCommand = new AsyncRelayCommand(NavigateHome);
             NavigateProfilesCommand = new AsyncRelayCommand(NavigateToProfiles);
             NavigateModsCommand = new AsyncRelayCommand(NavigateToMods);
             NavigateExternalDllsCommand = new AsyncRelayCommand(NavigateToDlls);
-            //NavigateSettingsCommand = new AsyncRelayCommand(_mainPanelVm.NavigateSettings);
             NavigateHelpCommand = new AsyncRelayCommand(NavigateHelp);
             NavigateCreateNewProfileCommand = new AsyncRelayCommand(NavigateToCreateProfile);
             NavigateAddModCommand = new AsyncRelayCommand(NavigateAddMod);
@@ -74,10 +71,7 @@ namespace ModEngine2ConfigTool.ViewModels
                     profile,
                     _navigationService,
                     _profileManagerService,
-                    _modManagerService,
-                    _dllManagerService,
-                    _playManagerService,
-                    _saveManagerService));
+                    _playManagerService));
             };
         }
 
@@ -90,70 +84,36 @@ namespace ModEngine2ConfigTool.ViewModels
                     profile,
                     _navigationService,
                     _profileManagerService,
-                    _modManagerService,
-                    _dllManagerService,
-                    _playManagerService,
-                    _saveManagerService));
+                    _playManagerService));
             }
         }
 
         private async Task NavigateHome()
         {
-            await _navigationService.NavigateTo(
-                new HomePageVm(
-                    _navigationService,
-                    _profileManagerService, 
-                    _modManagerService,
-                    _dllManagerService,
-                    _playManagerService,
-                    _saveManagerService));
+            await _navigationService.NavigateTo<HomePageVm>();
         }
 
         private async Task NavigateToProfiles()
         {
-            await _navigationService.NavigateTo(
-                new ProfilesPageVm(
-                    _navigationService,
-                    _profileManagerService,
-                    _modManagerService,
-                    _dllManagerService,
-                    _playManagerService,
-                    _saveManagerService));
+            await _navigationService.NavigateTo<ProfilesPageVm>();
         }
 
         private async Task NavigateToMods()
         {
-            await _navigationService.NavigateTo(
-                new ModsPageVm(
-                    _navigationService,
-                    _profileManagerService,
-                    _modManagerService));
+            await _navigationService.NavigateTo<ModsPageVm>();
         }
 
         private async Task NavigateToDlls()
         {
-            await _navigationService.NavigateTo(
-                new DllsPageVm(
-                    _navigationService,
-                    _profileManagerService,
-                    _dllManagerService));
+            await _navigationService.NavigateTo<DllsPageVm>();
         }
 
         private async Task NavigateToCreateProfile()
         {
             var profileVm = await _profileManagerService.CreateNewProfileAsync("New Profile");
 
-            var profileEditPageVm = new ProfileEditPageVm(
-                profileVm,
-                false,
-                _navigationService,
-                _profileManagerService,
-                _modManagerService,
-                _dllManagerService,
-                _playManagerService,
-                _saveManagerService);
-
-            await _navigationService.NavigateTo(profileEditPageVm);
+            await _navigationService.NavigateTo<ProfileEditPageVm>(
+                new NamedParameter("profile", profileVm));
         }
 
         private async Task NavigateAddMod()
@@ -164,14 +124,8 @@ namespace ModEngine2ConfigTool.ViewModels
                 return;
             }
 
-            var modEditPageVm = new ModEditPageVm(
-                modVm,
-                false,
-                _navigationService,
-                _profileManagerService,
-                _modManagerService);
-
-            await _navigationService.NavigateTo(modEditPageVm);
+            await _navigationService.NavigateTo<ModEditPageVm>(
+                new NamedParameter("mod", modVm));
         }
 
         private async Task NavigateAddDll()
@@ -182,19 +136,13 @@ namespace ModEngine2ConfigTool.ViewModels
                 return;
             }
 
-            var dllEditPageVm = new DllEditPageVm(
-                dllVm,
-                false,
-                _navigationService,
-                _profileManagerService,
-                _dllManagerService);
-
-            await _navigationService.NavigateTo(dllEditPageVm);
+            await _navigationService.NavigateTo<DllEditPageVm>(
+                new NamedParameter("dll", dllVm));
         }
 
         private async Task NavigateHelp()
         {
-            await _navigationService.NavigateTo(new HelpPageVm());
+            await _navigationService.NavigateTo<HelpPageVm>();
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Pages;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
@@ -26,7 +28,6 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
     public class ModListButtonVm : ObservableObject
     {
         private readonly NavigationService _navigationService;
-        private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
 
         public ModVm Mod { get; }
@@ -56,7 +57,6 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
             ModManagerService modManagerService)
         {
             Mod = modVm;
-            _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
             _navigationService = navigationService;
 
@@ -77,28 +77,16 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
 
         private async Task NavigateToEditModCommand()
         {
-            var modEditPageVm = new ModEditPageVm(
-                Mod,
-                false,
-                _navigationService,
-                _profileManagerService,
-                _modManagerService);
-
-            await _navigationService.NavigateTo(modEditPageVm);
+            await _navigationService.NavigateTo<ModEditPageVm>(
+                new NamedParameter("mod", Mod));
         }
 
         private async Task Copy()
         {
             var newMod = await _modManagerService.DuplicateModAsync(Mod);
 
-            var modEditPageVm = new ModEditPageVm(
-                newMod,
-                true,
-                _navigationService,
-                _profileManagerService,
-                _modManagerService);
-
-            await _navigationService.NavigateTo(modEditPageVm);
+            await _navigationService.NavigateTo<ModEditPageVm>(
+                new NamedParameter("mod", newMod));
         }
 
         private async Task Remove()

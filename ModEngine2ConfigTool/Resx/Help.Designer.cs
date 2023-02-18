@@ -61,9 +61,9 @@ namespace ModEngine2ConfigTool.Resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metis Mod Launcher does not currently monitor whether mods conflict.
+        ///   Looks up a localized string similar to Metis Mod Launcher does not currently support monitoring whether mods conflict.
         ///
-        ///This is a high priority issue which will hopefully be added soon(tm)..
+        ///This is a feature I&apos;m hoping to add in a future release..
         /// </summary>
         internal static string Faq_HowCanITellIfModsConflict {
             get {
@@ -72,9 +72,9 @@ namespace ModEngine2ConfigTool.Resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metis Mod Launcher DOES NOT SUPPORT downloading mods. 
+        ///   Looks up a localized string similar to Metis Mod Launcher does not supoort downloading mods. 
         ///
-        ///Any mods must be downloaded from mod hosting websites and imported into Metis via the &quot;Import Mod&quot; feature..
+        ///Any mods must be downloaded from mod hosting websites and imported into Metis via the &quot;Add Mod from Folder&quot; or &quot;Add from Package&quot; buttons..
         /// </summary>
         internal static string Faq_HowToDownloadMods {
             get {
@@ -83,11 +83,13 @@ namespace ModEngine2ConfigTool.Resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click the &quot;Import External Dll&quot; button on the side bar or on the External Dlls page.
+        ///   Looks up a localized string similar to Click the &quot;Add Dll from File&quot; button on the side bar or on the External Dlls page.
         ///
         ///Select the dll file you want to import.
         ///
-        ///Fill out any additional details such as name or description..
+        ///Fill out any additional details such as name or description.
+        ///
+        ///Some external dlls files such as Seamless Coop come with additional files like a config file.  Follow the authors instructions on how to handle these files. For instance with Seamless Coop make sure the &quot;seamlesscoopsettings.ini&quot; remains next to the dll..
         /// </summary>
         internal static string Faq_HowToImportAnExternalDll {
             get {
@@ -96,11 +98,13 @@ namespace ModEngine2ConfigTool.Resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click the &quot;Import Mod&quot; button on the side bar or on the Mods page. 
+        ///   Looks up a localized string similar to Click the &quot;Add Mod from Folder&quot; button on the side bar or on the Mods page. Or click the &quot;Add from Package&quot; option if you have a &quot;.metismodpkg&quot; file. 
         ///
-        ///Select the folder that contains the mods. This should include files such as &quot;Regulation.bin&quot;.
+        ///If you are using the first option a dialog will launch asking you to select the folder that contains the mods. This should include files such as &quot;Regulation.bin&quot;. 
         ///
-        ///Fill out the details such as name and description..
+        ///Fill out the details such as name and description.
+        ///
+        ///If you do not select the right folder then the game will launch without the mod active. If this happens double check the folder you have  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Faq_HowToImportMod {
             get {
@@ -148,11 +152,38 @@ namespace ModEngine2ConfigTool.Resx {
         ///
         ///Inside here check the &quot;Use profile specific save game&quot; option.
         ///
-        ///When you launch the game Metis will now backup your current saves and then give them temporary names. This will cause Elden Ring to generate a new save game for your profile. Metis will backup these saves and install / uninstall them each time you start Elden Ring via that profile..
+        ///When you launch the game Metis will now backup your current saves and then give them temporary names. This will cause Elden Ring to generate a new save game for your profile. Metis will backup these saves and install / uninstall them each time you start Elden Ring via that profile.
+        ///
+        ///You can also manually backup your saves or import saves from a [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Faq_ProfileSaves {
             get {
                 return ResourceManager.GetString("Faq_ProfileSaves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If the Elden Ring starts up but then closes itself this may indicate an issue with the mods or dll you are using. They usually have to be updated to match the latest version of the game. Check to see if the last update to the mod was made before or after the latest Elden  Ring update was released and whether the author has said it is compatible. You may need to check a mods discord (if it has one) or nexus mods page to find this information.
+        ///
+        ///Log files are stored in &quot;%LOCALAPPDATA%\\Metis Mod Launcher\\Te [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Faq_TheGameCrashesOrDoesntWork {
+            get {
+                return ResourceManager.GetString("Faq_TheGameCrashesOrDoesntWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Export Package option on a mod page allows you to export your mod with it&apos;s name, description, image and files all as a single &quot;.metismodpkg&quot;. 
+        ///
+        ///When someone imports the package file via the &quot;Add from Package&quot; option the files will automatically be extracted to &quot;%LocalAppData%\Metis Mod Launcher\Imported\Mods&quot; under it&apos;s new profile id and the mod folder path will be updated accordingly. 
+        ///
+        ///This feature is designed to help distribute and install mods with less chance of user issues. 
+        ///Currently this  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Faq_WhatDoesExportPackageDo {
+            get {
+                return ResourceManager.GetString("Faq_WhatDoesExportPackageDo", resourceCulture);
             }
         }
         
@@ -170,11 +201,11 @@ namespace ModEngine2ConfigTool.Resx {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metis does not find mod folders or dlls that have been moved on disk after importing.
+        ///   Looks up a localized string similar to Metis does not find mod folders or dlls that have been moved on disk after being added.
         ///
-        ///If you have already imported a mod or external dll and decide to move it after then you must edit the mod or external dll in Metis and use the &quot;Browse&quot; button to select the new location.
+        ///If you have already added a mod or external dll and decide to move it after then you must edit the mod or external dll in Metis and use the &quot;Browse&quot; button to select the new location.
         ///
-        ///If you do not update the items location after moving them, errors and crashes are highly likely and may result in corrupted save files..
+        ///If you do not update the items location after moving them then Metis will not be able to configure ModEngine2 to launch correctly..
         /// </summary>
         internal static string Faq_WhatHappensIfIMoveAModOrDllAfterImport {
             get {
@@ -207,6 +238,17 @@ namespace ModEngine2ConfigTool.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Metis will automatically keep backups of your profiles last 5 saves if you have profile specific saves enabled. These backups are created at launch and pruned at launch and are seperate to the Backup Saves button.
+        ///
+        ///You can find these saves in &quot;%LocalAppData%\Metis Mod Launcher\Saves\Backups&quot;. The saves are stored under your profiles Id (see Advanced Options in your profile) and you can import them back into your profile using the Import Saves button..
+        /// </summary>
+        internal static string Faq_WhereAreSavedBackedUp {
+            get {
+                return ResourceManager.GetString("Faq_WhereAreSavedBackedUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Metis Mod Launcher stores it&apos;s application data in &quot;%LocalAppData%\Metis Mod Launcher&quot;.
         ///
         ///This includes the applications sqllite database, saves, save backups and temporary files..
@@ -227,6 +269,26 @@ namespace ModEngine2ConfigTool.Resx {
         internal static string FaqCoopPassword {
             get {
                 return ResourceManager.GetString("FaqCoopPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The MIT License (MIT)
+        ///
+        ///Copyright © 2014 Autofac Project
+        ///
+        ///Permission is hereby granted, free of charge, to any person obtaining a copy
+        ///of this software and associated documentation files (the &quot;Software&quot;), to deal
+        ///in the Software without restriction, including without limitation the rights
+        ///to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        ///copies of the Software, and to permit persons to whom the Software is
+        ///furnished to do so, subject to the following conditions:
+        ///
+        ///The above  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Licence_Autofac {
+            get {
+                return ResourceManager.GetString("Licence_Autofac", resourceCulture);
             }
         }
         

@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Pages;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
@@ -27,7 +27,6 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
     public class DllListButtonVm : ObservableObject
     {
         private readonly NavigationService _navigationService;
-        private readonly ProfileManagerService _profileManagerService;
         private readonly DllManagerService _dllManagerService;
 
         public DllVm Dll { get; }
@@ -57,7 +56,6 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
             DllManagerService dllManagerService)
         {
             Dll = dllVM;
-            _profileManagerService = profileManagerService;
             _dllManagerService = dllManagerService;
             _navigationService = navigationService;
 
@@ -78,28 +76,16 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
 
         private async Task NavigateToEditModCommand()
         {
-            var modEditPageVm = new DllEditPageVm(
-                Dll,
-                false,
-                _navigationService,
-                _profileManagerService,
-                _dllManagerService);
-
-            await _navigationService.NavigateTo(modEditPageVm);
+            await _navigationService.NavigateTo<DllEditPageVm>(
+                new NamedParameter("dll", Dll));
         }
 
         private async Task Copy()
         {
             var newDll = await _dllManagerService.CopyDllAsync(Dll);
 
-            var modEditPageVm = new DllEditPageVm(
-                newDll,
-                true,
-                _navigationService,
-                _profileManagerService,
-                _dllManagerService);
-
-            await _navigationService.NavigateTo(modEditPageVm);
+            await _navigationService.NavigateTo<DllEditPageVm>(
+                new NamedParameter("dll", newDll));
         }
 
         private async Task Remove()

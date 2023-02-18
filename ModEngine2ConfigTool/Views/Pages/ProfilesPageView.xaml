@@ -281,10 +281,12 @@
                                                                                                     <ColumnDefinition Width="*" />
                                                                                                 </Grid.ColumnDefinitions>
                                                                                                 <Image Grid.Column="0"
-                                                                                                       Width="32"
                                                                                                        Height="32"
                                                                                                        Margin="10,0"
-                                                                                                       Source="{Binding Profile.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Blue'}"
+                                                                                                       HorizontalAlignment="Center"
+                                                                                                       VerticalAlignment="Center"
+                                                                                                       RenderOptions.BitmapScalingMode="HighQuality"
+                                                                                                       Source="{Binding Profile.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='EldenRing'}"
                                                                                                        Stretch="UniformToFill" />
 
                                                                                                 <Button x:Name="PlayIcon"

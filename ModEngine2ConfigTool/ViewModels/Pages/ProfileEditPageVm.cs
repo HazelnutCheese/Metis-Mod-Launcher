@@ -1,32 +1,20 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using IWshRuntimeLibrary;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
-using ModEngine2ConfigTool.Equality;
-using ModEngine2ConfigTool.Helpers;
-using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
-using ModEngine2ConfigTool.ViewModels.Dialogs;
-using ModEngine2ConfigTool.ViewModels.Fields;
-using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.ViewModels.Profiles;
-using ModEngine2ConfigTool.Views.Controls;
-using ModEngine2ConfigTool.Views.Dialogs;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
-using System.Formats.Asn1;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Input;using System.Windows.Threading;
+using System.Windows.Input;
 
 namespace ModEngine2ConfigTool.ViewModels.Pages
 {
@@ -35,14 +23,11 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private string _lastOpenedLocation;
         private readonly NavigationService _navigationService;
         private readonly SaveManagerService _saveManagerService;
+        private readonly PackageService _packageService;
         private readonly ProfileManagerService _profileManagerService;
-        private readonly ModManagerService _modManagerService;
-        private readonly DllManagerService _dllManagerService;
         private readonly PlayManagerService _playManagerService;
 
         public ProfileVm Profile { get; }
-
-        public string Header { get; }
 
         public ICommand SelectImageCommand { get; }
 
@@ -58,27 +43,31 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public HotBarMenuButtonVm AddDlls { get; }
 
+        public bool CanSelectMods { get; }
+
+        public bool CanSelectDlls { get; }
+
+        public string SelectModsText { get; }
+
+        public string SelectDllsText { get; }
+
         public ProfileEditPageVm(
-            ProfileVm profile, 
-            bool IsCreatingNewProfile,
+            ProfileVm profile,
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
             ModManagerService modManagerService,
             DllManagerService dllManagerService,
             PlayManagerService playManagerService,
-            SaveManagerService saveManagerService)
+            SaveManagerService saveManagerService,
+            PackageService packageService)
         {
             _profileManagerService = profileManagerService;
-            _modManagerService = modManagerService;
-            _dllManagerService = dllManagerService;
             _playManagerService = playManagerService;
             _navigationService = navigationService;
             _saveManagerService = saveManagerService;
+            _packageService = packageService;
 
             Profile = profile;
-            Header = IsCreatingNewProfile
-                ? "Profile"
-                : "Profile";
 
             SelectImageCommand = new RelayCommand(SelectImage);
 
@@ -103,10 +92,10 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                         "Create Shortcut",
                         PackIconKind.LinkPlus,
                         () => CreateShortcut()),
-                    new HotBarButtonVm(
-                        "Export Profile",
-                        PackIconKind.FileExportOutline,
-                        () => { }),
+                    //new HotBarButtonVm(
+                    //    "Export Package",
+                    //    PackIconKind.PackageVariantClosed,
+                    //    () => ExportPackage()),
                     });
 
             AddMods = new HotBarMenuButtonVm(
@@ -118,6 +107,11 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                         async () => await profileManagerService.AddModToProfile(profile, x)))
                     .ToList());
 
+            CanSelectMods = modManagerService.ModVms.Any();
+            SelectModsText = CanSelectMods
+                ? "Select Mods"
+                : "No mods avaliable";
+
             AddDlls = new HotBarMenuButtonVm(
                 "Add Dlls",
                 PackIconKind.FolderMultiplePlusOutline,
@@ -126,6 +120,11 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                         x.Name,
                         async () => await profileManagerService.AddDllToProfile(profile, x)))
                     .ToList());
+
+            CanSelectDlls = dllManagerService.DllVms.Any();
+            SelectDllsText = CanSelectDlls
+                ? "Select External Dlls"
+                : "No External Dlls avaliable";
 
             SavesHotBarVm = new HotBarVm(
                 new ObservableCollection<ObservableObject>()
@@ -156,16 +155,14 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     profile,
                     x,
                     navigationService,
-                    profileManagerService,
-                    modManagerService)));
+                    profileManagerService)));
 
             Dlls = new ObservableCollection<ProfileDllListButtonVm>(
                 Profile.ExternalDlls.Select(x => new ProfileDllListButtonVm(
                     profile,
                     x,
                     navigationService,
-                    profileManagerService,
-                    dllManagerService)));
+                    profileManagerService)));
 
             profile.Mods.CollectionChanged += ProfileMods_CollectionChanged;
             profile.ExternalDlls.CollectionChanged += ProfileDlls_CollectionChanged;
@@ -180,14 +177,13 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     Profile,
                     mod,
                     _navigationService,
-                    _profileManagerService,
-                    _modManagerService));
+                    _profileManagerService));
             }
         }
 
         private void ProfileDlls_CollectionChanged(
             object? sender,
-            System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+            NotifyCollectionChangedEventArgs e)
         {
             Dlls.Clear();
             foreach (var dll in Profile.ExternalDlls)
@@ -196,10 +192,9 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     Profile,
                     dll,
                     _navigationService,
-                    _profileManagerService,
-                    _dllManagerService));
+                    _profileManagerService));
             }
-        }   
+        }
 
         private void SelectImage()
         {
@@ -243,30 +238,17 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private async Task DuplicateProfileAsync()
         {
             var newProfile = await _profileManagerService.DuplicateProfileAsync(Profile);
-            await _navigationService.NavigateTo(new ProfileEditPageVm(
-                newProfile,
-                true,
-                _navigationService,
-                _profileManagerService,
-                _modManagerService,
-                _dllManagerService,
-                _playManagerService,
-                _saveManagerService));
+
+            await _navigationService.NavigateTo<ProfileEditPageVm>(
+                new NamedParameter("profile", newProfile));
         }
 
         private async Task DeleteProfileAsync()
         {
             await _profileManagerService.RemoveProfileAsync(Profile);
-            await _navigationService.NavigateTo(
-                new ProfilesPageVm(
-                    _navigationService,
-                    _profileManagerService,
-                    _modManagerService,
-                    _dllManagerService,
-                    _playManagerService,
-                    _saveManagerService));
+            await _navigationService.NavigateTo<ProfilesPageVm>();
         }
-        
+
         private void OpenSavesFolder()
         {
             _saveManagerService.OpenProfileSavesFolder(Profile.Model.ProfileId.ToString());
@@ -321,37 +303,56 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
             if (fileDialog.ShowDialog().Equals(true))
             {
-                var iconPath = string.Empty; 
-                if (Profile.ImagePath != null)
-                {
-                    iconPath = Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                        $"Metis Mod Launcher\\Temp\\{Guid.NewGuid()}.ico");
-
-                    var image = Image.FromFile(Profile.ImagePath);
-                    var icon = IconFromImage(image);
-                    using var filestream = new FileStream(
-                        iconPath, 
-                        FileMode.Create);
-                    icon.Save(filestream);
-                    icon.Dispose();
-                    image.Dispose();
-                }
-
                 var shell = new WshShell();
                 IWshShortcut shortcut = shell.CreateShortcut(fileDialog.FileName);
                 shortcut.TargetPath = AppDomain.CurrentDomain.BaseDirectory + "Metis Mod Launcher.exe";
                 shortcut.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 shortcut.Arguments = $"-p \"{Profile.Model.ProfileId}\"";
-                shortcut.IconLocation = iconPath;
+
+                if (System.IO.File.Exists(Profile.ImagePath))
+                {
+                    var iconPath = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                        $"Metis Mod Launcher\\Temp\\{Profile.Model.ProfileId}.ico");
+
+                    var image = Image.FromFile(Profile.ImagePath);
+                    var icon = IconFromImage(image);
+                    using var filestream = new FileStream(
+                        iconPath,
+                        FileMode.Create);
+                    icon.Save(filestream);
+                    icon.Dispose();
+                    image.Dispose();
+
+                    shortcut.IconLocation = iconPath;
+                }
+
                 shortcut.Save();
             }
         }
 
-        public static Icon IconFromImage(Image img)
+        private void ExportPackage()
         {
-            var ms = new System.IO.MemoryStream();
-            var bw = new System.IO.BinaryWriter(ms);
+            const string fileExtension = "metispropkg";
+
+            var fileDialog = new SaveFileDialog
+            {
+                Filter = $"Profile package Files(*.{fileExtension})|*.{fileExtension}",
+                Title = "Save Package File",
+                AddExtension = true,
+                FileName = $"{Profile.Name}.{fileExtension}"
+            };
+
+            if (fileDialog.ShowDialog().Equals(true))
+            {
+                _packageService.ExportProfile(Profile, fileDialog.FileName);
+            }
+        }
+
+        private static Icon IconFromImage(Image img)
+        {
+            var ms = new MemoryStream();
+            var bw = new BinaryWriter(ms);
             // Header
             bw.Write((short)0);   // 0 : reserved
             bw.Write((short)1);   // 2 : 1=ico, 2=cur

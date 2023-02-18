@@ -1,11 +1,15 @@
-﻿using ModEngine2ConfigTool.Helpers;
+﻿using Autofac;
+using ModEngine2ConfigTool.Helpers;
+using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
+using ModEngine2ConfigTool.ViewModels.Pages;
 using PowerArgs;
 using Sherlog;
 using Sherlog.Appenders;
 using Sherlog.Formatters;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -42,6 +46,56 @@ namespace ModEngine2ConfigTool
 
             ConfigureLogging(appDataPath);
 
+            var serviceContainer = GetServicesContainer(appDataPath, configPath, !(commandLineArgs.ProfileId is null));
+
+            if (commandLineArgs.ProfileId is null)
+            {
+                
+                Start(serviceContainer);
+            }
+            else
+            {
+                var dispatcherService = new NoUiDispatcher();
+                StartSilent(
+                    commandLineArgs.ProfileId,
+                    serviceContainer);
+            }
+        }
+
+        private static void Start(IContainer serviceContainer)
+        {
+            var app = new App(serviceContainer);
+            app.InitializeComponent();
+            app.Run();
+        }
+
+        private static void StartSilent(
+            string profileId,
+            IContainer serviceContainer)
+        {
+            var dispatcherService = new NoUiDispatcher();
+
+            var playManagerService = serviceContainer.Resolve<PlayManagerService>();
+            var profileManager = serviceContainer.Resolve<ProfileManagerService>();
+
+            var profile = profileManager
+                .ProfileVms
+                .FirstOrDefault(x => x.Model.ProfileId.ToString() == profileId);
+
+            if (profile is null)
+            {
+                MessageBox.Show($"Could not find profile: \"{profileId}\"");
+                return;
+            }
+
+            playManagerService.PlaySilent(profile);
+        }
+
+        private static IContainer GetServicesContainer(
+            string appDataPath,
+            string configPath,
+            bool isSilentMode)
+        {
             var configurationService = new ConfigurationService(configPath);
             var databaseService = new DatabaseService(appDataPath);
             var profileService = new ProfileService(appDataPath);
@@ -57,75 +111,77 @@ namespace ModEngine2ConfigTool
 
             var modEngine2Service = new ModEngine2Service(modEngine2Folder);
 
+            var serviceBuilder = new ContainerBuilder();
+            serviceBuilder.RegisterInstance(configurationService);
+            serviceBuilder.RegisterInstance(databaseService);
+            serviceBuilder.RegisterInstance(profileService);
+            serviceBuilder.RegisterInstance(saveManagerService);
+            serviceBuilder.RegisterInstance(modEngine2Service);
 
-            if (commandLineArgs.ProfileId is null)
+            IDispatcherService dispatcherService;
+            if (isSilentMode)
             {
-                var dispatcherService = new DispatcherService();
-                Start(
-                    databaseService,
-                    dispatcherService,
-                    profileService,
-                    saveManagerService,
-                    modEngine2Service);
+                dispatcherService = new NoUiDispatcher();
             }
             else
             {
-                var dispatcherService = new NoUiDispatcher();
-                StartSilent(
-                    commandLineArgs.ProfileId,
-                    profileService, 
-                    saveManagerService, 
-                    modEngine2Service, 
-                    dispatcherService, 
-                    databaseService);
+                dispatcherService = new DispatcherService();
             }
-        }
 
-        private static void Start(
-            IDatabaseService databaseService,
-            IDispatcherService dispatcherService,
-            ProfileService profileService,
-            SaveManagerService saveManagerService,
-            ModEngine2Service modEngine2Service)
-        { 
-            var app = new App(
-                databaseService,
-                dispatcherService,
-                saveManagerService,
-                modEngine2Service,
-                profileService);
+            serviceBuilder.RegisterInstance(dispatcherService);
 
-            app.InitializeComponent();
-            app.Run();
-        }
-
-        private static void StartSilent(
-            string profileId,
-            ProfileService profileService,
-            SaveManagerService saveManagerService,
-            ModEngine2Service modEngine2Service,
-            IDispatcherService dispatcherService,
-            IDatabaseService databaseService)
-        {
             var playManagerService = new PlayManagerService(
                 profileService,
                 saveManagerService,
                 modEngine2Service,
                 dispatcherService);
 
-            var profileManager = new ProfileManagerService(databaseService, dispatcherService);
+            serviceBuilder.RegisterInstance(playManagerService);
 
-            var profile = profileManager
-                .ProfileVms
-                .FirstOrDefault(x => x.Model.ProfileId.ToString() == profileId);
+            var profileManagerSerivce = new ProfileManagerService(
+                    databaseService,
+                    dispatcherService);
 
-            if (profile is null)
+            serviceBuilder.RegisterInstance(profileManagerSerivce);
+
+            var modManagerSerivce = new ModManagerService(
+                databaseService,
+                dispatcherService,
+                profileManagerSerivce);
+
+            serviceBuilder.RegisterInstance(modManagerSerivce);
+
+            var dllManagerSerivce = new DllManagerService(
+                databaseService,
+                dispatcherService,
+                profileManagerSerivce);
+
+            serviceBuilder.RegisterInstance(dllManagerSerivce);
+
+            serviceBuilder.RegisterInstance(
+                new PackageService(
+                    appDataPath, 
+                    dispatcherService,
+                    databaseService, 
+                    profileManagerSerivce, 
+                    modManagerSerivce, 
+                    dllManagerSerivce));
+
+            if (!isSilentMode)
             {
-                MessageBox.Show($"Could not find profile: \"{profileId}\"");
-                return;
+                serviceBuilder.RegisterType<HomePageVm>();
+                serviceBuilder.RegisterType<ProfilesPageVm>();
+                serviceBuilder.RegisterType<ModsPageVm>();
+                serviceBuilder.RegisterType<DllsPageVm>();
+                serviceBuilder.RegisterType<ProfileEditPageVm>();
+                serviceBuilder.RegisterType<ModEditPageVm>();
+                serviceBuilder.RegisterType<DllEditPageVm>();
+                serviceBuilder.RegisterType<HelpPageVm>();
+
+                serviceBuilder.RegisterInstance(new NavigationService());
             }
 
-            playManagerService.PlaySilent(profile);
+            return serviceBuilder.Build();
         }
 
         private static void ConfigureLogging(string dataStorage)

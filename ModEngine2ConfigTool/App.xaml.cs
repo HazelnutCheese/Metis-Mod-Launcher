@@ -1,4 +1,5 @@
-﻿using ModEngine2ConfigTool.Services;
+﻿using Autofac;
+using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels;
 using Sherlog;
 using System;
@@ -16,26 +17,12 @@ namespace ModEngine2ConfigTool
         public const string DialogHostId = "MainWindowDialogHost";
 
         private readonly Logger _logger;
-        private readonly IDatabaseService _databaseService;
-        private readonly IDispatcherService _dispatcherService;
-        private readonly SaveManagerService _saveManagerService;
-        private readonly ModEngine2Service _modEngine2Service;
-        private readonly ProfileService _profileService;
+        private readonly IContainer _serviceContainer;
 
-        public App(
-            IDatabaseService databaseService,
-            IDispatcherService dispatcherService,
-            SaveManagerService saveManagerService,
-            ModEngine2Service modEngine2Service,
-            ProfileService profileService)
+        public App(IContainer serviceContainer)
         {
             _logger = Logger.GetLogger(typeof(App));
-
-            _databaseService = databaseService;
-            _dispatcherService = dispatcherService;
-            _saveManagerService = saveManagerService;
-            _modEngine2Service = modEngine2Service;
-            _profileService = profileService;
+            _serviceContainer = serviceContainer;
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -49,11 +36,7 @@ namespace ModEngine2ConfigTool
             var mainWindow = new MainWindow();
             var mainViewModel = new MainWindowVm(
                 mainWindow,
-                _databaseService,
-                _dispatcherService,
-                _profileService,
-                _saveManagerService,
-                _modEngine2Service);
+                _serviceContainer);
 
             mainWindow.DataContext = mainViewModel;
 

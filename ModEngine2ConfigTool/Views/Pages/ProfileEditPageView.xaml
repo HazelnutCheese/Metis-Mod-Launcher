@@ -28,7 +28,7 @@
         <Image x:Name="BackImage"
                VerticalAlignment="Top"
                RenderOptions.BitmapScalingMode="HighQuality"
-               Source="{Binding Profile.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Blue'}"
+               Source="{Binding Profile.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='EldenRing'}"
                Stretch="UniformToFill">
             <Image.OpacityMask>
                 <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
@@ -87,8 +87,10 @@
                                     Command="{Binding SelectImageCommand}"
                                     Style="{StaticResource PictureSelectButtonStyle}">
                                 <Border BorderBrush="{DynamicResource PrimaryHueLightBrush}" BorderThickness="2">
-                                    <Image RenderOptions.BitmapScalingMode="HighQuality"
-                                           Source="{Binding Profile.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Blue'}"
+                                    <Image HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                           Source="{Binding Profile.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='EldenRing'}"
                                            Stretch="UniformToFill" />
                                 </Border>
                             </Button>
@@ -141,7 +143,7 @@
                                Text="Description:" />
 
                     <TextBox Grid.Row="1"
-                             materialDesign:HintAssist.Hint="Enter Profile Desription"
+                             materialDesign:HintAssist.Hint="Enter Profile Description"
                              AcceptsReturn="True"
                              Background="{DynamicResource SecondaryHueLightBrush}"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
@@ -219,10 +221,12 @@
                                                                         <ColumnDefinition Width="0" />
                                                                     </Grid.ColumnDefinitions>
                                                                     <Image Grid.Column="0"
-                                                                           Width="32"
                                                                            Height="32"
                                                                            Margin="10,0"
-                                                                           Source="{Binding Mod.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Red'}"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center"
+                                                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                                                           Source="{Binding Mod.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='EldenRing'}"
                                                                            Stretch="UniformToFill" />
 
                                                                     <materialDesign:PopupBox Grid.Column="1"
@@ -295,7 +299,8 @@
 
                     <Button Margin="0,5"
                             attached:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True"
-                            Content="Add Mod"
+                            Content="{Binding SelectModsText}"
+                            IsEnabled="{Binding CanSelectMods}"
                             Style="{StaticResource AddModDllStyle}">
                         <Button.ContextMenu>
                             <ContextMenu ItemsSource="{Binding AddMods.Items}">
@@ -357,10 +362,12 @@
                                                                         <ColumnDefinition Width="0" />
                                                                     </Grid.ColumnDefinitions>
                                                                     <Image Grid.Column="0"
-                                                                           Width="32"
                                                                            Height="32"
                                                                            Margin="10,0"
-                                                                           Source="{Binding Dll.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Green'}"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center"
+                                                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                                                           Source="{Binding Dll.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='EldenRing'}"
                                                                            Stretch="UniformToFill" />
 
                                                                     <materialDesign:PopupBox Grid.Column="1"
@@ -432,7 +439,8 @@
 
                     <Button Margin="0,5"
                             attached:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True"
-                            Content="Add External Dll"
+                            Content="{Binding SelectDllsText}"
+                            IsEnabled="{Binding CanSelectDlls}"
                             Style="{StaticResource AddModDllStyle}">
                         <Button.ContextMenu>
                             <ContextMenu ItemsSource="{Binding AddDlls.Items}">

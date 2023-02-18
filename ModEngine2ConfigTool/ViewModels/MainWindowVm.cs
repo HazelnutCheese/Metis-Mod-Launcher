@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
 using ModEngine2ConfigTool.Services;
 
 namespace ModEngine2ConfigTool.ViewModels
@@ -9,19 +10,18 @@ namespace ModEngine2ConfigTool.ViewModels
 
         public MainWindowVm(
             MainWindow mainWindow,
-            IDatabaseService databaseService,
-            IDispatcherService dispatcherService,
-            ProfileService profileService,
-            SaveManagerService saveManagerService,
-            ModEngine2Service modEngine2Service)
+            IContainer serviceContainer)
         {
+            var navigationService = serviceContainer.Resolve<NavigationService>();
+            navigationService.Initialise(serviceContainer);
+
             MainHostVm = new MainHostVm(
                 mainWindow,
-                databaseService,
-                dispatcherService,
-                profileService,
-                saveManagerService,
-                modEngine2Service);
+                serviceContainer.Resolve<NavigationService>(),
+                serviceContainer.Resolve<ProfileManagerService>(),
+                serviceContainer.Resolve<ModManagerService>(),
+                serviceContainer.Resolve<DllManagerService>(),
+                serviceContainer.Resolve<PlayManagerService>());
         }
     }
 }

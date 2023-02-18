@@ -138,6 +138,7 @@
                       Header="Licence">
                 <TextBox Margin="10"
                          IsReadOnly="True"
+                         MaxLines="9999"
                          Opacity="0.75"
                          Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          Text="{Binding Licence, Mode=OneWay}"
@@ -210,6 +211,7 @@
                                              Grid.Column="0"
                                              Grid.ColumnSpan="3"
                                              Margin="20,5"
+                                             AcceptsReturn="True"
                                              IsReadOnly="True"
                                              Opacity="0.75"
                                              Style="{StaticResource MaterialDesignOutlinedTextBox}"

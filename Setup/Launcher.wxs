@@ -31,6 +31,18 @@
             <Component Id="cmp23365ADFBE558E4DEE123923F28EAE49" Directory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Guid="*">
                 <File Id="fil451E6562B9867DDE8BEE7934F8CBAC50" KeyPath="yes" Source="SourceDir\wpfgfx_cor3.dll" />
             </Component>
+            <Component Id="cmp3680F628E6E27C3ABF4F76A68411F587" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="fil5310BB0CD15EBAAED370C461FC87EBC1" KeyPath="yes" Source="SourceDir\Resources\Background_01.png" />
+            </Component>
+            <Component Id="cmpC4F02AD8C4934EEBDD4C8570DF35A763" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="filE93D1498016B8F8F7B40E9D08BF283B6" KeyPath="yes" Source="SourceDir\Resources\Background_02.png" />
+            </Component>
+            <Component Id="cmp564C38FF80E03DE53CB56966875E1EE0" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="filCF27FD6AE343BD8F36C12D838CDB62BC" KeyPath="yes" Source="SourceDir\Resources\Background_03.png" />
+            </Component>
+            <Component Id="cmpCD278F7D947A024907330C8F824D78A1" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="filE8F175F1A39310E58BBB451939C79F1B" KeyPath="yes" Source="SourceDir\Resources\Background_04.png" />
+            </Component>
             <Component Id="cmp3936087B41B02BD8883C37FF5274418A" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
                 <File Id="filD63DD71C65F416243268C5000BDEBA6D" KeyPath="yes" Source="SourceDir\Resources\Blue.png" />
             </Component>

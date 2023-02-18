@@ -49,13 +49,13 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     "How do I download new mods?",
                     Help.Faq_HowToDownloadMods),
                 new QuestionVm(
-                    "How do I import a mod I have downloaded?",
+                    "How do I add a mod I have downloaded?",
                     Help.Faq_HowToImportMod),
                 new QuestionVm(
                     "What is an external dll?",
                     Help.Faq_WhatIsAnExternalDll),
                 new QuestionVm(
-                    "How do I use an external dll?",
+                    "How do I add an external dll?",
                     Help.Faq_HowToImportAnExternalDll),
                 new QuestionVm(
                     "How can I tell if my mods have conflicts?",
@@ -70,8 +70,17 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     "How do I import saves from vanilla or another profile?",
                     Help.Faq_ImportSaves),
                 new QuestionVm(
-                    "How do I set a password for Seamless Coop?",
-                    Help.FaqCoopPassword),
+                    "Where are saves automatically backed up to?",
+                    Help.Faq_WhereAreSavedBackedUp),
+                new QuestionVm(
+                    "The mod or dll doesn't load or the game crashes",
+                    Help.Faq_TheGameCrashesOrDoesntWork),
+                //new QuestionVm(
+                //    "How do I set a password for Seamless Coop?",
+                //    Help.FaqCoopPassword),
+                new QuestionVm(
+                    "What does the Export Package option do?",
+                    Help.Faq_WhatDoesExportPackageDo),
                 new QuestionVm(
                     "Where does Metis store application data?",
                     Help.Faq_WhereDoesMetisStoreData),
@@ -148,6 +157,12 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     "Adam Abdelhamed",
                     "4.0.0",
                     Help.Licence_PowerArgs),
+                new LicenceVm(
+                    "Autofac",
+                    @"https://github.com/autofac/Autofac",
+                    "Autofac Contributors",
+                    "8.0.0",
+                    Help.Licence_Autofac)
             };
         }
     }

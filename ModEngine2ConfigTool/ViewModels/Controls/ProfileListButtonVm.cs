@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Pages;
@@ -30,9 +31,7 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
         private readonly NavigationService _navigationService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
-        private readonly DllManagerService _dllManagerService;
         private readonly PlayManagerService _playManagerService;
-        private readonly SaveManagerService _saveManagerService;
 
         public ProfileVm Profile { get; }
 
@@ -63,17 +62,13 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
             ModManagerService modManagerService,
-            DllManagerService dllManagerService,
-            PlayManagerService playManagerService,
-            SaveManagerService saveManagerService)
+            PlayManagerService playManagerService)
         {
             Profile = profileVm;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
             _navigationService = navigationService;
-            _dllManagerService = dllManagerService;
             _playManagerService= playManagerService;
-            _saveManagerService = saveManagerService;
 
             Command = new AsyncRelayCommand(NavigateToEditModCommand);
             PlayCommand = new AsyncRelayCommand(PlayAsync);
@@ -100,34 +95,16 @@ namespace ModEngine2ConfigTool.ViewModels.Controls
 
         private async Task NavigateToEditModCommand()
         {
-            var profileEditPageVm = new ProfileEditPageVm(
-                Profile,
-                true,
-                _navigationService,
-                _profileManagerService,
-                _modManagerService,
-                _dllManagerService,
-                _playManagerService,
-                _saveManagerService);
-
-            await _navigationService.NavigateTo(profileEditPageVm);
+            await _navigationService.NavigateTo<ProfileEditPageVm>(
+                new NamedParameter("profile", Profile));
         }
 
         private async Task Copy()
         {
             var newProfile = await _profileManagerService.DuplicateProfileAsync(Profile);
 
-            var profileEditPageVm = new ProfileEditPageVm(
-                newProfile,
-                true,
-                _navigationService,
-                _profileManagerService,
-                _modManagerService,
-                _dllManagerService,
-                _playManagerService,
-                _saveManagerService);
-
-            await _navigationService.NavigateTo(profileEditPageVm);
+            await _navigationService.NavigateTo<ProfileEditPageVm>(
+                new NamedParameter("profile", newProfile));
         }
 
         private async Task Delete()

@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
+using ModEngine2ConfigTool.ViewModels.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace ModEngine2ConfigTool.Services
     {
         private readonly Stack<ObservableObject> _history;
         private readonly Stack<ObservableObject> _forwards;
-
+        private IContainer _container;
         private ObservableObject? _currentView;
 
         public ObservableObject? CurrentPage
@@ -32,7 +34,13 @@ namespace ModEngine2ConfigTool.Services
             _forwards = new Stack<ObservableObject>();
         }
 
-        public async Task NavigateTo(ObservableObject observableObject)
+        public void Initialise(IContainer container)
+        {
+            _container = container;
+            CurrentPage = _container.Resolve<HomePageVm>();
+        }
+
+        private async Task NavigateTo(ObservableObject observableObject)
         {
             if(CurrentPage is not null)
             {
@@ -46,6 +54,11 @@ namespace ModEngine2ConfigTool.Services
             });
 
             HistoryChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public async Task NavigateTo<T>(params NamedParameter[] args) where T : ObservableObject
+        {
+            await NavigateTo(_container.Resolve<T>(args));
         }
 
         public async Task NavigateBack()

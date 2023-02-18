@@ -172,6 +172,18 @@ namespace ModEngine2ConfigTool.Services
                 profileBackups,
                 timestamp);
 
+            if(Directory.Exists(profileBackups))
+            {
+                var allBackups = Directory.GetDirectories(profileBackups);
+                var ordered = allBackups.OrderBy(x => DateTime.ParseExact(
+                    new DirectoryInfo(x).Name, "dd_M_yyyy  H_mm_ss", null));
+
+                foreach (var backup in ordered.SkipLast(5))
+                {
+                    Directory.Delete(backup, true);
+                }
+            }
+
             if (Directory.Exists(profileSaves))
             {
                 Directory.CreateDirectory(datedProfileBackupFolderPath);

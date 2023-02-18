@@ -37,15 +37,8 @@
                     <RowDefinition Height="30" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="32" />
-                    <RowDefinition Height="20" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="300" />
-                    <RowDefinition Height="20" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="20" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -68,13 +61,14 @@
 
                 <TextBlock Grid.Row="3"
                            Grid.Column="1"
+                           Margin="0,5,0,20"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center"
                            Style="{StaticResource TitleStyle}"
                            Text="Recently Played Profiles" />
 
                 <ItemsControl x:Name="ProfileContent"
-                              Grid.Row="5"
+                              Grid.Row="4"
                               Grid.Column="1"
                               Background="Transparent"
                               ItemsSource="{Binding RecentProfiles}">

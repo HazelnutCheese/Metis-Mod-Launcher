@@ -1,6 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
+using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
@@ -29,6 +32,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly DllManagerService _dllManagerService;
         private readonly PlayManagerService _playManagerService;
         private readonly SaveManagerService _saveManagerService;
+        private readonly PackageService _packageService;
         private readonly ObservableCollection<ProfileListButtonVm> _profileListButtons;
 
         public ICollectionView Profiles
@@ -55,7 +59,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             ModManagerService modManagerService,
             DllManagerService dllManagerService,
             PlayManagerService playManagerService,
-            SaveManagerService saveManagerService)
+            SaveManagerService saveManagerService,
+            PackageService packageService)
         {
             _navigationService = navigationService;
             _profileManagerService = profileManagerService;
@@ -63,6 +68,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             _dllManagerService = dllManagerService;
             _playManagerService = playManagerService;
             _saveManagerService = saveManagerService;
+            _packageService = packageService;
 
             _profileListButtons = new ObservableCollection<ProfileListButtonVm>();
             UpdateProfileListButtons();
@@ -86,10 +92,10 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                         "Create new Profile",
                         PackIconKind.PencilOutline,
                         async () => await NavigateToCreateProfileAsync()),
-                    new HotBarButtonVm(
-                        "Add from Package",
-                        PackIconKind.PackageVariantClosedPlus,
-                        async () => await NavigateToCreateProfileAsync())
+                    //new HotBarButtonVm(
+                    //    "Add from Package",
+                    //    PackIconKind.PackageVariantPlus,
+                    //    async () => await ImportPackage())
                 });
 
             BackgroundImage = Path.Combine(
@@ -192,17 +198,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         {
             var profileVm = await _profileManagerService.CreateNewProfileAsync("New Profile");
 
-            var profileEditPage = new ProfileEditPageVm(
-                profileVm,
-                true,
-                _navigationService,
-                _profileManagerService,
-                _modManagerService,
-                _dllManagerService,
-                _playManagerService,
-                _saveManagerService);
-
-            await _navigationService.NavigateTo(profileEditPage);
+            await _navigationService.NavigateTo<ProfileEditPageVm>(
+                    new NamedParameter("profile", profileVm));
         }
 
         private void UpdateProfileListButtons()
@@ -215,9 +212,27 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     _navigationService,
                     _profileManagerService,
                     _modManagerService,
-                    _dllManagerService,
-                    _playManagerService,
-                    _saveManagerService));
+                    _playManagerService));
+            }
+        }
+
+        private async Task ImportPackage()
+        {
+            var fileDialog = new OpenFileDialog
+            {
+                Filter = "Profile Package files (*.metispropkg)|*.metispropkg",
+                Multiselect = false,
+                Title = "Select Profile Package",
+                CheckFileExists = true,
+                CheckPathExists = true
+            };
+
+            if (fileDialog.ShowDialog().Equals(true))
+            {
+                var profileVm = await _packageService.ImportProfile(fileDialog.FileName);
+
+                await _navigationService.NavigateTo<ProfileEditPageVm>(
+                    new NamedParameter("profile", profileVm));
             }
         }
     }

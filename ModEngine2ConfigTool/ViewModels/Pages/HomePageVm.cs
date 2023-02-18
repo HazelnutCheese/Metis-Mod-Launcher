@@ -1,7 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
 using MaterialDesignThemes.Wpf;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
+using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.ViewModels.Profiles;
 using System;
 using System.Collections.ObjectModel;
@@ -66,16 +68,16 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 {
                     new HotBarButtonVm(
                         "Create new Profile",
-                        PackIconKind.PlayBoxOutline,
+                        PackIconKind.PencilOutline,
                         async () => await NavigateToCreateProfileAsync()),
-                    new HotBarButtonVm(
-                        "Import Mod",
-                        PackIconKind.FolderMultiplePlusOutline,
-                        async () => await NavigateToImportModAsync()),
-                    new HotBarButtonVm(
-                        "Import External Dll",
-                        PackIconKind.FilePlusOutline,
-                        async () => await NavigateToImportDllAsync())
+                    //new HotBarButtonVm(
+                    //    "Import Mod",
+                    //    PackIconKind.FolderMultiplePlusOutline,
+                    //    async () => await NavigateToImportModAsync()),
+                    //new HotBarButtonVm(
+                    //    "Import External Dll",
+                    //    PackIconKind.FilePlusOutline,
+                    //    async () => await NavigateToImportDllAsync())
                 });
 
             BackgroundImage = Path.Combine(
@@ -101,17 +103,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         {
             var profileVm = await _profileManagerService.CreateNewProfileAsync("New Profile");
 
-            var profileEditPage = new ProfileEditPageVm(
-                profileVm, 
-                true,
-                _navigationService,
-                _profileManagerService, 
-                _modManagerService,
-                _dllManagerService,
-                _playManagerService,
-                _saveManagerService);
-
-            await _navigationService.NavigateTo(profileEditPage);
+            await _navigationService.NavigateTo<ProfileEditPageVm>(
+                    new NamedParameter("profile", profileVm));
         }
 
         private async Task NavigateToImportModAsync()
@@ -122,14 +115,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 return;
             }
 
-            var modEditPage = new ModEditPageVm(
-                modVm,
-                true,
-                _navigationService,
-                _profileManagerService,
-                _modManagerService);
-
-            await _navigationService.NavigateTo(modEditPage);
+            await _navigationService.NavigateTo<ModEditPageVm>(
+                new NamedParameter("mod", modVm));
         }
 
         private async Task NavigateToImportDllAsync()
@@ -140,14 +127,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 return;
             }
 
-            var dllEditPage = new DllEditPageVm(
-                dllVm,
-                true,
-                _navigationService,
-                _profileManagerService,
-                _dllManagerService);
-
-            await _navigationService.NavigateTo(dllEditPage);
+            await _navigationService.NavigateTo<DllEditPageVm>(
+                new NamedParameter("dll", dllVm));
         }
 
         private void UpdateProfileListButtons()
@@ -160,9 +141,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     _navigationService,
                     _profileManagerService,
                     _modManagerService,
-                    _dllManagerService,
-                    _playManagerService,
-                    _saveManagerService));
+                    _playManagerService));
             }
         }
     }

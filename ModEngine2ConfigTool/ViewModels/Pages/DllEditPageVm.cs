@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
@@ -8,6 +9,7 @@ using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.ViewModels.Profiles;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,8 +26,6 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public DllVm Dll { get; }
 
-        public string Header { get; }
-
         public ICommand SelectImageCommand { get; }
 
         public ICommand BrowseCommand { get; }
@@ -34,7 +34,6 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public DllEditPageVm(
             DllVm dll, 
-            bool isCreatingNewMod,
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
             DllManagerService dllManagerService)
@@ -45,10 +44,6 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
             Dll = dll;
 
-            Header = isCreatingNewMod
-                ? "Create new Mod"
-                : "Edit Mod";
-
             SelectImageCommand = new RelayCommand(SelectImage);
             BrowseCommand = new RelayCommand(Browse);
 
@@ -57,24 +52,39 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             HotBarVm = new HotBarVm(
                 new ObservableCollection<ObservableObject>()
                 {
-                    new HotBarMenuButtonVm(
-                        "Add to Profile",
-                        PackIconKind.FolderPlusOutline,
-                        _profileManagerService.ProfileVms
-                            .Select(x => new HotBarMenuButtonItemVm(
-                                x.Name,
-                                async ()=> await _profileManagerService.AddDllToProfile(x, Dll)))
-                            .ToList(),
-                        profileManagerService.ProfileVms.Any),
+                    new HotBarButtonVm(
+                        "Open in Explorer",
+                        PackIconKind.OpenInApp,
+                        () => OpenExplorer(),
+                        () => File.Exists(Dll.FilePath)),
+                    //new HotBarMenuButtonVm(
+                    //    "Add to Profile",
+                    //    PackIconKind.FolderPlusOutline,
+                    //    _profileManagerService.ProfileVms
+                    //        .Select(x => new HotBarMenuButtonItemVm(
+                    //            x.Name,
+                    //            async ()=> await _profileManagerService.AddDllToProfile(x, Dll)))
+                    //        .ToList(),
+                    //    profileManagerService.ProfileVms.Any),
                     new HotBarButtonVm(
                         "Copy Dll",
                         PackIconKind.ContentDuplicate,
                         async () => await NavigateToCopyDllAsync()),
                     new HotBarButtonVm(
-                        "Delete Dll",
+                        "Remove Dll",
                         PackIconKind.DeleteOutline,
                         async () => await DeleteDllAsync())
                 });
+
+            Dll.PropertyChanged += Dll_PropertyChanged;
+        }
+
+        private void Dll_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Dll.FilePath))
+            {
+                (HotBarVm.Buttons[0] as HotBarButtonVm)?.RaiseNotifyCommandExecuteChanged();
+            }
         }
 
         private void SelectImage()
@@ -110,26 +120,16 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         private async Task NavigateToCopyDllAsync()
         {
-            var modVm = await _dllManagerService.CopyDllAsync(Dll);
+            var dllVm = await _dllManagerService.CopyDllAsync(Dll);
 
-            var modEditPage = new DllEditPageVm(
-                modVm,
-                true,
-                _navigationService,
-                _profileManagerService,
-                _dllManagerService);
-
-            await _navigationService.NavigateTo(modEditPage);
+            await _navigationService.NavigateTo<DllEditPageVm>(
+                new NamedParameter("dll", dllVm));
         }
 
         private async Task DeleteDllAsync()
         {
             await _dllManagerService.RemoveDllAsync(Dll);
-            await _navigationService.NavigateTo(
-                new DllsPageVm(
-                    _navigationService, 
-                    _profileManagerService, 
-                    _dllManagerService));
+            await _navigationService.NavigateTo<DllsPageVm>();
         }
 
         private void Browse()
@@ -155,6 +155,16 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             }
 
             return null;
+        }
+
+        private void OpenExplorer()
+        {
+            if (!File.Exists(Dll.FilePath))
+            {
+                return;
+            }
+
+            Process.Start("explorer", Path.GetDirectoryName(Dll.FilePath));
         }
     }
 }

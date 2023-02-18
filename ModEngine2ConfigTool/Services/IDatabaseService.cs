@@ -26,5 +26,9 @@ namespace ModEngine2ConfigTool.Services
         void DeleteDll(DllVm dllVm);
 
         void SaveChanges();
+        void DiscardChanges();
+        void AddDll(Dll dll);
+        void AddMod(Mod mod);
+        void AddProfile(Profile profile);
     }
 }

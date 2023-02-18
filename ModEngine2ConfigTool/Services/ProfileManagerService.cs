@@ -4,8 +4,12 @@ using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.ViewModels.Profiles;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO.Compression;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ModEngine2ConfigTool.Models;
+using Tommy;
 
 namespace ModEngine2ConfigTool.Services
 {

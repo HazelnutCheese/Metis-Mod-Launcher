@@ -13,51 +13,22 @@ namespace ModEngine2ConfigTool.ViewModels
 
         public MainHostVm(
             MainWindow mainWindow,
-            IDatabaseService databaseService,
-            IDispatcherService dispatcherService,
-            ProfileService profileService,
-            SaveManagerService saveManagerService,
-            ModEngine2Service modEngine2Service)
+            NavigationService navigationService,
+            ProfileManagerService profileManagerService,
+            ModManagerService modManagerService,
+            DllManagerService dllManagerService,
+            PlayManagerService playManagerService)
         {
-            var navigationService = new NavigationService();
-
-            var profileManagerService = new ProfileManagerService(
-                databaseService,
-                dispatcherService);
-
-            var modManagerService = new ModManagerService(
-                databaseService,
-                dispatcherService,
-                profileManagerService);
-
-            var dllManagerService = new DllManagerService(
-                databaseService,
-                dispatcherService,
-                profileManagerService);
-
-            var playManagerService = new PlayManagerService(
-                profileService,
-                saveManagerService,
-                modEngine2Service,
-                dispatcherService);
-
             TopBarVm = new TopBarVm(mainWindow, navigationService);
 
-            MainPanelVm = new MainPanelVm(
-                navigationService,
-                profileManagerService,
-                modManagerService,
-                dllManagerService,
-                playManagerService,
-                saveManagerService);
+            MainPanelVm = new MainPanelVm(navigationService);
 
             SideBarVm = new SideBarVm(
                 navigationService, 
                 profileManagerService, 
                 modManagerService,
                 dllManagerService,
-                playManagerService,
-                saveManagerService);
+                playManagerService);
         }
     }
 }

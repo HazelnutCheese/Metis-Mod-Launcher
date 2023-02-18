@@ -22,7 +22,7 @@
         <Image x:Name="BackImage"
                VerticalAlignment="Top"
                RenderOptions.BitmapScalingMode="HighQuality"
-               Source="{Binding Mod.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Blue'}"
+               Source="{Binding Mod.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='EldenRing'}"
                Stretch="UniformToFill">
             <Image.OpacityMask>
                 <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
@@ -81,8 +81,10 @@
                                     Command="{Binding SelectImageCommand}"
                                     Style="{StaticResource PictureSelectButtonStyle}">
                                 <Border BorderBrush="{DynamicResource PrimaryHueLightBrush}" BorderThickness="2">
-                                    <Image RenderOptions.BitmapScalingMode="HighQuality"
-                                           Source="{Binding Mod.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Blue'}"
+                                    <Image HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                           Source="{Binding Mod.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='EldenRing'}"
                                            Stretch="UniformToFill" />
                                 </Border>
                             </Button>
@@ -135,7 +137,7 @@
                                Text="Description:" />
 
                     <TextBox Grid.Row="1"
-                             materialDesign:HintAssist.Hint="Enter Mod Desription"
+                             materialDesign:HintAssist.Hint="Enter Mod Description"
                              AcceptsReturn="True"
                              Background="{DynamicResource SecondaryHueLightBrush}"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"

@@ -13,10 +13,12 @@ namespace ModEngine2ConfigTool.Services
     public class DatabaseService : IDatabaseService, IDisposable
     {
         private DatabaseContext _databaseContext;
+        private readonly string _dataStorage;
 
         public DatabaseService(string dataStorage)
-        {
-            _databaseContext = new DatabaseContext(dataStorage);
+        {            
+            _dataStorage = dataStorage;
+            _databaseContext = new DatabaseContext(_dataStorage);
             _databaseContext.Database.EnsureCreated();
         }
 
@@ -41,6 +43,12 @@ namespace ModEngine2ConfigTool.Services
         public void SaveChanges()
         {
             _databaseContext.SaveChanges();
+        }
+
+        public void DiscardChanges()
+        {
+            _databaseContext.Dispose();
+            _databaseContext = new DatabaseContext(_dataStorage);
         }
 
         public void AddProfile(ProfileVm profileVm)
@@ -201,6 +209,21 @@ namespace ModEngine2ConfigTool.Services
                 profile.Dlls.Remove(dll);
                 _databaseContext.SaveChanges();
             }
+        }
+
+        public void AddProfile(Profile profile)
+        {
+            _databaseContext.Add(profile);
+        }
+
+        public void AddMod(Mod mod)
+        {
+            _databaseContext.Add(mod);
+        }
+
+        public void AddDll(Dll dll)
+        {
+            _databaseContext.Add(dll);
         }
 
         public void Dispose()

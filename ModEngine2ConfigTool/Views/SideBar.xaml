@@ -85,7 +85,7 @@
             <controls:SideBarButton Grid.Row="8"
                                     Grid.Column="1"
                                     Command="{Binding NavigateCreateNewProfileCommand}"
-                                    IconKind="TextBoxPlusOutline"
+                                    IconKind="PencilOutline"
                                     Text="Create New Profile" />
 
             <controls:SideBarButton Grid.Row="9"
@@ -98,7 +98,7 @@
                                     Grid.Column="1"
                                     Command="{Binding NavigateAddDllCommand}"
                                     IconKind="FilePlusOutline"
-                                    Text="Add Dll From File" />
+                                    Text="Add External Dll" />
 
             <Rectangle Grid.Row="11"
                        Grid.Column="1"
@@ -107,23 +107,24 @@
                        HorizontalAlignment="Stretch"
                        Fill="{DynamicResource PrimaryHueLightForegroundBrush}" />
 
-            <ScrollViewer Grid.Row="12" Grid.Column="1">
+            <ScrollViewer Grid.Row="12"
+                          Grid.Column="1"
+                          VerticalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding ProfileButtons}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <controls:SideBarButton Height="32"
-                                                    Command="{Binding Command}"
-                                                    IconKind="TextBoxOutline"
-                                                    Text="{Binding Name}">
-                                <controls:SideBarButton.ContextMenu>
+                            <controls:SideBarProfileButton Height="32"
+                                                           Command="{Binding Command}"
+                                                           IconKind="TextBoxOutline">
+                                <controls:SideBarProfileButton.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Command="{Binding PlayCommand}" Header="Play" />
                                         <MenuItem Command="{Binding EditCommand}" Header="Edit" />
                                         <MenuItem Command="{Binding CopyCommand}" Header="Duplicate" />
                                         <MenuItem Command="{Binding DeleteCommand}" Header="Delete" />
                                     </ContextMenu>
-                                </controls:SideBarButton.ContextMenu>
-                            </controls:SideBarButton>
+                                </controls:SideBarProfileButton.ContextMenu>
+                            </controls:SideBarProfileButton>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

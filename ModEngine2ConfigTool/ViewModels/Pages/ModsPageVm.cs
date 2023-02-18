@@ -1,6 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
+using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
@@ -22,7 +25,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly NavigationService _navigationService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
-
+        private readonly PackageService _packageService;
         private readonly ObservableCollection<ModListButtonVm> _modListButtons;
 
         public ICollectionView Mods
@@ -46,11 +49,13 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         public ModsPageVm(
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
-            ModManagerService modManagerService)
+            ModManagerService modManagerService,
+            PackageService packageService)
         {
             _navigationService = navigationService;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
+            _packageService = packageService;
 
             _modListButtons = new ObservableCollection<ModListButtonVm>();
             UpdateModListButtons();
@@ -71,10 +76,10 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     new HotBarButtonVm(
                         "Add from Folder",
                         PackIconKind.FolderMultiplePlusOutline,
-                        async () => await NavigateToImportModAsync()),
+                        async () => await NavigateToAddModAsync()),
                     new HotBarButtonVm(
                         "Add from Package",
-                        PackIconKind.PackageVariantClosedPlus,
+                        PackIconKind.PackageVariantPlus,
                         async () => await NavigateToImportModAsync())
                 });
 
@@ -176,7 +181,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             });
         }
 
-        private async Task NavigateToImportModAsync()
+        private async Task NavigateToAddModAsync()
         {
             var modVm = await _modManagerService.ImportModAsync();
             if (modVm is null)
@@ -184,14 +189,28 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 return;
             }
 
-            var modEditPage = new ModEditPageVm(
-                modVm,
-                true,
-                _navigationService,
-                _profileManagerService,
-                _modManagerService);
+            await _navigationService.NavigateTo<ModEditPageVm>(
+                new NamedParameter("mod", modVm));
+        }
 
-            await _navigationService.NavigateTo(modEditPage);
+        private async Task NavigateToImportModAsync()
+        {
+            var fileDialog = new OpenFileDialog
+            {
+                Filter = "Mod Package files (*.metismodpkg)|*.metismodpkg",
+                Multiselect = false,
+                Title = "Select Mod Package",
+                CheckFileExists = true,
+                CheckPathExists = true
+            };
+
+            if (fileDialog.ShowDialog().Equals(true))
+            {
+                var modVm = await _packageService.ImportMod(fileDialog.FileName);
+
+                await _navigationService.NavigateTo<ModEditPageVm>(
+                    new NamedParameter("mod", modVm));
+            }
         }
 
         private void UpdateModListButtons()

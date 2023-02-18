@@ -1,5 +1,6 @@
 ﻿using ModEngine2ConfigTool.ViewModels.Profiles;
 using System.IO;
+using System.IO.Compression;
 using Tommy;
 
 namespace ModEngine2ConfigTool.Services
@@ -74,6 +75,6 @@ namespace ModEngine2ConfigTool.Services
         public string GetProfilePath(string profileId)
         {
             return Path.Combine(_rootProfilesFolder, $"{profileId}.toml");
-        }
+        }        
     }
 }

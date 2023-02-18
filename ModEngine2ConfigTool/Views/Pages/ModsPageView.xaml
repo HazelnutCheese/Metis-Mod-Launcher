@@ -184,10 +184,12 @@
                                                                         <ColumnDefinition Width="*" />
                                                                     </Grid.ColumnDefinitions>
                                                                     <Image Grid.Column="0"
-                                                                           Width="32"
                                                                            Height="32"
                                                                            Margin="10,0"
-                                                                           Source="{Binding Mod.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='Red'}"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center"
+                                                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                                                           Source="{Binding Mod.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='EldenRing'}"
                                                                            Stretch="UniformToFill" />
 
                                                                     <materialDesign:PopupBox Grid.Column="1"
@@ -196,7 +198,7 @@
                                                                                              Background="Gray"
                                                                                              Foreground="#d1d1d1">
                                                                         <StackPanel>
-                                                                            <Button attached:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True" Content="Add to profile">
+                                                                            <!--<Button attached:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True" Content="Add to profile">
                                                                                 <Button.ContextMenu>
                                                                                     <ContextMenu ItemsSource="{Binding MenuItems}">
                                                                                         <ContextMenu.ItemContainerStyle>
@@ -211,11 +213,11 @@
                                                                                 </Button.ContextMenu>
                                                                             </Button>
 
-                                                                            <Separator />
+                                                                            <Separator />-->
 
                                                                             <Button Command="{Binding EditCommand}" Content="Edit" />
                                                                             <Button Command="{Binding CopyCommand}" Content="Duplicate" />
-                                                                            <Button Command="{Binding RemoveCommand}" Content="Uninstall - from all profiles" />
+                                                                            <Button Command="{Binding RemoveCommand}" Content="Remove" />
                                                                         </StackPanel>
                                                                     </materialDesign:PopupBox>
 

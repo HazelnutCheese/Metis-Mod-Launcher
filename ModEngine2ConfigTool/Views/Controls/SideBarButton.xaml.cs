@@ -28,7 +28,13 @@ namespace ModEngine2ConfigTool.Views.Controls
             DependencyProperty.Register(
                 nameof(Text), 
                 typeof(string), 
-                typeof(SideBarButton));
+                typeof(SideBarButton),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, TextPropertyChanged));
+
+        public static void TextPropertyChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
 
         public SideBarButton()
         {

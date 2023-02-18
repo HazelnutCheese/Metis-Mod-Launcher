@@ -1,11 +1,14 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
+using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,10 +23,9 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly NavigationService _navigationService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
+        private readonly PackageService _packageService;
 
         public ModVm Mod { get; }
-
-        public string Header { get; }
 
         public ICommand SelectImageCommand { get; }
         public ICommand BrowseCommand { get; }
@@ -31,21 +33,17 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         public HotBarVm HotBarVm { get; }
 
         public ModEditPageVm(
-            ModVm mod, 
-            bool isCreatingNewMod,
+            ModVm mod,
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
-            ModManagerService modManagerService)
+            ModManagerService modManagerService,
+            PackageService packageService)
         {
             _navigationService = navigationService;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
-
+            _packageService = packageService;
             Mod = mod;
-
-            Header = isCreatingNewMod
-                ? "Create new Mod"
-                : "Edit Mod";
 
             SelectImageCommand = new RelayCommand(SelectImage);
             BrowseCommand = new RelayCommand(Browse);
@@ -55,24 +53,34 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             HotBarVm = new HotBarVm(
                 new ObservableCollection<ObservableObject>()
                 {
-                    new HotBarMenuButtonVm(
-                        "Add to Profile",
-                        PackIconKind.FolderPlusOutline,
-                        _profileManagerService.ProfileVms
-                            .Select(x => new HotBarMenuButtonItemVm(
-                                x.Name,
-                                async ()=> await _profileManagerService.AddModToProfile(x, Mod)))
-                            .ToList(),
-                        modManagerService.ModVms.Any),
+                    new HotBarButtonVm(
+                        "Open in Explorer",
+                        PackIconKind.OpenInApp,
+                        () => OpenExplorer(),
+                        () => Directory.Exists(Mod.FolderPath)),
                     new HotBarButtonVm(
                         "Copy Mod",
                         PackIconKind.ContentDuplicate,
                         async () => await NavigateToCopyModAsync()),
                     new HotBarButtonVm(
-                        "Delete Mod",
+                        "Remove Mod",
                         PackIconKind.DeleteOutline,
-                        async () => await DeleteModAsync())
+                        async () => await DeleteModAsync()),
+                    new HotBarButtonVm(
+                        "Export Package",
+                        PackIconKind.PackageVariantClosed,
+                        async () => await ExportPackage()),
                 });
+
+            Mod.PropertyChanged += Mod_PropertyChanged;
+        }
+
+        private void Mod_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(Mod.FolderPath))
+            {
+                (HotBarVm.Buttons[0] as HotBarButtonVm)?.RaiseNotifyCommandExecuteChanged();
+            }
         }
 
         private void SelectImage()
@@ -110,24 +118,14 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         {
             var modVm = await _modManagerService.DuplicateModAsync(Mod);
 
-            var modEditPage = new ModEditPageVm(
-                modVm,
-                true,
-                _navigationService,
-                _profileManagerService,
-                _modManagerService);
-
-            await _navigationService.NavigateTo(modEditPage);
+            await _navigationService.NavigateTo<ModEditPageVm>(
+                new NamedParameter("mod", modVm));
         }
 
         private async Task DeleteModAsync()
         {
             await _modManagerService.RemoveModAsync(Mod);
-            await _navigationService.NavigateTo(
-                new ModsPageVm(
-                    _navigationService, 
-                    _profileManagerService, 
-                    _modManagerService));
+            await _navigationService.NavigateTo<ModsPageVm>();
         }
 
         private void Browse()
@@ -161,6 +159,34 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             {
                 return null;
             }
+        }
+
+        private async Task ExportPackage()
+        {
+            const string fileExtension = "metismodpkg";
+
+            var fileDialog = new Microsoft.Win32.SaveFileDialog
+            {
+                Filter = $"Profile package Files(*.{fileExtension})|*.{fileExtension}",
+                Title = "Save Package File",
+                AddExtension = true,
+                FileName = $"{Mod.Name}.{fileExtension}"
+            };
+
+            if (fileDialog.ShowDialog().Equals(true))
+            {
+                await _packageService.ExportMod(Mod, fileDialog.FileName);
+            }
+        }
+
+        private void OpenExplorer()
+        {
+            if(!Directory.Exists(Mod.FolderPath))
+            {
+                return;
+            }
+
+            Process.Start("explorer", Mod.FolderPath);
         }
     }
 }
