@@ -1,17 +1,10 @@
 ﻿using Autofac;
 using ModEngine2ConfigTool.Helpers;
-using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Pages;
 using PowerArgs;
-using Sherlog;
-using Sherlog.Appenders;
-using Sherlog.Formatters;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -43,8 +36,6 @@ namespace ModEngine2ConfigTool
             {
                 Directory.CreateDirectory(appDataPath);
             }
-
-            ConfigureLogging(appDataPath);
 
             var serviceContainer = GetServicesContainer(appDataPath, configPath, !(commandLineArgs.ProfileId is null));
 
@@ -96,27 +87,11 @@ namespace ModEngine2ConfigTool
             string configPath,
             bool isSilentMode)
         {
+            var serviceBuilder = new ContainerBuilder();
+
             var configurationService = new ConfigurationService(configPath);
             var databaseService = new DatabaseService(appDataPath);
             var profileService = new ProfileService(appDataPath);
-            var saveManagerService = new SaveManagerService(appDataPath);
-
-            var modEngine2FolderDefault = Path.Combine(
-                Directory.GetCurrentDirectory(),
-                "..\\ModEngine2\\ModEngine-2.0.0-preview4-win64");
-
-            var modEngine2Folder = !string.IsNullOrWhiteSpace(configurationService.ModEngine2Folder)
-                ? configurationService.ModEngine2Folder
-                : modEngine2FolderDefault;
-
-            var modEngine2Service = new ModEngine2Service(modEngine2Folder);
-
-            var serviceBuilder = new ContainerBuilder();
-            serviceBuilder.RegisterInstance(configurationService);
-            serviceBuilder.RegisterInstance(databaseService);
-            serviceBuilder.RegisterInstance(profileService);
-            serviceBuilder.RegisterInstance(saveManagerService);
-            serviceBuilder.RegisterInstance(modEngine2Service);
 
             IDispatcherService dispatcherService;
             if (isSilentMode)
@@ -130,11 +105,32 @@ namespace ModEngine2ConfigTool
 
             serviceBuilder.RegisterInstance(dispatcherService);
 
+            var dialogService = new DialogService(dispatcherService);
+            serviceBuilder.RegisterInstance(dialogService);
+
+            var saveManagerService = new SaveManagerService(appDataPath, dialogService);
+
+            var modEngine2FolderDefault = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "..\\ModEngine2\\ModEngine-2.0.0-preview4-win64");
+
+            var modEngine2Folder = !string.IsNullOrWhiteSpace(configurationService.ModEngine2Folder)
+                ? configurationService.ModEngine2Folder
+                : modEngine2FolderDefault;
+
+            var modEngine2Service = new ModEngine2Service(modEngine2Folder);
+
+            serviceBuilder.RegisterInstance(configurationService);
+            serviceBuilder.RegisterInstance(databaseService);
+            serviceBuilder.RegisterInstance(profileService);
+            serviceBuilder.RegisterInstance(saveManagerService);
+            serviceBuilder.RegisterInstance(modEngine2Service);
+
             var playManagerService = new PlayManagerService(
                 profileService,
                 saveManagerService,
                 modEngine2Service,
-                dispatcherService);
+                dialogService);
 
             serviceBuilder.RegisterInstance(playManagerService);
 
@@ -147,25 +143,25 @@ namespace ModEngine2ConfigTool
             var modManagerSerivce = new ModManagerService(
                 databaseService,
                 dispatcherService,
-                profileManagerSerivce);
+                profileManagerSerivce,
+                dialogService);
 
             serviceBuilder.RegisterInstance(modManagerSerivce);
 
             var dllManagerSerivce = new DllManagerService(
                 databaseService,
                 dispatcherService,
-                profileManagerSerivce);
+                profileManagerSerivce,
+                dialogService);
 
             serviceBuilder.RegisterInstance(dllManagerSerivce);
 
             serviceBuilder.RegisterInstance(
                 new PackageService(
-                    appDataPath, 
-                    dispatcherService,
+                    appDataPath,
+                    dialogService,
                     databaseService, 
-                    profileManagerSerivce, 
-                    modManagerSerivce, 
-                    dllManagerSerivce));
+                    modManagerSerivce));
 
             if (!isSilentMode)
             {
@@ -182,37 +178,6 @@ namespace ModEngine2ConfigTool
             }
 
             return serviceBuilder.Build();
-        }
-
-        private static void ConfigureLogging(string dataStorage)
-        {
-            var messageFormatter = new LogMessageFormatter();
-            var timestampFormatter = new TimestampFormatter(
-                () => DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
-
-            var consoleAppender = new ConsoleAppender(new Dictionary<LogLevel, ConsoleColor>
-            {
-                {LogLevel.Trace, ConsoleColor.Cyan},
-                {LogLevel.Debug, ConsoleColor.Blue},
-                {LogLevel.Info, ConsoleColor.White},
-                {LogLevel.Warn, ConsoleColor.Yellow},
-                {LogLevel.Error, ConsoleColor.Red},
-                {LogLevel.Fatal, ConsoleColor.Magenta},
-            });
-
-            var logFileName = Path.Combine(
-                dataStorage,
-                DateTime.Now.ToString("yyyy-M-dd_ModEngine2Config" + ".log"));
-
-            var fileAppender = new FileWriterAppender(logFileName);
-
-            Logger.AddAppender((logger, level, message) =>
-            {
-                message = messageFormatter.FormatMessage(logger, level, message);
-                message = timestampFormatter.FormatMessage(logger, level, message);
-                consoleAppender.WriteLine(logger, level, message);
-                fileAppender.WriteLine(logger, level, message);
-            });
         }
 
         private static Process? GetOtherInstance()

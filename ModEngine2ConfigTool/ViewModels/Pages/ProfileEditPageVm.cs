@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using IWshRuntimeLibrary;
 using MaterialDesignThemes.Wpf;
-using Microsoft.Win32;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.Profiles;
@@ -24,6 +23,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly NavigationService _navigationService;
         private readonly SaveManagerService _saveManagerService;
         private readonly PackageService _packageService;
+        private readonly DialogService _dialogService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly PlayManagerService _playManagerService;
 
@@ -59,13 +59,15 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             DllManagerService dllManagerService,
             PlayManagerService playManagerService,
             SaveManagerService saveManagerService,
-            PackageService packageService)
+            PackageService packageService,
+            DialogService dialogService)
         {
             _profileManagerService = profileManagerService;
             _playManagerService = playManagerService;
             _navigationService = navigationService;
             _saveManagerService = saveManagerService;
             _packageService = packageService;
+            _dialogService = dialogService;
 
             Profile = profile;
 
@@ -198,32 +200,15 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         private void SelectImage()
         {
-            var fileDialog = new OpenFileDialog
-            {
-                Filter = "All Picture Files(*.bmp;*.jpg;*.gif;*.ico;*.png;*.wdp;*.tiff)|" +
-                    "*.BMP;*.JPG;*.GIF;*.ICO;*.PNG;*.WDP;*.TIFF|" +
-                    "All files (*.*)|*.*",
-                Multiselect = false,
-                Title = "Select Profile Image",
-                CheckFileExists = true,
-                CheckPathExists = true
-            };
+            var imageFile = _dialogService.ShowOpenFileDialog(
+                "Select Profile Image",
+                DialogService.AllImageFilter,
+                Profile.ImagePath,
+                Profile.ImagePath);
 
-            if (_lastOpenedLocation.Equals(string.Empty))
+            if (System.IO.File.Exists(imageFile))
             {
-                fileDialog.InitialDirectory = !string.IsNullOrWhiteSpace(Profile.ImagePath)
-                    ? Path.GetDirectoryName(Profile.ImagePath)
-                    : Directory.GetCurrentDirectory();
-            }
-            else
-            {
-                fileDialog.InitialDirectory = _lastOpenedLocation;
-            }
-
-            if (fileDialog.ShowDialog().Equals(true))
-            {
-                _lastOpenedLocation = Path.GetDirectoryName(fileDialog.FileName) ?? string.Empty;
-                Profile.ImagePath = fileDialog.FileName;
+                Profile.ImagePath = imageFile;
             }
         }
 
@@ -282,29 +267,17 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         private void CreateShortcut()
         {
-            var fileDialog = new SaveFileDialog
-            {
-                Filter = "All Shortcut Files(*.lnk)|*.lnk",
-                Title = "Save shortcut",
-                AddExtension = true,
-                FileName = $"{Profile.Name}.lnk"
-            };
+            var shortcutFile = _dialogService.ShowSaveFileDialog(
+                "Save Shortcut to",
+                "All Shortcut Files(*.lnk)|*.lnk",
+                "*.lnk",
+                defaultFolder: null,
+                $"{Profile.Name}.lnk");
 
-            if (_lastOpenedLocation.Equals(string.Empty))
-            {
-                fileDialog.InitialDirectory = !string.IsNullOrWhiteSpace(Profile.ImagePath)
-                    ? Path.GetDirectoryName(Profile.ImagePath)
-                    : Directory.GetCurrentDirectory();
-            }
-            else
-            {
-                fileDialog.InitialDirectory = _lastOpenedLocation;
-            }
-
-            if (fileDialog.ShowDialog().Equals(true))
+            if (shortcutFile is not null)
             {
                 var shell = new WshShell();
-                IWshShortcut shortcut = shell.CreateShortcut(fileDialog.FileName);
+                IWshShortcut shortcut = shell.CreateShortcut(shortcutFile);
                 shortcut.TargetPath = AppDomain.CurrentDomain.BaseDirectory + "Metis Mod Launcher.exe";
                 shortcut.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 shortcut.Arguments = $"-p \"{Profile.Model.ProfileId}\"";
@@ -331,23 +304,23 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             }
         }
 
-        private void ExportPackage()
-        {
-            const string fileExtension = "metispropkg";
+        //private void ExportPackage()
+        //{
+        //    const string fileExtension = "metispropkg";
 
-            var fileDialog = new SaveFileDialog
-            {
-                Filter = $"Profile package Files(*.{fileExtension})|*.{fileExtension}",
-                Title = "Save Package File",
-                AddExtension = true,
-                FileName = $"{Profile.Name}.{fileExtension}"
-            };
+        //    var fileDialog = new SaveFileDialog
+        //    {
+        //        Filter = $"Profile package Files(*.{fileExtension})|*.{fileExtension}",
+        //        Title = "Save Package File",
+        //        AddExtension = true,
+        //        FileName = $"{Profile.Name}.{fileExtension}"
+        //    };
 
-            if (fileDialog.ShowDialog().Equals(true))
-            {
-                _packageService.ExportProfile(Profile, fileDialog.FileName);
-            }
-        }
+        //    if (fileDialog.ShowDialog().Equals(true))
+        //    {
+        //        _packageService.ExportProfile(Profile, fileDialog.FileName);
+        //    }
+        //}
 
         private static Icon IconFromImage(Image img)
         {

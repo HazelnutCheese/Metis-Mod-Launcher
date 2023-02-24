@@ -2,11 +2,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
-using Microsoft.Win32;
-using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
-using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.Views.Controls;
 using System;
 using System.Collections.ObjectModel;
@@ -26,6 +23,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
         private readonly PackageService _packageService;
+        private readonly DialogService _dialogService;
         private readonly ObservableCollection<ModListButtonVm> _modListButtons;
 
         public ICollectionView Mods
@@ -50,12 +48,14 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
             ModManagerService modManagerService,
-            PackageService packageService)
+            PackageService packageService,
+            DialogService dialogService)
         {
             _navigationService = navigationService;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
             _packageService = packageService;
+            _dialogService = dialogService;
 
             _modListButtons = new ObservableCollection<ModListButtonVm>();
             UpdateModListButtons();
@@ -195,18 +195,18 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         private async Task NavigateToImportModAsync()
         {
-            var fileDialog = new OpenFileDialog
-            {
-                Filter = "Mod Package files (*.metismodpkg)|*.metismodpkg",
-                Multiselect = false,
-                Title = "Select Mod Package",
-                CheckFileExists = true,
-                CheckPathExists = true
-            };
+            var packageFile = _dialogService.ShowOpenFileDialog(
+                "Select Mod package",
+                "Mod Package files (*.metismodpkg)|*.metismodpkg");
 
-            if (fileDialog.ShowDialog().Equals(true))
+            if (packageFile is not null)
             {
-                var modVm = await _packageService.ImportMod(fileDialog.FileName);
+                var modVm = await _packageService.ImportMod(packageFile);
+
+                if(modVm is null)
+                {
+                    return;
+                }
 
                 await _navigationService.NavigateTo<ModEditPageVm>(
                     new NamedParameter("mod", modVm));

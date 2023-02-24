@@ -16,8 +16,9 @@ namespace ModEngine2ConfigTool.Services
         private readonly string _savesRoot;
 
         private readonly string _backupsRoot;
+        private readonly DialogService _dialogService;
 
-        public SaveManagerService(string dataStorage)
+        public SaveManagerService(string dataStorage, DialogService dialogService)
         {
             _savesRoot = Path.Combine(dataStorage, _savesFolderName);
             _backupsRoot = Path.Combine(_savesRoot, _backupsFolderName);
@@ -31,6 +32,8 @@ namespace ModEngine2ConfigTool.Services
             {
                 Directory.CreateDirectory(_backupsRoot);
             }
+
+            _dialogService = dialogService;
         }
 
         public void InstallProfileSaves(string profileName)
@@ -293,7 +296,7 @@ namespace ModEngine2ConfigTool.Services
                 // Show are you sure dialog
             }
 
-            var importFolder = GetFolderPath("Select saves folder to import", _savesRoot);
+            var importFolder = _dialogService.ShowFolderDialog("Select saves folder to import", _savesRoot);
             if(string.IsNullOrEmpty(importFolder) || !Directory.Exists(importFolder))
             {
                 return;
@@ -322,7 +325,7 @@ namespace ModEngine2ConfigTool.Services
 
         public void BackupSaves(string profileId)
         {
-            var exportFolder = GetFolderPath("Select folder to export to", "");
+            var exportFolder = _dialogService.ShowFolderDialog("Select folder to export to");
             if (string.IsNullOrEmpty(exportFolder) || !Directory.Exists(exportFolder))
             {
                 return;
@@ -373,34 +376,6 @@ namespace ModEngine2ConfigTool.Services
                 .ToList()
                 .Concat(Directory.GetFiles(directory, $"*.{extension}.baktemp"))
                 .ToList();
-        }
-
-        private static string? GetFolderPath(string dialogTitle, string defaultLocation)
-        {
-            var dialog = new FolderBrowserEx.FolderBrowserDialog
-            {
-                Title = dialogTitle,
-                InitialFolder = @"C:\",
-                AllowMultiSelect = false
-            };
-
-            if (string.IsNullOrWhiteSpace(defaultLocation) || !Directory.Exists(defaultLocation))
-            {
-                dialog.InitialFolder = "C:\\";
-            }
-            else
-            {
-                dialog.InitialFolder = defaultLocation;
-            }
-
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                return dialog.SelectedFolder;
-            }
-            else
-            {
-                return null;
-            }
         }
     }
 }

@@ -14,6 +14,7 @@ namespace ModEngine2ConfigTool.Services
         private readonly IDatabaseService _databaseService;
         private readonly IDispatcherService _dispatcherService;
         private readonly ProfileManagerService _profileManagerService;
+        private readonly DialogService _dialogService;
         private readonly IEqualityComparer<DllVm> _dllVmEqualityComparer;
 
         private ObservableCollection<DllVm> _dllVms;
@@ -27,11 +28,14 @@ namespace ModEngine2ConfigTool.Services
         public DllManagerService(
             IDatabaseService databaseService,
             IDispatcherService dispatcherService,
-            ProfileManagerService profileManagerService)
+            ProfileManagerService profileManagerService,
+            DialogService dialogService)
         {
             _databaseService = databaseService;
             _dispatcherService = dispatcherService;
             _profileManagerService = profileManagerService;
+            _dialogService = dialogService;
+
             _dllVmEqualityComparer = new DllVmEqualityComparer();
 
             var dllVms = GetDllsFromDatabase(_databaseService);
@@ -56,8 +60,11 @@ namespace ModEngine2ConfigTool.Services
 
         public async Task<DllVm?> ImportDllAsync()
         {
-            var dllPath = GetFilePath("Select Dll file", "");
-            if (string.IsNullOrWhiteSpace(dllPath))
+            var dllPath = _dialogService.ShowOpenFileDialog(
+                "Select External Dll",
+                "Dll files (*.dll)|*.dll|All files (*.*)|*.*");
+
+            if (dllPath is null)
             {
                 return null;
             }
@@ -110,26 +117,6 @@ namespace ModEngine2ConfigTool.Services
             }
 
             return dllVms;
-        }
-
-        private static string? GetFilePath(string dialogTitle, string defaultLocation)
-        {
-            var fileDialog = new OpenFileDialog
-            {
-                Filter = "Dll files (*.dll)|*.dll|All files (*.*)|*.*",
-                Multiselect = false,
-                Title = "Select External Dll",
-                CheckFileExists = true,
-                CheckPathExists = true,
-                InitialDirectory = defaultLocation
-            };
-
-            if(fileDialog.ShowDialog().Equals(true))
-            {
-                return fileDialog.FileName;
-            }
-
-            return null;
         }
     }
 }

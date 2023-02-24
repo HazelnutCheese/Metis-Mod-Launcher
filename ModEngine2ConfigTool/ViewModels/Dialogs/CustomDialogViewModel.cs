@@ -5,6 +5,7 @@ using ModEngine2ConfigTool.ViewModels.Fields;
 using ModEngine2ConfigTool.Views.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -13,21 +14,6 @@ namespace ModEngine2ConfigTool.ViewModels.Dialogs
 
     public class CustomDialogViewModel
     {
-        public static ICommand GetCloseDialogCommand(
-            bool result,
-            IInputElement dialog,
-            Func<bool>? canExecute = null)
-        {
-            if(canExecute is not null)
-            {
-                return new RelayCommand(() => DialogHost.CloseDialogCommand.Execute(result, dialog), canExecute);
-            }
-            else
-            {
-                return new RelayCommand(() => DialogHost.CloseDialogCommand.Execute(result, dialog));
-            }
-        }
-
         public string Header { get; }
         public string Message { get; }
 
@@ -37,13 +23,13 @@ namespace ModEngine2ConfigTool.ViewModels.Dialogs
         public CustomDialogViewModel(
             string header,
             string message,
-            List<IFieldViewModel> fields, 
-            List<DialogButtonViewModel> buttons) 
+            List<IFieldViewModel>? fields = null, 
+            List<DialogButtonViewModel>? buttons = null) 
         {
-            Fields = new FieldsCollectionViewModel(fields);
+            Fields = new FieldsCollectionViewModel(fields ?? new List<IFieldViewModel>());
             Header = header;
             Message = message;
-            Buttons = buttons;
+            Buttons = buttons ?? new List<DialogButtonViewModel>();
 
             Fields.PropertyChanged += Fields_PropertyChanged;
         }

@@ -2,16 +2,12 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
-using Microsoft.Win32;
-using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
-using ModEngine2ConfigTool.ViewModels.Profiles;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -19,10 +15,9 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 {
     public class DllEditPageVm : ObservableObject
     {
-        private string _lastOpenedLocation;
         private readonly NavigationService _navigationService;
-        private readonly ProfileManagerService _profileManagerService;
         private readonly DllManagerService _dllManagerService;
+        private readonly DialogService _dialogService;
 
         public DllVm Dll { get; }
 
@@ -36,18 +31,17 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             DllVm dll, 
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
-            DllManagerService dllManagerService)
+            DllManagerService dllManagerService,
+            DialogService dialogService)
         {
             _navigationService = navigationService;
-            _profileManagerService = profileManagerService;
             _dllManagerService = dllManagerService;
+            _dialogService = dialogService;
 
             Dll = dll;
 
             SelectImageCommand = new RelayCommand(SelectImage);
             BrowseCommand = new RelayCommand(Browse);
-
-            _lastOpenedLocation = string.Empty;
 
             HotBarVm = new HotBarVm(
                 new ObservableCollection<ObservableObject>()
@@ -89,32 +83,15 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         private void SelectImage()
         {
-            var fileDialog = new OpenFileDialog
-            {
-                Filter = "All Picture Files(*.bmp;*.jpg;*.gif;*.ico;*.png;*.wdp;*.tiff)|" +
-                    "*.BMP;*.JPG;*.GIF;*.ICO;*.PNG;*.WDP;*.TIFF|" +
-                    "All files (*.*)|*.*",
-                Multiselect = false,
-                Title = "Select Profile Image",
-                CheckFileExists = true,
-                CheckPathExists = true
-            };
+            var imageFile = _dialogService.ShowOpenFileDialog(
+                "Select External Dll Image",
+                DialogService.AllImageFilter,
+                Dll.ImagePath,
+                Dll.ImagePath);
 
-            if (_lastOpenedLocation.Equals(string.Empty))
+            if (File.Exists(imageFile))
             {
-                fileDialog.InitialDirectory = !string.IsNullOrWhiteSpace(Dll.ImagePath)
-                    ? Path.GetDirectoryName(Dll.ImagePath)
-                    : Directory.GetCurrentDirectory();
-            }
-            else
-            {
-                fileDialog.InitialDirectory = _lastOpenedLocation;
-            }
-
-            if (fileDialog.ShowDialog().Equals(true))
-            {
-                _lastOpenedLocation = Path.GetDirectoryName(fileDialog.FileName) ?? string.Empty;
-                Dll.ImagePath = fileDialog.FileName;
+                Dll.ImagePath = imageFile;
             }
         }
 
@@ -134,37 +111,26 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         private void Browse()
         {
-            Dll.FilePath = GetFilePath("Select new dll", Dll.FilePath) ?? Dll.FilePath;
-        }
+            var filePath = _dialogService.ShowOpenFileDialog(
+                "Select new Mod folder",
+                 "Dll files (*.dll)|*.dll|All files (*.*)|*.*",
+                Dll.FilePath,
+                Dll.FilePath);
 
-        private static string? GetFilePath(string dialogTitle, string defaultLocation)
-        {
-            var fileDialog = new OpenFileDialog
+            if (filePath is not null)
             {
-                Filter = "Dll files (*.dll)|*.dll|All files (*.*)|*.*",
-                Multiselect = false,
-                Title = "Select External Dll",
-                CheckFileExists = true,
-                CheckPathExists = true,
-                InitialDirectory = defaultLocation
-            };
-
-            if (fileDialog.ShowDialog().Equals(true))
-            {
-                return fileDialog.FileName;
+                Dll.FilePath = filePath;
             }
-
-            return null;
         }
 
         private void OpenExplorer()
         {
-            if (!File.Exists(Dll.FilePath))
+            if (File.Exists(Dll.FilePath) && 
+                Path.GetDirectoryName(Dll.FilePath) is string parentFolder 
+                && Directory.Exists(parentFolder))
             {
-                return;
-            }
-
-            Process.Start("explorer", Path.GetDirectoryName(Dll.FilePath));
+                Process.Start("explorer", parentFolder);
+            }            
         }
     }
 }

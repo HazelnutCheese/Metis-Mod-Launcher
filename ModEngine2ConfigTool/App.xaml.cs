@@ -16,12 +16,10 @@ namespace ModEngine2ConfigTool
         public const string AppName = "Metis Mod Launcher";
         public const string DialogHostId = "MainWindowDialogHost";
 
-        private readonly Logger _logger;
         private readonly IContainer _serviceContainer;
 
         public App(IContainer serviceContainer)
         {
-            _logger = Logger.GetLogger(typeof(App));
             _serviceContainer = serviceContainer;
         }
 
@@ -54,7 +52,7 @@ namespace ModEngine2ConfigTool
                 MessageBox.Show(e.Exception?.Message);
             }
 
-            _logger.Error(e.Exception?.ToString());
+            Log.Instance.Error(e.Exception?.ToString());
 
             e.SetObserved();
         }
@@ -62,14 +60,14 @@ namespace ModEngine2ConfigTool
         private void Dispatcher_UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             MessageBox.Show(e.Exception.Message);
-            _logger.Error(e.Exception.ToString());
+            Log.Instance.Error(e.Exception.ToString());
             e.Handled = true;
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             MessageBox.Show(e.ExceptionObject.ToString());
-            _logger.Error(e.ExceptionObject.ToString());
+            Log.Instance.Error(e.ExceptionObject.ToString());
         }
     }
 }

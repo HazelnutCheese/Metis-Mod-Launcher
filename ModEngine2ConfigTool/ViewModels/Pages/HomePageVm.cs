@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using MaterialDesignThemes.Wpf;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
-using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.ViewModels.Profiles;
 using System;
 using System.Collections.ObjectModel;
@@ -12,7 +11,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using System.Windows.Forms;
 using System.Windows.Threading;
 
 namespace ModEngine2ConfigTool.ViewModels.Pages
@@ -23,9 +21,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly NavigationService _navigationService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
-        private readonly DllManagerService _dllManagerService;
         private readonly PlayManagerService _playManagerService;
-        private readonly SaveManagerService _saveManagerService;
         private ICollectionView _recentProfiles;
 
         private readonly ObservableCollection<ProfileListButtonVm> _profileListButtons;
@@ -43,18 +39,14 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             NavigationService navigationService,
             ProfileManagerService profileManagerService, 
             ModManagerService modManagerService,
-            DllManagerService dllManagerService,
-            PlayManagerService playManagerService,
-            SaveManagerService saveManagerService)
+            PlayManagerService playManagerService)
         {
             _profiles = profileManagerService.ProfileVms;
 
             _navigationService = navigationService;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
-            _dllManagerService = dllManagerService;
             _playManagerService = playManagerService;
-            _saveManagerService = saveManagerService;
 
             _profileListButtons = new ObservableCollection<ProfileListButtonVm>();
             UpdateProfileListButtons();
@@ -69,15 +61,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     new HotBarButtonVm(
                         "Create new Profile",
                         PackIconKind.PencilOutline,
-                        async () => await NavigateToCreateProfileAsync()),
-                    //new HotBarButtonVm(
-                    //    "Import Mod",
-                    //    PackIconKind.FolderMultiplePlusOutline,
-                    //    async () => await NavigateToImportModAsync()),
-                    //new HotBarButtonVm(
-                    //    "Import External Dll",
-                    //    PackIconKind.FilePlusOutline,
-                    //    async () => await NavigateToImportDllAsync())
+                        async () => await NavigateToCreateProfileAsync())
                 });
 
             BackgroundImage = Path.Combine(
@@ -105,30 +89,6 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
             await _navigationService.NavigateTo<ProfileEditPageVm>(
                     new NamedParameter("profile", profileVm));
-        }
-
-        private async Task NavigateToImportModAsync()
-        {
-            var modVm = await _modManagerService.ImportModAsync();
-            if(modVm is null)
-            {
-                return;
-            }
-
-            await _navigationService.NavigateTo<ModEditPageVm>(
-                new NamedParameter("mod", modVm));
-        }
-
-        private async Task NavigateToImportDllAsync()
-        {
-            var dllVm = await _dllManagerService.ImportDllAsync();
-            if (dllVm is null)
-            {
-                return;
-            }
-
-            await _navigationService.NavigateTo<DllEditPageVm>(
-                new NamedParameter("dll", dllVm));
         }
 
         private void UpdateProfileListButtons()

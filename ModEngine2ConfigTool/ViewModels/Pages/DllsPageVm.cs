@@ -23,7 +23,6 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly NavigationService _navigationService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly DllManagerService _dllManagerService;
-
         private readonly ObservableCollection<DllListButtonVm> _dllListButtons;
 
         public ICollectionView Dlls
@@ -71,11 +70,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     new HotBarButtonVm(
                         "Add from File",
                         PackIconKind.FilePlusOutline,
-                        async () => await NavigateToImportDllAsync()),
-                    //new HotBarButtonVm(
-                    //    "Add from Package",
-                    //    PackIconKind.PackageVariantClosedPlus,
-                    //    async () => await NavigateToImportDllAsync())
+                        async () => await NavigateToImportDllAsync())
                 });
 
             BackgroundImage = Path.Combine(

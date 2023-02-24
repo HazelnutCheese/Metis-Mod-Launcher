@@ -1,4 +1,7 @@
-﻿using System.Windows.Input;
+﻿using CommunityToolkit.Mvvm.Input;
+using MaterialDesignThemes.Wpf;
+using System.Windows;
+using System.Windows.Input;
 
 namespace ModEngine2ConfigTool.ViewModels.Dialogs
 {
@@ -10,11 +13,14 @@ namespace ModEngine2ConfigTool.ViewModels.Dialogs
 
         public DialogButtonViewModel(
             string label, 
-            ICommand command, 
+            bool result, 
             bool isDefault) 
         {
             Label = label;
-            Command = command;
+            Command = new RelayCommand<IInputElement>(view =>
+            {
+                DialogHost.CloseDialogCommand.Execute(result, view);
+            });
             IsDefault = isDefault;
         }
     }

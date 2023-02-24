@@ -11,6 +11,7 @@
              xmlns:validationrules="clr-namespace:ModEngine2ConfigTool.Views.ValidationRules"
              xmlns:viewModels="clr-namespace:ModEngine2ConfigTool.ViewModels.Dialogs"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             x:Name="CustomDialogSelf"
              MaxWidth="800"
              d:DataContext="{d:DesignInstance viewModels:CustomDialogViewModel,
                                               IsDesignTimeCreatable=False}"
@@ -60,6 +61,7 @@
                 <DataTemplate>
                     <Button HorizontalAlignment="Center"
                             Command="{Binding Command}"
+                            CommandParameter="{Binding ElementName=CustomDialogSelf}"
                             Foreground="#d1d1d1"
                             IsDefault="{Binding IsDefault}">
                         <Button.Content>

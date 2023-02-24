@@ -3,10 +3,8 @@ using ModEngine2ConfigTool.Equality;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ModEngine2ConfigTool.Services
 {
@@ -15,6 +13,7 @@ namespace ModEngine2ConfigTool.Services
         private readonly IDatabaseService _databaseService;
         private readonly IDispatcherService _dispatcherService;
         private readonly ProfileManagerService _profileManagerService;
+        private readonly DialogService _dialogService;
         private readonly IEqualityComparer<ModVm> _modVmEqualityComparer;
 
         private ObservableCollection<ModVm> _modVms;
@@ -28,11 +27,14 @@ namespace ModEngine2ConfigTool.Services
         public ModManagerService(
             IDatabaseService databaseService,
             IDispatcherService dispatcherService,
-            ProfileManagerService profileManagerService)
+            ProfileManagerService profileManagerService,
+            DialogService dialogService)
         {
             _databaseService = databaseService;
             _dispatcherService = dispatcherService;
             _profileManagerService = profileManagerService;
+            _dialogService = dialogService;
+
             _modVmEqualityComparer = new ModVmEqualityComparer();
 
             var modVms = GetModsFromDatabase(_databaseService);
@@ -57,8 +59,8 @@ namespace ModEngine2ConfigTool.Services
 
         public async Task<ModVm?> ImportModAsync()
         {
-            var modPath = GetFolderPath("Select Mod folder", "");
-            if (string.IsNullOrWhiteSpace(modPath))
+            var modPath = _dialogService.ShowFolderDialog("Select Mod Folder");
+            if (modPath is null)
             {
                 return null;
             }
@@ -112,34 +114,6 @@ namespace ModEngine2ConfigTool.Services
             }
 
             return modVms;
-        }
-
-        private static string? GetFolderPath(string dialogTitle, string defaultLocation)
-        {
-            var dialog = new FolderBrowserEx.FolderBrowserDialog
-            {
-                Title = dialogTitle,
-                InitialFolder = @"C:\",
-                AllowMultiSelect = false
-            };
-
-            if (string.IsNullOrWhiteSpace(defaultLocation) || !Directory.Exists(defaultLocation))
-            {
-                dialog.InitialFolder = "C:\\";
-            }
-            else
-            {
-                dialog.InitialFolder = defaultLocation;
-            }
-
-            if (dialog.ShowDialog().Equals(DialogResult.OK))
-            {
-                return dialog.SelectedFolder;
-            }
-            else
-            {
-                return null;
-            }
         }
     }
 }

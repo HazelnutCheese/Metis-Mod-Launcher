@@ -1,9 +1,5 @@
-﻿using MaterialDesignThemes.Wpf;
-using Microsoft.VisualBasic.ApplicationServices;
-using ModEngine2ConfigTool.ViewModels.Dialogs;
-using ModEngine2ConfigTool.ViewModels.Fields;
+﻿using ModEngine2ConfigTool.ViewModels.Dialogs;
 using ModEngine2ConfigTool.ViewModels.Profiles;
-using ModEngine2ConfigTool.Views.Dialogs;
 using Sherlog;
 using System;
 using System.Collections.Generic;
@@ -19,18 +15,18 @@ namespace ModEngine2ConfigTool.Services
         private readonly ProfileService _profileService;
         private readonly SaveManagerService _saveManagerService;
         private readonly ModEngine2Service _modEngine2Service;
-        private readonly IDispatcherService _dispatcherService;
+        private readonly DialogService _dialogService;
 
         public PlayManagerService(
             ProfileService profileService,
             SaveManagerService saveManagerService,
             ModEngine2Service modEngine2Service,
-            IDispatcherService dispatcherService)
+            DialogService dialogService)
         {
             _profileService = profileService;
             _saveManagerService = saveManagerService;
             _modEngine2Service = modEngine2Service;
-            _dispatcherService = dispatcherService;
+            _dialogService = dialogService;
         }
 
         public void PlaySilent(ProfileVm profileVm)
@@ -110,36 +106,31 @@ namespace ModEngine2ConfigTool.Services
 
         public async Task Play(ProfileVm profileVm)
         {
-            var dialog = new CustomDialogView();
             var dialogVm = new CustomDialogViewModel(
                 "Launch Elden Ring",
                 $"Are you sure you want to launch Elden Ring with this profile selected?" +
                 "\n\nNote: Steam must be running and logged in.",
-                new List<IFieldViewModel>(),
+                fields: null,
                 new List<DialogButtonViewModel>()
                 {
                     new DialogButtonViewModel(
                         "Play",
-                        CustomDialogViewModel.GetCloseDialogCommand(true, dialog),
+                        result: true,
                         isDefault: false),
                     new DialogButtonViewModel(
                         "Cancel",
-                        CustomDialogViewModel.GetCloseDialogCommand(false, dialog),
+                        result: false,
                         isDefault: true)
                 });
 
-            dialog.DataContext = dialogVm;
+            var result = await _dialogService.ShowDialog(dialogVm);
 
-            var result = await DialogHost.Show(dialog, App.DialogHostId);
-
-            if (result is not bool || result.Equals(false))
+            if (result is bool && result.Equals(true))
             {
-                return;
+                using var cts = new CancellationTokenSource();
+                var runEldenRingTask = GetPlayTask(profileVm, cts.Token);
+                await ShowPlayingDialog(runEldenRingTask, cts);
             }
-
-            using var cts = new CancellationTokenSource();
-            var runEldenRingTask = GetPlayTask(profileVm, cts.Token);
-            await ShowPlayingDialog(runEldenRingTask, cts);
         }
 
         private async Task GetPlayTask(ProfileVm profileVm, CancellationToken cancellationToken)
@@ -222,69 +213,26 @@ namespace ModEngine2ConfigTool.Services
 
         private async Task ShowPlayingDialog(Task backgroundTask, CancellationTokenSource cts)
         {
-            var playingDialog = new ProgressDialogView();
             var playingDialogVm = new CustomDialogViewModel(
                 "Playing Elden Ring",
                 $"Waiting for the Elden Ring process to exit...",
-                new List<IFieldViewModel>(),
-                new List<DialogButtonViewModel>()
-                {
-                        new DialogButtonViewModel(
-                            "Force Exit",
-                            CustomDialogViewModel.GetCloseDialogCommand(true, playingDialog),
-                            isDefault: true)
-                });
-            playingDialog.DataContext = playingDialogVm;
-
-            var areYouSureDialog = new CustomDialogView();
-            var areYouSureDialogVm = new CustomDialogViewModel(
-                "Cancel",
-                $"Are you sure you want to cancel?" +
-                "\n\nNote: This will close Elden Ring without saving. Progress may be lost.",
-                new List<IFieldViewModel>(),
-                new List<DialogButtonViewModel>()
+                fields: null,
+                new List<DialogButtonViewModel>
                 {
                     new DialogButtonViewModel(
-                        "Yes",
-                        CustomDialogViewModel.GetCloseDialogCommand(true, areYouSureDialog),
-                        isDefault: true),
-                    new DialogButtonViewModel(
-                        "No",
-                        CustomDialogViewModel.GetCloseDialogCommand(false, areYouSureDialog),
+                        "Force Exit",
+                        result: false,
                         isDefault: false)
-            });
-            areYouSureDialog.DataContext = areYouSureDialogVm;
+                });
 
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-            backgroundTask.ContinueWith(t =>
+            var dialogResult = await _dialogService.ShowProgressDialog(playingDialogVm, backgroundTask);
+
+            if(dialogResult is bool && dialogResult.Equals(false))
             {
-                _dispatcherService.InvokeUi(() => DialogHost.GetDialogSession(App.DialogHostId)?.Close(true));
-            }, cts.Token);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-
-            var hasRequestedForcedExit = false;
-            while (
-                !(backgroundTask.IsCompleted || backgroundTask.IsFaulted) &&
-                !hasRequestedForcedExit && 
-                !cts.Token.IsCancellationRequested)
-            {
-                var playResult = await DialogHost.Show(playingDialog, App.DialogHostId);
-
-                if (playResult is not bool || playResult.Equals(false) || !(backgroundTask.IsCompleted || backgroundTask.IsFaulted))
-                {
-                    var sureResult = await DialogHost.Show(areYouSureDialog, App.DialogHostId);
-
-                    if (sureResult is bool && sureResult.Equals(true))
-                    {
-                        hasRequestedForcedExit = true;
-                        cts.Cancel();
-                    }
-                }
-                else
-                {
-                    break;
-                }
+                cts.Cancel();
             }
+
+            await backgroundTask;
         }
     }
 }

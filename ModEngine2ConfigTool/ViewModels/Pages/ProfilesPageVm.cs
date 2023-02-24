@@ -29,10 +29,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly NavigationService _navigationService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
-        private readonly DllManagerService _dllManagerService;
         private readonly PlayManagerService _playManagerService;
-        private readonly SaveManagerService _saveManagerService;
-        private readonly PackageService _packageService;
         private readonly ObservableCollection<ProfileListButtonVm> _profileListButtons;
 
         public ICollectionView Profiles
@@ -57,18 +54,12 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
             ModManagerService modManagerService,
-            DllManagerService dllManagerService,
-            PlayManagerService playManagerService,
-            SaveManagerService saveManagerService,
-            PackageService packageService)
+            PlayManagerService playManagerService)
         {
             _navigationService = navigationService;
             _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
-            _dllManagerService = dllManagerService;
             _playManagerService = playManagerService;
-            _saveManagerService = saveManagerService;
-            _packageService = packageService;
 
             _profileListButtons = new ObservableCollection<ProfileListButtonVm>();
             UpdateProfileListButtons();
@@ -91,11 +82,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     new HotBarButtonVm(
                         "Create new Profile",
                         PackIconKind.PencilOutline,
-                        async () => await NavigateToCreateProfileAsync()),
-                    //new HotBarButtonVm(
-                    //    "Add from Package",
-                    //    PackIconKind.PackageVariantPlus,
-                    //    async () => await ImportPackage())
+                        async () => await NavigateToCreateProfileAsync())
                 });
 
             BackgroundImage = Path.Combine(
@@ -213,26 +200,6 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     _profileManagerService,
                     _modManagerService,
                     _playManagerService));
-            }
-        }
-
-        private async Task ImportPackage()
-        {
-            var fileDialog = new OpenFileDialog
-            {
-                Filter = "Profile Package files (*.metispropkg)|*.metispropkg",
-                Multiselect = false,
-                Title = "Select Profile Package",
-                CheckFileExists = true,
-                CheckPathExists = true
-            };
-
-            if (fileDialog.ShowDialog().Equals(true))
-            {
-                var profileVm = await _packageService.ImportProfile(fileDialog.FileName);
-
-                await _navigationService.NavigateTo<ProfileEditPageVm>(
-                    new NamedParameter("profile", profileVm));
             }
         }
     }

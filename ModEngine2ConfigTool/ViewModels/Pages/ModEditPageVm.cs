@@ -19,11 +19,10 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 {
     public class ModEditPageVm : ObservableObject
     {
-        private string _lastOpenedLocation;
         private readonly NavigationService _navigationService;
-        private readonly ProfileManagerService _profileManagerService;
         private readonly ModManagerService _modManagerService;
         private readonly PackageService _packageService;
+        private readonly DialogService _dialogService;
 
         public ModVm Mod { get; }
 
@@ -37,18 +36,18 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             NavigationService navigationService,
             ProfileManagerService profileManagerService,
             ModManagerService modManagerService,
-            PackageService packageService)
+            PackageService packageService,
+            DialogService dialogService)
         {
             _navigationService = navigationService;
-            _profileManagerService = profileManagerService;
             _modManagerService = modManagerService;
             _packageService = packageService;
+            _dialogService = dialogService;
+
             Mod = mod;
 
             SelectImageCommand = new RelayCommand(SelectImage);
             BrowseCommand = new RelayCommand(Browse);
-
-            _lastOpenedLocation = string.Empty;
 
             HotBarVm = new HotBarVm(
                 new ObservableCollection<ObservableObject>()
@@ -85,32 +84,15 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         private void SelectImage()
         {
-            var fileDialog = new Microsoft.Win32.OpenFileDialog
-            {
-                Filter = "All Picture Files(*.bmp;*.jpg;*.gif;*.ico;*.png;*.wdp;*.tiff)|" +
-                    "*.BMP;*.JPG;*.GIF;*.ICO;*.PNG;*.WDP;*.TIFF|" +
-                    "All files (*.*)|*.*",
-                Multiselect = false,
-                Title = "Select Profile Image",
-                CheckFileExists = true,
-                CheckPathExists = true
-            };
+            var imageFile = _dialogService.ShowOpenFileDialog(
+                "Select Mod Image",
+                DialogService.AllImageFilter,
+                Mod.ImagePath,
+                Mod.ImagePath);
 
-            if (_lastOpenedLocation.Equals(string.Empty))
+            if (File.Exists(imageFile))
             {
-                fileDialog.InitialDirectory = !string.IsNullOrWhiteSpace(Mod.ImagePath)
-                    ? Path.GetDirectoryName(Mod.ImagePath)
-                    : Directory.GetCurrentDirectory();
-            }
-            else
-            {
-                fileDialog.InitialDirectory = _lastOpenedLocation;
-            }
-
-            if (fileDialog.ShowDialog().Equals(true))
-            {
-                _lastOpenedLocation = Path.GetDirectoryName(fileDialog.FileName) ?? string.Empty;
-                Mod.ImagePath = fileDialog.FileName;
+                Mod.ImagePath = imageFile;
             }
         }
 
@@ -130,34 +112,14 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         private void Browse()
         {
-            Mod.FolderPath = GetFolderPath("Select new mod folder", Mod.FolderPath) ?? Mod.FolderPath;
-        }
+            var folderPath = _dialogService.ShowFolderDialog(
+                "Select new Mod folder",
+                Mod.FolderPath,
+                Mod.FolderPath);
 
-        private static string? GetFolderPath(string dialogTitle, string defaultLocation)
-        {
-            var dialog = new FolderBrowserEx.FolderBrowserDialog
+            if(folderPath is not null)
             {
-                Title = dialogTitle,
-                InitialFolder = @"C:\",
-                AllowMultiSelect = false
-            };
-
-            if (string.IsNullOrWhiteSpace(defaultLocation) || !Directory.Exists(defaultLocation))
-            {
-                dialog.InitialFolder = "C:\\";
-            }
-            else
-            {
-                dialog.InitialFolder = defaultLocation;
-            }
-
-            if (dialog.ShowDialog().Equals(DialogResult.OK))
-            {
-                return dialog.SelectedFolder;
-            }
-            else
-            {
-                return null;
+                Mod.FolderPath = folderPath;
             }
         }
 
@@ -165,17 +127,16 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         {
             const string fileExtension = "metismodpkg";
 
-            var fileDialog = new Microsoft.Win32.SaveFileDialog
-            {
-                Filter = $"Profile package Files(*.{fileExtension})|*.{fileExtension}",
-                Title = "Save Package File",
-                AddExtension = true,
-                FileName = $"{Mod.Name}.{fileExtension}"
-            };
+            var saveFilePath = _dialogService.ShowSaveFileDialog(
+                "Save Mod Package to",
+                $"Profile package Files(*.{fileExtension})|*.{fileExtension}",
+                fileExtension,
+                defaultFolder: null,
+                $"{Mod.Name}.{fileExtension}");
 
-            if (fileDialog.ShowDialog().Equals(true))
+            if (saveFilePath is not null)
             {
-                await _packageService.ExportMod(Mod, fileDialog.FileName);
+                await _packageService.ExportMod(Mod, saveFilePath);
             }
         }
 
