@@ -1,9 +1,5 @@
 <h1><img src="images/icon_07.png"  width="32" height="32"/> Metis Mod Launcher</h1>
 
-## Build Status
-
-[![build](https://github.com/HazelnutCheese/ModEngine2ConfigTool/actions/workflows/build-validation.yml/badge.svg)](https://github.com/HazelnutCheese/ModEngine2ConfigTool/actions/workflows/build-validation.yml)
-
 ## Description
 
 Metis Mod Launcher is a tool designed to make using mods in Elden Ring via ModEngine2 a smoother experience.
@@ -16,6 +12,10 @@ Metis Mod Launcher installs ModEngine2 and provides a user interface that allows
 
 ModEngine2 stores mod configurations in .toml files. This tool presents them in an interactive format and allows modification and management via a WPF user interface.
 
+Via file / folder selection you can select Mods and Dlls that are then recorded in an internal database. This database stores a reference to their location on disk and any additional details you give them.
+
+You can then create profiles and select different mods and dlls to add to the profiles and set profiles to use their own save games. This should allow you to swap between different mods without it messing up your saved game.
+
 ## Currently Supported Games
 
 * Elden Ring
@@ -23,6 +23,12 @@ ModEngine2 stores mod configurations in .toml files. This tool presents them in 
 ## What this tool does not do!
 
 * This tool does **not** download mods. To use a mod you must first download it and move it's files into a ME2 suitable arrangement. If the mod comes with a regulation.bin file it should be in the same top level folder as all the other mod files.
+
+# Thanks
+
+This launcher would not be possible without the efforts of [Gary Tierney](https://github.com/garyttierney), [katalash](https://github.com/katalash) and [Dasaav-dsv](https://github.com/Dasaav-dsv) for their work on https://github.com/soulsmods/ModEngine2. Please check out their other work for to see what else they have come up with.
+
+All other libraries that have been used to create this tool such as Material Design in Xaml are licensed in the help page and I recommend people check those out too if they are interested.
 
 # First time setup
 
