@@ -6,6 +6,7 @@ using Microsoft.Win32;
 using ModEngine2ConfigTool.Models;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
+using ModEngine2ConfigTool.ViewModels.Dialogs;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -125,6 +126,24 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         private async Task ExportPackage()
         {
+            var warningDialogVm = new CustomDialogViewModel(
+                "Warning",
+                "You MUST NOT redistribute a Mod without the authors permission. " +
+                "\n\nDo not package someone elses mod and claim it's your own.",
+                fields: null,
+                new System.Collections.Generic.List<DialogButtonViewModel>()
+                {
+                    new DialogButtonViewModel("I understand", true, true),
+                    new DialogButtonViewModel("Cancel", false, false)
+                });
+
+            var agreement = await _dialogService.ShowDialog(warningDialogVm);
+
+            if(agreement is not bool || agreement.Equals(false))
+            {
+                return;
+            }
+
             const string fileExtension = "metismodpkg";
 
             var saveFilePath = _dialogService.ShowSaveFileDialog(

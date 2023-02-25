@@ -191,10 +191,11 @@ namespace ModEngine2ConfigTool.Resx {
         /// <summary>
         ///   Looks up a localized string similar to The Export Package option on a mod page allows you to export your mod with it&apos;s name, description, image and files all as a single &quot;.metismodpkg&quot;. 
         ///
+        ///DO NOT UNDER ANY CIRCUMSTANCES REDISTRIBUTE A MOD WITHOUT THE AUTHORS PERMISSION.
+        ///
         ///When someone imports the package file via the &quot;Add from Package&quot; option the files will automatically be extracted to &quot;%LocalAppData%\Metis Mod Launcher\Imported\Mods&quot; under it&apos;s new profile id and the mod folder path will be updated accordingly. 
         ///
-        ///This feature is designed to help distribute and install mods with less chance of user issues. 
-        ///Currently this  [rest of string was truncated]&quot;;.
+        ///This feature is designed t [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Faq_WhatDoesExportPackageDo {
             get {

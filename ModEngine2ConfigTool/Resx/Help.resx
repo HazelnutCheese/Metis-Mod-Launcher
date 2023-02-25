@@ -211,6 +211,8 @@ For example, "C:\\Downloads\\GreyMoon v1.0\\Grey Moon" is correct. "C:\\Download
   <data name="Faq_WhatDoesExportPackageDo" xml:space="preserve">
     <value>The Export Package option on a mod page allows you to export your mod with it's name, description, image and files all as a single ".metismodpkg". 
 
+DO NOT UNDER ANY CIRCUMSTANCES REDISTRIBUTE A MOD WITHOUT THE AUTHORS PERMISSION.
+
 When someone imports the package file via the "Add from Package" option the files will automatically be extracted to "%LocalAppData%\Metis Mod Launcher\Imported\Mods" under it's new profile id and the mod folder path will be updated accordingly. 
 
 This feature is designed to help distribute and install mods with less chance of user issues. 
