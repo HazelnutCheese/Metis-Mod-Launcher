@@ -92,6 +92,7 @@ namespace ModEngine2ConfigTool
             var configurationService = new ConfigurationService(configPath);
             var databaseService = new DatabaseService(appDataPath);
             var profileService = new ProfileService(appDataPath);
+            var iconService = new IconService(appDataPath);
 
             IDispatcherService dispatcherService;
             if (isSilentMode)
@@ -125,6 +126,7 @@ namespace ModEngine2ConfigTool
             serviceBuilder.RegisterInstance(profileService);
             serviceBuilder.RegisterInstance(saveManagerService);
             serviceBuilder.RegisterInstance(modEngine2Service);
+            serviceBuilder.RegisterInstance(iconService);
 
             var playManagerService = new PlayManagerService(
                 profileService,
@@ -156,9 +158,13 @@ namespace ModEngine2ConfigTool
 
             serviceBuilder.RegisterInstance(dllManagerSerivce);
 
+            var appVersion = typeof(App).Assembly.GetName().Version ?? new Version(0, 0, 0);
+            serviceBuilder.RegisterInstance(appVersion);
+
             serviceBuilder.RegisterInstance(
                 new PackageService(
                     appDataPath,
+                    appVersion,
                     dialogService,
                     databaseService, 
                     modManagerSerivce));

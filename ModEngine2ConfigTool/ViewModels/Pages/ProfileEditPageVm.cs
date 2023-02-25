@@ -24,6 +24,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly SaveManagerService _saveManagerService;
         private readonly PackageService _packageService;
         private readonly DialogService _dialogService;
+        private readonly IconService _iconService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly PlayManagerService _playManagerService;
 
@@ -60,7 +61,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             PlayManagerService playManagerService,
             SaveManagerService saveManagerService,
             PackageService packageService,
-            DialogService dialogService)
+            DialogService dialogService,
+            IconService iconService)
         {
             _profileManagerService = profileManagerService;
             _playManagerService = playManagerService;
@@ -68,6 +70,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             _saveManagerService = saveManagerService;
             _packageService = packageService;
             _dialogService = dialogService;
+            _iconService = iconService;
 
             Profile = profile;
 
@@ -284,84 +287,18 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
                 if (System.IO.File.Exists(Profile.ImagePath))
                 {
-                    var iconPath = Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                        $"Metis Mod Launcher\\Temp\\{Profile.Model.ProfileId}.ico");
+                    var iconFile = _iconService.CreateTempIcon(
+                        Profile.ImagePath,
+                        Profile.Model.ProfileId.ToString());
 
-                    var image = Image.FromFile(Profile.ImagePath);
-                    var icon = IconFromImage(image);
-                    using var filestream = new FileStream(
-                        iconPath,
-                        FileMode.Create);
-                    icon.Save(filestream);
-                    icon.Dispose();
-                    image.Dispose();
-
-                    shortcut.IconLocation = iconPath;
+                    if(iconFile is not null)
+                    {
+                        shortcut.IconLocation = iconFile;
+                    }
                 }
 
                 shortcut.Save();
             }
-        }
-
-        //private void ExportPackage()
-        //{
-        //    const string fileExtension = "metispropkg";
-
-        //    var fileDialog = new SaveFileDialog
-        //    {
-        //        Filter = $"Profile package Files(*.{fileExtension})|*.{fileExtension}",
-        //        Title = "Save Package File",
-        //        AddExtension = true,
-        //        FileName = $"{Profile.Name}.{fileExtension}"
-        //    };
-
-        //    if (fileDialog.ShowDialog().Equals(true))
-        //    {
-        //        _packageService.ExportProfile(Profile, fileDialog.FileName);
-        //    }
-        //}
-
-        private static Icon IconFromImage(Image img)
-        {
-            var ms = new MemoryStream();
-            var bw = new BinaryWriter(ms);
-            // Header
-            bw.Write((short)0);   // 0 : reserved
-            bw.Write((short)1);   // 2 : 1=ico, 2=cur
-            bw.Write((short)1);   // 4 : number of images
-                                  // Image directory
-            var w = img.Width;
-            if (w >= 256)
-            {
-                w = 0;
-            }
-
-            bw.Write((byte)w);    // 0 : width of image
-            var h = img.Height;
-            if (h >= 256)
-            {
-                h = 0;
-            }
-
-            bw.Write((byte)h);    // 1 : height of image
-            bw.Write((byte)0);    // 2 : number of colors in palette
-            bw.Write((byte)0);    // 3 : reserved
-            bw.Write((short)0);   // 4 : number of color planes
-            bw.Write((short)0);   // 6 : bits per pixel
-            var sizeHere = ms.Position;
-            bw.Write((int)0);     // 8 : image size
-            var start = (int)ms.Position + 4;
-            bw.Write(start);      // 12: offset of image data
-                                  // Image data
-            img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-            var imageSize = (int)ms.Position - start;
-            ms.Seek(sizeHere, System.IO.SeekOrigin.Begin);
-            bw.Write(imageSize);
-            ms.Seek(0, System.IO.SeekOrigin.Begin);
-
-            // And load it
-            return new Icon(ms);
         }
     }
 }

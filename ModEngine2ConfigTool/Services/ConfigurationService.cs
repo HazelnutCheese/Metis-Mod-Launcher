@@ -1,5 +1,4 @@
 ﻿using Config.Net;
-using System.IO;
 
 namespace ModEngine2ConfigTool.Services
 {

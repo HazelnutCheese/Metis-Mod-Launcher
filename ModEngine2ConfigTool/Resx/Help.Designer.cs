@@ -61,6 +61,21 @@ namespace ModEngine2ConfigTool.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saves downloaded from another player cannot be used with your own game. You need to use a tool to copy a saves character to your own save.
+        ///
+        ///I recommend using EldenRingSaveCopier:
+        ///
+        ///https://github.com/BenGrn/EldenRingSaveCopier
+        ///
+        ///If you want to use this along with a seperate save per profile I recommend starting your game first with the option enabled, creating a character and then exiting the game. You can then use the &quot;Go to Saves&quot; option to find that profiles save..
+        /// </summary>
+        internal static string Faq_CorruptDownloadedSave {
+            get {
+                return ResourceManager.GetString("Faq_CorruptDownloadedSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Metis Mod Launcher does not currently support monitoring whether mods conflict.
         ///
         ///This is a feature I&apos;m hoping to add in a future release..

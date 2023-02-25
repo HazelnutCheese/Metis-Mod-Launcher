@@ -8,7 +8,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Tommy;
 
 namespace ModEngine2ConfigTool.Services
@@ -17,12 +16,14 @@ namespace ModEngine2ConfigTool.Services
     {
         private readonly string _importedMods;
         private readonly string _importedImages;
+        private readonly Version _version;
         private readonly DialogService _dialogService;
         private readonly IDatabaseService _databaseService;
         private readonly ModManagerService _modManagerService;
 
         public PackageService(
             string dataStorage,
+            Version version,
             DialogService dialogService,
             IDatabaseService databaseService,
             ModManagerService modManagerService)
@@ -45,6 +46,7 @@ namespace ModEngine2ConfigTool.Services
                 Directory.CreateDirectory(_importedImages);
             }
 
+            _version = version;
             _dialogService = dialogService;
             _databaseService = databaseService;
             //_profileManagerService = profileManagerService;
@@ -519,7 +521,7 @@ namespace ModEngine2ConfigTool.Services
         //    return profile;
         //}
 
-        private static Mod ReadModPackageDetailsFile(string filePath)
+        private Mod ReadModPackageDetailsFile(string filePath)
         {
             var mod = new Mod()
             {
@@ -532,10 +534,11 @@ namespace ModEngine2ConfigTool.Services
             TomlTable table = TOML.Parse(reader);
 
             var version = table["Package"]["version"].AsString;
-            if (!version.Value.Equals("1.0.0"))
+            if (!Version.TryParse(version, out var versionNum) ||
+                versionNum.CompareTo(_version) > 0)
             {
                 throw new InvalidOperationException(
-                    $"This package requires a newer version of Metis. " +
+                    $"This package requires a newer version ({version}) of Metis Mod Launcher. " +
                     $"Please install the latest release and try again.");
             }
 
@@ -626,7 +629,7 @@ namespace ModEngine2ConfigTool.Services
         //    writer.Flush();
         //}
 
-        private static void CreateModPackageDetailsFile(ModVm mod, string filePath)
+        private void CreateModPackageDetailsFile(ModVm mod, string filePath)
         {
             using TextWriter writer = File.CreateText(filePath);
 
@@ -634,7 +637,7 @@ namespace ModEngine2ConfigTool.Services
             {
                 ["Package"] =
                 {
-                    ["version"] = "1.0.0",
+                    ["version"] = _version.ToString(),
                     ["fileType"] = "mod"
                 },
                 ["Mod"] =

@@ -46,12 +46,12 @@
                 <TextBlock HorizontalAlignment="Left"
                            Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                            Text="Help" />
-                <Image Width="48"
-                       Height="48"
-                       Margin="0,-20,10,0"
+                <Image Width="36"
+                       Height="36"
+                       Margin="0,-20,15,0"
                        HorizontalAlignment="Right"
                        RenderOptions.BitmapScalingMode="HighQuality"
-                       Source="/Metis Mod Launcher;component/Resources/Icon_04.png" />
+                       Source="/Metis Mod Launcher;component/Resources/Icon_07.png" />
             </Grid>
 
             <Expander Grid.Row="4"

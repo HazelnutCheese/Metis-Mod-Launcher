@@ -5,11 +5,11 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
     <FileAssemblyVersion>0.0.1</FileAssemblyVersion>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
-    <ApplicationIcon>Resources\icon_04.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\icon_07.ico</ApplicationIcon>
     <StartupObject>ModEngine2ConfigTool.EntryPoint</StartupObject>
     <AssemblyName>Metis Mod Launcher</AssemblyName>
     <DebugType>Embedded</DebugType>
@@ -22,6 +22,14 @@
 
   <ItemGroup>
     <None Remove="Resources\icon_04.png" />
+    <None Remove="Resources\icon_06.png" />
+    <None Remove="Resources\icon_07.png" />
+    <None Remove="Resources\icon_5.ico" />
+    <None Remove="Resources\icon_5.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\icon_06.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,7 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Resources\icon_04.ico" />
+    <Content Include="Resources\icon_07.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -69,6 +77,8 @@
 
   <ItemGroup>
     <Resource Include="Resources\icon_04.png" />
+    <Resource Include="Resources\icon_07.png" />
+    <Resource Include="Resources\icon_5.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -125,6 +135,9 @@
     </None>
     <None Update="Resources\Green.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\icon_06.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Resources\ModDefaultImage.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -124,6 +124,15 @@ You must edit this file adding your password e.g. "cooppassword = myNewPassword"
 
 Metis does not support using a different seamless coop settings file for each profile so all profiles will use the same password.</value>
   </data>
+  <data name="Faq_CorruptDownloadedSave" xml:space="preserve">
+    <value>Saves downloaded from another player cannot be used with your own game. You need to use a tool to copy a saves character to your own save.
+
+I recommend using EldenRingSaveCopier:
+
+https://github.com/BenGrn/EldenRingSaveCopier
+
+If you want to use this along with a seperate save per profile I recommend starting your game first with the option enabled, creating a character and then exiting the game. You can then use the "Go to Saves" option to find that profiles save.</value>
+  </data>
   <data name="Faq_HowCanITellIfModsConflict" xml:space="preserve">
     <value>Metis Mod Launcher does not currently support monitoring whether mods conflict.
 

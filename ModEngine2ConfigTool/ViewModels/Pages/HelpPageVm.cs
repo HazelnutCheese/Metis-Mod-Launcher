@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ModEngine2ConfigTool.Resx;
 using ModEngine2ConfigTool.ViewModels.Controls;
+using System;
 using System.Collections.ObjectModel;
 
 namespace ModEngine2ConfigTool.ViewModels.Pages
@@ -20,16 +21,13 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public ObservableCollection<QuestionVm> FrequentlyAskedQuestions { get; }
 
-        public HelpPageVm()
+        public HelpPageVm(Version version)
         {
             AppName = "Metis Mod Launcher";
 
             try
             {
-                Version = typeof(App).Assembly
-                    .GetName()
-                    .Version?
-                    .ToString() ?? "No Version";
+                Version = version.ToString();
             }
             catch
             {
@@ -69,6 +67,9 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 new QuestionVm(
                     "How do I import saves from vanilla or another profile?",
                     Help.Faq_ImportSaves),
+                new QuestionVm(
+                    "I downloaded and imported a save but it's corrupt?",
+                    Help.Faq_CorruptDownloadedSave),
                 new QuestionVm(
                     "Where are saves automatically backed up to?",
                     Help.Faq_WhereAreSavedBackedUp),

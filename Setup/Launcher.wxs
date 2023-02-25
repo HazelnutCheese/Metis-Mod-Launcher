@@ -46,6 +46,9 @@
             <Component Id="cmp3936087B41B02BD8883C37FF5274418A" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
                 <File Id="filD63DD71C65F416243268C5000BDEBA6D" KeyPath="yes" Source="SourceDir\Resources\Blue.png" />
             </Component>
+            <Component Id="cmp25B73202B5537AFA84AEE97667C5CA8A" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="fil42081F8E3067EEBF8529CB1FCD2BAA8A" KeyPath="yes" Source="SourceDir\Resources\EldenRing.png" />
+            </Component>
             <Component Id="cmp3B296D7460B680B54695FF3E1E6B6E54" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
                 <File Id="filD4C68543E699488B19C244183064B14C" KeyPath="yes" Source="SourceDir\Resources\EldenRing256.png" />
             </Component>
