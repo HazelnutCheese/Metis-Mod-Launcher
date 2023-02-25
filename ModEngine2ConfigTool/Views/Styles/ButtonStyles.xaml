@@ -1,0 +1,411 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:attached="clr-namespace:ModEngine2ConfigTool.Views.Attached"
+                    xmlns:controls="clr-namespace:ModEngine2ConfigTool.Views.Controls"
+                    xmlns:converter="clr-namespace:ModEngine2ConfigTool.Views.Converter"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:views="clr-namespace:ModEngine2ConfigTool.Views">
+    <Style x:Key="ProfileButtonStyle" TargetType="{x:Type Button}">
+        <Style.Resources>
+            <converter:EmptyImagePathConverter x:Key="EmptyImagePathConverter" />
+        </Style.Resources>
+        <Setter Property="Height" Value="280" />
+        <Setter Property="Width" Value="180" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="FrameworkElement.Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <materialDesign:Card x:Name="Grid"
+                                         materialDesign:ElevationAssist.Elevation="Dp4"
+                                         materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left">
+                        <Border BorderBrush="{DynamicResource PrimaryHueLightBrush}" BorderThickness="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="140" />
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="15" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="15" />
+                                </Grid.ColumnDefinitions>
+
+                                <materialDesign:Card Grid.Row="1"
+                                                     Grid.Column="1"
+                                                     Width="128"
+                                                     Height="128"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                     materialDesign:ElevationAssist.Elevation="Dp4"
+                                                     materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left">
+                                    <Image HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                           Source="{Binding Profile.ImagePath, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='EldenRing'}"
+                                           Stretch="UniformToFill" />
+                                </materialDesign:Card>
+
+                                <Grid Grid.Row="3" Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock VerticalAlignment="Center"
+                                               FontSize="16"
+                                               FontWeight="Medium"
+                                               Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                                               Text="{Binding Name}"
+                                               TextTrimming="CharacterEllipsis" />
+
+                                    <materialDesign:PopupBox Grid.Column="2"
+                                                             VerticalAlignment="Center"
+                                                             Background="Gray"
+                                                             Content="1"
+                                                             Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                                        <StackPanel>
+                                            <!--<Button attached:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True" Content="Add mod">
+                                            <Button.ContextMenu>
+                                                <ContextMenu ItemsSource="{Binding MenuItems}">
+                                                    <ContextMenu.ItemContainerStyle>
+                                                        <Style TargetType="MenuItem">
+                                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                                            <Setter Property="Header" Value="{Binding Header}" />
+                                                            <Setter Property="Command" Value="{Binding Command}" />
+                                                        </Style>
+                                                    </ContextMenu.ItemContainerStyle>
+                                                </ContextMenu>
+                                            </Button.ContextMenu>
+                                        </Button>
+                                        <Separator />-->
+                                            <Button Command="{Binding PlayCommand}" Content="Play" />
+                                            <Button Command="{Binding EditCommand}" Content="Edit" />
+                                            <Button Command="{Binding CopyCommand}" Content="Duplicate" />
+                                            <Button Command="{Binding DeleteCommand}" Content="Delete" />
+                                        </StackPanel>
+                                    </materialDesign:PopupBox>
+                                </Grid>
+
+                                <TextBlock Grid.Row="5"
+                                           Grid.Column="1"
+                                           FontSize="14"
+                                           FontWeight="Medium"
+                                           Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                                           Text="{Binding Description}"
+                                           TextTrimming="CharacterEllipsis"
+                                           TextWrapping="Wrap" />
+
+
+                                <Button x:Name="PlayIcon"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Width="90"
+                                        Height="90"
+                                        Margin="0"
+                                        Padding="0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        materialDesign:ElevationAssist.Elevation="Dp4"
+                                        materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left"
+                                        Background="{DynamicResource PrimaryHueLightBrush}"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0"
+                                        Command="{Binding PlayCommand}"
+                                        Opacity="0.8">
+                                    <Grid>
+                                        <materialDesign:PackIcon Width="90"
+                                                                 Height="90"
+                                                                 Foreground="{DynamicResource SecondaryHueMidBrush}"
+                                                                 Kind="Play" />
+                                    </Grid>
+                                </Button>
+                            </Grid>
+                        </Border>
+                    </materialDesign:Card>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter TargetName="Grid" Property="Background" Value="{DynamicResource PrimaryHueLightBrush}" />
+                            <Setter TargetName="PlayIcon" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger SourceName="PlayIcon" Property="UIElement.IsMouseOver" Value="true">
+                            <Setter TargetName="PlayIcon" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="UIElement.IsMouseOver" Value="false">
+                            <Setter TargetName="Grid" Property="Background" Value="{DynamicResource SecondaryHueLightBrush}" />
+                            <Setter TargetName="PlayIcon" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SelectableRadioButtonStyle"
+           BasedOn="{StaticResource MaterialDesignRadioButton}"
+           TargetType="{x:Type RadioButton}">
+        <Setter Property="Background" Value="#808080" />
+        <Style.Triggers>
+            <Trigger Property="UIElement.IsMouseOver" Value="true">
+                <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="true">
+                <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
+                <Setter Property="Background" Value="{DynamicResource SecondaryHueMidBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SelectableArrowRadioButtonStyle"
+           BasedOn="{StaticResource MaterialDesignTabRadioButtonRight}"
+           TargetType="{x:Type RadioButton}">
+        <Style.Triggers>
+            <Trigger Property="UIElement.IsMouseOver" Value="true">
+                <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="true">
+                <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
+                <!--<Setter Property="Background" Value="{DynamicResource SecondaryHueMidBrush}" />-->
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ContentRadioButtonStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="FrameworkElement.Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid>
+                        <Rectangle Fill="Transparent" />
+                        <materialDesign:PackIcon x:Name="ContentElement"
+                                                 Width="22"
+                                                 Height="22"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                                                 Kind="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" />
+                    </Grid>
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="Click">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter TargetName="ContentElement" Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="ContentElement" Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
+                        </Trigger>
+                        <EventTrigger RoutedEvent="ButtonBase.Click">
+                            <BeginStoryboard Storyboard="{StaticResource Click}" />
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SideBarLinkButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FrameworkElement.Cursor" Value="Hand" />
+        <Setter Property="FrameworkElement.FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="10,5" />
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                    <ContentControl Content="{TemplateBinding Content}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SortButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FrameworkElement.Cursor" Value="Hand" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="5,5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                    <ContentControl Background="Transparent" Content="{TemplateBinding Content}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PictureSelectButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FrameworkElement.Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <ContentControl x:Name="Content"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        Content="{TemplateBinding Content}" />
+                        <Rectangle x:Name="PlusBack"
+                                   Fill="Transparent"
+                                   Opacity="0.90" />
+                        <materialDesign:PackIcon x:Name="Plus"
+                                                 Width="90"
+                                                 Height="90"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"
+                                                 Kind="Plus" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter TargetName="Plus" Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
+                            <Setter TargetName="PlusBack" Property="Fill" Value="{DynamicResource PrimaryHueLightBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LargeButtonStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SecondaryHueLightBrush}" />
+        <Setter Property="Height" Value="90" />
+        <Setter Property="Width" Value="90" />
+        <Setter Property="FrameworkElement.Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <materialDesign:Card x:Name="Card"
+                                             Width="90"
+                                             Height="90"
+                                             materialDesign:ElevationAssist.Elevation="Dp4"
+                                             materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left"
+                                             Background="{DynamicResource SecondaryHueLightBrush}"
+                                             Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                            <Border BorderBrush="{DynamicResource PrimaryHueLightBrush}" BorderThickness="1">
+                                <ContentControl Width="80"
+                                                Height="80"
+                                                Padding="5"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch"
+                                                Content="{TemplateBinding Content}" />
+                            </Border>
+
+                        </materialDesign:Card>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter TargetName="Card" Property="Background" Value="{DynamicResource PrimaryHueLightBrush}" />
+                            <Setter TargetName="Card" Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
+                        </Trigger>
+                        <Trigger Property="UIElement.IsMouseOver" Value="false">
+                            <Setter TargetName="Card" Property="Background" Value="{DynamicResource SecondaryHueLightBrush}" />
+                            <Setter TargetName="Card" Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="Card" Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AddModDllStyle" TargetType="{x:Type Button}">
+        <Setter Property="Height" Value="50" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="FrameworkElement.Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <materialDesign:Card x:Name="Grid"
+                                         Margin="0,0,10,0"
+                                         materialDesign:ElevationAssist.Elevation="Dp4"
+                                         materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left">
+                        <Border BorderBrush="{DynamicResource PrimaryHueLightBrush}" BorderThickness="2">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="54" />
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+
+
+
+                                <materialDesign:PackIcon x:Name="Plus"
+                                                         Grid.Column="0"
+                                                         Width="32"
+                                                         Height="32"
+                                                         Margin="10,0"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"
+                                                         Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                                                         Kind="Plus" />
+
+                                <TextBlock Grid.Column="2"
+                                           Margin="0,0,10,0"
+                                           VerticalAlignment="Center"
+                                           FontSize="16"
+                                           FontWeight="Medium"
+                                           Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                                           Text="{TemplateBinding Content}"
+                                           TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </Border>
+                    </materialDesign:Card>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.8" />
+                        </Trigger>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter TargetName="Plus" Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
+                        </Trigger>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter TargetName="Grid" Property="Background" Value="{DynamicResource PrimaryHueLightBrush}" />
+                        </Trigger>
+                        <Trigger Property="UIElement.IsMouseOver" Value="false">
+                            <Setter TargetName="Grid" Property="Background" Value="{DynamicResource SecondaryHueLightBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -6,9 +6,14 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.RadioButton.xaml" />
+                <ResourceDictionary Source="Views\Styles\TextBlockStyles.xaml" />
+                <ResourceDictionary Source="Views\Styles\ButtonStyles.xaml" />
+                <ResourceDictionary Source="Views\Styles\ComboBoxStyles.xaml" />
                 <materialDesign:BundledTheme BaseTheme="Dark"
                                              PrimaryColor="Orange"
                                              SecondaryColor="Orange" />
+                <ResourceDictionary Source="Views\Styles\MetisUiConstants.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

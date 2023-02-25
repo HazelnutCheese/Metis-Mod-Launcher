@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="ModEngine2ConfigTool.Views.Dialogs.ProgressDialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:ModEngine2ConfigTool.Views.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:fields="clr-namespace:ModEngine2ConfigTool.Views.Controls.Fields"
+             xmlns:local="clr-namespace:ModEngine2ConfigTool.Views.Dialogs"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:validationrules="clr-namespace:ModEngine2ConfigTool.Views.ValidationRules"
+             xmlns:viewModels="clr-namespace:ModEngine2ConfigTool.ViewModels.Dialogs"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             MaxWidth="800"
+             d:DataContext="{d:DesignInstance viewModels:CustomDialogViewModel,
+                                              IsDesignTimeCreatable=False}"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             Background="#202020"
+             mc:Ignorable="d">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Margin="5,10" Text="{Binding Header}" />
+        <TextBlock Grid.Row="1"
+                   Margin="10,10"
+                   Text="{Binding Message}"
+                   TextWrapping="Wrap" />
+        <!--<TextBox x:Name="FieldEntry"
+                 Grid.Row="2"
+                 Margin="5"
+                 FontSize="18"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+            <TextBox.Text>
+                <Binding Path="FieldValue" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationrules:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>-->
+
+        <fields:FieldsView Grid.Row="2"
+                           Margin="10,10"
+                           Fields="{Binding Fields.Fields}" />
+
+        <ProgressBar Grid.Row="2"
+                     Margin="10,10"
+                     Background="#303030"
+                     BorderBrush="#303030"
+                     Foreground="#ffc969"
+                     IsIndeterminate="True" />
+
+        <ItemsControl Grid.Row="3"
+                      Margin="10,25,10,10"
+                      ItemsSource="{Binding Buttons}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button HorizontalAlignment="Center"
+                            Command="{Binding Command}"
+                            Foreground="#d1d1d1"
+                            IsDefault="{Binding IsDefault}">
+                        <Button.Content>
+                            <Grid MinWidth="50" Background="Transparent">
+                                <TextBlock HorizontalAlignment="Center"
+                                           FontWeight="SemiBold"
+                                           Text="{Binding Label}" />
+                            </Grid>
+                        </Button.Content>
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Foreground" Value="#d1d1d1" />
+                                <Setter Property="BorderBrush" Value="Transparent" />
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="FrameworkElement.Cursor" Value="Hand" />
+                                <Setter Property="Height" Value="30" />
+                                <Setter Property="Margin" Value="5,5" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ButtonBase}">
+                                            <materialDesign:Card x:Name="Card"
+                                                                 Background="Transparent"
+                                                                 Foreground="#d1d1d1">
+                                                <ContentControl Padding="5"
+                                                                HorizontalAlignment="Stretch"
+                                                                VerticalAlignment="Stretch"
+                                                                Content="{TemplateBinding Content}" />
+                                            </materialDesign:Card>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="UIElement.IsMouseOver" Value="true">
+                                                    <Setter TargetName="Card" Property="Foreground" Value="#ffc969" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

@@ -8,10 +8,11 @@ namespace ModEngine2ConfigTool
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(INotifyPropertyChanged mainViewModel)
+        public MainWindow()
         {
             InitializeComponent();
-            DataContext = mainViewModel;
+            MaxHeight = SystemParameters.VirtualScreenHeight - 32;
+            MaxWidth = SystemParameters.VirtualScreenWidth + 10;
         }
     }
 }

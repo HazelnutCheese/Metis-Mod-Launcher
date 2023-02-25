@@ -1,13 +1,8 @@
-﻿using ModEngine2ConfigTool.Services;
+﻿using Autofac;
+using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels;
 using Sherlog;
-using Sherlog.Appenders;
-using Sherlog.Formatters;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -18,99 +13,61 @@ namespace ModEngine2ConfigTool
     /// </summary>
     public partial class App : Application
     {
-        public static Logger Logger { get; private set; }
-
-        public static string DataStorage { get; }
-
-        public static ConfigurationService ConfigurationService { get; }
-
+        public const string AppName = "Metis Mod Launcher";
         public const string DialogHostId = "MainWindowDialogHost";
 
-        static App()
-        {
-            if(Debugger.IsAttached)
-            {
-                DataStorage = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "ModEngine2ConfigTool");
-            }
-            else
-            {
-                DataStorage = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "ModEngine2ConfigTool");
-            }
+        private readonly IContainer _serviceContainer;
 
-            ConfigureLogging();
-            Logger = Logger.GetLogger(nameof(App));
-            ConfigurationService = new ConfigurationService();
+        public App(IContainer serviceContainer)
+        {
+            _serviceContainer = serviceContainer;
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            ConfigureLogging();
-
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Current.DispatcherUnhandledException += Dispatcher_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
-            // Initialise Services
-            ProfileService.Initialise();
+            var mainWindow = new MainWindow();
+            var mainViewModel = new MainWindowVm(
+                mainWindow,
+                _serviceContainer);
 
-            var mainViewModel = new MainWindowViewModel();
-            var mainWindow = new MainWindow(mainViewModel);
+            mainWindow.DataContext = mainViewModel;
 
             mainWindow.Show();
         }
 
         private void TaskScheduler_UnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
         {
-            MessageBox.Show(e.Exception.Message);
-            Logger.Error(e.Exception.ToString());
+            if(e.Exception?.InnerException is not null)
+            {
+                MessageBox.Show(e.Exception.InnerException?.Message);
+            }
+            else
+            {
+                MessageBox.Show(e.Exception?.Message);
+            }
+
+            Log.Instance.Error(e.Exception?.ToString());
+
             e.SetObserved();
         }
 
         private void Dispatcher_UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             MessageBox.Show(e.Exception.Message);
-            Logger.Error(e.Exception.ToString());
+            Log.Instance.Error(e.Exception.ToString());
             e.Handled = true;
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             MessageBox.Show(e.ExceptionObject.ToString());
-            Logger.Error(e.ExceptionObject.ToString());
-        }
-
-        private static void ConfigureLogging()
-        {
-            var messageFormatter = new LogMessageFormatter();
-            var timestampFormatter = new TimestampFormatter(
-                () => DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
-
-            var consoleAppender = new ConsoleAppender(new Dictionary<LogLevel, ConsoleColor>
-            {
-                {LogLevel.Trace, ConsoleColor.Cyan},
-                {LogLevel.Debug, ConsoleColor.Blue},
-                {LogLevel.Info, ConsoleColor.White},
-                {LogLevel.Warn, ConsoleColor.Yellow},
-                {LogLevel.Error, ConsoleColor.Red},
-                {LogLevel.Fatal, ConsoleColor.Magenta},
-            });
-
-            var logFileName = DateTime.Now.ToString("yyyy-M-dd_ModEngine2Config.log");
-            var fileAppender = new FileWriterAppender(logFileName);
-
-            Logger.AddAppender((logger, level, message) =>
-            {
-                message = messageFormatter.FormatMessage(logger, level, message);
-                message = timestampFormatter.FormatMessage(logger, level, message);
-                consoleAppender.WriteLine(logger, level, message);
-                fileAppender.WriteLine(logger, level, message);
-            });
+            Log.Instance.Error(e.ExceptionObject.ToString());
         }
     }
 }

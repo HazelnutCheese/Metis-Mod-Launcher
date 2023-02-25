@@ -3,60 +3,32 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ModEngine2ConfigTool.Services
 {
-    public static class ModEngine2Service
+    public class ModEngine2Service
     {
-        public static Process LaunchWithProfile(string profileName)
-        {
-            var profilePath = ProfileService.GetProfilePath(profileName);
-            if (!File.Exists(profilePath))
-            {
-                throw new FileNotFoundException($"Could not find profile at \"{profilePath}\"");
-            }
+        private readonly string _modEngine2Folder;
 
+        public ModEngine2Service(string modEngine2Folder)
+        {
+            _modEngine2Folder = modEngine2Folder;
+        }
+
+        public Process LaunchWithProfile(string tomlPath)
+        {
             var arguments = new List<string>()
             {
                 "-t er",
-                $"-c {profilePath}"
+                $"-c \"{tomlPath}\""
             };
 
             return Launch(arguments);
         }
 
-        public static void LaunchWithoutMods()
-        {
-            if (!IsSteamRunning())
-            {
-                throw new InvalidOperationException(
-                    "You must be logged into Steam to launch Elden Ring");
-            }
-
-            var eldenRingGameFolder = App.ConfigurationService.EldenRingGameFolder;
-            var eldenRingGameExe = $"{eldenRingGameFolder}\\eldenring.exe";
-
-            if (!File.Exists(eldenRingGameExe))
-            {
-                throw new InvalidOperationException(
-                    $"Could not find EldenRing (eldenring.exe) in \"{eldenRingGameFolder}\".");
-            }
-
-            var processStartInfo = new ProcessStartInfo()
-            {
-                FileName = eldenRingGameExe,
-                WorkingDirectory = eldenRingGameFolder
-            };
-
-            using var process = Process.Start(processStartInfo);
-            if (process is null)
-            {
-                throw new InvalidOperationException("Failed to start Elden Ring");
-            }
-        }
-
-        public static async Task WaitForEldenRingExit()
+        public async Task WaitForEldenRingExit(CancellationToken cancellationToken)
         {
             using var eldenRingProcess = GetProcessByName("eldenring");
 
@@ -66,10 +38,17 @@ namespace ModEngine2ConfigTool.Services
                     "Could not find Elden Ring Process.");
             }
 
-            await eldenRingProcess.WaitForExitAsync();
+            try
+            {
+                await eldenRingProcess.WaitForExitAsync(cancellationToken);
+            }
+            catch(TaskCanceledException)
+            {
+                eldenRingProcess.Kill();
+            }
         }
 
-        private static Process Launch(List<string> arguments) 
+        private Process Launch(List<string> arguments) 
         {
             if(!IsSteamRunning())
             {
@@ -77,19 +56,18 @@ namespace ModEngine2ConfigTool.Services
                     "You must be logged into Steam to launch Elden Ring");
             }
 
-            var modEngineFolder = App.ConfigurationService.ModEngine2Folder;
-            var modEngineExe = $"{modEngineFolder}\\modengine2_launcher.exe";
+            var modEngineExe = $"{_modEngine2Folder}\\modengine2_launcher.exe";
             if (!File.Exists(modEngineExe))
             {
                 throw new InvalidOperationException(
-                    $"Could not find ModEngine2 (modengine2_launcher.exe) in \"{modEngineFolder}\".");
+                    $"Could not find ModEngine2 (modengine2_launcher.exe) in \"{_modEngine2Folder}\".");
             }
 
             var processStartInfo = new ProcessStartInfo()
             {
                 FileName = modEngineExe,
                 Arguments = string.Join(" ", arguments),
-                WorkingDirectory = modEngineFolder
+                WorkingDirectory = _modEngine2Folder
             };
 
             var process = Process.Start(processStartInfo);
@@ -101,14 +79,14 @@ namespace ModEngine2ConfigTool.Services
             return process;
         }
 
-        private static bool IsSteamRunning()
+        private bool IsSteamRunning()
         {
             using var steamProcesses = GetProcessByName("steam");
 
             return steamProcesses is not null;
         }
 
-        private static Process? GetProcessByName(string name)
+        public Process? GetProcessByName(string name)
         {
             var processes = Process.GetProcessesByName(name);
             var result = processes.FirstOrDefault();

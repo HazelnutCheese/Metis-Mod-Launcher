@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER">
+            <Directory Id="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Name="win-x86" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="LauncherComponents">
+            <Component Id="cmp259D21E1F4BD0FB594FB1DBCE3CCCED6" Directory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Guid="*">
+                <File Id="filBBD3964B51805F6A75D68310D6764CF1" KeyPath="yes" Source="SourceDir\appSettings.json" />
+            </Component>
+            <Component Id="cmp6E99DB855A167B727F08899161CDE0D8" Directory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Guid="*">
+                <File Id="fil99ED77AF58BE4138B209637B5A2C2976" KeyPath="yes" Source="SourceDir\D3DCompiler_47_cor3.dll" />
+            </Component>
+            <Component Id="cmp2A0E34EA467D439F1AD2BFD1148F0085" Directory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Guid="*">
+                <File Id="fil3480DBE5C6ABC8B7988112B00B3ACB46" KeyPath="yes" Source="SourceDir\e_sqlite3.dll" />
+            </Component>
+            <Component Id="cmpA10CDC912E56B71BAB8EA14B95962D5A" Directory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Guid="*">
+                <File Id="filD4DAAA696BC0E684E26F3405DCF658E1" KeyPath="yes" Source="SourceDir\Metis Mod Launcher.exe" />
+            </Component>
+            <Component Id="cmp06600451F27524A113F7C50301EA7FF4" Directory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Guid="*">
+                <File Id="fil20C7E64525337FFEAC2DB4BFC320CA37" KeyPath="yes" Source="SourceDir\PenImc_cor3.dll" />
+            </Component>
+            <Component Id="cmp9FB4DDDE2651644931EC0192F3525DA8" Directory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Guid="*">
+                <File Id="fil5E2138E88ACE86CC62877A720C27613F" KeyPath="yes" Source="SourceDir\PresentationNative_cor3.dll" />
+            </Component>
+            <Component Id="cmp8E2E61EA2E5F4A87C53542A1E9A68182" Directory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Guid="*">
+                <File Id="fil85C86DD5FAB0310ACC7F458AB36A8A3C" KeyPath="yes" Source="SourceDir\vcruntime140_cor3.dll" />
+            </Component>
+            <Component Id="cmp23365ADFBE558E4DEE123923F28EAE49" Directory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Guid="*">
+                <File Id="fil451E6562B9867DDE8BEE7934F8CBAC50" KeyPath="yes" Source="SourceDir\wpfgfx_cor3.dll" />
+            </Component>
+            <Component Id="cmp3680F628E6E27C3ABF4F76A68411F587" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="fil5310BB0CD15EBAAED370C461FC87EBC1" KeyPath="yes" Source="SourceDir\Resources\Background_01.png" />
+            </Component>
+            <Component Id="cmpC4F02AD8C4934EEBDD4C8570DF35A763" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="filE93D1498016B8F8F7B40E9D08BF283B6" KeyPath="yes" Source="SourceDir\Resources\Background_02.png" />
+            </Component>
+            <Component Id="cmp564C38FF80E03DE53CB56966875E1EE0" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="filCF27FD6AE343BD8F36C12D838CDB62BC" KeyPath="yes" Source="SourceDir\Resources\Background_03.png" />
+            </Component>
+            <Component Id="cmpCD278F7D947A024907330C8F824D78A1" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="filE8F175F1A39310E58BBB451939C79F1B" KeyPath="yes" Source="SourceDir\Resources\Background_04.png" />
+            </Component>
+            <Component Id="cmp3936087B41B02BD8883C37FF5274418A" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="filD63DD71C65F416243268C5000BDEBA6D" KeyPath="yes" Source="SourceDir\Resources\Blue.png" />
+            </Component>
+            <Component Id="cmp25B73202B5537AFA84AEE97667C5CA8A" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="fil42081F8E3067EEBF8529CB1FCD2BAA8A" KeyPath="yes" Source="SourceDir\Resources\EldenRing.png" />
+            </Component>
+            <Component Id="cmp3B296D7460B680B54695FF3E1E6B6E54" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="filD4C68543E699488B19C244183064B14C" KeyPath="yes" Source="SourceDir\Resources\EldenRing256.png" />
+            </Component>
+            <Component Id="cmpD59AB67DD8F0EEFC881F3593C2B3A080" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="filA14BEF7D38C045D511EEAD7BEF51B44A" KeyPath="yes" Source="SourceDir\Resources\Green.png" />
+            </Component>
+            <Component Id="cmp3A691F3F2251FAD8DC8D5C3A91D21A3B" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="fil88A806613F5CEB4CB4C4745A0D31C32B" KeyPath="yes" Source="SourceDir\Resources\Orange.png" />
+            </Component>
+            <Component Id="cmpB677C6878E7A4B8B243615ED13C6CBFB" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="filC57A469050FAAAA227A7F3DBC5B1E028" KeyPath="yes" Source="SourceDir\Resources\Purple.png" />
+            </Component>
+            <Component Id="cmpF9D034D8C3280C7431E9261FB6A91AEF" Directory="dir200E980045D89165D854821C6B2F3405" Guid="*">
+                <File Id="fil6AC78BA013DC815E4D75607D3CC9708A" KeyPath="yes" Source="SourceDir\Resources\Red.png" />
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirF1B51B0F0204B6EC0C0F76B6642CAA4A">
+            <Directory Id="dir200E980045D89165D854821C6B2F3405" Name="Resources" />
+        </DirectoryRef>
+    </Fragment>
+</Wix>
