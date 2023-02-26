@@ -192,6 +192,7 @@ namespace ModEngine2ConfigTool.Services
                 catch (InvalidOperationException e)
                 {
                     MessageBox.Show(e.Message);
+                    Log.Instance.Error(e.Message);
                 }
 
                 //// pop current profile saves
@@ -206,8 +207,7 @@ namespace ModEngine2ConfigTool.Services
             catch(Exception e)
             {
                 MessageBox.Show(e.Message);
-                var logger = Logger.GetLogger(nameof(App));
-                logger.Error(e.Message);
+                Log.Instance.Error(e.Message);
             }
         }
 
