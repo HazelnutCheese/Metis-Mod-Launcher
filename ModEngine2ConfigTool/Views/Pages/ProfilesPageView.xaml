@@ -18,11 +18,14 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:EmptyImagePathConverter x:Key="EmptyImagePathConverter" />
+    </UserControl.Resources>
     <Grid>
         <Image x:Name="BackImage"
                VerticalAlignment="Top"
                RenderOptions.BitmapScalingMode="HighQuality"
-               Source="{Binding BackgroundImage}"
+               Source="{Binding BackgroundImage, Converter={StaticResource EmptyImagePathConverter}, ConverterParameter='EldenRing'}"
                Stretch="UniformToFill">
             <Image.OpacityMask>
                 <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
