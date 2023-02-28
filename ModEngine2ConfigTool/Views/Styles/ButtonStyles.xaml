@@ -236,6 +236,9 @@
                         <Trigger Property="UIElement.IsMouseOver" Value="true">
                             <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                     <ContentControl Content="{TemplateBinding Content}" />
                 </ControlTemplate>

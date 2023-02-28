@@ -10,11 +10,17 @@ namespace ModEngine2ConfigTool.Services
 {
     public class ModEngine2Service
     {
-        private readonly string _modEngine2Folder;
+        private readonly ConfigurationService _configurationService;
+        private readonly string _modEngine2DefaultPath;
 
-        public ModEngine2Service(string modEngine2Folder)
+        public ModEngine2Service(ConfigurationService configurationService)
         {
-            _modEngine2Folder = modEngine2Folder;
+            _configurationService = configurationService;
+
+            _modEngine2DefaultPath = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "..\\ModEngine2\\ModEngine-2.0.0-preview4-win64",
+                "modengine2_launcher.exe");
         }
 
         public Process LaunchWithProfile(string tomlPath)
@@ -25,27 +31,32 @@ namespace ModEngine2ConfigTool.Services
                 $"-c \"{tomlPath}\""
             };
 
+            if(_configurationService.AutoDetectEldenRing is false)
+            {
+                arguments.Add($"-p \"{_configurationService.EldenRingExePath}\"");
+            }
+
             return Launch(arguments);
         }
 
-        public async Task WaitForEldenRingExit(CancellationToken cancellationToken)
+        public async Task<Process> PollForEldenRingProcess(int timeoutMs, CancellationToken cancellationToken)
         {
-            using var eldenRingProcess = GetProcessByName("eldenring");
+            var attempts = timeoutMs / 1000;
+            for(var i = 0; i < attempts; i++)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
 
-            if(eldenRingProcess is null)
-            {
-                throw new InvalidOperationException(
-                    "Could not find Elden Ring Process.");
+                var eldenRingProcess = GetProcessByName("eldenring");
+
+                if(eldenRingProcess is not null)
+                {
+                    return eldenRingProcess;
+                }
+
+                await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
             }
 
-            try
-            {
-                await eldenRingProcess.WaitForExitAsync(cancellationToken);
-            }
-            catch(TaskCanceledException)
-            {
-                eldenRingProcess.Kill();
-            }
+            throw new InvalidOperationException("Could not find Elden Ring Process.");
         }
 
         private Process Launch(List<string> arguments) 
@@ -56,18 +67,19 @@ namespace ModEngine2ConfigTool.Services
                     "You must be logged into Steam to launch Elden Ring");
             }
 
-            var modEngineExe = $"{_modEngine2Folder}\\modengine2_launcher.exe";
+            var modEngineExe = GetModEngine2ExePath();
             if (!File.Exists(modEngineExe))
             {
                 throw new InvalidOperationException(
-                    $"Could not find ModEngine2 (modengine2_launcher.exe) in \"{_modEngine2Folder}\".");
+                    $"Could not find ModEngine2 (modengine2_launcher.exe) at " +
+                    $"\"{GetModEngine2ExePath()}\".");
             }
 
             var processStartInfo = new ProcessStartInfo()
             {
                 FileName = modEngineExe,
                 Arguments = string.Join(" ", arguments),
-                WorkingDirectory = _modEngine2Folder
+                WorkingDirectory = GetModEngine2FolderPath()
             };
 
             var process = Process.Start(processStartInfo);
@@ -100,6 +112,18 @@ namespace ModEngine2ConfigTool.Services
             }
 
             return result;
+        }
+
+        private string GetModEngine2ExePath()
+        {
+            return _configurationService.AutoDetectModEngine2 is true
+                ? _modEngine2DefaultPath
+                : _configurationService.ModEngine2ExePath;
+        }
+
+        private string GetModEngine2FolderPath()
+        {
+            return Path.GetDirectoryName(GetModEngine2ExePath()) ?? "";
         }
     }
 }

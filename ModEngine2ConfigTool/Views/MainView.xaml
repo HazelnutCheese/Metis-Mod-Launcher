@@ -36,6 +36,9 @@
         <DataTemplate DataType="{x:Type pageVms:DllEditPageVm}">
             <pages:DllEditPageView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type pageVms:SettingsPageVm}">
+            <pages:SettingsPageView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type pageVms:HelpPageVm}">
             <pages:HelpPageView />
         </DataTemplate>

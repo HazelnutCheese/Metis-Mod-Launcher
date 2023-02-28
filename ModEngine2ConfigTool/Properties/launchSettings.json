@@ -4,9 +4,9 @@
       "commandName": "Project",
       "nativeDebugging": false
     },
-    "Silent Mode": {
+    "C:\\ AppSettings": {
       "commandName": "Project",
-      "commandLineArgs": "-p \"bc7a2fc5-df9b-413c-9cd2-15d071fe4a27\"",
+      "commandLineArgs": "-c \"C:\\Program Files (x86)\\Metis Mod Launcher\\win-x86\\appSettings.json\"",
       "nativeDebugging": false
     }
   }

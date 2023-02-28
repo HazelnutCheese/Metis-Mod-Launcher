@@ -63,11 +63,11 @@
                                     IconKind="FileOutline"
                                     Text="External DLLs" />
 
-            <!--<controls:SideBarButton Grid.Row="5"
+            <controls:SideBarButton Grid.Row="5"
                                     Grid.Column="1"
                                     Command="{Binding NavigateSettingsCommand}"
                                     IconKind="CogOutline"
-                                    Text="Settings" />-->
+                                    Text="Settings" />
 
             <controls:SideBarButton Grid.Row="6"
                                     Grid.Column="1"
