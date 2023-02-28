@@ -3,6 +3,7 @@ using ModEngine2ConfigTool.ViewModels.Profiles;
 using Sherlog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -161,29 +162,53 @@ namespace ModEngine2ConfigTool.Services
 
                 try
                 {
-                    //// launch modengine2 with toml
+                    //// launch modengine2 with toml then wait for exit
                     using var modEngineProcess = _modEngine2Service.LaunchWithProfile(profileToml);
 
-                    if(!modEngineProcess.HasExited)
+                    try
                     {
-                        try
+                        if (!modEngineProcess.HasExited)
                         {
                             await modEngineProcess
                                 .WaitForExitAsync(cancellationToken)
                                 .ConfigureAwait(false);
                         }
-                        catch (TaskCanceledException)
-                        {
-                            modEngineProcess.Kill();
-                        }
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        TryKill(modEngineProcess);
+                    }
+                    catch
+                    {
+                        TryKill(modEngineProcess);
+                        throw;
                     }
 
                     //// wait for elden ring to exit
-                    await Task.Delay(3000).ConfigureAwait(false);
-                    await _modEngine2Service
-                        .WaitForEldenRingExit(cancellationToken)
+                    using var eldenRingProcess = await _modEngine2Service
+                        .PollForEldenRingProcess(
+                            10000, 
+                            cancellationToken)
                         .ConfigureAwait(false);
-                    //await Task.Delay(15000, cancellationToken);
+
+                    try
+                    {
+                        if (!eldenRingProcess.HasExited)
+                        {
+                            await eldenRingProcess
+                                .WaitForExitAsync(cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        TryKill(eldenRingProcess);
+                    }
+                    catch
+                    {
+                        TryKill(eldenRingProcess);
+                        throw;
+                    }
                 }
                 catch (TaskCanceledException)
                 {
@@ -233,6 +258,18 @@ namespace ModEngine2ConfigTool.Services
             }
 
             await backgroundTask;
+        }
+
+        private void TryKill(Process process)
+        {
+            try
+            {
+                process.Kill();
+            }
+            catch(Exception e)
+            {
+                Log.Instance.Error(e.Message);
+            }
         }
     }
 }

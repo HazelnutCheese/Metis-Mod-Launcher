@@ -30,6 +30,8 @@ namespace ModEngine2ConfigTool.ViewModels
 
         public ICommand NavigateExternalDllsCommand { get; }
 
+        public ICommand NavigateSettingsCommand { get; }
+
         public ICommand NavigateHelpCommand { get; }
 
         public ICommand NavigateCreateNewProfileCommand { get; }
@@ -57,6 +59,7 @@ namespace ModEngine2ConfigTool.ViewModels
             NavigateProfilesCommand = new AsyncRelayCommand(NavigateToProfiles);
             NavigateModsCommand = new AsyncRelayCommand(NavigateToMods);
             NavigateExternalDllsCommand = new AsyncRelayCommand(NavigateToDlls);
+            NavigateSettingsCommand = new AsyncRelayCommand(NavigateSettings);
             NavigateHelpCommand = new AsyncRelayCommand(NavigateHelp);
             NavigateCreateNewProfileCommand = new AsyncRelayCommand(NavigateToCreateProfile);
             NavigateAddModCommand = new AsyncRelayCommand(NavigateAddMod);
@@ -138,6 +141,11 @@ namespace ModEngine2ConfigTool.ViewModels
 
             await _navigationService.NavigateTo<DllEditPageVm>(
                 new NamedParameter("dll", dllVm));
+        }
+
+        private async Task NavigateSettings()
+        {
+            await _navigationService.NavigateTo<SettingsPageVm>();
         }
 
         private async Task NavigateHelp()

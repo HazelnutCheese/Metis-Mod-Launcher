@@ -2,6 +2,12 @@
 {
     public interface IAppSettings
     {
-        string ModEngine2Folder { get; set; }
+        bool? AutoDetectModEngine2 { get; set; }
+
+        string ModEngine2ExePath { get; set; }
+
+        bool? AutoDetectEldenRing { get; set; }
+
+        string EldenRingExePath { get; set; }
     }
 }

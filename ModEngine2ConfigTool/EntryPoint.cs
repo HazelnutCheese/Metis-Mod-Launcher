@@ -19,13 +19,13 @@ namespace ModEngine2ConfigTool
             using var otherProcess = GetOtherInstance();
             if (otherProcess != null)
             {
+                MessageBox.Show("Only one instance of Metis Mod Launcher can be running.");
                 WindowHelper.BringProcessToFront(otherProcess);
                 otherProcess.Dispose();
                 return;
             }
 
             var commandLineArgs = Args.Parse<CommandLineArgs>(args);
-            var configPath = commandLineArgs.AppSettings ?? "appsettings.json";
 
             var appDataPath = commandLineArgs.AppData
                 ?? Path.Combine(
@@ -36,6 +36,8 @@ namespace ModEngine2ConfigTool
             {
                 Directory.CreateDirectory(appDataPath);
             }
+
+            var configPath = commandLineArgs.AppSettings ?? Path.Combine(appDataPath, "appsettings.json");
 
             var serviceContainer = GetServicesContainer(appDataPath, configPath, !(commandLineArgs.ProfileId is null));
 
@@ -64,8 +66,6 @@ namespace ModEngine2ConfigTool
             string profileId,
             IContainer serviceContainer)
         {
-            var dispatcherService = new NoUiDispatcher();
-
             var playManagerService = serviceContainer.Resolve<PlayManagerService>();
             var profileManager = serviceContainer.Resolve<ProfileManagerService>();
 
@@ -115,11 +115,7 @@ namespace ModEngine2ConfigTool
                 Directory.GetCurrentDirectory(),
                 "..\\ModEngine2\\ModEngine-2.0.0-preview4-win64");
 
-            var modEngine2Folder = !string.IsNullOrWhiteSpace(configurationService.ModEngine2Folder)
-                ? configurationService.ModEngine2Folder
-                : modEngine2FolderDefault;
-
-            var modEngine2Service = new ModEngine2Service(modEngine2Folder);
+            var modEngine2Service = new ModEngine2Service(configurationService);
 
             serviceBuilder.RegisterInstance(configurationService);
             serviceBuilder.RegisterInstance(databaseService);
@@ -178,6 +174,7 @@ namespace ModEngine2ConfigTool
                 serviceBuilder.RegisterType<ProfileEditPageVm>();
                 serviceBuilder.RegisterType<ModEditPageVm>();
                 serviceBuilder.RegisterType<DllEditPageVm>();
+                serviceBuilder.RegisterType<SettingsPageVm>();
                 serviceBuilder.RegisterType<HelpPageVm>();
 
                 serviceBuilder.RegisterInstance(new NavigationService());
