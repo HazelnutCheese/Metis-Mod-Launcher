@@ -1,8 +1,9 @@
 ﻿using Config.Net;
+using ModEngine2ConfigTool.Services.Interfaces;
 
 namespace ModEngine2ConfigTool.Services
 {
-    public class ConfigurationService
+    public class ConfigurationService : IConfigurationService
     {
         readonly IAppSettings _settings;
 
@@ -34,7 +35,7 @@ namespace ModEngine2ConfigTool.Services
             set => _settings.EldenRingExePath = value;
         }
 
-        public ConfigurationService(string configPath) 
+        public ConfigurationService(string configPath)
         {
             var configFile = configPath;
 

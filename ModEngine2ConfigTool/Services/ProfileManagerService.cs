@@ -10,10 +10,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using ModEngine2ConfigTool.Models;
 using Tommy;
+using ModEngine2ConfigTool.Services.Interfaces;
 
 namespace ModEngine2ConfigTool.Services
 {
-    public class ProfileManagerService : ObservableObject
+    public class ProfileManagerService : ObservableObject, IProfileManagerService
     {
         private readonly IDatabaseService _databaseService;
         private readonly IDispatcherService _dispatcherService;
@@ -21,10 +22,10 @@ namespace ModEngine2ConfigTool.Services
 
         private ObservableCollection<ProfileVm> _profileVms;
 
-        public ObservableCollection<ProfileVm> ProfileVms 
-        { 
-            get => _profileVms; 
-            private set => _profileVms = value; 
+        public ObservableCollection<ProfileVm> ProfileVms
+        {
+            get => _profileVms;
+            private set => _profileVms = value;
         }
 
         public ProfileManagerService(
@@ -46,7 +47,7 @@ namespace ModEngine2ConfigTool.Services
             {
                 ProfileVms.Clear();
 
-                foreach(var profileVm in profileVms)
+                foreach (var profileVm in profileVms)
                 {
                     ProfileVms.Add(profileVm);
                 }
@@ -92,7 +93,7 @@ namespace ModEngine2ConfigTool.Services
                 await AddModToProfile(newProfileVm, modVm);
             }
 
-            foreach(var dllVm in profileVm.ExternalDlls)
+            foreach (var dllVm in profileVm.ExternalDlls)
             {
                 await AddDllToProfile(newProfileVm, dllVm);
             }
@@ -110,7 +111,7 @@ namespace ModEngine2ConfigTool.Services
 
         public async Task AddModToProfile(ProfileVm profileVm, ModVm modVm)
         {
-            if(!profileVm.Mods.Contains(modVm, new ModVmEqualityComparer()))
+            if (!profileVm.Mods.Contains(modVm, new ModVmEqualityComparer()))
             {
                 _databaseService.AddModToProfile(profileVm, modVm);
             }

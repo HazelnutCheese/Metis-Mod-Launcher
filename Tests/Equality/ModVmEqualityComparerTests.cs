@@ -1,6 +1,6 @@
 using ModEngine2ConfigTool.Equality;
 using ModEngine2ConfigTool.Models;
-using ModEngine2ConfigTool.Services;
+using ModEngine2ConfigTool.Services.Interfaces;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using Moq;
 

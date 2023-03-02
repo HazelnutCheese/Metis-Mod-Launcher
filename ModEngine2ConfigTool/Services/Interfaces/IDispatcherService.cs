@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace ModEngine2ConfigTool.Services
+namespace ModEngine2ConfigTool.Services.Interfaces
 {
     public interface IDispatcherService
     {

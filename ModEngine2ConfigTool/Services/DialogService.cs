@@ -1,4 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
+using ModEngine2ConfigTool.Services.Interfaces;
 using ModEngine2ConfigTool.ViewModels.Dialogs;
 using ModEngine2ConfigTool.Views.Dialogs;
 using System.Threading.Tasks;
@@ -6,7 +7,7 @@ using System.Windows.Forms;
 
 namespace ModEngine2ConfigTool.Services
 {
-    public class DialogService
+    public class DialogService : IDialogService
     {
         private readonly IDispatcherService _dispatcherService;
 
@@ -41,8 +42,8 @@ namespace ModEngine2ConfigTool.Services
         }
 
         public string? ShowSaveFileDialog(
-            string title, 
-            string? filter = null, 
+            string title,
+            string? filter = null,
             string? fileExtension = null,
             string? defaultFolder = null,
             string? filePath = null)
@@ -52,20 +53,20 @@ namespace ModEngine2ConfigTool.Services
                 Title = title
             };
 
-            if(fileExtension is not null)
+            if (fileExtension is not null)
             {
                 fileDialog.AddExtension = true;
                 fileDialog.DefaultExt = fileExtension;
             }
 
-            return GetFileDialogValue(fileDialog, 
+            return GetFileDialogValue(fileDialog,
                 filter,
-                defaultFolder, 
+                defaultFolder,
                 filePath);
         }
 
         public string? ShowFolderDialog(
-            string title, 
+            string title,
             string? defaultFolder = null,
             string? folderPath = null)
         {
@@ -75,18 +76,18 @@ namespace ModEngine2ConfigTool.Services
                 AllowMultiSelect = false
             };
 
-            if(defaultFolder is not null)
+            if (defaultFolder is not null)
             {
                 dialog.InitialFolder = defaultFolder;
             }
 
-            if(folderPath is not null)
+            if (folderPath is not null)
             {
                 dialog.DefaultFolder = folderPath;
             }
 
-            return dialog.ShowDialog().Equals(DialogResult.OK) 
-                ? dialog.SelectedFolder 
+            return dialog.ShowDialog().Equals(DialogResult.OK)
+                ? dialog.SelectedFolder
                 : null;
         }
 
@@ -148,6 +149,11 @@ namespace ModEngine2ConfigTool.Services
         private void CloseCurrentDialogSession()
         {
             _dispatcherService.InvokeUi(() => DialogHost.GetDialogSession(App.DialogHostId)?.Close(true));
+        }
+
+        public void ShowMessageBox(string title, string message)
+        {
+            MessageBox.Show(title, message);
         }
     }
 }

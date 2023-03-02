@@ -1,4 +1,6 @@
-﻿using ModEngine2ConfigTool.ViewModels.Dialogs;
+﻿using ModEngine2ConfigTool.Models;
+using ModEngine2ConfigTool.Services.Interfaces;
+using ModEngine2ConfigTool.ViewModels.Dialogs;
 using ModEngine2ConfigTool.ViewModels.Profiles;
 using Sherlog;
 using System;
@@ -13,21 +15,52 @@ namespace ModEngine2ConfigTool.Services
 {
     public class PlayManagerService
     {
-        private readonly ProfileService _profileService;
-        private readonly SaveManagerService _saveManagerService;
-        private readonly ModEngine2Service _modEngine2Service;
-        private readonly DialogService _dialogService;
+        private readonly IProfileService _profileService;
+        private readonly ISaveManagerService _saveManagerService;
+        private readonly IModEngine2Service _modEngine2Service;
+        private readonly IDialogService _dialogService;
 
         public PlayManagerService(
-            ProfileService profileService,
-            SaveManagerService saveManagerService,
-            ModEngine2Service modEngine2Service,
-            DialogService dialogService)
+            IProfileService profileService,
+            ISaveManagerService saveManagerService,
+            IModEngine2Service modEngine2Service,
+            IDialogService dialogService)
         {
             _profileService = profileService;
             _saveManagerService = saveManagerService;
             _modEngine2Service = modEngine2Service;
             _dialogService = dialogService;
+        }
+
+        public void Play(IProfileVm profile, bool silentMode)
+        {
+            _saveManagerService.BackupVanilla();
+
+            if (profile.UseSaveManager)
+            {
+                _saveManagerService.BackupProfile(profile);
+            }
+
+            try
+            {
+                if (profile.UseSaveManager)
+                {
+                    _saveManagerService.Push(profile);
+                }
+
+                var profileConfig = _profileService.WriteProfile(profile);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                if(profile.UseSaveManager)
+                {
+                    _saveManagerService.Pop(profile);
+                }
+            }
         }
 
         public void PlaySilent(ProfileVm profileVm)
@@ -94,7 +127,7 @@ namespace ModEngine2ConfigTool.Services
                     _saveManagerService.UninstallProfileSaves(profileId);
                 }
 
-                // delete toml file                
+                // delete toml file
                 File.Delete(profileToml);
             }
             catch (Exception e)

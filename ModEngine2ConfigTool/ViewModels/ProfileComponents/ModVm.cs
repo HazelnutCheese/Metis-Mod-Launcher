@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ModEngine2ConfigTool.Models;
-using ModEngine2ConfigTool.Services;
+using ModEngine2ConfigTool.Services.Interfaces;
 using System;
 using System.IO;
 

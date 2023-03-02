@@ -1,4 +1,4 @@
-﻿namespace ModEngine2ConfigTool.Services
+﻿namespace ModEngine2ConfigTool.Services.Interfaces
 {
     public interface IAppSettings
     {

@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ModEngine2ConfigTool.Equality;
 using ModEngine2ConfigTool.Models;
-using ModEngine2ConfigTool.Services;
+using ModEngine2ConfigTool.Services.Interfaces;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ModEngine2ConfigTool.ViewModels.Profiles
 {
-    public class ProfileVm : ObservableObject
+    public class ProfileVm : ObservableObject, IProfileVm
     {
         public Profile Model { get; private set; }
 
@@ -93,7 +93,7 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
             get => Model.UseScyllaHide;
             set
             {
-                if(Model.UseScyllaHide != value)
+                if (Model.UseScyllaHide != value)
                 {
                     Model.UseScyllaHide = value;
                     _databaseService.SaveChanges();
@@ -110,7 +110,7 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
 
         public ObservableCollection<DllVm> ExternalDlls { get; }
 
-        public ProfileVm(string name, 
+        public ProfileVm(string name,
             IDatabaseService databaseService,
             IDispatcherService dispatcherService)
         {
@@ -129,11 +129,11 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
             _dispatcherService = dispatcherService;
 
             Mods = new ObservableCollection<ModVm>();
-            ExternalDlls= new ObservableCollection<DllVm>();
+            ExternalDlls = new ObservableCollection<DllVm>();
         }
 
         public ProfileVm(
-            Profile profile, 
+            Profile profile,
             IDatabaseService databaseService,
             IDispatcherService dispatcherService)
         {
@@ -141,7 +141,7 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
             _databaseService = databaseService;
             _dispatcherService = dispatcherService;
 
-            if(Model.Mods is null)
+            if (Model.Mods is null)
             {
                 Mods = new ObservableCollection<ModVm>();
             }
@@ -189,10 +189,10 @@ namespace ModEngine2ConfigTool.ViewModels.Profiles
                     {
                         Mods.Add(modVm);
                     }
-                }                
+                }
 
                 ExternalDlls.Clear();
-                if(dllVms is not null)
+                if (dllVms is not null)
                 {
                     foreach (var dllVm in dllVms)
                     {

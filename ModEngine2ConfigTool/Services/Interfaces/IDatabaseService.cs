@@ -3,7 +3,7 @@ using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using ModEngine2ConfigTool.ViewModels.Profiles;
 using System.Collections.Generic;
 
-namespace ModEngine2ConfigTool.Services
+namespace ModEngine2ConfigTool.Services.Interfaces
 {
     public interface IDatabaseService
     {

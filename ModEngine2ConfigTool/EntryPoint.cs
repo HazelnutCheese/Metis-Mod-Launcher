@@ -1,11 +1,13 @@
 ﻿using Autofac;
 using ModEngine2ConfigTool.Helpers;
 using ModEngine2ConfigTool.Services;
+using ModEngine2ConfigTool.Services.Interfaces;
 using ModEngine2ConfigTool.ViewModels.Pages;
 using PowerArgs;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Windows;
 
@@ -89,6 +91,9 @@ namespace ModEngine2ConfigTool
         {
             var serviceBuilder = new ContainerBuilder();
 
+            var fileSystem = new FileSystem();
+            serviceBuilder.RegisterInstance(fileSystem);
+
             var configurationService = new ConfigurationService(configPath);
             var databaseService = new DatabaseService(appDataPath);
             var profileService = new ProfileService(appDataPath);
@@ -109,7 +114,7 @@ namespace ModEngine2ConfigTool
             var dialogService = new DialogService(dispatcherService);
             serviceBuilder.RegisterInstance(dialogService);
 
-            var saveManagerService = new SaveManagerService(appDataPath, dialogService);
+            var saveManagerService = new SaveManagerService(appDataPath, fileSystem, dialogService);
 
             var modEngine2FolderDefault = Path.Combine(
                 Directory.GetCurrentDirectory(),

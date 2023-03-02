@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Win32;
 using ModEngine2ConfigTool.Equality;
+using ModEngine2ConfigTool.Services.Interfaces;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

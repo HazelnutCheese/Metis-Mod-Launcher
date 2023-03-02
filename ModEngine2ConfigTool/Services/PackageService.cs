@@ -1,4 +1,5 @@
 ﻿using ModEngine2ConfigTool.Models;
+using ModEngine2ConfigTool.Services.Interfaces;
 using ModEngine2ConfigTool.ViewModels.Dialogs;
 using ModEngine2ConfigTool.ViewModels.ProfileComponents;
 using System;

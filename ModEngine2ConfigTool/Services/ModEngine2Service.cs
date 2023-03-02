@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModEngine2ConfigTool.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -8,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace ModEngine2ConfigTool.Services
 {
-    public class ModEngine2Service
+    public class ModEngine2Service : IModEngine2Service
     {
-        private readonly ConfigurationService _configurationService;
+        private readonly IConfigurationService _configurationService;
         private readonly string _modEngine2DefaultPath;
 
-        public ModEngine2Service(ConfigurationService configurationService)
+        public ModEngine2Service(IConfigurationService configurationService)
         {
             _configurationService = configurationService;
 
@@ -31,7 +32,7 @@ namespace ModEngine2ConfigTool.Services
                 $"-c \"{tomlPath}\""
             };
 
-            if(_configurationService.AutoDetectEldenRing is false)
+            if (_configurationService.AutoDetectEldenRing is false)
             {
                 arguments.Add($"-p \"{_configurationService.EldenRingExePath}\"");
             }
@@ -42,13 +43,13 @@ namespace ModEngine2ConfigTool.Services
         public async Task<Process> PollForEldenRingProcess(int timeoutMs, CancellationToken cancellationToken)
         {
             var attempts = timeoutMs / 1000;
-            for(var i = 0; i < attempts; i++)
+            for (var i = 0; i < attempts; i++)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
                 var eldenRingProcess = GetProcessByName("eldenring");
 
-                if(eldenRingProcess is not null)
+                if (eldenRingProcess is not null)
                 {
                     return eldenRingProcess;
                 }
@@ -59,9 +60,9 @@ namespace ModEngine2ConfigTool.Services
             throw new InvalidOperationException("Could not find Elden Ring Process.");
         }
 
-        private Process Launch(List<string> arguments) 
+        private Process Launch(List<string> arguments)
         {
-            if(!IsSteamRunning())
+            if (!IsSteamRunning())
             {
                 throw new InvalidOperationException(
                     "You must be logged into Steam to launch Elden Ring");
@@ -105,7 +106,7 @@ namespace ModEngine2ConfigTool.Services
 
             foreach (var process in processes)
             {
-                if(process != result)
+                if (process != result)
                 {
                     process.Dispose();
                 }

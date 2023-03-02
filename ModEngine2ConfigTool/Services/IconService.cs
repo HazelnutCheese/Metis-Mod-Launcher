@@ -1,9 +1,10 @@
 ﻿using System.Drawing;
 using System.IO;
+using ModEngine2ConfigTool.Services.Interfaces;
 
 namespace ModEngine2ConfigTool.Services
 {
-    public class IconService
+    public class IconService : IIconService
     {
         private string _iconFolder;
 
@@ -11,7 +12,7 @@ namespace ModEngine2ConfigTool.Services
         {
             _iconFolder = Path.Combine(dataStorage, "temp");
 
-            if(!Directory.Exists(_iconFolder))
+            if (!Directory.Exists(_iconFolder))
             {
                 Directory.CreateDirectory(_iconFolder);
             }
@@ -25,7 +26,7 @@ namespace ModEngine2ConfigTool.Services
                     _iconFolder,
                     $"{id}.ico");
 
-                if(File.Exists(iconPath))
+                if (File.Exists(iconPath))
                 {
                     File.Delete(iconPath);
                 }

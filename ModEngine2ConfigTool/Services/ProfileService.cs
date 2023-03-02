@@ -1,31 +1,31 @@
-﻿using ModEngine2ConfigTool.ViewModels.Profiles;
+﻿using ModEngine2ConfigTool.Services.Interfaces;
+using ModEngine2ConfigTool.ViewModels.Profiles;
 using System.IO;
-using System.IO.Compression;
 using Tommy;
 
 namespace ModEngine2ConfigTool.Services
 {
-    public class ProfileService
+    public class ProfileService : IProfileService
     {
         private readonly string _rootProfilesFolder;
 
         public ProfileService(string dataStorage)
         {
             _rootProfilesFolder = Path.Combine(dataStorage, "temp");
-            if(!Directory.Exists(_rootProfilesFolder))
+            if (!Directory.Exists(_rootProfilesFolder))
             {
                 Directory.CreateDirectory(_rootProfilesFolder);
-            }            
+            }
         }
 
-        public string WriteProfile(ProfileVm profile)
+        public string WriteProfile(IProfileVm profile)
         {
             var fileName = GetProfilePath(profile.Model.ProfileId.ToString());
 
             using TextWriter writer = File.CreateText(fileName);
 
             var dllListToml = new TomlArray();
-            foreach(var dll in profile.ExternalDlls)
+            foreach (var dll in profile.ExternalDlls)
             {
                 dllListToml.Add(dll.FilePath);
             }
@@ -56,7 +56,7 @@ namespace ModEngine2ConfigTool.Services
                         ["loose_params"] = false,
                         ["mods"] = modsListToml,
                     }
-                },                
+                },
                 ["extension"] =
                 {
                     ["scylla_hide"] =
@@ -72,9 +72,9 @@ namespace ModEngine2ConfigTool.Services
             return fileName;
         }
 
-        public string GetProfilePath(string profileId)
+        private string GetProfilePath(string profileId)
         {
             return Path.Combine(_rootProfilesFolder, $"{profileId}.toml");
-        }        
+        }
     }
 }
