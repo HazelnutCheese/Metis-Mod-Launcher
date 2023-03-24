@@ -1,6 +1,5 @@
 ﻿using ModEngine2ConfigTool.ViewModels.Profiles;
 using System.IO;
-using System.IO.Compression;
 using Tommy;
 
 namespace ModEngine2ConfigTool.Services

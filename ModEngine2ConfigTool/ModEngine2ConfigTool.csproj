@@ -33,18 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <COMReference Include="IWshRuntimeLibrary">
-      <WrapperTool>tlbimp</WrapperTool>
-      <VersionMinor>0</VersionMinor>
-      <VersionMajor>1</VersionMajor>
-      <Guid>f935dc20-1cf0-11d0-adb9-00c04fd58a0b</Guid>
-      <Lcid>0</Lcid>
-      <Isolated>false</Isolated>
-      <EmbedInteropTypes>true</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Resources\icon_07.ico" />
   </ItemGroup>
 
@@ -68,6 +56,7 @@
     <PackageReference Include="Sherlog" Version="1.0.0" />
     <PackageReference Include="Sherlog.Appenders" Version="1.0.3" />
     <PackageReference Include="Sherlog.Formatters" Version="2.0.0" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
     <PackageReference Include="Tommy" Version="3.1.2" />
   </ItemGroup>
 

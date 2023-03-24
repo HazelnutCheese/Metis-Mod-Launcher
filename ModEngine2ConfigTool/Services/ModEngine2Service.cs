@@ -61,12 +61,6 @@ namespace ModEngine2ConfigTool.Services
 
         private Process Launch(List<string> arguments) 
         {
-            if(!IsSteamRunning())
-            {
-                throw new InvalidOperationException(
-                    "You must be logged into Steam to launch Elden Ring");
-            }
-
             var modEngineExe = GetModEngine2ExePath();
             if (!File.Exists(modEngineExe))
             {
@@ -89,13 +83,6 @@ namespace ModEngine2ConfigTool.Services
             }
 
             return process;
-        }
-
-        private bool IsSteamRunning()
-        {
-            using var steamProcesses = GetProcessByName("steam");
-
-            return steamProcesses is not null;
         }
 
         public Process? GetProcessByName(string name)

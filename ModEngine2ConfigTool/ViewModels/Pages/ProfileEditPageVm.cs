@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using IWshRuntimeLibrary;
 using MaterialDesignThemes.Wpf;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
@@ -12,6 +11,8 @@ using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -279,13 +280,15 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
             if (shortcutFile is not null)
             {
-                var shell = new WshShell();
-                IWshShortcut shortcut = shell.CreateShortcut(shortcutFile);
-                shortcut.TargetPath = AppDomain.CurrentDomain.BaseDirectory + "Metis Mod Launcher.exe";
-                shortcut.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                shortcut.Arguments = $"-p \"{Profile.Model.ProfileId}\"";
+                IShellLink link = (IShellLink)new ShellLink();
 
-                if (System.IO.File.Exists(Profile.ImagePath))
+                // setup shortcut information
+                link.SetDescription($"Shortcut to {Profile.Name}.");
+                link.SetArguments($"-p \"{Profile.Model.ProfileId}\"");
+                link.SetWorkingDirectory(AppDomain.CurrentDomain.BaseDirectory);
+                link.SetPath(AppDomain.CurrentDomain.BaseDirectory + "Metis Mod Launcher.exe");
+
+                if (File.Exists(Profile.ImagePath))
                 {
                     var iconFile = _iconService.CreateTempIcon(
                         Profile.ImagePath,
@@ -293,12 +296,46 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
                     if(iconFile is not null)
                     {
-                        shortcut.IconLocation = iconFile;
+                        link.SetIconLocation(iconFile, 0);
                     }
                 }
 
-                shortcut.Save();
+                // save it
+                var file = (System.Runtime.InteropServices.ComTypes.IPersistFile)link;
+
+                file.Save(shortcutFile, false);
             }
+        }
+
+        [ComImport]
+        [Guid("00021401-0000-0000-C000-000000000046")]
+        internal class ShellLink
+        {
+        }
+
+        [ComImport]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [Guid("000214F9-0000-0000-C000-000000000046")]
+        internal interface IShellLink
+        {
+            void GetPath([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszFile, int cchMaxPath, out IntPtr pfd, int fFlags);
+            void GetIDList(out IntPtr ppidl);
+            void SetIDList(IntPtr pidl);
+            void GetDescription([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszName, int cchMaxName);
+            void SetDescription([MarshalAs(UnmanagedType.LPWStr)] string pszName);
+            void GetWorkingDirectory([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszDir, int cchMaxPath);
+            void SetWorkingDirectory([MarshalAs(UnmanagedType.LPWStr)] string pszDir);
+            void GetArguments([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszArgs, int cchMaxPath);
+            void SetArguments([MarshalAs(UnmanagedType.LPWStr)] string pszArgs);
+            void GetHotkey(out short pwHotkey);
+            void SetHotkey(short wHotkey);
+            void GetShowCmd(out int piShowCmd);
+            void SetShowCmd(int iShowCmd);
+            void GetIconLocation([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszIconPath, int cchIconPath, out int piIcon);
+            void SetIconLocation([MarshalAs(UnmanagedType.LPWStr)] string pszIconPath, int iIcon);
+            void SetRelativePath([MarshalAs(UnmanagedType.LPWStr)] string pszPathRel, int dwReserved);
+            void Resolve(IntPtr hwnd, int fFlags);
+            void SetPath([MarshalAs(UnmanagedType.LPWStr)] string pszFile);
         }
     }
 }

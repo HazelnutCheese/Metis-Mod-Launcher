@@ -11,8 +11,8 @@ using ModEngine2ConfigTool.Models;
 namespace ModEngine2ConfigTool.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230211200847_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230324162606_Ordering")]
+    partial class Ordering
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,10 +101,18 @@ namespace ModEngine2ConfigTool.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("DllsOrder")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ImagePath")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("LastPlayed")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ModsOrder")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
