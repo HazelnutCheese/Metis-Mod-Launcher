@@ -7,10 +7,7 @@ namespace ModEngine2ConfigTool
         [ArgShortcut("-p")]
         public string? ProfileId { get; set; }
 
-        [ArgShortcut("-c")]
-        public string? AppSettings { get; set; }
-
-        [ArgShortcut("-l")]
+        [ArgShortcut("-d")]
         public string? AppData { get; set; }
     }
 }

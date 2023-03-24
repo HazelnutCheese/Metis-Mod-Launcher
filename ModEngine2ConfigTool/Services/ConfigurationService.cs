@@ -34,6 +34,21 @@ namespace ModEngine2ConfigTool.Services
             set => _settings.EldenRingExePath = value;
         }
 
+        [Option(DefaultValue = true)]
+        public bool? AutoDetectSaves
+        {
+            get => _settings.AutoDetectSaves;
+            set => _settings.AutoDetectSaves = value;
+        }
+
+        [Option(Alias = nameof(EldenRingSavesPath))]
+        public string EldenRingSavesPath
+        {
+            get => _settings.EldenRingSavesPath;
+            set => _settings.EldenRingSavesPath = value;
+        }
+
+
         public ConfigurationService(string configPath) 
         {
             var configFile = configPath;
@@ -44,6 +59,7 @@ namespace ModEngine2ConfigTool.Services
 
             _settings.AutoDetectEldenRing = _settings.AutoDetectEldenRing ?? true;
             _settings.AutoDetectModEngine2 = _settings.AutoDetectModEngine2 ?? true;
+            _settings.AutoDetectSaves = _settings.AutoDetectSaves ?? true;
         }
     }
 }

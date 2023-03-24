@@ -215,8 +215,8 @@
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="54" />
                                                                         <ColumnDefinition Width="40" />
-                                                                        <ColumnDefinition Width="0.25*" />
-                                                                        <ColumnDefinition Width="0.75*" />
+                                                                        <ColumnDefinition Width="0.5*" />
+                                                                        <ColumnDefinition Width="0.5*" />
                                                                         <ColumnDefinition Width="54" />
                                                                         <ColumnDefinition Width="0" />
                                                                     </Grid.ColumnDefinitions>
@@ -356,8 +356,8 @@
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="54" />
                                                                         <ColumnDefinition Width="40" />
-                                                                        <ColumnDefinition Width="0.25*" />
-                                                                        <ColumnDefinition Width="0.75*" />
+                                                                        <ColumnDefinition Width="0.5*" />
+                                                                        <ColumnDefinition Width="0.5*" />
                                                                         <ColumnDefinition Width="54" />
                                                                         <ColumnDefinition Width="0" />
                                                                     </Grid.ColumnDefinitions>

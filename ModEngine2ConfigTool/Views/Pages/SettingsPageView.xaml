@@ -45,6 +45,8 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
@@ -99,7 +101,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Margin="0,0,0,12"
                                Style="{StaticResource ValueStyle}"
-                               Text="Elden Ring Exe Path:" />
+                               Text="Custom Elden Ring exe path:" />
 
                     <TextBox Grid.Row="1"
                              materialDesign:HintAssist.Hint="Enter Elden Ring Exe Path (eldenring.exe)"
@@ -118,7 +120,51 @@
                                             Text="Browse" />
                 </Grid>
 
-                <TextBlock Grid.Row="6"
+                <StackPanel Grid.Row="6"
+                            Grid.Column="1"
+                            Margin="0,10"
+                            Orientation="Horizontal">
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding AutoDetectSaves}" />
+                    <TextBlock Margin="10,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Auto detect Elden Ring saves" />
+                </StackPanel>
+
+                <Grid Grid.Row="7"
+                      Grid.Column="1"
+                      Margin="0,10,0,15"
+                      IsEnabled="{calc:Binding Path='!AutoDetectSaves'}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.90*" MaxWidth="900" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="0.1*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="0,0,0,12"
+                               Style="{StaticResource ValueStyle}"
+                               Text="Custom saves folder path:" />
+
+                    <TextBox Grid.Row="1"
+                             materialDesign:HintAssist.Hint="Enter Elden Ring saves folder path"
+                             AcceptsReturn="False"
+                             Background="{DynamicResource SecondaryHueLightBrush}"
+                             MaxLines="1"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Text="{Binding EldenRingSavesPath}" />
+
+                    <controls:SideBarButton Grid.Row="1"
+                                            Grid.Column="1"
+                                            Margin="10,0"
+                                            Background="{DynamicResource SecondaryHueLightBrush}"
+                                            Command="{Binding BrowseEldenRingExeCommand}"
+                                            IconKind="FolderEditOutline"
+                                            Text="Browse" />
+                </Grid>
+
+                <TextBlock Grid.Row="8"
                            Grid.Column="1"
                            Margin="0,20,0,10"
                            HorizontalAlignment="Left"
@@ -126,7 +172,7 @@
                            Style="{StaticResource TitleStyle}"
                            Text="Advanced ModEngine2 Options:" />
 
-                <StackPanel Grid.Row="7"
+                <StackPanel Grid.Row="9"
                             Grid.Column="1"
                             Margin="0,10"
                             Orientation="Horizontal">
@@ -136,7 +182,7 @@
                                Text="Auto detect ModEngine2 installation" />
                 </StackPanel>
 
-                <Grid Grid.Row="8"
+                <Grid Grid.Row="10"
                       Grid.Column="1"
                       Margin="0,10,0,15"
                       IsEnabled="{calc:Binding Path='!AutoDetectModEngine2'}">
@@ -151,10 +197,10 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Margin="0,0,0,12"
                                Style="{StaticResource ValueStyle}"
-                               Text="ModEngine2 Exe Path:" />
+                               Text="Custom ModEngine2 exe path:" />
 
                     <TextBox Grid.Row="1"
-                             materialDesign:HintAssist.Hint="Enter ModEngine2 Path (modengine2_launcher.exe)"
+                             materialDesign:HintAssist.Hint="Enter ModEngine2 path (modengine2_launcher.exe)"
                              AcceptsReturn="False"
                              Background="{DynamicResource SecondaryHueLightBrush}"
                              MaxLines="1"

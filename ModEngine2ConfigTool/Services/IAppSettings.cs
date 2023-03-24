@@ -9,5 +9,9 @@
         bool? AutoDetectEldenRing { get; set; }
 
         string EldenRingExePath { get; set; }
+
+        bool? AutoDetectSaves { get; set; }
+
+        string EldenRingSavesPath { get; set; }
     }
 }
