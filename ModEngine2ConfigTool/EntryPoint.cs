@@ -109,7 +109,7 @@ namespace ModEngine2ConfigTool
             var dialogService = new DialogService(dispatcherService);
             serviceBuilder.RegisterInstance(dialogService);
 
-            var saveManagerService = new SaveManagerService(appDataPath, dialogService);
+            var saveManagerService = new SaveManagerService(appDataPath, configurationService, dialogService);
 
             var modEngine2FolderDefault = Path.Combine(
                 Directory.GetCurrentDirectory(),
