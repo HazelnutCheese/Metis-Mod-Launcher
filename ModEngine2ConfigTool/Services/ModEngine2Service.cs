@@ -18,7 +18,7 @@ namespace ModEngine2ConfigTool.Services
             _configurationService = configurationService;
 
             _modEngine2DefaultPath = Path.Combine(
-                Directory.GetCurrentDirectory(),
+                AppDomain.CurrentDomain.BaseDirectory,
                 "..\\ModEngine2\\ModEngine-2.0.0-preview4-win64",
                 "modengine2_launcher.exe");
         }

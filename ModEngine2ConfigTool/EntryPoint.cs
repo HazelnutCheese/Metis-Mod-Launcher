@@ -111,10 +111,6 @@ namespace ModEngine2ConfigTool
 
             var saveManagerService = new SaveManagerService(appDataPath, configurationService, dialogService);
 
-            var modEngine2FolderDefault = Path.Combine(
-                Directory.GetCurrentDirectory(),
-                "..\\ModEngine2\\ModEngine-2.0.0-preview4-win64");
-
             var modEngine2Service = new ModEngine2Service(configurationService);
 
             serviceBuilder.RegisterInstance(configurationService);
