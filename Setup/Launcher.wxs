@@ -364,8 +364,8 @@
             <Component Id="cmpDAF735CF82AADBF7CEA82E865A043C69" Directory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Guid="*">
                 <File Id="filF3E5F7DA737A7FE445D4255A66114668" KeyPath="yes" Source="SourceDir\mscordaccore.dll" />
             </Component>
-            <Component Id="cmpA7AAA4BCCD6A2EF278CA2F31EFA0632E" Directory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Guid="*">
-                <File Id="fil47ADE34D6F8B5EF0153CCD66A5DB2305" KeyPath="yes" Source="SourceDir\mscordaccore_x86_x86_6.0.1222.56807.dll" />
+            <Component Id="cmp08DE07252A39D3687FB8F5F95D80AE72" Directory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Guid="*">
+                <File Id="fil6DB212506A72A92FE4B03455304E8D79" KeyPath="yes" Source="SourceDir\mscordaccore_x86_x86_6.0.1423.7309.dll" />
             </Component>
             <Component Id="cmpD6FC410D8082520B1DAAFC64F7606884" Directory="dirF1B51B0F0204B6EC0C0F76B6642CAA4A" Guid="*">
                 <File Id="fil6A1DFB002BEB04099306BAC89C150F2B" KeyPath="yes" Source="SourceDir\mscordbi.dll" />
