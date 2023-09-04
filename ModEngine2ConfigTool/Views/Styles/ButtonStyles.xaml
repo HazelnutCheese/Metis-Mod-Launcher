@@ -411,4 +411,47 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="HelpButtonStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SecondaryHueLightBrush}" />
+        <Setter Property="FrameworkElement.Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <materialDesign:Card x:Name="Card"
+                                             Height="40"
+                                             materialDesign:ElevationAssist.Elevation="Dp4"
+                                             materialDesign:ShadowAssist.ShadowEdges="Bottom,Right,Left"
+                                             Background="{DynamicResource SecondaryHueLightBrush}"
+                                             Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                            <Border BorderBrush="{DynamicResource PrimaryHueLightBrush}" BorderThickness="1">
+                                <ContentControl Height="30"
+                                                Padding="5"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch"
+                                                Content="{TemplateBinding Content}" />
+                            </Border>
+
+                        </materialDesign:Card>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter TargetName="Card" Property="Background" Value="{DynamicResource PrimaryHueLightBrush}" />
+                            <Setter TargetName="Card" Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
+                        </Trigger>
+                        <Trigger Property="UIElement.IsMouseOver" Value="false">
+                            <Setter TargetName="Card" Property="Background" Value="{DynamicResource SecondaryHueLightBrush}" />
+                            <Setter TargetName="Card" Property="Foreground" Value="{DynamicResource PrimaryHueLightForegroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="Card" Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

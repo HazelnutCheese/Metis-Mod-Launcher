@@ -18,8 +18,8 @@ namespace ModEngine2ConfigTool.Services
             _configurationService = configurationService;
 
             _modEngine2DefaultPath = Path.Combine(
-                Directory.GetCurrentDirectory(),
-                "..\\ModEngine2\\ModEngine-2.0.0-preview4-win64",
+                AppDomain.CurrentDomain.BaseDirectory,
+                "..\\ModEngine2\\ModEngine-2.1.0.0-win64",
                 "modengine2_launcher.exe");
         }
 
@@ -61,12 +61,6 @@ namespace ModEngine2ConfigTool.Services
 
         private Process Launch(List<string> arguments) 
         {
-            if(!IsSteamRunning())
-            {
-                throw new InvalidOperationException(
-                    "You must be logged into Steam to launch Elden Ring");
-            }
-
             var modEngineExe = GetModEngine2ExePath();
             if (!File.Exists(modEngineExe))
             {
@@ -89,13 +83,6 @@ namespace ModEngine2ConfigTool.Services
             }
 
             return process;
-        }
-
-        private bool IsSteamRunning()
-        {
-            using var steamProcesses = GetProcessByName("steam");
-
-            return steamProcesses is not null;
         }
 
         public Process? GetProcessByName(string name)

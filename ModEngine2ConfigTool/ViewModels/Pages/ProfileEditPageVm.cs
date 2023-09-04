@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using IWshRuntimeLibrary;
 using MaterialDesignThemes.Wpf;
 using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
@@ -12,6 +11,8 @@ using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -24,7 +25,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
         private readonly SaveManagerService _saveManagerService;
         private readonly PackageService _packageService;
         private readonly DialogService _dialogService;
-        private readonly IconService _iconService;
+        private readonly ShortcutService _shortcutService;
         private readonly ProfileManagerService _profileManagerService;
         private readonly PlayManagerService _playManagerService;
 
@@ -62,7 +63,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             SaveManagerService saveManagerService,
             PackageService packageService,
             DialogService dialogService,
-            IconService iconService)
+            ShortcutService shortcutService)
         {
             _profileManagerService = profileManagerService;
             _playManagerService = playManagerService;
@@ -70,7 +71,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             _saveManagerService = saveManagerService;
             _packageService = packageService;
             _dialogService = dialogService;
-            _iconService = iconService;
+            _shortcutService = shortcutService;
 
             Profile = profile;
 
@@ -270,35 +271,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         private void CreateShortcut()
         {
-            var shortcutFile = _dialogService.ShowSaveFileDialog(
-                "Save Shortcut to",
-                "All Shortcut Files(*.lnk)|*.lnk",
-                "*.lnk",
-                defaultFolder: null,
-                $"{Profile.Name}.lnk");
-
-            if (shortcutFile is not null)
-            {
-                var shell = new WshShell();
-                IWshShortcut shortcut = shell.CreateShortcut(shortcutFile);
-                shortcut.TargetPath = AppDomain.CurrentDomain.BaseDirectory + "Metis Mod Launcher.exe";
-                shortcut.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                shortcut.Arguments = $"-p \"{Profile.Model.ProfileId}\"";
-
-                if (System.IO.File.Exists(Profile.ImagePath))
-                {
-                    var iconFile = _iconService.CreateTempIcon(
-                        Profile.ImagePath,
-                        Profile.Model.ProfileId.ToString());
-
-                    if(iconFile is not null)
-                    {
-                        shortcut.IconLocation = iconFile;
-                    }
-                }
-
-                shortcut.Save();
-            }
+            _shortcutService.CreateShortcut(Profile);
         }
     }
 }

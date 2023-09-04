@@ -69,7 +69,7 @@ There are also a number of Advanced options:
 
 | **Advanced Options**        | **Description**   |
 | ------------- |:-------------|
-| Profile Id * | The internal Id for the profile.<br/><br/>Cannot be edited, will be automatically updated.
+| Profile Id * | The internal Id for the profile.<br/><br/>Will never change after creation.
 | Use Profile Specific Save Games | Turn this on to give your profile its own save game. |
 | Launch ModEngine2 with Debug Mode | Turn this on to run the profile with ModEngine2's debug mode to generate additional log information.. |
 | Launch ModEngine2 with ScyllaHide | When enabled, ScyllaHide will be injected into the game. This allows for antidebug measures in the game to be bypassed so that you can attach debuggers such as Cheat Engine, x64dbg, windbg, etc to the game without as much trouble.<br><br>If you're not reverse engineering the game, this option is probably not for you.

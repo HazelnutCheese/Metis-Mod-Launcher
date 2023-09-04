@@ -37,7 +37,7 @@ namespace ModEngine2ConfigTool
                 Directory.CreateDirectory(appDataPath);
             }
 
-            var configPath = commandLineArgs.AppSettings ?? Path.Combine(appDataPath, "appsettings.json");
+            var configPath = Path.Combine(appDataPath, "appsettings.json");
 
             var serviceContainer = GetServicesContainer(appDataPath, configPath, !(commandLineArgs.ProfileId is null));
 
@@ -109,11 +109,7 @@ namespace ModEngine2ConfigTool
             var dialogService = new DialogService(dispatcherService);
             serviceBuilder.RegisterInstance(dialogService);
 
-            var saveManagerService = new SaveManagerService(appDataPath, dialogService);
-
-            var modEngine2FolderDefault = Path.Combine(
-                Directory.GetCurrentDirectory(),
-                "..\\ModEngine2\\ModEngine-2.0.0-preview4-win64");
+            var saveManagerService = new SaveManagerService(appDataPath, configurationService, dialogService);
 
             var modEngine2Service = new ModEngine2Service(configurationService);
 
@@ -123,6 +119,11 @@ namespace ModEngine2ConfigTool
             serviceBuilder.RegisterInstance(saveManagerService);
             serviceBuilder.RegisterInstance(modEngine2Service);
             serviceBuilder.RegisterInstance(iconService);
+            serviceBuilder.RegisterInstance(
+                new ShortcutService(
+                    iconService, 
+                    dialogService,
+                    appDataPath));
 
             var playManagerService = new PlayManagerService(
                 profileService,

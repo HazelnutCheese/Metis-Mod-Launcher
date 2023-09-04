@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace ModEngine2ConfigTool.Services
 {
     public class SaveManagerService
     {
+        private const string _tempExt = "mtemp";
         private const string _savesFolderName = "Saves";
         private const string _backupsFolderName = "Backups";
         private const string _baseGameBackupsFolderName = "Vanilla";
@@ -16,9 +16,13 @@ namespace ModEngine2ConfigTool.Services
         private readonly string _savesRoot;
 
         private readonly string _backupsRoot;
+        private readonly ConfigurationService _configurationService;
         private readonly DialogService _dialogService;
 
-        public SaveManagerService(string dataStorage, DialogService dialogService)
+        public SaveManagerService(
+            string dataStorage, 
+            ConfigurationService configurationService, 
+            DialogService dialogService)
         {
             _savesRoot = Path.Combine(dataStorage, _savesFolderName);
             _backupsRoot = Path.Combine(_savesRoot, _backupsFolderName);
@@ -33,6 +37,7 @@ namespace ModEngine2ConfigTool.Services
                 Directory.CreateDirectory(_backupsRoot);
             }
 
+            _configurationService = configurationService;
             _dialogService = dialogService;
         }
 
@@ -50,34 +55,20 @@ namespace ModEngine2ConfigTool.Services
 
             if (Directory.Exists(eldenRingSaveGameFolder))
             {
-                var existingSaveGames = GetSaves(eldenRingSaveGameFolder, "sl2");
-                var existingCoopSaveGames = GetSaves(eldenRingSaveGameFolder, "co2");
+                var existingSaveGames = GetSaves(eldenRingSaveGameFolder);
 
                 foreach (var file in existingSaveGames)
                 {
-                    var newExtension = $"{Path.GetExtension(file)}temp";
-                    File.Move(file, Path.ChangeExtension(file, newExtension), true);
-                }
-
-                foreach (var file in existingCoopSaveGames)
-                {
-                    var newExtension = $"{Path.GetExtension(file)}temp";
+                    var newExtension = $"{Path.GetExtension(file)}{_tempExt}";
                     File.Move(file, Path.ChangeExtension(file, newExtension), true);
                 }
             }
 
             if (Directory.Exists(profileSaves))
             {
-                var existingSaveGames = GetSaves(profileSaves, "sl2");
-                var existingCoopSaveGames = GetSaves(profileSaves, "co2");
+                var existingSaveGames = GetSaves(profileSaves);
 
                 foreach (var file in existingSaveGames)
-                {
-                    var fileName = Path.GetFileName(file);
-                    File.Copy(file, $"{eldenRingSaveGameFolder}\\{fileName}");
-                }
-
-                foreach (var file in existingCoopSaveGames)
                 {
                     var fileName = Path.GetFileName(file);
                     File.Copy(file, $"{eldenRingSaveGameFolder}\\{fileName}");
@@ -101,8 +92,7 @@ namespace ModEngine2ConfigTool.Services
 
             if (Directory.Exists(eldenRingSaveGameFolder))
             {
-                var existingSaveGames = GetSaves(eldenRingSaveGameFolder, "sl2");
-                var existingCoopSaveGames = GetSaves(eldenRingSaveGameFolder, "co2");
+                var existingSaveGames = GetSaves(eldenRingSaveGameFolder);
 
                 foreach (var file in existingSaveGames)
                 {
@@ -110,24 +100,11 @@ namespace ModEngine2ConfigTool.Services
                     File.Move(file, $"{profileSaves}\\{fileName}", true);
                 }
 
-                foreach (var file in existingCoopSaveGames)
-                {
-                    var fileName = Path.GetFileName(file);
-                    File.Move(file, $"{profileSaves}\\{fileName}", true);
-                }
-
-                var tempSaveGames = GetTempSaves(eldenRingSaveGameFolder, "sl2");
-                var tempCoopSaveGames = GetTempSaves(eldenRingSaveGameFolder, "co2");
+                var tempSaveGames = GetTempSaves(eldenRingSaveGameFolder);
 
                 foreach (var file in tempSaveGames)
                 {
-                    var newExtension = Path.GetExtension(file).Replace("temp", "");
-                    File.Move(file, Path.ChangeExtension(file, newExtension));
-                }
-
-                foreach (var file in tempCoopSaveGames)
-                {
-                    var newExtension = Path.GetExtension(file).Replace("temp", "");
+                    var newExtension = Path.GetExtension(file).Replace(_tempExt, "");
                     File.Move(file, Path.ChangeExtension(file, newExtension));
                 }
             }
@@ -141,20 +118,38 @@ namespace ModEngine2ConfigTool.Services
                 return;
             }
 
+            var timestamp = DateTime.Now.ToString("dd_M_yyyy  H_mm_ss");
+
             var unmoddedBackups = Path.Combine(
                 _backupsRoot,
                 _baseGameBackupsFolderName);
 
+            var datedProfileBackupFolderPath = Path.Combine(
+                unmoddedBackups,
+                timestamp);
+
+            if (Directory.Exists(unmoddedBackups))
+            {
+                var allBackups = Directory.GetDirectories(unmoddedBackups);
+                var ordered = allBackups.OrderBy(x => DateTime.ParseExact(
+                    new DirectoryInfo(x).Name, "dd_M_yyyy  H_mm_ss", null));
+
+                foreach (var backup in ordered.SkipLast(10))
+                {
+                    Directory.Delete(backup, true);
+                }
+            }
+
             if (Directory.Exists(eldenRingSaveGameFolder))
             {
-                Directory.CreateDirectory(unmoddedBackups);
+                Directory.CreateDirectory(datedProfileBackupFolderPath);
 
                 var saveGames = Directory.GetFiles(eldenRingSaveGameFolder);
 
                 foreach (var file in saveGames)
                 {
                     var fileName = Path.GetFileName(file);
-                    File.Copy(file, $"{unmoddedBackups}\\{fileName}", true);
+                    File.Copy(file, $"{datedProfileBackupFolderPath}\\{fileName}", true);
                 }
             }
         }
@@ -268,6 +263,14 @@ namespace ModEngine2ConfigTool.Services
             }
         }
 
+        public void OpenBackupSavesFolder()
+        {
+            if (Directory.Exists(_backupsRoot))
+            {
+                Process.Start("explorer", _backupsRoot);
+            }
+        }
+
         public void OpenProfileSavesFolder(string profileId)
         {
             var profileSaves = Path.Combine(
@@ -302,9 +305,7 @@ namespace ModEngine2ConfigTool.Services
                 return;
             }
 
-            var sl2Saves = GetSaves(importFolder, "sl2");
-            var coopSaves = GetSaves(importFolder, "co2");
-            var allSaves = sl2Saves.Concat(coopSaves);
+            var allSaves = Directory.GetFiles(importFolder);
 
             var profileSaves = Path.Combine(
                 _savesRoot,
@@ -341,9 +342,7 @@ namespace ModEngine2ConfigTool.Services
                 _savesRoot,
                 profileId);
 
-            var sl2Saves = GetSaves(profileSaves, "sl2");
-            var coopSaves = GetSaves(profileSaves, "co2");
-            var allSaves = sl2Saves.Concat(coopSaves);
+            var allSaves = Directory.GetFiles(profileSaves);
 
             foreach (var save in allSaves)
             {
@@ -355,6 +354,12 @@ namespace ModEngine2ConfigTool.Services
 
         private string? GetEldenRingSavesFolder()
         {
+            if(_configurationService.AutoDetectSaves.HasValue 
+                && _configurationService.AutoDetectSaves.Value.Equals(false))
+            {
+                return _configurationService.EldenRingSavesPath;
+            }
+
             var eldenRingSaveGameFolder = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "EldenRing");
@@ -362,19 +367,17 @@ namespace ModEngine2ConfigTool.Services
             return Directory.GetDirectories(eldenRingSaveGameFolder).FirstOrDefault();
         }
 
-        private static List<string> GetSaves(string directory, string extension)
+        private List<string> GetSaves(string folder)
         {
-            return Directory.GetFiles(directory, $"*.{extension}")
-                .ToList()
-                .Concat(Directory.GetFiles(directory, $"*.{extension}.bak"))
+            return Directory.GetFiles(folder)
+                .Where(x => !Path.GetExtension(x).EndsWith(_tempExt))
                 .ToList();
         }
 
-        private static List<string> GetTempSaves(string directory, string extension)
+        private List<string> GetTempSaves(string folder)
         {
-            return Directory.GetFiles(directory, $"*.{extension}temp")
-                .ToList()
-                .Concat(Directory.GetFiles(directory, $"*.{extension}.baktemp"))
+            return Directory.GetFiles(folder)
+                .Where(x => Path.GetExtension(x).EndsWith(_tempExt))
                 .ToList();
         }
     }

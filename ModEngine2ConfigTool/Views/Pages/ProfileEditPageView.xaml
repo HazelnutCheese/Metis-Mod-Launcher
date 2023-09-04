@@ -215,8 +215,8 @@
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="54" />
                                                                         <ColumnDefinition Width="40" />
-                                                                        <ColumnDefinition Width="0.25*" />
-                                                                        <ColumnDefinition Width="0.75*" />
+                                                                        <ColumnDefinition Width="0.5*" />
+                                                                        <ColumnDefinition Width="0.5*" />
                                                                         <ColumnDefinition Width="54" />
                                                                         <ColumnDefinition Width="0" />
                                                                     </Grid.ColumnDefinitions>
@@ -356,8 +356,8 @@
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="54" />
                                                                         <ColumnDefinition Width="40" />
-                                                                        <ColumnDefinition Width="0.25*" />
-                                                                        <ColumnDefinition Width="0.75*" />
+                                                                        <ColumnDefinition Width="0.5*" />
+                                                                        <ColumnDefinition Width="0.5*" />
                                                                         <ColumnDefinition Width="54" />
                                                                         <ColumnDefinition Width="0" />
                                                                     </Grid.ColumnDefinitions>
@@ -474,11 +474,23 @@
 
                     <StackPanel Margin="0,15,15,5" Orientation="Horizontal">
                         <CheckBox x:Name="UseSavesCheck"
-                                  VerticalAlignment="Center"
+                                  VerticalAlignment="Top"
                                   IsChecked="{Binding Profile.UseSaveManager}" />
-                        <TextBlock Margin="10,0,0,0"
+                        <TextBlock Width="400"
+                                   Margin="10,0,0,0"
                                    VerticalAlignment="Center"
-                                   Text="Use profile specific save game" />
+                                   TextWrapping="Wrap">
+                            <Run Text="Use profile specific save game" />
+                            <LineBreak />
+                            <LineBreak />
+                            <Run Text="Warning:" />
+                            <LineBreak />
+                            <LineBreak />
+                            <Run Text="This feature is no longer supported and was kept for legacies sake." />
+                            <LineBreak />
+                            <LineBreak />
+                            <Run Text="It's recomended you do not use it due to bugs. Use at your own risk!" />
+                        </TextBlock>
                     </StackPanel>
                     <controls:HotBar Grid.Row="5"
                                      Margin="0,10"

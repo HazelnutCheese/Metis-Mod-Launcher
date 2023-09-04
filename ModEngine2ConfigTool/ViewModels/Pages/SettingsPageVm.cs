@@ -65,9 +65,35 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             }
         }
 
+        public bool? AutoDetectSaves
+        {
+            get => _configurationService.AutoDetectSaves;
+            set
+            {
+                _configurationService.AutoDetectSaves = value;
+                OnPropertyChanged(nameof(AutoDetectSaves));
+                (BrowseEldenRingExeCommand as RelayCommand)?.NotifyCanExecuteChanged();
+            }
+        }
+
+        public string EldenRingSavesPath
+        {
+            get => _configurationService.EldenRingSavesPath;
+            set
+            {
+                if (System.IO.Directory.Exists(value))
+                {
+                    _configurationService.EldenRingSavesPath = value;
+                    OnPropertyChanged(nameof(EldenRingSavesPath));
+                }
+            }
+        }
+
         public ICommand BrowseEldenRingExeCommand { get; }
 
         public ICommand BrowseModEngine2Command { get; }
+
+        public ICommand BrowseSavesCommand { get; }
 
         public SettingsPageVm(
             ConfigurationService configurationService,
@@ -78,6 +104,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
             BrowseEldenRingExeCommand = new RelayCommand(BrowseEldenRing, () => !AutoDetectEldenRing is false);
             BrowseModEngine2Command = new RelayCommand(BrowseModEngine2, () => AutoDetectModEngine2 is false);
+            BrowseSavesCommand = new RelayCommand(BrowseSaves, () => AutoDetectSaves is false);
 
             HotBarVm = new HotBarVm(
                 new ObservableCollection<ObservableObject>()
@@ -119,6 +146,19 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             if (newPath is string && System.IO.File.Exists(newPath))
             {
                 ModEngine2ExePath = newPath;
+            }
+        }
+
+        private void BrowseSaves()
+        {
+            var newPath = _dialogService.ShowFolderDialog(
+                "Select Elden Ring Saves folder",
+                EldenRingSavesPath,
+                EldenRingSavesPath);
+
+            if (newPath is string && System.IO.Directory.Exists(newPath))
+            {
+                EldenRingSavesPath = newPath;
             }
         }
     }

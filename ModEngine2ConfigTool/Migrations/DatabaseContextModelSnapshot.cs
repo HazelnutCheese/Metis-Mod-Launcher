@@ -98,10 +98,18 @@ namespace ModEngine2ConfigTool.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("DllsOrder")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ImagePath")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("LastPlayed")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ModsOrder")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")

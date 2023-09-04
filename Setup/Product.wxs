@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" 
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" >
 	<Product Id="*" 
            Name="Metis Mod Launcher Setup" 
            Language="1033" 
@@ -20,6 +21,7 @@
 			<ComponentGroupRef Id="LauncherComponents" />
       <ComponentGroupRef Id="ModEngine2Components"/>
       <ComponentGroupRef Id="DesktopComponents" />
+      <ComponentRef Id="CmpCreateMe2LogsFolder" />
 		</Feature>
 
     <UIRef Id="WixUI_InstallDir" />
@@ -39,6 +41,19 @@
       <Directory Id="DesktopFolder" Name="Desktop"/>
 		</Directory>
 	</Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="dir319122A915C9FE4E3B27384DDA1D00A5">
+      <Directory Id="ME2LOGS" Name="logs">
+        <Component Id="CmpCreateMe2LogsFolder" Guid="37C6032D-1DA8-48DF-85A3-D02C5AC4D516">
+          <CreateFolder>
+            <!--Me2 Logs folder needs write permission. -->
+            <util:PermissionEx User="Users" GenericAll="yes" />
+          </CreateFolder>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
 
 	<Fragment>
     <ComponentGroup Id="DesktopComponents" Directory="DesktopFolder">

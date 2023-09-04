@@ -14,6 +14,10 @@ namespace ModEngine2ConfigTool.Models
         public List<Mod> Mods { get; set; }
         public List<Dll> Dlls { get; set; }
 
+        public string ModsOrder { get; set; }
+
+        public string DllsOrder { get; set; }
+
         public bool UseSaveManager { get; set; }
 
         public bool UseDebugMode { get; set; } = false;

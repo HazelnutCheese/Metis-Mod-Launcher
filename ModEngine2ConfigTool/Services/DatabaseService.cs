@@ -20,14 +20,38 @@ namespace ModEngine2ConfigTool.Services
             _dataStorage = dataStorage;
             _databaseContext = new DatabaseContext(_dataStorage);
             _databaseContext.Database.EnsureCreated();
+            _databaseContext.Database.Migrate();
         }
 
         public List<Profile> GetProfiles()
         {
-            return _databaseContext.Profiles
+            var profiles = _databaseContext.Profiles
                 .Include(p => p.Mods)
                 .Include(p => p.Dlls)
                 .ToList();
+
+            foreach(var profile in profiles)
+            {
+                if(!string.IsNullOrEmpty(profile.ModsOrder))
+                {
+                    var order = profile.ModsOrder.Split(";", StringSplitOptions.None);
+
+                    profile.Mods = profile
+                        .Mods
+                        .OrderBy(x => Array.IndexOf(order, x.ModId.ToString())).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(profile.DllsOrder))
+                {
+                    var order = profile.DllsOrder.Split(";", StringSplitOptions.None);
+
+                    profile.Dlls = profile
+                        .Dlls
+                        .OrderBy(x => Array.IndexOf(order, x.DllId.ToString())).ToList();
+                }
+            }
+
+            return profiles;
         }
 
         public List<Mod> GetMods()
@@ -55,6 +79,8 @@ namespace ModEngine2ConfigTool.Services
         {
             if (!_databaseContext.Profiles.AsEnumerable().Contains(profileVm.Model, new ProfileEqualityComparer()))
             {
+                SortOrdering(profileVm.Model);
+
                 _databaseContext.Add(profileVm.Model);
                 _databaseContext.SaveChanges();
             }
@@ -94,6 +120,9 @@ namespace ModEngine2ConfigTool.Services
                 && !profile.Mods.Contains(mod, new ModEqualityComparer()))
             {
                 profile.Mods.Add(mod);
+
+                SortOrdering(profile);
+
                 _databaseContext.SaveChanges();
             }
         }
@@ -125,6 +154,8 @@ namespace ModEngine2ConfigTool.Services
 
                 profile.Mods.Insert(newIndex, mod);
 
+                SortOrdering(profile);
+
                 _databaseContext.SaveChanges();
             }
         }
@@ -135,7 +166,10 @@ namespace ModEngine2ConfigTool.Services
                 && TryGetMod(modVm, out var mod)
                 && profile.Mods.Contains(mod, new ModEqualityComparer()))
             {
-                profile.Mods.Remove(mod); 
+                profile.Mods.Remove(mod);
+
+                SortOrdering(profile);
+
                 _databaseContext.SaveChanges();
             }
         }
@@ -165,6 +199,9 @@ namespace ModEngine2ConfigTool.Services
                 && !profile.Dlls.Contains(dll, new DllEqualityComparer()))
             {
                 profile.Dlls.Add(dll);
+
+                SortOrdering(profile);
+
                 _databaseContext.SaveChanges();
             }
         }
@@ -196,6 +233,8 @@ namespace ModEngine2ConfigTool.Services
 
                 profile.Dlls.Insert(newIndex, dll);
 
+                SortOrdering(profile);
+
                 _databaseContext.SaveChanges();
             }
         }
@@ -207,6 +246,9 @@ namespace ModEngine2ConfigTool.Services
                 && profile.Dlls.Contains(dll, new DllEqualityComparer()))
             {
                 profile.Dlls.Remove(dll);
+
+                SortOrdering(profile);
+
                 _databaseContext.SaveChanges();
             }
         }
@@ -262,6 +304,12 @@ namespace ModEngine2ConfigTool.Services
                 dllVm.Model.DllId) as Dll;
 
             return result is not null;
+        }
+
+        private void SortOrdering(Profile profile)
+        {
+            profile.ModsOrder = string.Join(";", profile.Mods.Select(x => x.ModId));
+            profile.DllsOrder = string.Join(";", profile.Dlls.Select(x => x.DllId));
         }
     }
 }
