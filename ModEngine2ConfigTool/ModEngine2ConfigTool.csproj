@@ -5,9 +5,9 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <AssemblyVersion>1.2.0</AssemblyVersion>
-    <FileAssemblyVersion>0.0.1</FileAssemblyVersion>
-    <Version>1.2.0</Version>
+    <AssemblyVersion>1.3.0</AssemblyVersion>
+    <FileAssemblyVersion>1.3.0</FileAssemblyVersion>
+    <Version>1.3.0</Version>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <ApplicationIcon>Resources\icon_07.ico</ApplicationIcon>
     <StartupObject>ModEngine2ConfigTool.EntryPoint</StartupObject>

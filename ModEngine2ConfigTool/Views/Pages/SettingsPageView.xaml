@@ -148,7 +148,7 @@
                                Text="Custom saves folder path:" />
 
                     <TextBox Grid.Row="1"
-                             materialDesign:HintAssist.Hint="Enter Elden Ring saves folder path"
+                             materialDesign:HintAssist.Hint="Enter folder path where Elden Ring stores saves"
                              AcceptsReturn="False"
                              Background="{DynamicResource SecondaryHueLightBrush}"
                              MaxLines="1"

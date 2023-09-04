@@ -94,7 +94,7 @@ namespace ModEngine2ConfigTool.Services
                     _saveManagerService.UninstallProfileSaves(profileId);
                 }
 
-                // delete toml file                
+                // delete toml file
                 File.Delete(profileToml);
             }
             catch (Exception e)

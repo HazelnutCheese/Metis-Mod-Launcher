@@ -2,737 +2,1075 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="ME2FOLDER">
-            <Directory Id="dir45499512B23F30BEE1EB759B9F3ABA9D" Name="ModEngine-2.0.0-preview4-win64" />
+            <Directory Id="dir8235B37C307F8330AA160E7190434847" Name="ModEngine-2.1.0.0-win64" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
         <ComponentGroup Id="ModEngine2Components">
-            <Component Id="cmpF699695FE7BF80EC8E25DB520DFFAA4D" Directory="dir45499512B23F30BEE1EB759B9F3ABA9D" Guid="*">
-                <File Id="fil5FEF911F922731017392E20625585048" KeyPath="yes" Source="SourceDir\modengine2_launcher.exe" />
+            <Component Id="cmpA4654EA410844E070FA9A3099549C4AF" Directory="dir8235B37C307F8330AA160E7190434847" Guid="*">
+                <File Id="fil88FD05FD6F8E08C308442861031BB40D" KeyPath="yes" Source="SourceDir\modengine2_launcher.exe" />
             </Component>
-            <Component Id="cmpFF5FE18446A224ED04467E6587F564BE" Directory="dir45499512B23F30BEE1EB759B9F3ABA9D" Guid="*">
-                <File Id="fil0DA74CA4866A604283FCB786569A488D" KeyPath="yes" Source="SourceDir\README.txt" />
+            <Component Id="cmp9F2017DE8A24CE10B514018153E9601C" Directory="dir8235B37C307F8330AA160E7190434847" Guid="*">
+                <File Id="fil1FD9B95978D7C85F13E0D7B07390CF3E" KeyPath="yes" Source="SourceDir\README.txt" />
             </Component>
-            <Component Id="cmp067CA259682B1E81C7143666553194CE" Directory="dir74CFC34D65C15613807C7610FC71B782" Guid="*">
-                <File Id="fil9162FAD87FBE24C508C008A87FFFF898" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\adhoc\FontShader\debugFont_ps.ppo" />
+            <Component Id="cmpA1F45AC8FA30EC8D2DDD5F7B5884A29D" Directory="dirAEED3DDE080D9914DFACAF6B7EF819AE" Guid="*">
+                <File Id="filE009BC5E155E8C80E00606FAED5163BC" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\adhoc\FontShader\debugFont_ps.ppo" />
             </Component>
-            <Component Id="cmp8E1D185E45C34669D876A2E4A7A94854" Directory="dir74CFC34D65C15613807C7610FC71B782" Guid="*">
-                <File Id="filA046DD1923429123FD4736F18993C22C" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\adhoc\FontShader\debugFont_vs.vpo" />
+            <Component Id="cmp68358607E4FE13DF2344B3C1E884E3AB" Directory="dirAEED3DDE080D9914DFACAF6B7EF819AE" Guid="*">
+                <File Id="filBF2E36F7520C6523B4D2DE2793018AE0" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\adhoc\FontShader\debugFont_vs.vpo" />
             </Component>
-            <Component Id="cmpBD4212394DB03A4CEBCD024DBA2ED8F1" Directory="dir1A5954C00C17FC6A25B461E1232D5CE6" Guid="*">
-                <File Id="fil4595695028AFAA1BB6D493975DEDFA29" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\font\dbgfont14h.ccm" />
+            <Component Id="cmp2CF5F22E88077938CB9E04F0BEDD3505" Directory="dir94E90D1311A0E4574CA74E9404F95343" Guid="*">
+                <File Id="filD0BAF6FC1B3747EBED8974C387852D07" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\font\dbgfont14h.ccm" />
             </Component>
-            <Component Id="cmpA93455D54DFDA89F72FE52BCE516EA87" Directory="dir1A5954C00C17FC6A25B461E1232D5CE6" Guid="*">
-                <File Id="filEFF1E27018CEBA0C75952FE50F14814D" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\font\dbgfont14h.tpf" />
+            <Component Id="cmpDAF2E15317669CC0541D640E5C567536" Directory="dir94E90D1311A0E4574CA74E9404F95343" Guid="*">
+                <File Id="fil7A446F49168759F720DDD3EC2ECFBA2E" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\font\dbgfont14h.tpf" />
             </Component>
-            <Component Id="cmp6CC015BE6F673D2FBFBE24EDF82631F4" Directory="dir1A5954C00C17FC6A25B461E1232D5CE6" Guid="*">
-                <File Id="fil6C1C307D5A9E634937FD209F068B75F3" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\font\DSFont24.ccm" />
+            <Component Id="cmpBA9BB2FF39CF8DD79DAF801A67BAB147" Directory="dir94E90D1311A0E4574CA74E9404F95343" Guid="*">
+                <File Id="fil78CA0947189A7AE90D0BFE96ECBB1926" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\font\DSFont24.ccm" />
             </Component>
-            <Component Id="cmpACBC7ED207771C5704397621AE99A595" Directory="dir1A5954C00C17FC6A25B461E1232D5CE6" Guid="*">
-                <File Id="fil33575081B0151E212C200229B34F4DF8" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\font\DSFont24.tpf" />
+            <Component Id="cmpFE8B1051735F9523B57BBB6E803E05AE" Directory="dir94E90D1311A0E4574CA74E9404F95343" Guid="*">
+                <File Id="fil23FBE36D3D6E8C57F8360EA73C1219C4" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\font\DSFont24.tpf" />
             </Component>
-            <Component Id="cmpD7EC9656AA88DBBA584EA9F853E9C8B9" Directory="dir1A5954C00C17FC6A25B461E1232D5CE6" Guid="*">
-                <File Id="fil19F03591EF14D072FE3C7032E7C1ABDD" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\font\TalkFont24.ccm" />
+            <Component Id="cmpEFE01C722CB2A69D67A0713BC64DD373" Directory="dir94E90D1311A0E4574CA74E9404F95343" Guid="*">
+                <File Id="fil834BC890191DEA5B5041D4CC8BDD4BAC" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\font\TalkFont24.ccm" />
             </Component>
-            <Component Id="cmpC35DB8364F166B6D2CD338E7E8E84A24" Directory="dir1A5954C00C17FC6A25B461E1232D5CE6" Guid="*">
-                <File Id="fil16AC5F1FC317D6B30D2A3607330D909C" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\font\TalkFont24.tpf" />
+            <Component Id="cmp25DAD9B90112A1D16B8C4F155449B8FF" Directory="dir94E90D1311A0E4574CA74E9404F95343" Guid="*">
+                <File Id="filAEADDB975E996382845CB3AC47A7EE1D" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\font\TalkFont24.tpf" />
             </Component>
-            <Component Id="cmp42D269656094CF49486713EAD2373D61" Directory="dirC5752E9C36FB7A83660939E3B53A2B5B" Guid="*">
-                <File Id="fil4804567C0D38F815B71B1E0F8D977AD8" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\paramdef\paramdef.paramdefbnd.dcx" />
+            <Component Id="cmpF8CABAB9091AB0E66C84B8FB11B39D42" Directory="dirE3A7FA8F787239DFB81E96579351B4CE" Guid="*">
+                <File Id="filF602E8F393C88626F277AA8BB06DB221" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\paramdef\paramdef.paramdefbnd.dcx" />
             </Component>
-            <Component Id="cmp9327C632F8053956641F73E04A70F121" Directory="dirEC2BCFDDBBFB731C66D9F5B0C10F174F" Guid="*">
-                <File Id="fil6CB0104AFE8CAB22EC53E00D6B6FEF7C" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\stayparamdef\stayparamdef.parambnd.dcx" />
+            <Component Id="cmp5D626862CEC632352F19D798C576C218" Directory="dirF44B12F7DEB65E335ECE125E85175623" Guid="*">
+                <File Id="fil1DAEA7E4CFB2F64A783062B679B0F3EA" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\stayparamdef\stayparamdef.parambnd.dcx" />
             </Component>
-            <Component Id="cmpC7338F00941B7137853F7EEC60492A2A" Directory="dirC97E2660C9CB0654C0E5775495B3E380" Guid="*">
-                <File Id="filE182BC47B7D263E8E202D8D7D6B53C92" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\testdata\debugBootMenu.textlist" />
+            <Component Id="cmp72ACD7DFDE5EE99D290D6329C3DCCC9C" Directory="dir80E03EDB307484B49672AFDFB7E3AD7F" Guid="*">
+                <File Id="fil0D008EF67267C06300E3A9755B53336F" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\testdata\debugBootMenu.textlist" />
             </Component>
-            <Component Id="cmp742D71FA7217D764670FC7E15CFA9BEB" Directory="dir657E3234B0FC962990AAE6FDAC030C58" Guid="*">
-                <File Id="filB4220431F6CE12D1C4B3DDD40ABD9EC9" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\testdata\signboard\testsignboard.pwt" />
+            <Component Id="cmpFD8E943797A961E1B1516D47EAFF9CA1" Directory="dir7A879C46552D7F525134FC62232C2D64" Guid="*">
+                <File Id="fil3FFA23AEE04AC52DD34FC16C1D555B95" KeyPath="yes" Source="SourceDir\modengine2\assets\debug_menu\testdata\signboard\testsignboard.pwt" />
             </Component>
-            <Component Id="cmp6BD1318CBAC24258FB9DF04CFE037B52" Directory="dir7A5B5737C8BB3B51E6D6857005471CDD" Guid="*">
-                <File Id="filE7FB5FB38F885DF998C15A051CE89978" KeyPath="yes" Source="SourceDir\modengine2\bin\lua.dll" />
+            <Component Id="cmpDC94A5ADA6B9161D3666CC95DA0C61A3" Directory="dirCAF1AA55C5A097380736FD5ED385BF7C" Guid="*">
+                <File Id="fil3F16C001A1C770E3C271DF4550C6AD96" KeyPath="yes" Source="SourceDir\modengine2\bin\lua.dll" />
             </Component>
-            <Component Id="cmpB61939772DA669E8A8D55A839E6ACB5B" Directory="dir7A5B5737C8BB3B51E6D6857005471CDD" Guid="*">
-                <File Id="fil144ED90133FEC4B56C77C4825209662E" KeyPath="yes" Source="SourceDir\modengine2\bin\modengine2.dll" />
+            <Component Id="cmp2B059749B02385AFE19C54D7164C3684" Directory="dirCAF1AA55C5A097380736FD5ED385BF7C" Guid="*">
+                <File Id="filA769CF0817787FF0960957AECC771040" KeyPath="yes" Source="SourceDir\modengine2\bin\modengine2.dll" />
             </Component>
-            <Component Id="cmp6D3D486F87BBB5E6C093AEFB730D4DA7" Directory="dir585268D7666C54E18CBE5AB1AE59159E" Guid="*">
-                <File Id="fil75F66B6C9BCB03170802A2368967799E" KeyPath="yes" Source="SourceDir\modengine2\crashpad\crashpad_handler.exe" />
+            <Component Id="cmp6879267671A2360D6F7AF8324AB5D9B7" Directory="dirCC1BF04BFFD03788D6A96E0CDCFA6CBA" Guid="*">
+                <File Id="fil8B54B80CD4EEF8D2F52CCD8CDCA6BDCD" KeyPath="yes" Source="SourceDir\modengine2\crashpad\crashpad_handler.exe" />
             </Component>
-            <Component Id="cmp73C48557F49D71CA417EEBD4B4C365DA" Directory="dir585268D7666C54E18CBE5AB1AE59159E" Guid="*">
-                <File Id="filFC0C6EB7974750E734AB094CB748022A" KeyPath="yes" Source="SourceDir\modengine2\crashpad\zlib1.dll" />
+            <Component Id="cmp5A84E2CDF24984100E258AEAB0FD785A" Directory="dirCC1BF04BFFD03788D6A96E0CDCFA6CBA" Guid="*">
+                <File Id="fil548A4391C2E69C064F9A7DE88D997186" KeyPath="yes" Source="SourceDir\modengine2\crashpad\zlib1.dll" />
             </Component>
-            <Component Id="cmp346494AF28CD23CDB3369BA97C376D36" Directory="dir91B9A34CD499F4EDF8548BC181E2872E" Guid="*">
-                <File Id="fil5C788ED7E93D54226A58A491E8464B8C" KeyPath="yes" Source="SourceDir\modengine2\include\lauxlib.h" />
+            <Component Id="cmp97BB6F388B1D14B19B7AA57F9BC4269C" Directory="dir3C2C2312E774B15E2DD24B8442E88E2E" Guid="*">
+                <File Id="fil3802E2ED0AC2E92E5D83A9A498AB060E" KeyPath="yes" Source="SourceDir\modengine2\include\lauxlib.h" />
             </Component>
-            <Component Id="cmp1B2F2A884A044220A2CBB9AFF4CF8BD8" Directory="dir91B9A34CD499F4EDF8548BC181E2872E" Guid="*">
-                <File Id="fil271EA0FE440B7398DE7527147ED1DC5D" KeyPath="yes" Source="SourceDir\modengine2\include\lua.h" />
+            <Component Id="cmp279580783755E4EBC1A10608F15610D9" Directory="dir3C2C2312E774B15E2DD24B8442E88E2E" Guid="*">
+                <File Id="fil6B5F354B6DEF331375F9DCB77757A206" KeyPath="yes" Source="SourceDir\modengine2\include\lua.h" />
             </Component>
-            <Component Id="cmp75A5CB57DC2F53BE4A3D9C97A36C12E7" Directory="dir91B9A34CD499F4EDF8548BC181E2872E" Guid="*">
-                <File Id="filC5F633BF3F5D2047BEBB154694631053" KeyPath="yes" Source="SourceDir\modengine2\include\lua.hpp" />
+            <Component Id="cmpC97EF431CCA0F18B2E55490899337EAA" Directory="dir3C2C2312E774B15E2DD24B8442E88E2E" Guid="*">
+                <File Id="fil75F0DCFE71DDACBDB4B9BBF016060223" KeyPath="yes" Source="SourceDir\modengine2\include\lua.hpp" />
             </Component>
-            <Component Id="cmpBBEB035197AC7B67CA9DEDB34005BCB4" Directory="dir91B9A34CD499F4EDF8548BC181E2872E" Guid="*">
-                <File Id="fil1336F45F50C4DD67B6643890B93AE56E" KeyPath="yes" Source="SourceDir\modengine2\include\luaconf.h" />
+            <Component Id="cmp4F010C4ED89BB917C1AF7425509CA0BB" Directory="dir3C2C2312E774B15E2DD24B8442E88E2E" Guid="*">
+                <File Id="filAE29211FD33A731A00ACE5393AD50B58" KeyPath="yes" Source="SourceDir\modengine2\include\luaconf.h" />
             </Component>
-            <Component Id="cmpC762FCBB0830DF265C3BAB19F81E5546" Directory="dir91B9A34CD499F4EDF8548BC181E2872E" Guid="*">
-                <File Id="filA702D0A9F9016D0179935CAB55FED172" KeyPath="yes" Source="SourceDir\modengine2\include\lualib.h" />
+            <Component Id="cmp994F57D82B195BCED6A5B3BC54FDCF38" Directory="dir3C2C2312E774B15E2DD24B8442E88E2E" Guid="*">
+                <File Id="filC98CDAD82BB1E3A7B1A7DCB294585991" KeyPath="yes" Source="SourceDir\modengine2\include\lualib.h" />
             </Component>
-            <Component Id="cmp1C589D4F5EAE447C1370CCC566AA4AA7" Directory="dir91B9A34CD499F4EDF8548BC181E2872E" Guid="*">
-                <File Id="fil261050B246CBC6265277D25BABEADB9E" KeyPath="yes" Source="SourceDir\modengine2\include\MINT.h" />
+            <Component Id="cmp7CECAEF422BB53E6A779572E95E320D0" Directory="dir3C2C2312E774B15E2DD24B8442E88E2E" Guid="*">
+                <File Id="fil66CC971D779251CDA58AE8D8DAD2CE19" KeyPath="yes" Source="SourceDir\modengine2\include\MINT.h" />
             </Component>
-            <Component Id="cmp69C0061574089035A21A5A070E61F279" Directory="dir91B9A34CD499F4EDF8548BC181E2872E" Guid="*">
-                <File Id="fil0E607417B9F8EA7ACF713D7394D5F7C0" KeyPath="yes" Source="SourceDir\modengine2\include\README.md" />
+            <Component Id="cmpBAFB93E13622AA1F4F766A6D4AE3FD16" Directory="dir3C2C2312E774B15E2DD24B8442E88E2E" Guid="*">
+                <File Id="fil98760EDD5A2BDCC35A4FCE14137ECC39" KeyPath="yes" Source="SourceDir\modengine2\include\README.md" />
             </Component>
-            <Component Id="cmpA319C343089F6F7AE3E3FF5C5F55B8A9" Directory="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Guid="*">
-                <File Id="fil20B2EAB9664722578FA9C3037158F091" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\args.h" />
+            <Component Id="cmp2D35961492BD270EBD032E5047285B25" Directory="dir7820B785B237DC426006CEB22177245B" Guid="*">
+                <File Id="filC2A4A85CC177FC9DDC89711300B31DEA" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\args.h" />
             </Component>
-            <Component Id="cmp443C448E509C521F84C7B75BCAC2B927" Directory="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Guid="*">
-                <File Id="fil6E250D446623E010A9EA107B05DF77B4" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\chrono.h" />
+            <Component Id="cmpC4F66C489F0D98FBC21EDFA49B67BF68" Directory="dir7820B785B237DC426006CEB22177245B" Guid="*">
+                <File Id="filAE4ECC112FBAD17B34B79A3078E69690" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\chrono.h" />
             </Component>
-            <Component Id="cmp8D064E3A12C02183C24B06EE82384809" Directory="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Guid="*">
-                <File Id="filB26603883390E16045D136DFC8C4C64D" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\color.h" />
+            <Component Id="cmp24C9FB55642AFE9530938CBAF10E5C1B" Directory="dir7820B785B237DC426006CEB22177245B" Guid="*">
+                <File Id="filC44B65E9C3849BB7C233CDB596983789" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\color.h" />
             </Component>
-            <Component Id="cmp51AC3145A64F71606F3C597F0A17EEFD" Directory="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Guid="*">
-                <File Id="filF8BF71EBB3F862799A579DE0DCF62F51" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\compile.h" />
+            <Component Id="cmp7A685C1482435E828C8C2FC97C1A2CB3" Directory="dir7820B785B237DC426006CEB22177245B" Guid="*">
+                <File Id="fil7CD718EF63F4CE029E21BB8F820456A3" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\compile.h" />
             </Component>
-            <Component Id="cmp3B341AD02A49581EA7557D87CAB8A8BD" Directory="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Guid="*">
-                <File Id="filDC6A0E27AE464077EAC11C8C344923FE" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\core.h" />
+            <Component Id="cmpE6BFDF02A131C0A6E6CF9894C60E6CAD" Directory="dir7820B785B237DC426006CEB22177245B" Guid="*">
+                <File Id="fil6CD0ACAD03F07D3C7B960B7DD1512FDE" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\core.h" />
             </Component>
-            <Component Id="cmpDA702C7C023C6BA0C3F2911AE6D66040" Directory="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Guid="*">
-                <File Id="filE6E98C150C223B98B0EA1B24CD9CE2D1" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\format-inl.h" />
+            <Component Id="cmp194DFDC907778BCB697199EE9F320D74" Directory="dir7820B785B237DC426006CEB22177245B" Guid="*">
+                <File Id="fil353987A06149E42AB361AFEA590291D2" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\format-inl.h" />
             </Component>
-            <Component Id="cmp58DF2A49C3A7954B3DF75F220FC3BCF8" Directory="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Guid="*">
-                <File Id="fil3B4AA56D63935BCBFDC3C7075849942D" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\format.h" />
+            <Component Id="cmp89DCBC066734CC6F9774D67430EB3883" Directory="dir7820B785B237DC426006CEB22177245B" Guid="*">
+                <File Id="filDB3EF816AE5BDE5D057DC901AC6286E1" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\format.h" />
             </Component>
-            <Component Id="cmp471D9B06F90D63DC539BBD873AB5A6CD" Directory="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Guid="*">
-                <File Id="filB3CFD0DD0063324D5A27E15F53AB1F4A" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\locale.h" />
+            <Component Id="cmpA48B0F5CBF8EB630E22B7F8CD41CA27F" Directory="dir7820B785B237DC426006CEB22177245B" Guid="*">
+                <File Id="filE4E835B2F4E8EB80183985664CCD2C35" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\os.h" />
             </Component>
-            <Component Id="cmpF64CD6567E58B67FD2F3BE9B2B71D802" Directory="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Guid="*">
-                <File Id="fil57EE50AC3C35DCFFAAB8EF39C0AD7767" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\os.h" />
+            <Component Id="cmpD6865F23D7EF8A577A345308D10BF70E" Directory="dir7820B785B237DC426006CEB22177245B" Guid="*">
+                <File Id="filD172B40AEF9E2DBF3C191A87331AAAF3" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\ostream.h" />
             </Component>
-            <Component Id="cmp58117E13761092C14794EC8AA8EE460E" Directory="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Guid="*">
-                <File Id="fil92E7E907416896628393E9B4B8146758" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\ostream.h" />
+            <Component Id="cmp7C7C43845033DD85E888906C7B5FB505" Directory="dir7820B785B237DC426006CEB22177245B" Guid="*">
+                <File Id="fil02459FA6075A7C56B2F65A9103729A27" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\printf.h" />
             </Component>
-            <Component Id="cmpCF5939E07920554BDCAEDE8A2674B5EB" Directory="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Guid="*">
-                <File Id="filDE643712C7B99CD5F2DC16BAD8BB64BC" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\printf.h" />
+            <Component Id="cmpD4FAED20F066B5DF768F5FE9A59D78E5" Directory="dir7820B785B237DC426006CEB22177245B" Guid="*">
+                <File Id="fil701D3D0CA42EEFD98833CC283337DCB7" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\ranges.h" />
             </Component>
-            <Component Id="cmpB231561E65125B39B595A89FEE21C665" Directory="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Guid="*">
-                <File Id="fil279A0EBF2E6F00681AE600892E824380" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\ranges.h" />
+            <Component Id="cmpAFFFCFE03EF97C1871327CC12335A463" Directory="dir7820B785B237DC426006CEB22177245B" Guid="*">
+                <File Id="fil235EE51682E4A70642FCEADEBCCBCBEC" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\std.h" />
             </Component>
-            <Component Id="cmpF500F810890903F0217D51A2903F68C4" Directory="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Guid="*">
-                <File Id="fil0DBAAD9A2F54178BE5EE1E08CF858A05" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\xchar.h" />
+            <Component Id="cmp45D63E3C71FDCDFE9614D1B01681E301" Directory="dir7820B785B237DC426006CEB22177245B" Guid="*">
+                <File Id="fil2FBD39C3D9F964B0B049C5EB38DBAF43" KeyPath="yes" Source="SourceDir\modengine2\include\fmt\xchar.h" />
             </Component>
-            <Component Id="cmpF4FA8BD4BCC86E135C8BBB603562E852" Directory="dir01A4FE78F0C94695FAA937BEC9CB319F" Guid="*">
-                <File Id="filFEB6C6A2E4D4679A16FBF55533FF40D2" KeyPath="yes" Source="SourceDir\modengine2\include\modengine\extension.h" />
+            <Component Id="cmpC8B80E77B66123760AD27289C78DCC8B" Directory="dir4DC42E9388BA52B236661125C26E30DA" Guid="*">
+                <File Id="filCC1169DBEDEE38878FDF8551449DF55F" KeyPath="yes" Source="SourceDir\modengine2\include\modengine\extension.h" />
             </Component>
-            <Component Id="cmp5E06392DE8F069319DFA3ED53A40BCD0" Directory="dir01A4FE78F0C94695FAA937BEC9CB319F" Guid="*">
-                <File Id="filE6064E03681325021CC2B7D5EBC5F2D8" KeyPath="yes" Source="SourceDir\modengine2\include\modengine\extension_logger.h" />
+            <Component Id="cmp845B934808626C0FA6A03E0B4694971B" Directory="dir4DC42E9388BA52B236661125C26E30DA" Guid="*">
+                <File Id="fil784271B44FD974B62487D5E11B3D82FF" KeyPath="yes" Source="SourceDir\modengine2\include\modengine\extension_logger.h" />
             </Component>
-            <Component Id="cmp83AA890690E60E11027276BF8DE0D9B3" Directory="dir01A4FE78F0C94695FAA937BEC9CB319F" Guid="*">
-                <File Id="fil5EC334182160C1509827050EEC05BA54" KeyPath="yes" Source="SourceDir\modengine2\include\modengine\game_type.h" />
+            <Component Id="cmp855F1C287E2D35EEA8D92B88D7882C11" Directory="dir4DC42E9388BA52B236661125C26E30DA" Guid="*">
+                <File Id="fil6936293A6066D2115078476FDBFB1428" KeyPath="yes" Source="SourceDir\modengine2\include\modengine\game_type.h" />
             </Component>
-            <Component Id="cmp144C5C0D7C40B391503A91F5FD9DC763" Directory="dir01A4FE78F0C94695FAA937BEC9CB319F" Guid="*">
-                <File Id="fil2960AB1927F94264EB2B7CA77A68C414" KeyPath="yes" Source="SourceDir\modengine2\include\modengine\hook.h" />
+            <Component Id="cmp1DCFFBD0ADDD458912B4AD9B432B4EEC" Directory="dir4DC42E9388BA52B236661125C26E30DA" Guid="*">
+                <File Id="filFA62E63ED692B168AE58D9126F7FE41D" KeyPath="yes" Source="SourceDir\modengine2\include\modengine\hook.h" />
             </Component>
-            <Component Id="cmp0327BD505E0C03EA71D73678C4606C5E" Directory="dir01A4FE78F0C94695FAA937BEC9CB319F" Guid="*">
-                <File Id="filAB7B2CCE9E447E4A143778F8F090FA2D" KeyPath="yes" Source="SourceDir\modengine2\include\modengine\settings.h" />
+            <Component Id="cmp5C09527C75EFDE7B6131D131A15960BB" Directory="dir4DC42E9388BA52B236661125C26E30DA" Guid="*">
+                <File Id="fil57A06FD07CEEE942A94927C8E4823ACC" KeyPath="yes" Source="SourceDir\modengine2\include\modengine\settings.h" />
             </Component>
-            <Component Id="cmp62B891CDABAFB2F0F8F9B8D53F368662" Directory="dir9036960CDF5D564352BBB25DC7BC6EC1" Guid="*">
-                <File Id="filED08423E96883A8715EDD85F56715B48" KeyPath="yes" Source="SourceDir\modengine2\include\modengine\util\memory_scanner.h" />
+            <Component Id="cmp6B02D86836A5DD60C4D7A955C954F1FD" Directory="dir44FE819FF3FA3E464D5841177AE5E057" Guid="*">
+                <File Id="filF1F4EF368B33D5AACEF180799E618648" KeyPath="yes" Source="SourceDir\modengine2\include\modengine\util\memory_scanner.h" />
             </Component>
-            <Component Id="cmp8DC6F56432E7907A2138C0FB999C0AD9" Directory="dir0DD738560862A0EBE686C50E486A1AFF" Guid="*">
-                <File Id="filC7D4F152666833C3EA5C3ECF54BE5B23" KeyPath="yes" Source="SourceDir\modengine2\include\sol\config.hpp" />
+            <Component Id="cmp6321E304ACF087A49C625D1D9C421276" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filA52C65FF47AC21B7E93655EC73AF3E57" KeyPath="yes" Source="SourceDir\modengine2\include\sol\assert.hpp" />
             </Component>
-            <Component Id="cmpC23AB030115940DDCE1CB576DA1D9AB7" Directory="dir0DD738560862A0EBE686C50E486A1AFF" Guid="*">
-                <File Id="fil5A9CDEE1430C9437E51BDE12AA6D201B" KeyPath="yes" Source="SourceDir\modengine2\include\sol\forward.hpp" />
+            <Component Id="cmpC2EBF165E3FF56310CF55D2A4D2C1715" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil7BAC1B23887D9A3B5780B80781282E11" KeyPath="yes" Source="SourceDir\modengine2\include\sol\as_args.hpp" />
             </Component>
-            <Component Id="cmp5076837D43CD32E42BC95F7846BE87EF" Directory="dir0DD738560862A0EBE686C50E486A1AFF" Guid="*">
-                <File Id="fil33D037AE1A5C754F3A62BC9A33257BAA" KeyPath="yes" Source="SourceDir\modengine2\include\sol\sol.hpp" />
+            <Component Id="cmp5757F6C1EE1A1347063579F5EFD6DB72" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil347BA88EC90E5A7654AF340ADF269413" KeyPath="yes" Source="SourceDir\modengine2\include\sol\as_returns.hpp" />
             </Component>
-            <Component Id="cmp836B0A074D052D56BC3DDFD25B496430" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="fil595FF53F733E4150E48898F2491B117D" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\async.h" />
+            <Component Id="cmpE5BA9FA877687ED7AB4240F937E84F54" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil548B18BDC5C83CEA2AEA043596C18DD9" KeyPath="yes" Source="SourceDir\modengine2\include\sol\base_traits.hpp" />
             </Component>
-            <Component Id="cmp90449F12CE998805E04D236B594C172F" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="fil227A3F937A43A0B976397890AAEEB05F" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\async_logger-inl.h" />
+            <Component Id="cmp5BF75335D77203B9DFB1C5106ADE5764" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil6917D405D3732B73609A5F10D1473BE7" KeyPath="yes" Source="SourceDir\modengine2\include\sol\bind_traits.hpp" />
             </Component>
-            <Component Id="cmp2FAD6CADAFF482B4DE706917E41BA382" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="filED9DE2952D3FBEDA207E7493E21CEB28" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\async_logger.h" />
+            <Component Id="cmpC55A7BD4A91403C0AAEA526EF0635C12" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil2C05526EA9BE1B0CBE900A849D9AC07F" KeyPath="yes" Source="SourceDir\modengine2\include\sol\bytecode.hpp" />
             </Component>
-            <Component Id="cmp0AE6FC93C75F938E52B32F1611D007E8" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="fil633BE6A9D644BA22EF0E8830EBBC5EA1" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\common-inl.h" />
+            <Component Id="cmpF8F1CB53B080DA81C06886861F40B71C" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil0EA104413A21298EDFFCEC54535AE61F" KeyPath="yes" Source="SourceDir\modengine2\include\sol\call.hpp" />
             </Component>
-            <Component Id="cmp7CBE9E03817FE2E0152AE90A1FC7EF28" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="filD629D2BE7E809B91FA25DB21B2BA35BC" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\common.h" />
+            <Component Id="cmp92D31DED5E26824428A0EE3FC97A91F4" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filB16E2C20C3A566740A9C2FF366589A41" KeyPath="yes" Source="SourceDir\modengine2\include\sol\compatibility.hpp" />
             </Component>
-            <Component Id="cmp9433AD278F468A6DCD9629D8D4CD74CE" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="filC39237E4B0431BCF7062307E49D62F65" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\formatter.h" />
+            <Component Id="cmpD1C2926090FB2CD6A22C3B6FD87D39FE" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil2D75BAE517A7E07B64CCB11A18B60FD6" KeyPath="yes" Source="SourceDir\modengine2\include\sol\config.hpp" />
             </Component>
-            <Component Id="cmpD9970C1EBC9964629B27AB8D5A0DFF30" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="fil56499011EA98846748356D5047C7BDD4" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fwd.h" />
+            <Component Id="cmp4A705F1D60C3960C160284DE3D8152DB" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filCE45EB50BFE54053A868C28CC4B6BA99" KeyPath="yes" Source="SourceDir\modengine2\include\sol\coroutine.hpp" />
             </Component>
-            <Component Id="cmp710ABAFA1FDDE731ADDD2F4D70E6F1CD" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="fil64CC6B033C36C1AC6CCA6DD576FEEEB3" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\logger-inl.h" />
+            <Component Id="cmp03F37963E2360D0ADFB500EFD5248562" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil4A6F3F1D43EFF6DC90042693E30B327E" KeyPath="yes" Source="SourceDir\modengine2\include\sol\debug.hpp" />
             </Component>
-            <Component Id="cmpC1F8E6F5FB1E1B4C8DB19DD831074681" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="filF8A984B1FB67D17C4232C84EA495A51F" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\logger.h" />
+            <Component Id="cmp56E5D95F78449BA21B76A49BC3CF6A76" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil5DD3137448E5BC1781E12480741A657D" KeyPath="yes" Source="SourceDir\modengine2\include\sol\demangle.hpp" />
             </Component>
-            <Component Id="cmp002FCB518690A9CD88618B69A32F860D" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="filC852D5A35E18E70B56703A237B607B91" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\pattern_formatter-inl.h" />
+            <Component Id="cmpA6A0EC07001CA460DB5F90D8C88AB135" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filC4621A7701E9D31A51878CAC707CA1D8" KeyPath="yes" Source="SourceDir\modengine2\include\sol\deprecate.hpp" />
             </Component>
-            <Component Id="cmp560F1E0E28ECA0710059274EF7A1E8CE" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="filDBDBB414159A539135B14EE4C626D626" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\pattern_formatter.h" />
+            <Component Id="cmp808AB41E8A8497F0EDE3C265C999CC73" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filF53E20E1A1D39A33C1225D2CC193DC70" KeyPath="yes" Source="SourceDir\modengine2\include\sol\dump_handler.hpp" />
             </Component>
-            <Component Id="cmp38B9CFE6195DCF3ED9F57F7F0C061A34" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="fil48B92B81ABF36F653447289F49D5C8DC" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\spdlog-inl.h" />
+            <Component Id="cmpAD8621E5E6B521019B47F4307C021572" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil634F07E03BA01F217095889F623E1771" KeyPath="yes" Source="SourceDir\modengine2\include\sol\ebco.hpp" />
             </Component>
-            <Component Id="cmpF98743A946650930988D6D94F09046FC" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="fil3D69FB3FD6498EDE261271C529696380" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\spdlog.h" />
+            <Component Id="cmp020E3DD2B2D6E26B187A0EE6895CFE8C" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil287E44E9DF187BBB37DABA7859FF6147" KeyPath="yes" Source="SourceDir\modengine2\include\sol\environment.hpp" />
             </Component>
-            <Component Id="cmp6C7FD3E093C2559A59DAB56BC0356514" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="fil864D5ACEEE788D9D61E018DA45C87D71" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\stopwatch.h" />
+            <Component Id="cmpE5D7FEFD4DDE6E43AF8E8648EEB00D1D" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil4D9F38A8F3875CF825DCB12ADEC12165" KeyPath="yes" Source="SourceDir\modengine2\include\sol\epilogue.hpp" />
             </Component>
-            <Component Id="cmp6F5770A4C513EBE6198AF75E0084FEC9" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="fil28F915A1DF9B2CDF63204175D861A3EC" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\tweakme.h" />
+            <Component Id="cmp24C7ECFE5CF1A5A560CA1BC386D9163C" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil093D7346585EBEC47356EA91AB43F622" KeyPath="yes" Source="SourceDir\modengine2\include\sol\error.hpp" />
             </Component>
-            <Component Id="cmpBF04E6CB0AF2BE152DE9A104E42E7293" Directory="dir21E90E4CAC19DCB622BEA978F0638076" Guid="*">
-                <File Id="filE098FBA0F69997C19108A6AF8FAF87E4" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\version.h" />
+            <Component Id="cmp79E528995D815013225B8808CFCA190A" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil4BEBB89D7846777A07C111C1CB763B86" KeyPath="yes" Source="SourceDir\modengine2\include\sol\error_handler.hpp" />
             </Component>
-            <Component Id="cmp6443903684F720D8976A2E514E2CC35A" Directory="dir506474EDD6EEDF83E11ED7DC81AC6AFF" Guid="*">
-                <File Id="filD0D45E12200C4D16A4093F149812C9AB" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\cfg\argv.h" />
+            <Component Id="cmp8AB0717DFEE961643B80B6941768F283" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filCCCCA29D9D781FEE23ED98815BEF3A53" KeyPath="yes" Source="SourceDir\modengine2\include\sol\forward.hpp" />
             </Component>
-            <Component Id="cmp5937187E6C89519C323EC6DDCEB19C97" Directory="dir506474EDD6EEDF83E11ED7DC81AC6AFF" Guid="*">
-                <File Id="fil3351EA3DF5596D19B44D6338EB03CBE4" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\cfg\env.h" />
+            <Component Id="cmp97A7DCB231DA1041C49787C73E057C9B" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filE43FDE7EC263B2BDAF700A1710D26958" KeyPath="yes" Source="SourceDir\modengine2\include\sol\forward_detail.hpp" />
             </Component>
-            <Component Id="cmp167DFB259A6C8BF96AC880E3AD9159A4" Directory="dir506474EDD6EEDF83E11ED7DC81AC6AFF" Guid="*">
-                <File Id="fil280843A41B6FD1A52DABF34A05621B8B" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\cfg\helpers-inl.h" />
+            <Component Id="cmpDB27D279A7DB040602EE41C5DDC262F9" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil13A22812F7AA00F8E5400C9253DB33C6" KeyPath="yes" Source="SourceDir\modengine2\include\sol\function.hpp" />
             </Component>
-            <Component Id="cmpC80E5BEEE3732FFD097EA76F5D4C0280" Directory="dir506474EDD6EEDF83E11ED7DC81AC6AFF" Guid="*">
-                <File Id="fil34738E52AC93224767AD8A997A8E4D56" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\cfg\helpers.h" />
+            <Component Id="cmpE6E2DC443B506F1A5B6A835BAC44F5B4" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filCCA028F79EA947AE68A308ACC5A87EDA" KeyPath="yes" Source="SourceDir\modengine2\include\sol\function_result.hpp" />
             </Component>
-            <Component Id="cmpAA098F1A5F0040680419FC920B775607" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="filAFF0AFEACFF7F30BB5BCA30A33B7300F" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\backtracer-inl.h" />
+            <Component Id="cmpF6A5E97654680EF4CB5EBF595A180DAA" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil0514931666701D47652180C7C6C08B11" KeyPath="yes" Source="SourceDir\modengine2\include\sol\function_types.hpp" />
             </Component>
-            <Component Id="cmp9260EF8BA8CE11832E2EDED545DA6E28" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil348907246C61C55E7649344EDAAA0683" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\backtracer.h" />
+            <Component Id="cmp13871657D4749296641C3AF268612233" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil544D209DB88FEEFD757DF69F136F8554" KeyPath="yes" Source="SourceDir\modengine2\include\sol\function_types_core.hpp" />
             </Component>
-            <Component Id="cmp99CBB1EF88C0A3555B8BDC0201578967" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil456757FBDBFE3740F5B631163D9C19BA" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\circular_q.h" />
+            <Component Id="cmpAD3DAEDBCF546BDBDA22B052DCE1313B" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filFD229DBCD12462EBB73209DBE18AF12C" KeyPath="yes" Source="SourceDir\modengine2\include\sol\function_types_overloaded.hpp" />
             </Component>
-            <Component Id="cmp1E4F98BAD63ACB9C6E9F45CF713BF9AF" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="filF8671274484E604DFA68C56C1ADA481C" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\console_globals.h" />
+            <Component Id="cmp69410354AE52E2684C902F8532A01539" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filEC0AF1E6182466A68E7F80DDD988FFB1" KeyPath="yes" Source="SourceDir\modengine2\include\sol\function_types_stateful.hpp" />
             </Component>
-            <Component Id="cmpDFD373F833C7A0BDC7592B1B1EFEA5C0" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="filFF5FCD92D4F12F026762EA422961DF71" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\file_helper-inl.h" />
+            <Component Id="cmp24562ED88CB8D97F2D64D5398B1E0E93" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filBB9A8E6200F7A361847AE3F5AA07FB60" KeyPath="yes" Source="SourceDir\modengine2\include\sol\function_types_stateless.hpp" />
             </Component>
-            <Component Id="cmpBBF6AFBA284BA139711C4987A6458D57" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil4D08F342496C5D1B9A1D2A2333DD2DF6" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\file_helper.h" />
+            <Component Id="cmp3057E352FD3FBC59066969D61342888D" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil51A99B3E0083844444095F9AC19D0683" KeyPath="yes" Source="SourceDir\modengine2\include\sol\function_types_templated.hpp" />
             </Component>
-            <Component Id="cmpA19E87BE98B5982BEACBEC0FC6287C9A" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil9A657AFC71032BE99C1E5FA3A2AE4F30" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\fmt_helper.h" />
+            <Component Id="cmp1F062DED928582082480A3B5B119B14F" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil6C8F5AF8E975A5351D961559E12D25C0" KeyPath="yes" Source="SourceDir\modengine2\include\sol\inheritance.hpp" />
             </Component>
-            <Component Id="cmp7874C6A64381360B2DEEB9AD2239E85C" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil247DD8F9D08FD2BE6CF72B978448E034" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\log_msg-inl.h" />
+            <Component Id="cmp3F1FBAE8EF4E22FD4D390150856B59B5" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil480AA40BCDA4CC3308CCE754FE2E152E" KeyPath="yes" Source="SourceDir\modengine2\include\sol\in_place.hpp" />
             </Component>
-            <Component Id="cmp37CB6A25716BB7A45646DE7DBF70BD3D" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil81AFA9595D3871F97EF3EF319EE5D749" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\log_msg.h" />
+            <Component Id="cmp56A2C2CB39A981BC2A53EB6C63E2B659" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil2E5BB6707775EDFE36D35D8CF4F721BA" KeyPath="yes" Source="SourceDir\modengine2\include\sol\load_result.hpp" />
             </Component>
-            <Component Id="cmpF02D8F0B6684DF6F55C39567C1C84FA7" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil50911141A65B81C3B536E2C613C4A157" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\log_msg_buffer-inl.h" />
+            <Component Id="cmp2241CC3F3E9FB9EB567B3CB2607C2A5F" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filEA6BB00FCAEB6BA9B4BA0129753F23C6" KeyPath="yes" Source="SourceDir\modengine2\include\sol\lua_table.hpp" />
             </Component>
-            <Component Id="cmpA8747A9721A25A4E912377B51237FF1A" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil3F02C47B3528479045FB265546B06129" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\log_msg_buffer.h" />
+            <Component Id="cmp971E3B32602C9036A953F8F3707DDA51" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil0A567156EF0DAB494E70F92162C6CC35" KeyPath="yes" Source="SourceDir\modengine2\include\sol\lua_value.hpp" />
             </Component>
-            <Component Id="cmp419B4301EDCDD42C7C4FCA7C8A23D8FB" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="filCB38AFC89AACB04D5C3AA0633136DCB4" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\mpmc_blocking_q.h" />
+            <Component Id="cmp17589A6D6FCF0E6FC69F15FF3599201C" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil37DEC9F3439A5B4F9BBE6852061A64C6" KeyPath="yes" Source="SourceDir\modengine2\include\sol\make_reference.hpp" />
             </Component>
-            <Component Id="cmp5CA4BD7D3BB5D56291E45DC0098C5563" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil41D95618BDA28F9549328814DB6800CE" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\null_mutex.h" />
+            <Component Id="cmp2F1891A9A66BEA7CE97E26B97271D606" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filF256562652736A8AC88A353FEA7B53FB" KeyPath="yes" Source="SourceDir\modengine2\include\sol\metatable.hpp" />
             </Component>
-            <Component Id="cmp81F28E7226FE4FB80085352C32F6CC0C" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil478AFA0470EC9482821CEB877001B509" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\os-inl.h" />
+            <Component Id="cmp9B3465D686FF19ACF255027BB1C0FAFB" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filDDFCC6659724F370EC58BC48B702F038" KeyPath="yes" Source="SourceDir\modengine2\include\sol\object.hpp" />
             </Component>
-            <Component Id="cmpB7C6BF7F89C27F82E39B3BB185067F17" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil6F579C783CB3925E4505F368A28689D2" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\os.h" />
+            <Component Id="cmp381F22FBC47B640B14D51E22D3BF4984" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil8A2241691ABA8E6684B39DF1B0B7C47E" KeyPath="yes" Source="SourceDir\modengine2\include\sol\object_base.hpp" />
             </Component>
-            <Component Id="cmp58CE6A66E8FD93078A0F07D2E401E56A" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="filD1C062C1A75D10A667955AC52993263A" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\periodic_worker-inl.h" />
+            <Component Id="cmpB8C61A7608B197B4CCAEA6565D33B499" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filB6C63129AD224FCC9423A059A1D0EF48" KeyPath="yes" Source="SourceDir\modengine2\include\sol\optional.hpp" />
             </Component>
-            <Component Id="cmp2BF9998495568E50EDE3B21EF0F9C581" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil2CEBAA004C56A035E054B61B305012BF" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\periodic_worker.h" />
+            <Component Id="cmp20D5C94548D0D840FCE704E88A53E757" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil1E49D6FCC9FBA4D6C5529B43292B363D" KeyPath="yes" Source="SourceDir\modengine2\include\sol\optional_implementation.hpp" />
             </Component>
-            <Component Id="cmpA66E04B60BC7C1259488F0DAAF268CC8" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil82D2E5ADF2352D2C44ADB53DB630E2BC" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\registry-inl.h" />
+            <Component Id="cmp4DF80EF5E1574707415C477E9AC246E4" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil494BDABE9915096AEDA624AD7B547EF4" KeyPath="yes" Source="SourceDir\modengine2\include\sol\overload.hpp" />
             </Component>
-            <Component Id="cmp3DEBCC2A6CB6F4F95CE41913F4A9B303" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil09FDD5D8ECBFB4B45C9F80B91BEA9290" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\registry.h" />
+            <Component Id="cmp820BB1B73115328502497D5567D0D7C3" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filF5995A05ADF5309FB879744A5BCDC088" KeyPath="yes" Source="SourceDir\modengine2\include\sol\packaged_coroutine.hpp" />
             </Component>
-            <Component Id="cmp9004858EF4531022DBFFB1B40E96430A" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil46A6C3BB17B800BE6447872CA930E3FF" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\synchronous_factory.h" />
+            <Component Id="cmpABF9EEEC0120D22401D3BF933734865F" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil48DCBC0D4C00ECB35F88E1F984284F12" KeyPath="yes" Source="SourceDir\modengine2\include\sol\pairs_iterator.hpp" />
             </Component>
-            <Component Id="cmp7DE988C6292C9730292D72FA062CCF32" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil1D9C0990A6D4DEA349FB37EB824F8A63" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\tcp_client-windows.h" />
+            <Component Id="cmpD400FDE93E535447E68D57880118EFFC" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filC2CD6DD8530244E61D429F372E0746D7" KeyPath="yes" Source="SourceDir\modengine2\include\sol\pointer_like.hpp" />
             </Component>
-            <Component Id="cmpC72704E30488AB012A25C4A1AAFAD6E4" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil21E703ECB4F956487AA0B200ABACF62C" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\tcp_client.h" />
+            <Component Id="cmpCA78C10F3FD08E65629895351BA83CF4" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil1B2FD2742D36A1F13EFA1548A051B8D4" KeyPath="yes" Source="SourceDir\modengine2\include\sol\policies.hpp" />
             </Component>
-            <Component Id="cmpFE521DEB0F04548CC3003CE0F4F15C4D" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil8F15B7F3A214A197AC550114F1B2B5F8" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\thread_pool-inl.h" />
+            <Component Id="cmp8711669DEBB33DCBEC0ACA54F0177A4C" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil90613DF19BA61258B9028DFA7C69ACB6" KeyPath="yes" Source="SourceDir\modengine2\include\sol\prologue.hpp" />
             </Component>
-            <Component Id="cmpA6B626F1C7CC99C197025C0C05F73923" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil89D618351975D4C1E3ADBF65AB2AD954" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\thread_pool.h" />
+            <Component Id="cmp6A77D938D584D60C6EA0B62B79102999" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filE8EA77C5C3BA823F75B07FC5AFBABB8D" KeyPath="yes" Source="SourceDir\modengine2\include\sol\property.hpp" />
             </Component>
-            <Component Id="cmp96C01D40501D0F352652680FD8B11B43" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="filD7CC46EFC80ABC16B02DA14BD80CD4ED" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\udp_client-windows.h" />
+            <Component Id="cmpAD058E1E9CC2172245C419453BA7145C" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil2376676F3C3366608056C1FC479066BA" KeyPath="yes" Source="SourceDir\modengine2\include\sol\protect.hpp" />
             </Component>
-            <Component Id="cmp7980F144D0277C35F2407A4EBDF68D4B" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="filE201097AE67CD35DE975BC604C334202" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\udp_client.h" />
+            <Component Id="cmpC5709163B14B066FDD835C9B7303F812" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil07A4030D6E2766A42F5D5D07C98D240F" KeyPath="yes" Source="SourceDir\modengine2\include\sol\protected_function.hpp" />
             </Component>
-            <Component Id="cmp6AAF9562F8FAF9FD26F58E362847E522" Directory="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Guid="*">
-                <File Id="fil10B47925F4840D9E9C7F416DBDB765AD" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\windows_include.h" />
+            <Component Id="cmp1EF5D1FA3D8FF8B519188ACFAB660980" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filD154BB36B82E9227713BC8FD7F730F9E" KeyPath="yes" Source="SourceDir\modengine2\include\sol\protected_function_result.hpp" />
             </Component>
-            <Component Id="cmpCDA193C8E61FB3D972E0E8D02746AFFB" Directory="dirE527EA57BF7C2445DCA4F5059C115F26" Guid="*">
-                <File Id="fil5D32F6E5345D2CA995093D4987DD6905" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\bin_to_hex.h" />
+            <Component Id="cmpE5E10AD68271B1906CE269078C80634A" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil34C7E6CB70769C66CB6E0FB68059A0BA" KeyPath="yes" Source="SourceDir\modengine2\include\sol\protected_handler.hpp" />
             </Component>
-            <Component Id="cmpFC93FAB608D49FCBAC888936B390118A" Directory="dirE527EA57BF7C2445DCA4F5059C115F26" Guid="*">
-                <File Id="filBCCDC6273595CD4EFF3D937A1883F715" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\chrono.h" />
+            <Component Id="cmp29EF3C64CF376F2210D5BCB55598F4C0" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filCC6FA1DB3536288BCA0F3E469FD5B84B" KeyPath="yes" Source="SourceDir\modengine2\include\sol\proxy_base.hpp" />
             </Component>
-            <Component Id="cmpC43CF0D7E34AD07B5D1CFA833157EDD0" Directory="dirE527EA57BF7C2445DCA4F5059C115F26" Guid="*">
-                <File Id="fil5D3FB1ED8AEE06E1D55DCF95B540CED9" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\compile.h" />
+            <Component Id="cmp7D1BD89E66FBA7B522A9F6B805EB1C1D" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil1832F815AEDA16233E682183EC223F35" KeyPath="yes" Source="SourceDir\modengine2\include\sol\raii.hpp" />
             </Component>
-            <Component Id="cmpE4EDBBFB291C7D8EBDDAD68C8A650FB6" Directory="dirE527EA57BF7C2445DCA4F5059C115F26" Guid="*">
-                <File Id="fil586547FB29ABDB976A21910FC349CCC0" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\fmt.h" />
+            <Component Id="cmp711CE8BB5C4DBAB51F07C46C02061C1C" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil32BD73CBBDE4BE65365FC2F158886E17" KeyPath="yes" Source="SourceDir\modengine2\include\sol\reference.hpp" />
             </Component>
-            <Component Id="cmp6B1857D27003C33332FAF96930FE1261" Directory="dirE527EA57BF7C2445DCA4F5059C115F26" Guid="*">
-                <File Id="fil9EEE470087087607FA479648A8BC6E03" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\ostr.h" />
+            <Component Id="cmpC3D0BA083D4E9027E3D5EF6F23376036" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil684A7DF7BB9D51460763BB73F0330472" KeyPath="yes" Source="SourceDir\modengine2\include\sol\resolve.hpp" />
             </Component>
-            <Component Id="cmp24F7529DAD7DA1FA4ADEEF180319DBA1" Directory="dirE527EA57BF7C2445DCA4F5059C115F26" Guid="*">
-                <File Id="filD8FF5067459AAC609948ECC78E20F026" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\ranges.h" />
+            <Component Id="cmpA63858211434F832BA0514A9DFC5501E" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil3D2447B4BA40E5F1834339B2997C7EFB" KeyPath="yes" Source="SourceDir\modengine2\include\sol\sol.hpp" />
             </Component>
-            <Component Id="cmpA109705F608E41F913A5474450747217" Directory="dirE527EA57BF7C2445DCA4F5059C115F26" Guid="*">
-                <File Id="fil7F28C837546B48BABEE3FE016AFFA9E2" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\xchar.h" />
+            <Component Id="cmp3D60927715012DB9AE940DAD07994ABD" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filBF5CFAF7675A56B9A48CB89ADF41DCF1" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack.hpp" />
             </Component>
-            <Component Id="cmpFA1B9050DBE6E950AF5693A0CBA6A3F0" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil627E6FD754BBD2D720974A1A59896E0F" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\android_sink.h" />
+            <Component Id="cmp6E6937C0C393E17B7994D84CAD67CD85" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil9E4FB4D4F09638E121F8CD8404FA8793" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_check.hpp" />
             </Component>
-            <Component Id="cmp4860EEA6A61AD9DCAC3F937BC8C2CB22" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil3DD75D4AC3D3F430FAFB9A0B1C0BBCC1" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\ansicolor_sink-inl.h" />
+            <Component Id="cmp72B6287E56AEDCD5536CFD7AECDE1D8C" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filDEB0757966F12D6B25D90BC843786FC5" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_check_get.hpp" />
             </Component>
-            <Component Id="cmp5693409448CEDB732CAE50C40638B6C6" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil078901EF7502CD81B26D570F83DF3CAD" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\ansicolor_sink.h" />
+            <Component Id="cmp4D7694F0133BF1BDF31ECEE543F8D544" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filBFAB9E1AF60171D8BDC1ED514D96397A" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_check_get_qualified.hpp" />
             </Component>
-            <Component Id="cmp47BFA0DB29BA46B6E55D365E0FF7ED37" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filEBDF37AFD99A8812235DA25D43773232" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\base_sink-inl.h" />
+            <Component Id="cmpC8CD6F49C617FD937D82A22329BA0949" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil18410E6519BA800BD2C4104931D8459F" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_check_get_unqualified.hpp" />
             </Component>
-            <Component Id="cmp134BB1E34C50F0EC2FF4B28ECDDA92CC" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filC384BF0DF953294E1D42781DF606BA90" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\base_sink.h" />
+            <Component Id="cmp1FFB0FACDA7FD7CFC471312645E44F9C" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil8C91250D75DB707135ABA827A4CD0998" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_check_qualified.hpp" />
             </Component>
-            <Component Id="cmp9D7E906F6289D560343764D9E15DA7D6" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil3F0201A4463C1D0FFC302DDB03C8E91B" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\basic_file_sink-inl.h" />
+            <Component Id="cmp6823A0BF9105C5CAB5B62B7D9D1E6285" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil8D1CB5DA541CB086257820C70B1A6118" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_check_unqualified.hpp" />
             </Component>
-            <Component Id="cmp37FB3C20FEDC7C15868DFA703F05EC60" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil46B7E61FE1491B985C4BA550E24E0873" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\basic_file_sink.h" />
+            <Component Id="cmp22D788AD8503AE4E2B822A8C3C3FE49E" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil15624986F2D6C5E11BCD8DBFE5710250" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_core.hpp" />
             </Component>
-            <Component Id="cmp39BA4119B9DF72416B6B451D984144F0" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil04C217BEF4DEE63BDB19B9F5B82E7FDD" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\daily_file_sink.h" />
+            <Component Id="cmp86BD2BC27137D5F0851EE13D737D00AF" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil6E70978D13E235251AF793C0CD895269" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_field.hpp" />
             </Component>
-            <Component Id="cmpEABFA072839C3F07FC766F466750E462" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil69C71A87AE41E292BE2BBB98674A0C9F" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\dist_sink.h" />
+            <Component Id="cmp0A92BC54BCDE29173F579F4539C54820" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filBDE9B36BF15E7F7FBA6A1C8D83D7585D" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_get.hpp" />
             </Component>
-            <Component Id="cmpCF9769FFF296184EA1EE20B5D81A247A" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil8CFA522309B90A43B73030FC032C56E3" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\dup_filter_sink.h" />
+            <Component Id="cmp6B0D4E26BAC24F7C20D196CEA6A1DE62" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filE90ABAF3C311D35600363F69099205DE" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_get_qualified.hpp" />
             </Component>
-            <Component Id="cmpBC3491F9E800AE48F91A12B9B26935B5" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filDF9638F84DCF59892A88812730E127A4" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\hourly_file_sink.h" />
+            <Component Id="cmp301F37BC0459B9206A207418EA9CC423" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filA5728B1043128C53BF73202A173187AD" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_get_unqualified.hpp" />
             </Component>
-            <Component Id="cmpD4D1AB5BE9A9D86CE28C170B38C9609F" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filBCC691D44CDF007048183996E36163B3" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\mongo_sink.h" />
+            <Component Id="cmpDCBB9EF4D9641BFB460300325DCFFD06" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filA544716A372FAFE568B70830A5B2E5DE" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_guard.hpp" />
             </Component>
-            <Component Id="cmp9F9318868F50AA5284321C5E40F68372" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filB5B7ADE5371D2E4ABCA88C48C94F0565" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\msvc_sink.h" />
+            <Component Id="cmp0CCA27066794948B37DF3B250ED0F321" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil05125F2B9A953797A9315DCEED423D13" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_iterator.hpp" />
             </Component>
-            <Component Id="cmpFB680DE8D55873835DF22EA7CF9D4A8B" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil2C57FB2698DE5BF700FD815036B01441" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\null_sink.h" />
+            <Component Id="cmp89DAE7C408587732EDF5180C463FFCEC" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil813A1649DD2713970237DA2D26AAA7AA" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_pop.hpp" />
             </Component>
-            <Component Id="cmp3B1F8293B259089558305356CF6BA0A7" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil05DA99394A4612A5B0398CB8D0B57555" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\ostream_sink.h" />
+            <Component Id="cmpC8C45EC5CE2BCD6B8FAAAFF6B3082A15" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filFCC2B2D67FBD1DC13CE307D01E98E81D" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_probe.hpp" />
             </Component>
-            <Component Id="cmp69376E99D9D7099E5D667146FD810AA6" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil1A6B3494241C01A9C68BB884ADFDA181" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\qt_sinks.h" />
+            <Component Id="cmpA485A3C75823D257FB2695DBD97EA3E5" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filE0D930EAAAC0EAC6AECA162A01CB5AE7" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_proxy.hpp" />
             </Component>
-            <Component Id="cmp8F8C9058BF50FF6D875F4350A08A6036" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filB4E47775D432EE7967802F98BEE3995A" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\ringbuffer_sink.h" />
+            <Component Id="cmp269245FE46F6ADF1DBCAE1FA4EA40BF1" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filDD8095299934762FBA51D3FCC9A52A0E" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_proxy_base.hpp" />
             </Component>
-            <Component Id="cmp1E679129763DC86C02981BB3B7B5F58A" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filC2DDAFD4DF1A83212D2252051CC59761" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\rotating_file_sink-inl.h" />
+            <Component Id="cmp1A21D5754F56F0C874DCFCC79FA9EE9D" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil10EF4C7788673D465264D19F7C290058" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_push.hpp" />
             </Component>
-            <Component Id="cmpF70CDEFB6E03E4133EBF067446F9087A" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filC16825FA3CCA3E4B3C695E440A521AF4" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\rotating_file_sink.h" />
+            <Component Id="cmp9DFE3CA021E234F98B7E986336126EA0" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filE986F38882846367B8CB2E54DA8B6069" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack_reference.hpp" />
             </Component>
-            <Component Id="cmpAD700F515399C7D6D5619036FD4FD392" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil260D7A1D6C191662920E646F8B59A2F3" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\sink-inl.h" />
+            <Component Id="cmpB9E0D1FDB263CC14606E9693BA580711" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil31C6330B5C6C1EFFA4FD75C2DB991E7D" KeyPath="yes" Source="SourceDir\modengine2\include\sol\state.hpp" />
             </Component>
-            <Component Id="cmpC48A95B819B2A196102807E911FDFEF7" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filB25CEF475FAB532691EEC1D9D44DDD20" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\sink.h" />
+            <Component Id="cmp9DE302446F5E9B5F59FF499CD9342EC8" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filF036A624560DF521CD2DFABCFF7B2F04" KeyPath="yes" Source="SourceDir\modengine2\include\sol\state_handling.hpp" />
             </Component>
-            <Component Id="cmp613EBB6C1574367F6899F3A7A802367F" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil8D51BC5E904B7E6D950B4C77E6DC9463" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\stdout_color_sinks-inl.h" />
+            <Component Id="cmpCBC6DC2C56BD33E1A026E2EB1BABC62A" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil576B903FD523F75DB8B2B39085711988" KeyPath="yes" Source="SourceDir\modengine2\include\sol\state_view.hpp" />
             </Component>
-            <Component Id="cmpFBB15DCDDDDAC57A5809B53C2D174FC8" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filCF669BFE8504F3B1D7C1A39F90417BA0" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\stdout_color_sinks.h" />
+            <Component Id="cmp93E7C09439D04567651F37F72AC74FB5" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil9838E4AF64733AF6E7B1B6F2BA97F762" KeyPath="yes" Source="SourceDir\modengine2\include\sol\string_view.hpp" />
             </Component>
-            <Component Id="cmp7B0DB3105C113E791AC0BF88AA46F0F0" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filD6DB6F07C10C83345FF67D25E19E8559" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\stdout_sinks-inl.h" />
+            <Component Id="cmpF4074415E00DA8E4585E48EBF1B820C1" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil6CB112F99B665A58F431A12BD8A7CFC5" KeyPath="yes" Source="SourceDir\modengine2\include\sol\table.hpp" />
             </Component>
-            <Component Id="cmp64B5073D9A33554CE2593B7C76DCEE24" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil6421EFDCFF27FB8B33DC840E75D18100" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\stdout_sinks.h" />
+            <Component Id="cmpDED91F0B33DAB4A4498D3E3262B28A7C" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filFA7EA0331BDCA0B2E8B57171A0EE5F00" KeyPath="yes" Source="SourceDir\modengine2\include\sol\table_core.hpp" />
             </Component>
-            <Component Id="cmpDE0EE6812180BE358B93ED9C346A7D9A" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filEFA571CEC71D0DB0B880E8D11E0D79F4" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\syslog_sink.h" />
+            <Component Id="cmpE590261BCCB195CA5B3DEAC88C011DEC" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filD4C297DE4117890C7069E65C773DCF4C" KeyPath="yes" Source="SourceDir\modengine2\include\sol\table_iterator.hpp" />
             </Component>
-            <Component Id="cmp0FC7FC8ACD407B1604F5C75AD36AB6F3" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filBF8AA2BEF7BD94BC12AA5D42E149957D" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\systemd_sink.h" />
+            <Component Id="cmp579CB6B41C9E82ECAA29A54F5E211352" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filE37C5134F6E49107094A24FA05BD6219" KeyPath="yes" Source="SourceDir\modengine2\include\sol\table_proxy.hpp" />
             </Component>
-            <Component Id="cmp34B0A6AB97E1A4F669CF6A5DFFAA5B66" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil309842EC2F5027E50A96E068679E65F9" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\tcp_sink.h" />
+            <Component Id="cmpEBFB724E5992A2A604FB2F1CDC2EFBD8" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil8F64DE5D5BF72D858B3BD2432027B341" KeyPath="yes" Source="SourceDir\modengine2\include\sol\thread.hpp" />
             </Component>
-            <Component Id="cmp7B796A72CE4EE98CF2BDCB2C1CD0B792" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil87F79B3CD5855D72B1785276FA476548" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\udp_sink.h" />
+            <Component Id="cmp765BF55CA828A7EADB46DF473C107DFE" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil4BD87B1E07F8087111C735D3F572BF1E" KeyPath="yes" Source="SourceDir\modengine2\include\sol\tie.hpp" />
             </Component>
-            <Component Id="cmp3DC78A347275C284FC62DA95608D7372" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filCDB6FB618D7C1F63805BDBBB913AE012" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\wincolor_sink-inl.h" />
+            <Component Id="cmp279DCF1667F7A7ED10CBF2058854C72B" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil17748F27D355623D88C82076900BD30B" KeyPath="yes" Source="SourceDir\modengine2\include\sol\traits.hpp" />
             </Component>
-            <Component Id="cmp213814DBB202DCADFFA2EDAA4ACE4E1B" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="fil2870DC470253656EC4755E0B4ADD0AC9" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\wincolor_sink.h" />
+            <Component Id="cmpC1C82B4B2050ADAA341AFFC38B728CA2" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filF4882AD872291A784E3257361F8FD0D9" KeyPath="yes" Source="SourceDir\modengine2\include\sol\trampoline.hpp" />
             </Component>
-            <Component Id="cmp52CBF8B209A89E92CF5D5096C5B61437" Directory="dir2C6E2B4B0AD801F239C10D67C47002C5" Guid="*">
-                <File Id="filEDAA30B3D4A05373519CE1A4DD653B84" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\win_eventlog_sink.h" />
+            <Component Id="cmp694150A1D89375684738F2077166193E" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil5DD8E140A7CF7ECE6109E01056A5C62D" KeyPath="yes" Source="SourceDir\modengine2\include\sol\tuple.hpp" />
             </Component>
-            <Component Id="cmp462C312FCCD802A70B14A692E615E974" Directory="dirBFF9828717F94DD1EC33C9F804151DEA" Guid="*">
-                <File Id="fil5FC4C2A2603FEFDDEE367F22A3508E82" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\toml.h" />
+            <Component Id="cmp97DC5C982B604CC399F5A187C2D2FC0D" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filE459980DA8AA1AAD1B8689A8669D3CED" KeyPath="yes" Source="SourceDir\modengine2\include\sol\types.hpp" />
             </Component>
-            <Component Id="cmpD15C359E2D6D7621F113EE6FE4852781" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil91A254D69B462724D4FB682231718074" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\array.h" />
+            <Component Id="cmpDFB715AF83529CA9F0450D054E826CCE" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filFCB0D646EC040A15947AB772FC70E778" KeyPath="yes" Source="SourceDir\modengine2\include\sol\unicode.hpp" />
             </Component>
-            <Component Id="cmp2FE5F5E5678E4BF8B9B9098F244416A9" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil6A8A288653739F23991EA4CCBAC354EB" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\array.inl" />
+            <Component Id="cmpEB69314A25E49F43152E418E1C4C7306" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil51AB37FC10791328250E45ED590E7255" KeyPath="yes" Source="SourceDir\modengine2\include\sol\unique_usertype_traits.hpp" />
             </Component>
-            <Component Id="cmp7306D91F50E56D36BB72CFA360C4F1BD" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filD3FD624495055DCBC10CCDCDFB9E911A" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\at_path.h" />
+            <Component Id="cmp39365D5D47D4DA55DE5A5B36703F3A92" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil8764294619511913DE347A82F3FB2BA9" KeyPath="yes" Source="SourceDir\modengine2\include\sol\unsafe_function.hpp" />
             </Component>
-            <Component Id="cmp1DB70439ABAF6D83FAF05579877758F8" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filAEB29A9A7D1439069D3726C4775ED2D3" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\at_path.inl" />
+            <Component Id="cmp5C0327190AB79B51A09A48CC70F696DC" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil2A06FF4DA5EF0AA39BEBBFF66C535A38" KeyPath="yes" Source="SourceDir\modengine2\include\sol\unsafe_function_result.hpp" />
             </Component>
-            <Component Id="cmpB2BAEB8E496734E695EADCBF4C5EBFDD" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil874B4496ED8DA474AE985CA4693882F2" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\date_time.h" />
+            <Component Id="cmp4E0969EBF97D1054A1C16CB105CC5E65" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil23ECA1614AA4913DBF89B1AE3C97D375" KeyPath="yes" Source="SourceDir\modengine2\include\sol\userdata.hpp" />
             </Component>
-            <Component Id="cmpC0F2A21406D22F5BADF326554BC70253" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil93E14967B146F665552C3FA25D3D55B9" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\formatter.h" />
+            <Component Id="cmp5DB35FD41BAD29914DA2843A5F11593F" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filC57B23CDFCC8E4FC8F1278A9C80C1026" KeyPath="yes" Source="SourceDir\modengine2\include\sol\usertype.hpp" />
             </Component>
-            <Component Id="cmpEDEEDEBC18DF2328E466BE08B0254F15" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil17B5A6F96F8D90166D89F716A68B2C48" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\formatter.inl" />
+            <Component Id="cmpEE06A36F21A8726D4EDCFFB55C31225E" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filC907D09777266FB1DF1B8E0F91F86DBF" KeyPath="yes" Source="SourceDir\modengine2\include\sol\usertype_container.hpp" />
             </Component>
-            <Component Id="cmp51E5DB28D99EF6B74E2BBF7CEC1ACCFF" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil929280B2622B89C79AC64738D7C17022" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\forward_declarations.h" />
+            <Component Id="cmp4CA5EC2D09AC6F9F8E481097AAFA9F31" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil9352A11407CB119E531CE7C6826696FC" KeyPath="yes" Source="SourceDir\modengine2\include\sol\usertype_container_launch.hpp" />
             </Component>
-            <Component Id="cmp27CFF98AFF14EAF74A024AF08B749AA5" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filCF6362338768A9035E5602BFE0F998CC" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\header_end.h" />
+            <Component Id="cmp403B783A0485EB7E782869D724C89797" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filAB23B13BF10A0741702CAAA748E08A0B" KeyPath="yes" Source="SourceDir\modengine2\include\sol\usertype_core.hpp" />
             </Component>
-            <Component Id="cmp2FBE60EBD4C78EE5B62948F83C3069AE" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil5C2D2E2FD721263F5BCE3088985EC1E8" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\header_start.h" />
+            <Component Id="cmpD8A84ECF3B6A3EACA672EAD766709D34" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil323F9C39235EECE7D1516328AE6AD3EE" KeyPath="yes" Source="SourceDir\modengine2\include\sol\usertype_proxy.hpp" />
             </Component>
-            <Component Id="cmp8D974ECEB1DD1CBE05DAB2FB3BFB4B09" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil6EBEA40799330B4976C0900E64B95E92" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\json_formatter.h" />
+            <Component Id="cmp5CEA4B756F36DCF9987C59B7AF8F96BC" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filE7319EF8F0F493FF1DEC010A4032D9F7" KeyPath="yes" Source="SourceDir\modengine2\include\sol\usertype_storage.hpp" />
             </Component>
-            <Component Id="cmpFE84E8F131B9E830D84612A561A37EC0" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil80EA46B734DF86441723BAD2591E6FC6" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\json_formatter.inl" />
+            <Component Id="cmpE0CA74C62941D71937E19B06EF13D0DE" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filD8409D1A96B6791553A8C88DC5841EDE" KeyPath="yes" Source="SourceDir\modengine2\include\sol\usertype_traits.hpp" />
             </Component>
-            <Component Id="cmp7D8E40BBEE88F213EFA3326BDB079E1B" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil1793A4585A28B8975D7693208DB1310C" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\key.h" />
+            <Component Id="cmpF961B2E37DE2FDC34921AEE0CD7FB37C" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil1665AFF2E8B46D89E5A063CF6657B9A3" KeyPath="yes" Source="SourceDir\modengine2\include\sol\variadic_args.hpp" />
             </Component>
-            <Component Id="cmpA05F1795120A46BC18BFF3750909B422" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil1B88510855E0ABD909DAC5394F7AB0FF" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\make_node.h" />
+            <Component Id="cmpBDC997529145BA1902A2CE1E710AE01C" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filBDD24BB48702D000EFACE7A704F95082" KeyPath="yes" Source="SourceDir\modengine2\include\sol\variadic_results.hpp" />
             </Component>
-            <Component Id="cmpF074631AD6925168731EEEB8BC54808D" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filD1F04EE9052EFE4234F8BD004CFC73B1" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\node.h" />
+            <Component Id="cmp54F36AA5AE25DF05CC0FDD20499D2594" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="filCC246653E2A3E02B367C63AA99B41B05" KeyPath="yes" Source="SourceDir\modengine2\include\sol\version.hpp" />
             </Component>
-            <Component Id="cmp69878C76275C7CECD6BD5770A7D8F778" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filAAA1849D675A7AF655307FF2ADFEA847" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\node.inl" />
+            <Component Id="cmpB61181ED04B4CFC177CB2B8F221B0FBC" Directory="dir3E032AA8BC340EF03170EFCA9DCC43ED" Guid="*">
+                <File Id="fil1EA23E61FAE167C104193921E72F33D4" KeyPath="yes" Source="SourceDir\modengine2\include\sol\wrapper.hpp" />
             </Component>
-            <Component Id="cmp7731535C716AEEA0BAEF5992C9AAE4CE" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil4C043C24F2E2977B9B1A0796D7D83147" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\node_view.h" />
+            <Component Id="cmp43B9C8FCC309FC07518B94666BB3D026" Directory="dir375981DBA796B0E045E3CCDC23FDB48C" Guid="*">
+                <File Id="fil39435D30215C685B1714F6B6A0155948" KeyPath="yes" Source="SourceDir\modengine2\include\sol\compatibility\compat-5.3.c.h" />
             </Component>
-            <Component Id="cmpED1F32546D3B93E916241DFA80DBA625" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil851A9DDBBF6472ADEE368794B4CCD60D" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\node_view.inl" />
+            <Component Id="cmp4D3752EF9CE71689233828055EC59F27" Directory="dir375981DBA796B0E045E3CCDC23FDB48C" Guid="*">
+                <File Id="fil56E19C80207D20CA66D2601CD6EC1835" KeyPath="yes" Source="SourceDir\modengine2\include\sol\compatibility\compat-5.3.h" />
             </Component>
-            <Component Id="cmpED2A57E461749407CACBA77F86C6D7EC" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filF5D4DCC938464723F24B65FE3B15717A" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\node_view_extern.inl" />
+            <Component Id="cmp998E52EB0868FC16ACB9CD41D4451CDA" Directory="dir375981DBA796B0E045E3CCDC23FDB48C" Guid="*">
+                <File Id="fil1134C80862DF796F994BAB360BB5B002" KeyPath="yes" Source="SourceDir\modengine2\include\sol\compatibility\compat-5.4.h" />
             </Component>
-            <Component Id="cmpAD87AD3721EA37B98C7F2B88B62DC19F" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filF9367E7CA72A55952A8764775FE44F65" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\parser.h" />
+            <Component Id="cmpDAF74B1FBFD18B0C167E9330166CE236" Directory="dir375981DBA796B0E045E3CCDC23FDB48C" Guid="*">
+                <File Id="filD25063D00F1F93E8858791C5F1DAFC90" KeyPath="yes" Source="SourceDir\modengine2\include\sol\compatibility\lua_version.hpp" />
             </Component>
-            <Component Id="cmp46B88180A08636EDF5117A0BFA3590AB" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filB8192406B668E5C0AF5751BA6ED6DC31" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\parser.inl" />
+            <Component Id="cmpD5AC32F44D30F0F931D7A4CC730F9CD2" Directory="dir4C7BEE86F17D1444080CD5823C52E85F" Guid="*">
+                <File Id="fil1583797D827885BA90D6C1690E95FC34" KeyPath="yes" Source="SourceDir\modengine2\include\sol\detail\build_version.hpp" />
             </Component>
-            <Component Id="cmp26D73B0E73AC825D7B87A6C5FCBDA733" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil59E97A960AD3349DE46082818ACB0672" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\parse_error.h" />
+            <Component Id="cmp6AA8424C43FA51DB9CD8736B0F8B4757" Directory="dir9FB51E5D47CCEF96B2168FB3AF9B49EB" Guid="*">
+                <File Id="filCCFACB25729E9F5F2F1A908AE874575D" KeyPath="yes" Source="SourceDir\modengine2\include\sol\stack\detail\pairs.hpp" />
             </Component>
-            <Component Id="cmp3BCD87A477D362D54F0E95F047A69751" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil028A24A48979C4629E4D0052C8D45CEC" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\parse_result.h" />
+            <Component Id="cmp2FDE7EECAA793859820DF7CDA6014ECA" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="fil49F029EBE195FB8ACAB50EE46CF3AB1D" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\async.h" />
             </Component>
-            <Component Id="cmp9E102CAABCC783E7C4AC76F736AB7430" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil44EFC94A541E20A2F9C681189BBE487F" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\preprocessor.h" />
+            <Component Id="cmpDEB6311C37AB3E058BF3169A1EFEB595" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="fil6BB3114B84F0392D9AD46C2CAF028BA8" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\async_logger-inl.h" />
             </Component>
-            <Component Id="cmpF85CC1E5F8A2A5D6E2882A97438ED9D2" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil6448CB7EC9C00EAE7B7B930B89B8FE44" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\print_to_stream.h" />
+            <Component Id="cmp31BB0B7707E4517B6814402F0670B45C" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="fil91863DB0D82C6B032723E8FC0003842C" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\async_logger.h" />
             </Component>
-            <Component Id="cmp0AEF02DBD8E2D723319D8A0608C8030E" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil2ABDE948C5DD06C6E43AD567AA3D3B50" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\print_to_stream.inl" />
+            <Component Id="cmp0EF65DDEDD34AD42541B012E9C63884B" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="fil6CA0877C88C506DF6BF7EF77092F2AB0" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\common-inl.h" />
             </Component>
-            <Component Id="cmpE84AA093808B04CFC04656634ECFC7E1" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil68099C2F9AD52EC3B50589768B2A245A" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\simd.h" />
+            <Component Id="cmp75F8E7DA767BA6691EF1F4223379DA11" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="fil778CF2971A85540A19B7532FC3DE0AAB" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\common.h" />
             </Component>
-            <Component Id="cmp2681EE9EDB55E9EFFCB904AB637D7047" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil6F52678F4F62108075B29DFC979B648B" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\source_region.h" />
+            <Component Id="cmp7285A5DBE55B7DD81DC705224132E2EC" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="fil505FF430141399FF24FA0DEB614C2C5D" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\formatter.h" />
             </Component>
-            <Component Id="cmp783FE6892BE6781F907B0D79EFFBA09D" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil1711FACF094A46DD87431DCBFBD684C9" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_except.h" />
+            <Component Id="cmp77A027D8206AEC20119BC4B39051FFBD" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="filC40D55C328BB3EFD69C1BCF3D197D430" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fwd.h" />
             </Component>
-            <Component Id="cmp03AF560F9F468379E1346B4FE54E72FE" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil2B7977ED63BF6F4C72766201C4CDA64A" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_initializer_list.h" />
+            <Component Id="cmp7B15614E892CCAB853E81084B0F6B081" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="fil007AFC3AD4F477430A12039F99BA6011" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\logger-inl.h" />
             </Component>
-            <Component Id="cmp5192C50F91403C3A2318E68F91E7C63C" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil10BE683ADBC328064F24ED1F4D757613" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_map.h" />
+            <Component Id="cmp8A0C0A2D0C26F94A9484BD2E8E602F54" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="fil95BC81690193EDDAE6B3251938B108E1" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\logger.h" />
             </Component>
-            <Component Id="cmp20991057006F6D3E679EF38E6702CA81" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filB5EC955E96B39AF62A5C3B5D4BABAE55" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_new.h" />
+            <Component Id="cmpD4DDEA6AE7957522B4D61335B0558768" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="filE04E7F683024728FAE1E2FAA8763F152" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\pattern_formatter-inl.h" />
             </Component>
-            <Component Id="cmpC3D1FC657C6E179068EDC0626764B8B3" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil349AEE75C2774AF360F2C7BF6DBABA04" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_optional.h" />
+            <Component Id="cmp97FEF05356B9229F4E03CE7625928472" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="filA009947898CEE6C0D89E8BC989DD59D3" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\pattern_formatter.h" />
             </Component>
-            <Component Id="cmp1A016B6872373E9A88D4C949D57F013E" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil949775F4A305D0968AA57137C2CD4FC3" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_string.h" />
+            <Component Id="cmp4A955FA191B75103D39CE950DA559B79" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="filE7ADE31E0AB6B041E6C6D26B8E2B59BA" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\spdlog-inl.h" />
             </Component>
-            <Component Id="cmp0128A964AB3FF0B1E0E37EEC45DD941B" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filEF8663D2BDE75D30BCA79417747CF1C1" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_string.inl" />
+            <Component Id="cmp3B03E7A199B1578FA8F5CC2255216C1B" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="fil1CA26139F4505312E49057D3385DBCDF" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\spdlog.h" />
             </Component>
-            <Component Id="cmp932122ACFB42E9281AC8CEEAEC26EC6B" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil7D7C0758AA0B59B342B7E8D53D163849" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_utility.h" />
+            <Component Id="cmpB3717FB8816B6A6B4C2DAE560A5C0A56" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="fil112E6AB5D15522B614B72B59F514BE2B" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\stopwatch.h" />
             </Component>
-            <Component Id="cmpEF3C6ADB76727711F7A4D8F95D0E3E87" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil39292E95F1485EA956DA88780F89330F" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_vector.h" />
+            <Component Id="cmpF2AFD2E5C9EFC2024922EA6A727D8C3A" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="fil74AACA4EEE5B89D2DE13B08D2CF2DDFB" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\tweakme.h" />
             </Component>
-            <Component Id="cmp45996B33A63DAD94D85BA43114B04F3B" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil5BEF27C5499422F5CE304F0929FD1B13" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\table.h" />
+            <Component Id="cmp594DBA451B4074ED426FD5BF76088DEE" Directory="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Guid="*">
+                <File Id="fil0FE6254B60C654E848D8192606B44C39" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\version.h" />
             </Component>
-            <Component Id="cmpC8DD232AD28FF2167B93E0C2B47EC617" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil8743C2BB47E60E60F9D7300D13464D0A" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\table.inl" />
+            <Component Id="cmp972BDC66E2C8997489B758FC12515BF5" Directory="dirA3095828846EE70286AB97B5A6597D37" Guid="*">
+                <File Id="fil04A70BB0F71521BBB365C7B030624C83" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\cfg\argv.h" />
             </Component>
-            <Component Id="cmp47E7506629FF9575CC48FA6C1FA8C970" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil3CC34A4093946BB280D601413181B25C" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\toml_formatter.h" />
+            <Component Id="cmpDFDA8145260EFB8800331C47CD5D49FA" Directory="dirA3095828846EE70286AB97B5A6597D37" Guid="*">
+                <File Id="filC79DE8F53A4D4142A95525AC8F8739E9" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\cfg\env.h" />
             </Component>
-            <Component Id="cmp8447FDDAAC89682AD6DCCBB66838432E" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil93C5D03050E9081A9E86F215C58CEC26" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\toml_formatter.inl" />
+            <Component Id="cmpF947D46BC88BEB3FA4DCAF4845D9C591" Directory="dirA3095828846EE70286AB97B5A6597D37" Guid="*">
+                <File Id="fil73B21AC6FD161C0D2D9D5E3BA5B0DE73" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\cfg\helpers-inl.h" />
             </Component>
-            <Component Id="cmp6EDE795711B86D6D7EF9C23FBB8BA8A0" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filE3E2EE1D1EE9860D8615D27B6332912B" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\unicode.h" />
+            <Component Id="cmp4CEC62F7970B54837F308B680F8F7393" Directory="dirA3095828846EE70286AB97B5A6597D37" Guid="*">
+                <File Id="fil928EF9320029220DAAB8AA73AD6722B7" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\cfg\helpers.h" />
             </Component>
-            <Component Id="cmp1AB5952DFA808B8E06120F57141473D1" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filD1BB062E0419C1E9DA013AE6D3BD1F96" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\unicode.inl" />
+            <Component Id="cmpD5601207FD16376B16606AFE26898A44" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil4D490B0B73F94DB2BB33FA0D9C7F8E9C" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\backtracer-inl.h" />
             </Component>
-            <Component Id="cmp7CC76809497241735D87655D46F82B46" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filE2C9D11A5FD3B8609F3F8BC576821C69" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\value.h" />
+            <Component Id="cmp1F1F8A65F3541BC5D9304AB5BEAF7694" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="filAC729B6B5D22B526B1BB0899D19D5917" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\backtracer.h" />
             </Component>
-            <Component Id="cmpD5BECAE85B981A857B5DB4D64A4542D4" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil7C733E50F279E9D16E7F4168FBCB4432" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\value.inl" />
+            <Component Id="cmp80EBB5BEAD58CD7F9836791106E0E562" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="filF745135D02ABCE8DCFD1259E2F252E5B" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\circular_q.h" />
             </Component>
-            <Component Id="cmp6B5CA7F9C2B11100C1B0D1A9714FDD18" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil89C2B4A97C81035DD6D26E02F57A9996" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\value_extern.inl" />
+            <Component Id="cmp659577619EA58814A653E8B2F49E5A96" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil751989A198365D39F550F980EE80B287" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\console_globals.h" />
             </Component>
-            <Component Id="cmp958A07F6FEE410C05EB58FBC6D97189B" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil05FC747D61228B760F7574408C99E072" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\version.h" />
+            <Component Id="cmp7296952FAA8E20171EF24FD3066EECD6" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil887D3B3013BEB0C390FA03CD8CF032D5" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\file_helper-inl.h" />
             </Component>
-            <Component Id="cmp9AA0852EC6720F3A9214182A253A76E7" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="filC39F8B7161A598652E407BA3203F2C6A" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\yaml_formatter.h" />
+            <Component Id="cmpA6DF202F789197C835E12710BD432C49" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="filBE284C0CD896250BB150286D7094B5CB" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\file_helper.h" />
             </Component>
-            <Component Id="cmp4FB65061DBD66EFBB367CFE712C6D106" Directory="dirEB0E97C5F0466513D174FDD213BECA52" Guid="*">
-                <File Id="fil3975B4A331AD3DA19A09769CDFF5D210" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\yaml_formatter.inl" />
+            <Component Id="cmpBC33BE3ACA2528E14F07E51122DE8E67" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil01E3FDBA038293A53A3826840B82A736" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\fmt_helper.h" />
             </Component>
-            <Component Id="cmp2E5A02BE6F3C3F118AC3686F819AA11F" Directory="dirB466914352B3E36BCC80505DE1ACA159" Guid="*">
-                <File Id="fil7315A93C59A2D6A9A10E5ABC40F5231C" KeyPath="yes" Source="SourceDir\modengine2\lib\lua.lib" />
+            <Component Id="cmp1EBE45054DF0C6C9972CF136B17FC820" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="filCBFDCFBDA911F784EFFB7DC9AC66CEA4" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\log_msg-inl.h" />
             </Component>
-            <Component Id="cmpCE5BAAF155EAC23A6C75647A7DF1C743" Directory="dirB466914352B3E36BCC80505DE1ACA159" Guid="*">
-                <File Id="filB8C9F2AD15ED9C7E929381B9DFC91FAF" KeyPath="yes" Source="SourceDir\modengine2\lib\modengine2.lib" />
+            <Component Id="cmp46CAD7C82BD1408F5836C063139D25D0" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="filB50A0E6472054EBF8873B8C2CC1D8C37" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\log_msg.h" />
             </Component>
-            <Component Id="cmpB80C99432A430644BF22FE8FD0F546CE" Directory="dirEE0DB06C95D213E603006422496BC5BE" Guid="*">
-                <File Id="fil7BB4E2EF2236C90A9C1308FDA49FE23C" KeyPath="yes" Source="SourceDir\modengine2\share\cmake\modengine\ModEngineConfig.cmake" />
+            <Component Id="cmp15D9FE9AF92DEC248375AEABB314C1BB" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil47371ABE8AEFE0A048587D4BA7D5EAFE" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\log_msg_buffer-inl.h" />
             </Component>
-            <Component Id="cmp726E61229949D1F9824A448CE601474C" Directory="dirEE0DB06C95D213E603006422496BC5BE" Guid="*">
-                <File Id="fil0B445AEC37EF7ECCE6C5E63E46939C56" KeyPath="yes" Source="SourceDir\modengine2\share\cmake\modengine\ModEngineConfigVersion.cmake" />
+            <Component Id="cmp0E66117CF9A507E0867D15A2AF6E7751" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil5EACD63223B69C95B0B5EF1F816BB7B7" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\log_msg_buffer.h" />
             </Component>
-            <Component Id="cmp231BA96D85BEEE9DD2A8C6F36B106E5E" Directory="dirEE0DB06C95D213E603006422496BC5BE" Guid="*">
-                <File Id="fil69229A23EB53E3E1AD5B1BFF94C949FC" KeyPath="yes" Source="SourceDir\modengine2\share\cmake\modengine\ModEngineTargets-minsizerel.cmake" />
+            <Component Id="cmpF906E14167B6777D689B16FC11A5E734" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil29E150D7BBBBFDD8FAA65FD9160F6D30" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\mpmc_blocking_q.h" />
             </Component>
-            <Component Id="cmp5F7682A02CB1C20BEA2992C3C98EBE8D" Directory="dirEE0DB06C95D213E603006422496BC5BE" Guid="*">
-                <File Id="filE6DAE51D5578D92B911A278116BD9592" KeyPath="yes" Source="SourceDir\modengine2\share\cmake\modengine\ModEngineTargets.cmake" />
+            <Component Id="cmp5289FF7C0A50F8635A8FEFE9C5F94608" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil02EE6CD6C8C6F857FB369ADE6CE7FE5E" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\null_mutex.h" />
             </Component>
-            <Component Id="cmpBA5AAF5F02374C61353E8119C00429FF" Directory="dirFDDDB90D943796F17045709939C5BB93" Guid="*">
-                <File Id="filA6A61D70C1878083954450C4FA85C451" KeyPath="yes" Source="SourceDir\modengine2\tools\scyllahide\HookLibraryx64.dll" />
+            <Component Id="cmp3909411962859FCC9B09B39FEA74C39B" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="filCE40C0F5A7276D25F42ED2C9EEEAD063" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\os-inl.h" />
             </Component>
-            <Component Id="cmp51EBEF7F8EDD6585685D32BD5F5D5EAC" Directory="dirFDDDB90D943796F17045709939C5BB93" Guid="*">
-                <File Id="filE5CA388562A0639C0C96493A37893309" KeyPath="yes" Source="SourceDir\modengine2\tools\scyllahide\InjectorCLIx64.exe" />
+            <Component Id="cmp3518ED455460569505C8F51D9BCB0F99" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="filAA2721CF7049F87709B89F4CA5A6236F" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\os.h" />
             </Component>
-            <Component Id="cmpDAE967874E0A7635EFEE3DD6D4F3A83F" Directory="dirFDDDB90D943796F17045709939C5BB93" Guid="*">
-                <File Id="fil3C19069C7F3A9AE5B62A8160CAB645A1" KeyPath="yes" Source="SourceDir\modengine2\tools\scyllahide\scylla_hide.ini" />
+            <Component Id="cmp030E6EF5D0D530F942F04E27A33D5795" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil2595B578A2BE91CC76B8E115B78165CD" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\periodic_worker-inl.h" />
+            </Component>
+            <Component Id="cmpE9F36E3F911D18F31098C036880D4719" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil4FFF277BC86EBF790126B84A2990C9B1" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\periodic_worker.h" />
+            </Component>
+            <Component Id="cmp6F87B1564D2BFAD2B4059772C77234A1" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil3840F34880C295DA7536FBB3D9C1B47B" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\registry-inl.h" />
+            </Component>
+            <Component Id="cmpF93C559AD47512EFE502DF771D575293" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="filFE44BCBC3DDF76E2936E4E3792C76A49" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\registry.h" />
+            </Component>
+            <Component Id="cmp043A122CD76EAFBD8163F9E54F7DF9AB" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil30244431BE1F7C2026D2732C97DB3CAD" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\synchronous_factory.h" />
+            </Component>
+            <Component Id="cmp33E12FD5EA06A390B1D235FCA842EEF0" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil58E3AFE6E97EE56CAE88DBA08A91057F" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\tcp_client-windows.h" />
+            </Component>
+            <Component Id="cmp5467C90E8497B8330B99E3541FF260AA" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil262942819E288C4819A1B14252C742AF" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\tcp_client.h" />
+            </Component>
+            <Component Id="cmp96DAB302BEE6C9AA0701BA8B37B463BB" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil51F18344259E1A0EBF6BE21659EFA099" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\thread_pool-inl.h" />
+            </Component>
+            <Component Id="cmpBDBC5566577759D9249D3C5EDEE35E6E" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil279353E679A70B01B6784DD1EB0689A7" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\thread_pool.h" />
+            </Component>
+            <Component Id="cmpF62B73FC614FF0672FBEB33762F543CA" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil99796CDEA5F746E6ADF2544640C55AF9" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\udp_client-windows.h" />
+            </Component>
+            <Component Id="cmpB06CA4FFF5B871B8EDCFE899DBBDCEB1" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil2517089603CC5FC2991415A520996B9C" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\udp_client.h" />
+            </Component>
+            <Component Id="cmp39894CFE3AD0430D6CFCBD8C899E5EE5" Directory="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Guid="*">
+                <File Id="fil37623A182B443AB14564054919062CA9" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\details\windows_include.h" />
+            </Component>
+            <Component Id="cmp54E01840CFBE6DAA86D53232B7AA19F0" Directory="dirCBD61AF3926C1F083E3C42E3E12C3AE9" Guid="*">
+                <File Id="fil7D48E657B7A62016C46D7107E1D382F1" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\bin_to_hex.h" />
+            </Component>
+            <Component Id="cmpFFACBCDBA7F4D54792FCF879AFB43F7B" Directory="dirCBD61AF3926C1F083E3C42E3E12C3AE9" Guid="*">
+                <File Id="fil0575F5D233A6D01D549ED2FEF34C695D" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\chrono.h" />
+            </Component>
+            <Component Id="cmpAEF87AFA13F5E1C08FE0A6C7D83F51DD" Directory="dirCBD61AF3926C1F083E3C42E3E12C3AE9" Guid="*">
+                <File Id="fil2E9B6E31A49534F164786DF488B7852E" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\compile.h" />
+            </Component>
+            <Component Id="cmp8D1807B5DF2FAFB7AE39DCCA8B78D7CA" Directory="dirCBD61AF3926C1F083E3C42E3E12C3AE9" Guid="*">
+                <File Id="fil68E9A81CC34ED012925902D1ED96F5CB" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\fmt.h" />
+            </Component>
+            <Component Id="cmp2890CAD73D202B2A2B51F8DE47AD79F7" Directory="dirCBD61AF3926C1F083E3C42E3E12C3AE9" Guid="*">
+                <File Id="filC7F9A81F57C479117017ADC7BEF55E20" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\ostr.h" />
+            </Component>
+            <Component Id="cmpA329A629A0C2B768BF79600EFA3BE9DA" Directory="dirCBD61AF3926C1F083E3C42E3E12C3AE9" Guid="*">
+                <File Id="fil690F5A2E7FFF2C3C7ED8FDA6626E8691" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\ranges.h" />
+            </Component>
+            <Component Id="cmp217EE3BA3747C6F656943BC25E3C3FCE" Directory="dirCBD61AF3926C1F083E3C42E3E12C3AE9" Guid="*">
+                <File Id="filF05127AA6ABC258EE3B63BD6E31BD020" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\fmt\xchar.h" />
+            </Component>
+            <Component Id="cmp9E765C67AF2CE41F5F021A954BADA069" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="filC00055E55B8D1DBBF2D15949807DBD99" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\android_sink.h" />
+            </Component>
+            <Component Id="cmp9034B1660B03A095AB8BC565F4740BCE" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="filFF1657E894FE3BF4243C7647FB8465ED" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\ansicolor_sink-inl.h" />
+            </Component>
+            <Component Id="cmp6866AA4C53D1DFCAF6C8477A8D67D9AC" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="filC6E733E2F8E39C727C5E276145504E86" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\ansicolor_sink.h" />
+            </Component>
+            <Component Id="cmp8F61829702D57610CB5E78F6974F919A" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil72AB8E858DA13B49B5F0AB3E3CA5634D" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\base_sink-inl.h" />
+            </Component>
+            <Component Id="cmp4437881457C59A81A02F0860B7391D8A" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil63077125B43110B11C34876289702812" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\base_sink.h" />
+            </Component>
+            <Component Id="cmp673E7A84464982D1C00DCE78130685C3" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil849533B6B4EE650A1A08DD487CE9C087" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\basic_file_sink-inl.h" />
+            </Component>
+            <Component Id="cmpA324E782F26371FE92ED7F1D9E82CA2C" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil1F440D3C8AE19AB20DC87F9C07B4C255" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\basic_file_sink.h" />
+            </Component>
+            <Component Id="cmpAEAA2453FF6E93E957EF47BED318D3D9" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil52299B562189AF287A7B5E22D4AC29F2" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\daily_file_sink.h" />
+            </Component>
+            <Component Id="cmpB9A516346D90AA7CAFAC4BF2A6B232D6" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="filBFADDD1069F863ABA18BC22909DDDB5C" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\dist_sink.h" />
+            </Component>
+            <Component Id="cmp8F7293CC5C9900CD7A6F0F48D26B8AE3" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil1CFDF0041A0FDE7735B69B97FDD10778" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\dup_filter_sink.h" />
+            </Component>
+            <Component Id="cmp1AE57CC04646FEA1F419A11B7834C789" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="filF78D25BD848FCA715A19C6F53D93AD36" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\hourly_file_sink.h" />
+            </Component>
+            <Component Id="cmpABFB277E22BE2660DB815F4BF514E2C9" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil8D128291C8BD492A5BCBA69AB160CF92" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\mongo_sink.h" />
+            </Component>
+            <Component Id="cmp516C7E73EB7695855690D782672AF689" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil9C70EA3A307A8609D90FD254AD1FD3AC" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\msvc_sink.h" />
+            </Component>
+            <Component Id="cmp19442F6BFB949710D6F60D5559B679E9" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="filA78A29014987237744BFBB6B1C0C50ED" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\null_sink.h" />
+            </Component>
+            <Component Id="cmpD0EEC6F78C510767F9721744C04145DE" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil4FD5A2676A4036F41C1AE19068A15509" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\ostream_sink.h" />
+            </Component>
+            <Component Id="cmpB351BE47357F7AF0C5FB24E35F3508D0" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="filDC5F6EE3A55C0860BA4FE5F1B2B6019C" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\qt_sinks.h" />
+            </Component>
+            <Component Id="cmpA9C720DC546CFE2EF015E591DCBE8D63" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil15AC2C3299356E34706BA2C61D9E2F18" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\ringbuffer_sink.h" />
+            </Component>
+            <Component Id="cmp5094D4141191F7615A8B0CBD0C53D2E9" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="filA3528128EB7FCFE08A86D38BB6EBA7EB" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\rotating_file_sink-inl.h" />
+            </Component>
+            <Component Id="cmp690F51DE934010201B4CAB39B04DFC73" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="filB9931A589E13F5EBE72CD8CD30853BC4" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\rotating_file_sink.h" />
+            </Component>
+            <Component Id="cmp0C5E2B070D34C62121734E60B9FA9CA2" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil3FA3D420AC98DB19613ED8EDB038A531" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\sink-inl.h" />
+            </Component>
+            <Component Id="cmp629A5B11B22E7B5AE92F3D1A3E0191E7" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil60DAB574003B21B08166A88D1F5EBC68" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\sink.h" />
+            </Component>
+            <Component Id="cmpE40CFC002FDE8AAFCFCB5EFFBC7AAB9F" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil78E4DD1AC59B242B4EE32875F83D2DC0" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\stdout_color_sinks-inl.h" />
+            </Component>
+            <Component Id="cmp3A106AF5900D4DFA33D1703E7C1C9205" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil03F31DDDE13B4511C74279928F4D1ACA" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\stdout_color_sinks.h" />
+            </Component>
+            <Component Id="cmp3E34BE5EC2BA2C47702A0D00687B4C89" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil330B6C73CE15F9242DAA765206EAC354" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\stdout_sinks-inl.h" />
+            </Component>
+            <Component Id="cmpFB4224C2C31E459C5F7CA42B498F6175" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="filBC3DF97574FEC23AE251E415FBF5ED01" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\stdout_sinks.h" />
+            </Component>
+            <Component Id="cmp97149207B77CE77B4D36AFBE3EE2A88B" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="filB92A5D859B4A63B07BDAE26C86E0CB7E" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\syslog_sink.h" />
+            </Component>
+            <Component Id="cmp4FBD4267EB6E35F217D914CCC11F93B6" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil1D23DD5035884F9717AD4F387D089A51" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\systemd_sink.h" />
+            </Component>
+            <Component Id="cmp98567ED2CCE1EE295C11076B4F10F901" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil1FC2444C2E1F5D4989C5C9D9F9C148B9" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\tcp_sink.h" />
+            </Component>
+            <Component Id="cmpB6A2256FF320655D26765980BBFE3242" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="filD2F2EF9DD29E2A9BADAC67BB39CE4E21" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\udp_sink.h" />
+            </Component>
+            <Component Id="cmp2C004A12CB15E11EE89BF08503275069" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil10D58B848F9CB2A4D3025AB30BB976BE" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\wincolor_sink-inl.h" />
+            </Component>
+            <Component Id="cmp188FF2B8B53873D85E361846F59C5647" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="filF8ACF5982C61EE1E65624F40F70559F8" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\wincolor_sink.h" />
+            </Component>
+            <Component Id="cmp5076B11CE429BFDBDBEAD77D8AEB9911" Directory="dir815B85E4815830F9AB3F319684D0DF2E" Guid="*">
+                <File Id="fil4C75AADB72A8DABE1F52FF72653ADAF8" KeyPath="yes" Source="SourceDir\modengine2\include\spdlog\sinks\win_eventlog_sink.h" />
+            </Component>
+            <Component Id="cmp576BED38BCABAE9C08CE1EDD7D6CF83A" Directory="dir81091B60FCA84DAD8C2E588C93EB11FD" Guid="*">
+                <File Id="filA1AD65E9C8F7794D20E4CAFB45E94770" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\toml.h" />
+            </Component>
+            <Component Id="cmpE1B7EC69466545EA6C02B4972D331208" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil1521B7FB64CD228E2201544E5883AC61" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\array.h" />
+            </Component>
+            <Component Id="cmp33802F16523C9E386561B33AEEC57AE3" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil76C32E2853DED8D3BDAF258BF0943809" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\array.inl" />
+            </Component>
+            <Component Id="cmp6AAE5BE0FAC476ED0F72BA88C89B4AB9" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil0EC21A84F021F28DD54B0D20BC90404E" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\at_path.h" />
+            </Component>
+            <Component Id="cmp6E41079A218608195A500232728D1222" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil42BA78CFFD5C4A466662C7AC1FC46E85" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\at_path.inl" />
+            </Component>
+            <Component Id="cmp8AB89987A7BCB5B831C25054A531A347" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil4B9103A60C46AB36C28D5F88E8AF6E24" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\date_time.h" />
+            </Component>
+            <Component Id="cmp98869B64EA38AC754A01BA178406F5CE" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil6A3ED668E89F9392322D1EA70A9870CB" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\formatter.h" />
+            </Component>
+            <Component Id="cmpEEF76AF62D8760CA042758682F2A7A18" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filE628204E1C36E85B0AE0A712AAAC5AC7" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\formatter.inl" />
+            </Component>
+            <Component Id="cmpD2B68FF64771907782194AB708FD69EE" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil0E91666C413D31DD3D0CB1B79709B93F" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\forward_declarations.h" />
+            </Component>
+            <Component Id="cmp3A46C8765B6DDA51A14D33889AE25707" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil5402D725CC689C05BABF1B67EF93DDA5" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\header_end.h" />
+            </Component>
+            <Component Id="cmp4ECD3FAE5ADE6E65087F979F769A2078" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil4275BA89EBE2811D5BE22657791E2EC9" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\header_start.h" />
+            </Component>
+            <Component Id="cmpAC60BC9631B1627E93D0A15161C6A368" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil319EDF3C262DABFCFDAAD57F6C50E19A" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\json_formatter.h" />
+            </Component>
+            <Component Id="cmp6D69C69B810A84CEE500C795786C8B14" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filF2BA7236497123138727243942D2E3A1" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\json_formatter.inl" />
+            </Component>
+            <Component Id="cmpA1C2C113230AE5BC3DB84B821C7CA821" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filED75607A479C8B29AE9FAC880D2A671B" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\key.h" />
+            </Component>
+            <Component Id="cmp1565C40CDA926275B215F541E8D2F28E" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil5BD752EEDEFBBC04E633828F7C872FD5" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\make_node.h" />
+            </Component>
+            <Component Id="cmp70208A46ADFBCFCF4FB89E46ED686CF5" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filE628EB7F770FD0BA359737EB72D76AE9" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\node.h" />
+            </Component>
+            <Component Id="cmp8EAE0212818FC2D57240D1B4368048E0" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filA5CD522BC30A963D2D7214FD72216A25" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\node.inl" />
+            </Component>
+            <Component Id="cmpA17E661C1BDF17548D5EF97A643BF810" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil43B775CAB40E31460F2C05F6495E2268" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\node_view.h" />
+            </Component>
+            <Component Id="cmp5DC9E086D3E4F5E031F6A984EB66F2F6" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil6A0B5BDD61BD6FACE044BB63CE030660" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\parser.h" />
+            </Component>
+            <Component Id="cmp51CFCBC65A301C27B2CCC0922CF5431A" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filF6817E7FF99FFB150C23331B6271F4C1" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\parser.inl" />
+            </Component>
+            <Component Id="cmp1B7D3FC9734B4D730F1F4FAA1A01070D" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil230CB186CE591C4F9307D05BE77EB6F0" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\parse_error.h" />
+            </Component>
+            <Component Id="cmp6D03A9A84465E32A7B90B76A3AC948AF" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filBB90B75C031E14FBDF51753F25B331CE" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\parse_result.h" />
+            </Component>
+            <Component Id="cmp173B77071C358FE3974949F5F232EAEA" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filF37B2B8470C0435C546DE6D4DAA971FE" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\preprocessor.h" />
+            </Component>
+            <Component Id="cmpF4B25350D13591941FD024B311AC7EDF" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filBD938D26714BAF46BB121632FA81FC6F" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\print_to_stream.h" />
+            </Component>
+            <Component Id="cmp9BD031420C4E4678412AE17B59B5DCE9" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil72F2794A36A050CD8BBA6737FEC25116" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\print_to_stream.inl" />
+            </Component>
+            <Component Id="cmp0B0081D4843AF372576048546BB12330" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil52DA3B0E60EAA60589A19A9965991268" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\simd.h" />
+            </Component>
+            <Component Id="cmpE6ADE96E3D5FD735CD324AA67F6F9A1D" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil78C6690B0A5C2CC67AE8B1310AF49F83" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\source_region.h" />
+            </Component>
+            <Component Id="cmp4851E75BD3E556D3F4C5121E257EA0A1" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil2B4F914692BE6B5B6FF0D425C0EB4D8F" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_except.h" />
+            </Component>
+            <Component Id="cmp9F66B36F5C7B22596D218606116AEB7F" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filC2E488163BD7FAFC54C355F043FA6802" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_initializer_list.h" />
+            </Component>
+            <Component Id="cmpB8CB81E70265597475F46D934A42DE99" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filAA1127C51032620D37CC878142BC2E58" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_map.h" />
+            </Component>
+            <Component Id="cmpED16731764A372140803ED4D97549005" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil151406A977BC170155449D3D1F10BCDE" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_new.h" />
+            </Component>
+            <Component Id="cmpC35E721F2F4AB30871774B9E91441F8F" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filC5786D2087071929127B6EBC4AB2D4A1" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_optional.h" />
+            </Component>
+            <Component Id="cmp5F1DF1F48B9C313DCD2E192A431957F1" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filBF6DE75063302C204B17102992CD832F" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_string.h" />
+            </Component>
+            <Component Id="cmp99656DCADC295ABB379C1AD07638467D" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil712EFE210A720028152E193B23DA4E90" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_string.inl" />
+            </Component>
+            <Component Id="cmp2FD5B632C1524EF4F73119117EE62897" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil99334B85B9435F0174FAAE8F528D5009" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_utility.h" />
+            </Component>
+            <Component Id="cmp8D43C73920C1D5B1F5DBE47F3B2D8C90" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filB1B5D4C2F36941002DBFE63C9A80F8F9" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\std_vector.h" />
+            </Component>
+            <Component Id="cmp3C99C7F2041FD38F185E4A8100D909F5" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filAD9EA688D81DFA6AFFAF4295E4949074" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\table.h" />
+            </Component>
+            <Component Id="cmp7A7EFD7148B93E1A0F208B818810F830" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filB6BBEBFE73CCAEA9144830430F63E299" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\table.inl" />
+            </Component>
+            <Component Id="cmp0BEC7DEB44C42A88F82E90902E190442" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filD48B05865A790BA46701779A6C0755B3" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\toml_formatter.h" />
+            </Component>
+            <Component Id="cmp69F55302F6017F8C3300621AA05974C0" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil945095F46C5286156D751D44B3FAFB32" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\toml_formatter.inl" />
+            </Component>
+            <Component Id="cmp9E1EB6721393ECAC945E2337C66FE465" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="filC42A0A6F7FC64C7D2B0A390FEC635DC3" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\unicode.h" />
+            </Component>
+            <Component Id="cmp79FBE496070E0E3248F07D792E627DD8" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil93047F7883C15EFED752214F8C5A5A26" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\unicode.inl" />
+            </Component>
+            <Component Id="cmpDFA6E8DB140621815EBB2B02981F717C" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil41303ED737139C11060FAC11C03C8E81" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\unicode_autogenerated.h" />
+            </Component>
+            <Component Id="cmp63C65B4B7B4BDEB1DA616F6C804A3242" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil1101CA2AAFD78307C73B13CC97E69B45" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\value.h" />
+            </Component>
+            <Component Id="cmpD8EB0E05B90FA6C2BAA34AD9BED62C2F" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil8E5F73EB9B258C58CF18EE8772D1A931" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\version.h" />
+            </Component>
+            <Component Id="cmp70472A21D29E1F559124621FD1C17C3F" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil89A5F9DAA205D0CEE36CC671E3E27275" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\yaml_formatter.h" />
+            </Component>
+            <Component Id="cmp81CB9E4444C29BAE1D41C99E022E7D8A" Directory="dir29B3462A78503CFD1E93C05D62477D1D" Guid="*">
+                <File Id="fil67580E52DDE6137E910038A5190E007C" KeyPath="yes" Source="SourceDir\modengine2\include\toml++\impl\yaml_formatter.inl" />
+            </Component>
+            <Component Id="cmpD6068D981ADE81DCCC957113D58DE6F1" Directory="dirFFFF306EEC4105ADF87BA2510AAF8746" Guid="*">
+                <File Id="fil1E59D8D7AA754B69CDF3124B1F3E01E1" KeyPath="yes" Source="SourceDir\modengine2\lib\lua.lib" />
+            </Component>
+            <Component Id="cmp120BEC45EC1583A21A0532350767F9C6" Directory="dirFFFF306EEC4105ADF87BA2510AAF8746" Guid="*">
+                <File Id="filC4EC67195A776A38964D7D63C572BF04" KeyPath="yes" Source="SourceDir\modengine2\lib\modengine2.lib" />
+            </Component>
+            <Component Id="cmp2C503070F84D37437629C777F02F7216" Directory="dir1E0BA7BAD5F9A38BF5191BE6003FF27D" Guid="*">
+                <File Id="fil27B6AF004D84A9968B8E64DC2654C40C" KeyPath="yes" Source="SourceDir\modengine2\share\cmake\modengine\ModEngineConfig.cmake" />
+            </Component>
+            <Component Id="cmp29C9D9D9810169FFC3867C9FC069F119" Directory="dir1E0BA7BAD5F9A38BF5191BE6003FF27D" Guid="*">
+                <File Id="fil66E861A8DE327E050AE4D3202DBBE727" KeyPath="yes" Source="SourceDir\modengine2\share\cmake\modengine\ModEngineConfigVersion.cmake" />
+            </Component>
+            <Component Id="cmp9E05708AD5C0A98BEE68CC69310A446B" Directory="dir1E0BA7BAD5F9A38BF5191BE6003FF27D" Guid="*">
+                <File Id="filE5842B83686BA67C174FB79F220476BF" KeyPath="yes" Source="SourceDir\modengine2\share\cmake\modengine\ModEngineTargets-minsizerel.cmake" />
+            </Component>
+            <Component Id="cmp6EE1C7BB2CC5539204CDB6F2CFB3CFA3" Directory="dir1E0BA7BAD5F9A38BF5191BE6003FF27D" Guid="*">
+                <File Id="fil4FB53AE71E4516D6724805D21DBF6051" KeyPath="yes" Source="SourceDir\modengine2\share\cmake\modengine\ModEngineTargets.cmake" />
+            </Component>
+            <Component Id="cmp4818161DDAA82881FA7F1D8BEB3A84E3" Directory="dir977232148AA15BAE5059E093701C7809" Guid="*">
+                <File Id="fil1DF033E494F9FE4EAD453CE0709DAEB0" KeyPath="yes" Source="SourceDir\modengine2\tools\scyllahide\HookLibraryx64.dll" />
+            </Component>
+            <Component Id="cmp12D82D2893BFEE654686B77C0EEB539D" Directory="dir977232148AA15BAE5059E093701C7809" Guid="*">
+                <File Id="fil873702455305CD5A4E2D885C5CA1544F" KeyPath="yes" Source="SourceDir\modengine2\tools\scyllahide\InjectorCLIx64.exe" />
+            </Component>
+            <Component Id="cmpFD7B4A17AB01E20F7807C58BBD27A06D" Directory="dir977232148AA15BAE5059E093701C7809" Guid="*">
+                <File Id="filEEF72A938470594CE36C6CCCA4B83571" KeyPath="yes" Source="SourceDir\modengine2\tools\scyllahide\scylla_hide.ini" />
             </Component>
         </ComponentGroup>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir91B9A34CD499F4EDF8548BC181E2872E">
-            <Directory Id="dir01A4FE78F0C94695FAA937BEC9CB319F" Name="modengine" />
+        <DirectoryRef Id="dir6EDD92DC299074D650AEA26356BEB018">
+            <Directory Id="dir1E0BA7BAD5F9A38BF5191BE6003FF27D" Name="modengine" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir91B9A34CD499F4EDF8548BC181E2872E">
-            <Directory Id="dir0DD738560862A0EBE686C50E486A1AFF" Name="sol" />
+        <DirectoryRef Id="dir475333EEC64FB3B252B06FED20920B86">
+            <Directory Id="dir24F988DE1308A3731186D4FF477191A0" Name="debug_menu" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir45499512B23F30BEE1EB759B9F3ABA9D">
-            <Directory Id="dir0EA696F01361866A23D03EF56B54AB73" Name="modengine2" />
+        <DirectoryRef Id="dir81091B60FCA84DAD8C2E588C93EB11FD">
+            <Directory Id="dir29B3462A78503CFD1E93C05D62477D1D" Name="impl" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir52065ECAFFAB63E157A2382AB8E94FC1">
-            <Directory Id="dir1118B209FF19455811DBAAD203B2A008" Name="debug_menu" />
+        <DirectoryRef Id="dir8235B37C307F8330AA160E7190434847">
+            <Directory Id="dir319122A915C9FE4E3B27384DDA1D00A5" Name="modengine2" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir1118B209FF19455811DBAAD203B2A008">
-            <Directory Id="dir1A5954C00C17FC6A25B461E1232D5CE6" Name="font" />
+        <DirectoryRef Id="dir3E032AA8BC340EF03170EFCA9DCC43ED">
+            <Directory Id="dir375981DBA796B0E045E3CCDC23FDB48C" Name="compatibility" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir91B9A34CD499F4EDF8548BC181E2872E">
-            <Directory Id="dir21E90E4CAC19DCB622BEA978F0638076" Name="spdlog" />
+        <DirectoryRef Id="dir319122A915C9FE4E3B27384DDA1D00A5">
+            <Directory Id="dir3C2C2312E774B15E2DD24B8442E88E2E" Name="include" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir21E90E4CAC19DCB622BEA978F0638076">
-            <Directory Id="dir2C6E2B4B0AD801F239C10D67C47002C5" Name="sinks" />
+        <DirectoryRef Id="dir3C2C2312E774B15E2DD24B8442E88E2E">
+            <Directory Id="dir3E032AA8BC340EF03170EFCA9DCC43ED" Name="sol" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir21E90E4CAC19DCB622BEA978F0638076">
-            <Directory Id="dir506474EDD6EEDF83E11ED7DC81AC6AFF" Name="cfg" />
+        <DirectoryRef Id="dir4DC42E9388BA52B236661125C26E30DA">
+            <Directory Id="dir44FE819FF3FA3E464D5841177AE5E057" Name="util" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir0EA696F01361866A23D03EF56B54AB73">
-            <Directory Id="dir52065ECAFFAB63E157A2382AB8E94FC1" Name="assets" />
+        <DirectoryRef Id="dir319122A915C9FE4E3B27384DDA1D00A5">
+            <Directory Id="dir475333EEC64FB3B252B06FED20920B86" Name="assets" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir0EA696F01361866A23D03EF56B54AB73">
-            <Directory Id="dir585268D7666C54E18CBE5AB1AE59159E" Name="crashpad" />
+        <DirectoryRef Id="dir319122A915C9FE4E3B27384DDA1D00A5">
+            <Directory Id="dir4A8DB6EC086D16399F4C5D8E8ED011D1" Name="share" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dirC97E2660C9CB0654C0E5775495B3E380">
-            <Directory Id="dir657E3234B0FC962990AAE6FDAC030C58" Name="signboard" />
+        <DirectoryRef Id="dir3E032AA8BC340EF03170EFCA9DCC43ED">
+            <Directory Id="dir4C7BEE86F17D1444080CD5823C52E85F" Name="detail" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir1118B209FF19455811DBAAD203B2A008">
-            <Directory Id="dir6F1691800D604D9DD80E3A30141FDFBA" Name="adhoc" />
+        <DirectoryRef Id="dir3C2C2312E774B15E2DD24B8442E88E2E">
+            <Directory Id="dir4DC42E9388BA52B236661125C26E30DA" Name="modengine" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir6F1691800D604D9DD80E3A30141FDFBA">
-            <Directory Id="dir74CFC34D65C15613807C7610FC71B782" Name="FontShader" />
+        <DirectoryRef Id="dir319122A915C9FE4E3B27384DDA1D00A5">
+            <Directory Id="dir53BC6F5C2CA0841BE2B3E1C495CDC0BA" Name="tools" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir0EA696F01361866A23D03EF56B54AB73">
-            <Directory Id="dir7A5B5737C8BB3B51E6D6857005471CDD" Name="bin" />
+        <DirectoryRef Id="dir4A8DB6EC086D16399F4C5D8E8ED011D1">
+            <Directory Id="dir6EDD92DC299074D650AEA26356BEB018" Name="cmake" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir01A4FE78F0C94695FAA937BEC9CB319F">
-            <Directory Id="dir9036960CDF5D564352BBB25DC7BC6EC1" Name="util" />
+        <DirectoryRef Id="dir3C2C2312E774B15E2DD24B8442E88E2E">
+            <Directory Id="dir7820B785B237DC426006CEB22177245B" Name="fmt" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir0EA696F01361866A23D03EF56B54AB73">
-            <Directory Id="dir90F88A13F0518370AD0ABF168011527A" Name="share" />
+        <DirectoryRef Id="dir80E03EDB307484B49672AFDFB7E3AD7F">
+            <Directory Id="dir7A879C46552D7F525134FC62232C2D64" Name="signboard" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir0EA696F01361866A23D03EF56B54AB73">
-            <Directory Id="dir91B9A34CD499F4EDF8548BC181E2872E" Name="include" />
+        <DirectoryRef Id="dir24F988DE1308A3731186D4FF477191A0">
+            <Directory Id="dir80E03EDB307484B49672AFDFB7E3AD7F" Name="testdata" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir0EA696F01361866A23D03EF56B54AB73">
-            <Directory Id="dirA5767EFA805B16DB1930A821208017B3" Name="tools" />
+        <DirectoryRef Id="dir3C2C2312E774B15E2DD24B8442E88E2E">
+            <Directory Id="dir81091B60FCA84DAD8C2E588C93EB11FD" Name="toml++" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir0EA696F01361866A23D03EF56B54AB73">
-            <Directory Id="dirB466914352B3E36BCC80505DE1ACA159" Name="lib" />
+        <DirectoryRef Id="dirE4DA0388B0AE3AB75C3D232DE3822BC6">
+            <Directory Id="dir815B85E4815830F9AB3F319684D0DF2E" Name="sinks" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir21E90E4CAC19DCB622BEA978F0638076">
-            <Directory Id="dirB609D932DD91C8C8A6E0FC4B4CE69CF6" Name="details" />
+        <DirectoryRef Id="dir24F988DE1308A3731186D4FF477191A0">
+            <Directory Id="dir94E90D1311A0E4574CA74E9404F95343" Name="font" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir91B9A34CD499F4EDF8548BC181E2872E">
-            <Directory Id="dirBFF9828717F94DD1EC33C9F804151DEA" Name="toml++" />
+        <DirectoryRef Id="dir53BC6F5C2CA0841BE2B3E1C495CDC0BA">
+            <Directory Id="dir977232148AA15BAE5059E093701C7809" Name="scyllahide" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir1118B209FF19455811DBAAD203B2A008">
-            <Directory Id="dirC5752E9C36FB7A83660939E3B53A2B5B" Name="paramdef" />
+        <DirectoryRef Id="dirA6535236C2D392CE96445A5D5582B818">
+            <Directory Id="dir9FB51E5D47CCEF96B2168FB3AF9B49EB" Name="detail" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir1118B209FF19455811DBAAD203B2A008">
-            <Directory Id="dirC97E2660C9CB0654C0E5775495B3E380" Name="testdata" />
+        <DirectoryRef Id="dirE4DA0388B0AE3AB75C3D232DE3822BC6">
+            <Directory Id="dirA3095828846EE70286AB97B5A6597D37" Name="cfg" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir90F88A13F0518370AD0ABF168011527A">
-            <Directory Id="dirD7C4AFB4E7BD279FE80A41B89449844B" Name="cmake" />
+        <DirectoryRef Id="dir3E032AA8BC340EF03170EFCA9DCC43ED">
+            <Directory Id="dirA6535236C2D392CE96445A5D5582B818" Name="stack" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir91B9A34CD499F4EDF8548BC181E2872E">
-            <Directory Id="dirDA75D08A39AEE55C8DE43BC6AC3C9562" Name="fmt" />
+        <DirectoryRef Id="dirE2FDF8B3C544E35C3D868D3E9237BBFC">
+            <Directory Id="dirAEED3DDE080D9914DFACAF6B7EF819AE" Name="FontShader" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir21E90E4CAC19DCB622BEA978F0638076">
-            <Directory Id="dirE527EA57BF7C2445DCA4F5059C115F26" Name="fmt" />
+        <DirectoryRef Id="dir319122A915C9FE4E3B27384DDA1D00A5">
+            <Directory Id="dirCAF1AA55C5A097380736FD5ED385BF7C" Name="bin" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dirBFF9828717F94DD1EC33C9F804151DEA">
-            <Directory Id="dirEB0E97C5F0466513D174FDD213BECA52" Name="impl" />
+        <DirectoryRef Id="dirE4DA0388B0AE3AB75C3D232DE3822BC6">
+            <Directory Id="dirCBD61AF3926C1F083E3C42E3E12C3AE9" Name="fmt" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir1118B209FF19455811DBAAD203B2A008">
-            <Directory Id="dirEC2BCFDDBBFB731C66D9F5B0C10F174F" Name="stayparamdef" />
+        <DirectoryRef Id="dir319122A915C9FE4E3B27384DDA1D00A5">
+            <Directory Id="dirCC1BF04BFFD03788D6A96E0CDCFA6CBA" Name="crashpad" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dirD7C4AFB4E7BD279FE80A41B89449844B">
-            <Directory Id="dirEE0DB06C95D213E603006422496BC5BE" Name="modengine" />
+        <DirectoryRef Id="dirE4DA0388B0AE3AB75C3D232DE3822BC6">
+            <Directory Id="dirD23CA48F2391BF635C02C5CCB9FE0BD7" Name="details" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dirA5767EFA805B16DB1930A821208017B3">
-            <Directory Id="dirFDDDB90D943796F17045709939C5BB93" Name="scyllahide" />
+        <DirectoryRef Id="dir24F988DE1308A3731186D4FF477191A0">
+            <Directory Id="dirE2FDF8B3C544E35C3D868D3E9237BBFC" Name="adhoc" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir24F988DE1308A3731186D4FF477191A0">
+            <Directory Id="dirE3A7FA8F787239DFB81E96579351B4CE" Name="paramdef" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir3C2C2312E774B15E2DD24B8442E88E2E">
+            <Directory Id="dirE4DA0388B0AE3AB75C3D232DE3822BC6" Name="spdlog" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir24F988DE1308A3731186D4FF477191A0">
+            <Directory Id="dirF44B12F7DEB65E335ECE125E85175623" Name="stayparamdef" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir319122A915C9FE4E3B27384DDA1D00A5">
+            <Directory Id="dirFFFF306EEC4105ADF87BA2510AAF8746" Name="lib" />
         </DirectoryRef>
     </Fragment>
 </Wix>

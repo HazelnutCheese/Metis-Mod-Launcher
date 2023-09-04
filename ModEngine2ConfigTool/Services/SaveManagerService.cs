@@ -263,6 +263,14 @@ namespace ModEngine2ConfigTool.Services
             }
         }
 
+        public void OpenBackupSavesFolder()
+        {
+            if (Directory.Exists(_backupsRoot))
+            {
+                Process.Start("explorer", _backupsRoot);
+            }
+        }
+
         public void OpenProfileSavesFolder(string profileId)
         {
             var profileSaves = Path.Combine(

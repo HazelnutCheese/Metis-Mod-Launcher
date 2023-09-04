@@ -47,7 +47,7 @@
   </Target>
   <PropertyGroup>
     <PreBuildEvent>"$(WIX)bin\heat.exe" dir "C:\Users\Thebb\source\repos\ModEngine2ConfigTool\ModEngine2ConfigTool\bin\Release\net6.0-windows\publish\win-x86" -out "C:\Users\Thebb\source\repos\ModEngine2ConfigTool\Setup\Launcher.wxs" -cg LauncherComponents -dr INSTALLFOLDER -ag
-"$(WIX)bin\heat.exe" dir "C:\Users\Thebb\source\repos\Redist\ModEngine-2.0.0-preview4-win64" -out "C:\Users\Thebb\source\repos\ModEngine2ConfigTool\Setup\ModEngine2.wxs" -cg ModEngine2Components -dr ME2FOLDER -ag</PreBuildEvent>
+"$(WIX)bin\heat.exe" dir "C:\Users\Thebb\source\repos\Redist\ModEngine-2.1.0.0-win64" -out "C:\Users\Thebb\source\repos\ModEngine2ConfigTool\Setup\ModEngine2.wxs" -cg ModEngine2Components -dr ME2FOLDER -ag</PreBuildEvent>
   </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.

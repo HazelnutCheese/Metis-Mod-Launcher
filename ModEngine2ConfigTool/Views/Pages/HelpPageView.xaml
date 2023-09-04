@@ -223,6 +223,38 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </Expander>
+
+            <Button Grid.Row="8"
+                    Grid.Column="1"
+                    Width="100"
+                    Height="100"
+                    Margin="-5,10,10,10"
+                    HorizontalAlignment="Left"
+                    Command="{Binding OpenBackupSavesFolderCommand}"
+                    Style="{StaticResource LargeButtonStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <materialDesign:PackIcon Grid.Row="1"
+                                             Width="32"
+                                             Height="32"
+                                             Margin="10,5,10,2.5"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Kind="ContentSave" />
+                    <TextBlock Grid.Row="2"
+                               Margin="10,2.5,10,5"
+                               FontSize="12"
+                               FontWeight="Regular"
+                               Text="Open Backups"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap" />
+                </Grid>
+            </Button>
         </Grid>
     </ScrollViewer>
 </UserControl>

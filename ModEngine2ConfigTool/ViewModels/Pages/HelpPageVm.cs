@@ -1,13 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ModEngine2ConfigTool.Resx;
+using ModEngine2ConfigTool.Services;
 using ModEngine2ConfigTool.ViewModels.Controls;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace ModEngine2ConfigTool.ViewModels.Pages
 {
     public class HelpPageVm : ObservableObject
     {
+        private readonly SaveManagerService _saveManagerService;
+
         public string AppName { get; }
 
         public string Version { get; }
@@ -16,12 +21,14 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
 
         public string Licence { get; }
 
+        public ICommand OpenBackupSavesFolderCommand { get; }
+
 
         public ObservableCollection<LicenceVm> ThirdPartyLicences { get; }
 
         public ObservableCollection<QuestionVm> FrequentlyAskedQuestions { get; }
 
-        public HelpPageVm(Version version)
+        public HelpPageVm(Version version, SaveManagerService saveManagerService)
         {
             AppName = "Metis Mod Launcher";
 
@@ -33,6 +40,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             {
                 Version= "Unknown";
             }
+
+            _saveManagerService = saveManagerService;
 
             Author = "HazelnutCheese";
 
@@ -95,8 +104,8 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                 new LicenceVm(
                     "ModEngine2",
                     @"https://github.com/soulsmods/ModEngine2",
-                    "Gary Tierney, katalash, Dasaav-dsv",
-                    "ModEngine-2.0.0-preview4-win64", 
+                    "Gary Tierney, katalash, Dasaav-dsv, horkrux, ivyl, ividyon",
+                    "ModEngine-2.1.0.0-win64", 
                     Help.Licence_ModEngine2),
                 new LicenceVm(
                     ".NET Community Toolkit",
@@ -165,6 +174,14 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
                     "8.0.0",
                     Help.Licence_Autofac)
             };
+
+            OpenBackupSavesFolderCommand = new RelayCommand(OpenBackupSavesFolder);
+            
+        }
+
+        private void OpenBackupSavesFolder()
+        {
+            _saveManagerService.OpenBackupSavesFolder();
         }
     }
 }
