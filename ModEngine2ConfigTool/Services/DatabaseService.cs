@@ -19,8 +19,13 @@ namespace ModEngine2ConfigTool.Services
         {            
             _dataStorage = dataStorage;
             _databaseContext = new DatabaseContext(_dataStorage);
+
             _databaseContext.Database.EnsureCreated();
-            _databaseContext.Database.Migrate();
+
+            if(!CheckIfColumnOnTableExists())
+            {
+                _databaseContext.Database.Migrate();
+            }
         }
 
         public List<Profile> GetProfiles()
@@ -310,6 +315,17 @@ namespace ModEngine2ConfigTool.Services
         {
             profile.ModsOrder = string.Join(";", profile.Mods.Select(x => x.ModId));
             profile.DllsOrder = string.Join(";", profile.Dlls.Select(x => x.DllId));
+        }
+
+        private bool CheckIfColumnOnTableExists()
+        {
+            var result = _databaseContext.Database.SqlQuery<string>(
+                @$"SELECT GROUP_CONCAT(NAME,',') FROM PRAGMA_TABLE_INFO('Profiles')").ToList();
+
+            var hasModsOrder = result?.FirstOrDefault()?.Contains("ModsOrder") ?? false;
+            var hasDllsOrder = result?.FirstOrDefault()?.Contains("DllsOrder") ?? false;
+
+            return hasModsOrder && hasDllsOrder;
         }
     }
 }
