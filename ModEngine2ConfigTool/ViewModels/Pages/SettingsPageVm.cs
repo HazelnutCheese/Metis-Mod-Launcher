@@ -102,7 +102,7 @@ namespace ModEngine2ConfigTool.ViewModels.Pages
             _configurationService = configurationService;
             _dialogService = dialogService;
 
-            BrowseEldenRingExeCommand = new RelayCommand(BrowseEldenRing, () => !AutoDetectEldenRing is false);
+            BrowseEldenRingExeCommand = new RelayCommand(BrowseEldenRing, () => AutoDetectEldenRing is false);
             BrowseModEngine2Command = new RelayCommand(BrowseModEngine2, () => AutoDetectModEngine2 is false);
             BrowseSavesCommand = new RelayCommand(BrowseSaves, () => AutoDetectSaves is false);
 

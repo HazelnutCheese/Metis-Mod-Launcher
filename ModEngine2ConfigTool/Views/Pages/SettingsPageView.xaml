@@ -159,7 +159,7 @@
                                             Grid.Column="1"
                                             Margin="10,0"
                                             Background="{DynamicResource SecondaryHueLightBrush}"
-                                            Command="{Binding BrowseEldenRingExeCommand}"
+                                            Command="{Binding BrowseSavesCommand}"
                                             IconKind="FolderEditOutline"
                                             Text="Browse" />
                 </Grid>
